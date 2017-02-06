@@ -8,8 +8,8 @@ import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.AcceptsWithAnnotations;
 import br.com.caelum.vraptor.interceptor.SimpleInterceptorStack;
-import auth.controller.SessionUsuarioEfika;
 import auth.annotation.Admin;
+import auth.controller.SessionUsuarioEfika;
 import controller.HomeController;
 
 @Intercepts

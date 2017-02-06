@@ -1,5 +1,7 @@
 package auth.controller;
 
+import auth.dal.webservice.EfikaUsersProxy;
+import auth.dal.webservice.Usuario;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
@@ -9,8 +11,6 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.view.Results;
 import controller.HomeController;
-import auth.dal.webservice.EfikaUsersProxy;
-import auth.dal.webservice.Usuario;
 
 @Controller
 @RequestScoped
@@ -31,6 +31,10 @@ public class UsuarioController {
     public void create() {
 
     }
+    
+    public void logar() {
+        
+    }
 
     public void login(Usuario u) {
 
@@ -45,9 +49,9 @@ public class UsuarioController {
                 result.redirectTo(HomeController.class).index();
 
             } else {
-
+                
                 result.include("mensagemFalha", "Credênciais incorretas.");
-                result.forwardTo(this).create();
+                result.forwardTo(this).logar();
             }
 
         } catch (Exception e) {
@@ -63,7 +67,7 @@ public class UsuarioController {
 
     public void logout() {
         session.setUsuario(new Usuario());
-        result.forwardTo(UsuarioController.class).create();
+        result.forwardTo(UsuarioController.class).logar();
     }
 
     @Get

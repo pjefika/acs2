@@ -1,12 +1,11 @@
 package auth.controller;
 
+import auth.dal.webservice.Usuario;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import auth.dal.webservice.Usuario;
 
 @SessionScoped
 @Named

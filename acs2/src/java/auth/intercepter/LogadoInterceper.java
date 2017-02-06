@@ -8,9 +8,10 @@ import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.AcceptsWithAnnotations;
 import br.com.caelum.vraptor.interceptor.SimpleInterceptorStack;
-import auth.controller.SessionUsuarioEfika;
 import auth.annotation.Logado;
+import auth.controller.SessionUsuarioEfika;
 import auth.controller.UsuarioController;
+
 
 @Intercepts
 @RequestScoped
@@ -42,10 +43,10 @@ public class LogadoInterceper {
             if (!session.getUsuario().getLogin().isEmpty()) {
                 stack.next();
             } else {
-                result.forwardTo(UsuarioController.class).create();
+                result.forwardTo(UsuarioController.class).logar();                                
             }
         } catch (Exception e) {
-            result.forwardTo(UsuarioController.class).create();
+            result.forwardTo(UsuarioController.class).logar();
         }
     }
 
