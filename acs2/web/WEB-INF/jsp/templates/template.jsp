@@ -38,7 +38,7 @@
                 <div id="navbar" class="collapse navbar-collapse" v-cloak>
                     <c:if test="${sessionUsuarioEfika.logado}">
                         <ul class="nav navbar-nav">
-                            <li><a href="#">Ação</a></li>
+                            <li><a href="${linkTo[SearchController].create()}">Busca</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
@@ -49,7 +49,7 @@
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <p class="text-center">
-                                                        <img src="http://portalcolaboradores/idc/portalcolaboradores/userimages/${sessionUsuarioEfika.usuario.login}.jpg" alt="User" class="img-rounded" style="width: 100px; height: 100px;">
+                                                        <img src="http://portalcolaboradores/idc/portalcolaboradores/userimages/${sessionUsuarioEfika.usuario.login}.jpg" alt="User" class="img-rounded" style="width: 90px; height: 100px;">
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-7">
