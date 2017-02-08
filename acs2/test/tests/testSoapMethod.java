@@ -20,8 +20,7 @@ public class testSoapMethod {
 
         EquipamentoDAO d = new EquipamentoDAO();
 
-        d.listarEquipamentosPorMac();
-
+        d.templates();
     }
 
 }
