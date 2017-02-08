@@ -9,6 +9,9 @@ import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NBIService_Service;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiParameter;
+import com.alcatel.hdm.service.nbi2.NbiTemplate;
+import java.util.List;
 
 /**
  *
@@ -32,6 +35,26 @@ public class EquipamentoDAO {
             System.out.println("Result = " + result);
         } catch (NBIException_Exception ex) {
             ex.printStackTrace();
+        }
+
+    }
+
+    public void listarEquipamentoPorSerial(String serial) throws NBIException_Exception {
+
+        NbiTemplate n = new NbiTemplate();
+        n.setName("ct.find.devices.serialNumber");
+
+        NbiParameter param = new NbiParameter();
+
+        param.setName("serialNumber");
+        param.setValue(serial);
+
+        n.getParameters().add(param);
+
+        List<NbiDeviceData> list = port.findDevicesByTemplate(n, 500, -1);
+
+        for (NbiDeviceData e : list) {
+            e.getSoftwareVersion();
         }
 
     }

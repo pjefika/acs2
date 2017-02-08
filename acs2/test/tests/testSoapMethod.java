@@ -5,6 +5,7 @@
  */
 package tests;
 
+import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import dao.EquipamentoDAO;
 
 /**
@@ -15,12 +16,13 @@ public class testSoapMethod {
 
     /**
      * @param args the command line arguments
+     * @throws com.alcatel.hdm.service.nbi2.NBIException_Exception
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NBIException_Exception {
 
         EquipamentoDAO d = new EquipamentoDAO();
 
-        d.templates();
+        d.listarEquipamentoPorSerial("c4a81dce6779");
     }
 
 }
