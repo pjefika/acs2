@@ -5,10 +5,14 @@
  */
 package controller.search;
 
-import auth.annotation.Logado;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
+import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import controller.AbstractController;
+import dao.EquipamentoDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.inject.Inject;
 
 /**
  *
@@ -17,24 +21,28 @@ import controller.AbstractController;
 @Controller
 public class SearchController extends AbstractController {
 
+    @Inject
+    private EquipamentoDAO dao;
+
     public SearchController() {
     }
-    
+
     @Path("/busca")
-    @Logado
     public void create() {
-        
-        
-        
     }
-    
+
     @Path("/action")
-    @Logado
     public void action() {
-        
-        
-        
     }
-    
-    
+
+    //@Consumes("application/json")
+    @Path("/busca/listar/serial/{serial}")
+    public void listarPorSerial(String serial) {
+        try {
+            this.includeSerializer(dao.listarEquipamentoPorSerial(serial));
+        } catch (NBIException_Exception ex) {
+            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
