@@ -36,12 +36,27 @@ public class SearchController extends AbstractController {
     }
 
     //@Consumes("application/json")
+    /**
+     *
+     * @param serial
+     */
     @Path("/busca/listar/serial/{serial}")
     public void listarPorSerial(String serial) {
         try {
-            this.includeSerializer(dao.listarEquipamentoPorSerial(serial));
+            this.includeSerializer(dao.listarEquipamentosPorSerial(serial));
         } catch (NBIException_Exception ex) {
             Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
+            this.includeSerializer(ex);
+        }
+    }
+
+    @Path("/busca/listar/mac/{mac}")
+    public void listarPorMac(String mac) {
+        try {
+            this.includeSerializer(dao.listarEquipamentosPorMac(mac.toUpperCase()));
+        } catch (NBIException_Exception ex) {
+            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
+            this.includeSerializer(ex);
         }
     }
 

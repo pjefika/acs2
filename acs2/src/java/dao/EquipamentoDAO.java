@@ -53,18 +53,21 @@ public class EquipamentoDAO {
         return port.findDeviceByGUID(guid);
     }
 
-    public void listarEquipamentosPorMac() throws NBIException_Exception {
+    public List<NbiDeviceData> listarEquipamentosPorMac(String mac) throws NBIException_Exception {
+        NbiTemplate n = new NbiTemplate();
+        n.setName("Find Devices By MacAddress");
 
-        try {
-            Long arg0 = new Long(23006);
-            NbiDeviceData result = port.findDeviceByGUID(arg0);
-        } catch (NBIException_Exception ex) {
-            ex.printStackTrace();
-        }
+        NbiParameter param = new NbiParameter();
 
+        param.setName("macAddress");
+        param.setValue(mac);
+
+        n.getParameters().add(param);
+
+        return port.findDevicesByTemplate(n, 1, -1);
     }
 
-    public List<NbiDeviceData> listarEquipamentoPorSerial(String serial) throws NBIException_Exception {
+    public List<NbiDeviceData> listarEquipamentosPorSerial(String serial) throws NBIException_Exception {
 
         NbiTemplate n = new NbiTemplate();
         n.setName("ct.find.devices.serialNumber");
@@ -77,6 +80,10 @@ public class EquipamentoDAO {
         n.getParameters().add(param);
 
         return port.findDevicesByTemplate(n, 1, -1);
+    }
+
+    public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {
+        return port.findDevicesBySubscriberId(subscriber);
     }
 
     public void templates() throws NBIException_Exception {

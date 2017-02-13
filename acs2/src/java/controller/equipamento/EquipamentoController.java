@@ -13,6 +13,7 @@ import dao.EquipamentoDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.xml.ws.soap.SOAPFaultException;
 
 /**
  *
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 @Controller
 public class EquipamentoController extends AbstractController {
 
+    @Inject
     private EquipamentoDAO dao;
 
     public EquipamentoController() {
@@ -29,14 +31,10 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/detalhe/{guid}")
     public void detalhes(String guid) {
         try {
-            this.dao = new EquipamentoDAO();
-            this.includeSerializer(dao.detalheEquipamento(new Long(23006)));
-        } catch (javax.xml.ws.soap.SOAPFaultException soapFaultException) {
-            System.out.println(soapFaultException.getCause().getMessage());
-        } catch (NBIException_Exception ex) {
-            Logger.getLogger(EquipamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            this.includeSerializer(dao.detalheEquipamento(new Long(guid)));
+        } catch (SOAPFaultException | NBIException_Exception ex) {
+            this.includeSerializer(ex);
         }
-
     }
 
 }
