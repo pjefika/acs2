@@ -86,8 +86,8 @@ public class EquipamentoDAO {
         return port.findDevicesBySubscriberId(subscriber);
     }
 
-    public void templates() throws NBIException_Exception {
-        List<NbiTemplate> result = port.getAvailableCriteriaTemplates();
+    public List<NbiTemplate> templates() throws NBIException_Exception {
+        return port.getAvailableCriteriaTemplates();
     }
 
 }

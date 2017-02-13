@@ -7,11 +7,10 @@ package controller.equipamento;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.view.Results;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 
@@ -35,6 +34,11 @@ public class EquipamentoController extends AbstractController {
         } catch (SOAPFaultException | NBIException_Exception ex) {
             this.includeSerializer(ex);
         }
+    }
+
+    @Override
+    public void includeSerializer(Object a) {
+        result.use(Results.json()).from(a).recursive().serialize();
     }
 
 }

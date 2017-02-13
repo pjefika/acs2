@@ -7,6 +7,7 @@ package tests;
 
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import dao.EquipamentoDAO;
 import java.util.List;
 
@@ -26,9 +27,12 @@ public class testSoapMethod {
             //d.listarEquipamentoPorSerial("c4a81dce6779");
             //NbiDeviceData detalheEquipamento = d.detalheEquipamento(new Long(23006));
             //System.out.println(detalheEquipamento.getManufacturer());
-            List<NbiDeviceData> ds = d.listarEquipamentosPorMac("C4:A8:1D:CE:67:79");
-            for (NbiDeviceData detalhe : ds) {
-                System.out.println(detalhe.getSubscriberID());
+//            List<NbiDeviceData> ds = d.listarEquipamentosPorMac("C4:A8:1D:CE:67:79");
+//            for (NbiDeviceData detalhe : ds) {
+//                System.out.println(detalhe.getSubscriberID());
+//            }
+            for (NbiTemplate arg : d.templates()) {
+                System.out.println(arg.getName());
             }
 
         } catch (NBIException_Exception e) {

@@ -7,6 +7,7 @@ package controller.search;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.view.Results;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
@@ -50,6 +51,16 @@ public class SearchController extends AbstractController {
         }
     }
 
+    @Path("/busca/listar/subscriber/{subscriber}")
+    public void listarPorSubscriber(String subscriber) {
+        try {
+            this.includeSerializer(dao.listarEquipamentosPorSubscriber(subscriber));
+        } catch (NBIException_Exception ex) {
+            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
+            this.includeSerializer(ex);
+        }
+    }
+
     @Path("/busca/listar/mac/{mac}")
     public void listarPorMac(String mac) {
         try {
@@ -58,6 +69,11 @@ public class SearchController extends AbstractController {
             Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
             this.includeSerializer(ex);
         }
+    }
+
+    @Override
+    public void includeSerializer(Object a) {
+        result.use(Results.json()).from(a).recursive().serialize();
     }
 
 }
