@@ -7,7 +7,6 @@ package dao;
 
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
-import com.alcatel.hdm.service.nbi2.NBIService_Service;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
@@ -29,6 +28,9 @@ public class EquipamentoDAO {
     private NBIService port;
 
     public EquipamentoDAO() {
+    }
+
+    public void init() {
         try {
             URL url;
             url = new URL("http://200.168.104.216:7035/NBIServiceImpl/NBIService?wsdl");
@@ -50,6 +52,7 @@ public class EquipamentoDAO {
      * @throws NBIException_Exception
      */
     public NbiDeviceData detalheEquipamento(Long guid) throws NBIException_Exception {
+        this.init();
         return port.findDeviceByGUID(guid);
     }
 
@@ -64,6 +67,7 @@ public class EquipamentoDAO {
 
         n.getParameters().add(param);
 
+        this.init();
         return port.findDevicesByTemplate(n, 1, -1);
     }
 
@@ -79,14 +83,17 @@ public class EquipamentoDAO {
 
         n.getParameters().add(param);
 
+        this.init();
         return port.findDevicesByTemplate(n, 1, -1);
     }
 
     public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {
+        this.init();
         return port.findDevicesBySubscriberId(subscriber);
     }
 
     public List<NbiTemplate> templates() throws NBIException_Exception {
+        this.init();
         return port.getAvailableCriteriaTemplates();
     }
 
