@@ -3,35 +3,29 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
            prefix="decorator"%>
 
-<div class="container" id="search">
+<div class="container" id="search" v-cloack>
 
     <div class="page-header">
         <h1>Buscar Equipamentos</h1>
     </div>
-
-    <search-action></search-action>
-
+    <search-action></search-action>    
+    <div>        
+        <label class="radio-inline">            
+            <input type="radio" Value="MAC" v-model="picked" name="pickedSearch"/> MAC
+        </label>
+        <label class="radio-inline">            
+            <input type="radio" Value="GUID" v-model="picked" name="pickedSearch"/> GUID
+        </label>
+        <label class="radio-inline">            
+            <input type="radio" Value="Subscriber" v-model="picked" name="pickedSearch"/> Subscriber
+        </label>
+        <label class="radio-inline">            
+            <input type="radio" Value="Serial" v-model="picked" name="pickedSearch"/> Serial
+        </label>
+    </div>
     <br/>
     <br/>
-
-    <table class="table table-bordered" style="text-align: center;">
-        <thead>
-            <tr>
-                <th>ID do Assinante</th>
-                <th>Subscriber</th>
-                <th>IP</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="eqp in listaEqp" :key="eqp.deviceGUID">
-                <td>{{eqp.deviceGUID}}</td>
-                <td>{{eqp.subscriberID}}</td>
-                <td>{{eqp.ipAddress}}</td>
-                <td><a href="${linkTo[SearchController].action()}">Selecionar</a></td>
-            </tr>
-        </tbody>
-    </table>
+    <search-table></search-table>
 
     <!-- Modal -->
     <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

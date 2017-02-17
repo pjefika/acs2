@@ -3,25 +3,46 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /* global Vue */
-
 var url = "/acs/busca/listar/";
-
 Vue.config.devtools = true;
 Vue.config.silent = true;
-
 var data = {
     inputToSearch: null,
-    listaEqp: []
-
+    listaEqp: [],
+    picked: null,
+    renderTable: false
 };
-
+Vue.component("search-table", {
+    template: "<table v-if='renderTable' class='table table-bordered' style='text-align: center;'>\n\
+                    <thead>\n\
+                        <tr>\n\
+                            <th>ID do Assinante</th>\n\
+                            <th>Subscriber</th>\n\
+                            <th>IP</th>\n\
+                            <th>Ações</th>\n\
+                        </tr>\n\
+                    </thead>\n\
+                    <tbody>\n\
+                        <tr v-for='eqp in listaEqp' :key='eqp.deviceGUID'>\n\
+                            <td>{{eqp.deviceGUID}}</td>\n\
+                            <td>{{eqp.subscriberID}}</td>\n\
+                            <td>{{eqp.ipAddress}}</td>\n\
+                            <td><a href='${linkTo[SearchController].action()}'>Selecionar</a></td>\n\
+                        </tr>\n\
+                    </tbody>\n\
+                </table>",
+    methods: {        
+    },
+    data: function () {
+        return data;
+    }
+});
 Vue.component("search-action", {
     template: "<div class='row'>\n\
                     <div class='col-lg-6'>\n\
                         <div class='input-group'>\n\
-                            <input type='text' class='form-control' placeholder='Search for...' v-model='inputToSearch'>\n\
+                            <input type='text' class='form-control' placeholder='Buscar...' v-model='inputToSearch' @change='searchChange()'>\n\
                             <span class='input-group-btn'>\n\
                                 <button class='btn btn-default' type='button' @click='busca()'>Buscar</button>\n\
                             </span>\n\
@@ -33,59 +54,73 @@ Vue.component("search-action", {
             var self = this;
             $("#loadingModal").modal({backdrop: "static"});
             $("#loadingModal").modal("show");
+
+            //Consulta
+            if (self.picked === "MAC") {
+                console.log("Pesquisa por MAC");
+                $.get(url + "mac/" + self.inputToSearch, function (data) {
+                    self.listaEqp = data.list;
+                }).done(function () {
+                    $("#loadingModal").modal("hide");
+                    self.renderTable = true;
+                });
+            } else if (self.picked === "GUID") {
+                console.log("Pesquisa por GUID");
+                $.get(url + "guid/" + self.inputToSearch, function (data) {
+                    self.listaEqp = data;
+                }).done(function () {
+                    $("#loadingModal").modal("hide");
+                    self.renderTable = true;
+                });
+            } else if (self.picked === "Subscriber") {
+                console.log("Pesquisa por Subscriber");
+                $.get(url + "subscriber/" + self.inputToSearch, function (data) {
+                    self.listaEqp = data.list;
+                }).done(function () {
+                    $("#loadingModal").modal("hide");
+                    self.renderTable = true;
+                });
+            } else if (self.picked === "Serial") {
+                console.log("Pesquisa por Serial");
+                $.get(url + "serial/" + self.inputToSearch, function (data) {
+                    self.listaEqp = data;
+                }).done(function () {
+                    $("#loadingModal").modal("hide");
+                    self.renderTable = true;
+                });
+            }
+
+        },
+        searchChange: function () {
+            var self = this;
             //Tira os espaços da varivel
             self.inputToSearch = self.inputToSearch.trim();
             //Regexs
             var regexMac = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/;
             var regexID = /^[0-9]{5}/;
             var regexSubs = /[a-zA-Z]{3}[-]?[A-Z0-9]{9}[-]?\d{3}/;
-
-            //Comparações
             if (regexMac.test(self.inputToSearch)) {
-                console.log("Pesquisa por MAC");
-                $.get(url + "mac/" + self.inputToSearch, function (data) {                    
-                    self.listaEqp = data.list;                    
-                }).done(function () {
-                    $("#loadingModal").modal("hide");
-                });
+                self.picked = "MAC";
             } else if (regexSubs.test(self.inputToSearch)) {
-                console.log("Pesquisa por Subscriber");
-                $.get(url + "subscriber/" + self.inputToSearch, function (data) {
-                    self.listaEqp = data.list;
-                }).done(function () {
-                    $("#loadingModal").modal("hide");
-                });
+                self.picked = "Subscriber";
             } else if (regexID.test(self.inputToSearch)) {
-                console.log("Pesquisa por GUID");
-                $.get(url + "guid/" + self.inputToSearch, function (data) {
-                    self.listaEqp = data;                    
-                }).done(function () {
-                    $("#loadingModal").modal("hide");
-                });
+                self.picked = "GUID";
             } else {
-                console.log("Pesquisa por Serial");
-                $.get(url + "serial/" + self.inputToSearch, function (data) {
-                    self.listaEqp = data;
-                }).done(function () {
-                    $("#loadingModal").modal("hide");
-                });
+                self.picked = "Serial";
             }
+
         }
     },
     data: function () {
         return data;
     }
 });
-
-
-
 new Vue({
     el: "#search",
     data: data,
-    created: function () {        
-                
+    created: function () {
+
     },
     methods: {
     }
-
 });
