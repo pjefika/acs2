@@ -70,6 +70,16 @@ public class SearchController extends AbstractController {
             this.includeSerializer(ex);
         }
     }
+    
+    @Path("/busca/listar/guid/{guid}")
+    public void listarPorGuid(Long guid) {
+        try {            
+            this.includeSerializer(dao.detalheEquipamento(guid));            
+        } catch (NBIException_Exception ex) {
+            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
+            this.includeSerializer(ex);
+        }
+    }
 
     @Override
     public void includeSerializer(Object a) {

@@ -12,7 +12,6 @@ public class HomeController extends AbstractController {
     }
 
     @Path("/")
-    @Logado
     public void index() {
 
     }
