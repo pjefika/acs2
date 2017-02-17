@@ -132,26 +132,25 @@ public class EquipamentoDAO {
         id.setProtocol(eqp.getDeviceId().getProtocol());
         id.setSerialNumber(eqp.getDeviceId().getSerialNumber());
 
-        NbiSingleDeviceOperationOptions opt = new NbiSingleDeviceOperationOptions();
-
-        NbiSingleDeviceOperationCallBackInfo cb = new NbiSingleDeviceOperationCallBackInfo();
-        cb.setRetry(false);
-
-        opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(60);
-        opt.setFailOnConnectionRequestFailure(true);
-        opt.setNBISingleDeviceOperationCallBackInfo(cb);
-        opt.setOpaqueTransactionId("teste5555");
-        opt.setPolicyClass("policytest");
-        opt.setPriority(100);
-        opt.setReplaceDeviceCachedDataRecord(false);
-        opt.setUpdateCachedDataRecord(true);
-
-        List<Object> a = new ArrayList<>();
-        a.add("{}");
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
 
         this.initSynchDeviceOperations();
-        return (ExecuteFunctionResponse) synch.executeFunction(id, a, 9527, opt, 10000, "");
+        return (ExecuteFunctionResponse) synch.executeFunction(id, NbiDecorator.getEmptyJson(), 9527, opt, 10000, "");
+    }
+
+    public ExecuteFunctionResponse getFirmwareVersion(NbiDeviceData eqp) throws Exception {
+
+        NbiDeviceID id = new NbiDeviceID();
+
+        id.setOUI(eqp.getDeviceId().getOUI());
+        id.setProductClass(eqp.getDeviceId().getProductClass());
+        id.setProtocol(eqp.getDeviceId().getProtocol());
+        id.setSerialNumber(eqp.getDeviceId().getSerialNumber());
+
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+
+        this.initSynchDeviceOperations();
+        return (ExecuteFunctionResponse) synch.executeFunction(id, NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
     }
 
     public List<NbiTemplate> templates() throws NBIException_Exception {

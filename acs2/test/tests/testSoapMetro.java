@@ -6,12 +6,7 @@
 package tests;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDeviceOperationsService;
-import com.sun.xml.wss.XWSSConstants;
 import dao.EquipamentoDAO;
-import java.net.URL;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 
 /**
