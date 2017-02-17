@@ -9,13 +9,6 @@ Efika Acs
 
 ===================
 
-### Modelagem
-Item     | Ferramenta
--------- | ---
-UML| JDeveloper 12c
-
-===================
-
 ### Implementação
 
 Item     | Ferramenta
