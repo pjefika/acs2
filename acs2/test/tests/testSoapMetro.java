@@ -23,7 +23,7 @@ public class testSoapMetro {
 
             EquipamentoDAO dao = new EquipamentoDAO();
 
-            NbiDeviceData d = dao.detalheEquipamento(new Long(23006));
+            NbiDeviceData d = dao.findDeviceByGUID(new Long(23006));
 
             ExecuteFunctionResponse r = dao.getDeviceInfo(d);
 

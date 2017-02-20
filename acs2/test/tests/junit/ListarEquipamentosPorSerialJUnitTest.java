@@ -5,25 +5,24 @@
  */
 package tests.junit;
 
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class checkOnlineJUnitTest {
+public class ListarEquipamentosPorSerialJUnitTest {
 
-    public checkOnlineJUnitTest() {
+    public ListarEquipamentosPorSerialJUnitTest() {
     }
 
     @BeforeClass
@@ -46,20 +45,18 @@ public class checkOnlineJUnitTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void checkOnline() {
-
+    public void listarEquipamentosPorSerial() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            NbiDeviceData eqp;
-            eqp = d.detalheEquipamento(new Long(23006));
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("4D528439507847");
 
-            assertTrue(d.checkOnline(eqp));
+            SoutUtil.print(eqp);
 
-        } catch (NBIException_Exception ex) {
-            Logger.getLogger(checkOnlineJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertTrue(true);
         } catch (Exception ex) {
-            Logger.getLogger(checkOnlineJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            assertTrue(false);
         }
 
     }

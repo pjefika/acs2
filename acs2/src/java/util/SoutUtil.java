@@ -6,6 +6,8 @@
 package util;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import java.util.List;
+import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 
 /**
  *
@@ -14,13 +16,25 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 public class SoutUtil {
 
     public static void print(NbiDeviceData d) {
+        System.out.println("DeviceGUID: " + d.getDeviceGUID());
+        System.out.println("OUI: " + d.getDeviceId().getOUI());
+        System.out.println("getProductClass: " + d.getDeviceId().getProductClass());
+        System.out.println("getProtocol: " + d.getDeviceId().getProtocol());
+        System.out.println("getSerialNumber: " + d.getDeviceId().getSerialNumber());
+        System.out.println("isActivated: " + d.isActivated());
+        System.out.println("isCaptured: " + d.isCaptured());
+        System.out.println("isManaged: " + d.isManaged());
+        System.out.println("");
+    }
 
-        System.out.println(d.getDeviceId().getOUI());
-        System.out.println(d.getDeviceId().getProductClass());
-        System.out.println(d.getDeviceId().getProtocol());
-        System.out.println(d.getDeviceId().getSerialNumber());
-        System.out.println(d.isActivated());
+    public static void print(List<NbiDeviceData> ds) {
+        for (NbiDeviceData nbiDeviceData : ds) {
+            print(nbiDeviceData);
+        }
+    }
 
+    public static void print(ExecuteFunctionResponse e) {
+        System.out.println(e.getReturn());
     }
 
 }

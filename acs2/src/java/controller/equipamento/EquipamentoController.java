@@ -30,7 +30,7 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/detalhe/{guid}")
     public void detalhes(String guid) {
         try {
-            this.includeSerializer(dao.detalheEquipamento(new Long(guid)));
+            this.includeSerializer(dao.findDeviceByGUID(new Long(guid)));
         } catch (SOAPFaultException | NBIException_Exception ex) {
             this.includeSerializer(ex);
         }

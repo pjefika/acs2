@@ -25,8 +25,8 @@ public class testSoapMethod {
             EquipamentoDAO d = new EquipamentoDAO();
 
             //d.listarEquipamentoPorSerial("c4a81dce6779");
-            //NbiDeviceData detalheEquipamento = d.detalheEquipamento(new Long(23006));
-            //System.out.println(detalheEquipamento.getManufacturer());
+            //NbiDeviceData findDeviceByGUID = d.findDeviceByGUID(new Long(23006));
+            //System.out.println(findDeviceByGUID.getManufacturer());
 //            List<NbiDeviceData> ds = d.listarEquipamentosPorMac("C4:A8:1D:CE:67:79");
 //            for (NbiDeviceData detalhe : ds) {
 //                System.out.println(detalhe.getSubscriberID());

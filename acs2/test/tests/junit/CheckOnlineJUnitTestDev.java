@@ -16,14 +16,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class getFirmwareVersionJUnitTest {
+public class CheckOnlineJUnitTestDev {
 
-    public getFirmwareVersionJUnitTest() {
+    public CheckOnlineJUnitTestDev() {
     }
 
     @BeforeClass
@@ -46,19 +47,20 @@ public class getFirmwareVersionJUnitTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void getFirmwareVersion() {
+    public void checkOnline() {
 
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-            eqp = d.detalheEquipamento(new Long(23006));
-            d.getFirmwareVersion(eqp);
+            eqp = d.findDeviceByGUID(new Long(23006));
+
+            d.checkOnline(eqp);
 
         } catch (NBIException_Exception ex) {
-            Logger.getLogger(getFirmwareVersionJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckOnlineJUnitTestDev.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(getFirmwareVersionJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckOnlineJUnitTestDev.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

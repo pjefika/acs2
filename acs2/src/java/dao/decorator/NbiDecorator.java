@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dao.decorator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,9 @@ public class NbiDecorator {
 
         NbiSingleDeviceOperationCallBackInfo cb = new NbiSingleDeviceOperationCallBackInfo();
         cb.setRetry(false);
+        opt.setDisableCaptureConstraint(true);
         opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(60);
+        opt.setExpirationTimeoutSeconds(600);
         opt.setFailOnConnectionRequestFailure(true);
         opt.setNBISingleDeviceOperationCallBackInfo(cb);
         opt.setOpaqueTransactionId("teste5555");
@@ -39,6 +40,7 @@ public class NbiDecorator {
 
         com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo cb = new com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo();
         cb.setRetry(false);
+        opt.setDisableCaptureConstraint(true);
         opt.setExecutionTimeoutSeconds(1200);
         opt.setExpirationTimeoutSeconds(60);
         opt.setFailOnConnectionRequestFailure(true);
@@ -54,7 +56,7 @@ public class NbiDecorator {
 
     public static List<Object> getEmptyJson() {
         List<Object> a = new ArrayList<>();
-        a.add("{}");
+        a.add("");
         return a;
     }
 

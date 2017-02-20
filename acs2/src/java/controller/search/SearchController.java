@@ -74,7 +74,7 @@ public class SearchController extends AbstractController {
     @Path("/busca/listar/guid/{guid}")
     public void listarPorGuid(Long guid) {
         try {            
-            this.includeSerializer(dao.detalheEquipamento(guid));            
+            this.includeSerializer(dao.findDeviceByGUID(guid));            
         } catch (NBIException_Exception ex) {
             Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
             this.includeSerializer(ex);
