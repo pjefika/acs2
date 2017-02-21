@@ -7,6 +7,7 @@ package dao.decorator;
 
 import java.util.ArrayList;
 import java.util.List;
+import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationCallBackInfo;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 
@@ -57,6 +58,18 @@ public class NbiDecorator {
     public static List<Object> getEmptyJson() {
         List<Object> a = new ArrayList<>();
         a.add("");
+        return a;
+    }
+
+    public static NbiDeviceID cast(com.alcatel.hdm.service.nbi2.NbiDeviceID id) {
+
+        NbiDeviceID a = new NbiDeviceID();
+
+        a.setOUI(id.getOUI());
+        a.setProductClass(id.getProductClass());
+        a.setProtocol(id.getProtocol());
+        a.setSerialNumber(id.getSerialNumber());
+
         return a;
     }
 

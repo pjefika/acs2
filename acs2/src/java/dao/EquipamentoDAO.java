@@ -45,32 +45,36 @@ public class EquipamentoDAO {
     }
 
     public void initNbi() {
-        try {
-            URL url;
-            url = new URL("http://200.168.104.216:7035/NBIServiceImpl/NBIService?wsdl");
-            QName qname = new QName("http://nbi2.service.hdm.alcatel.com/",
-                    "NBIService");
-            Service service = Service.create(url, qname);
-            nbi = service.getPort(NBIService.class);
-            ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
-            ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        if (nbi == null) {
+            try {
+                URL url;
+                url = new URL("http://200.168.104.216:7035/NBIServiceImpl/NBIService?wsdl");
+                QName qname = new QName("http://nbi2.service.hdm.alcatel.com/",
+                        "NBIService");
+                Service service = Service.create(url, qname);
+                nbi = service.getPort(NBIService.class);
+                ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
+                ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
     public void initSynchDeviceOperations() {
-        try {
-            URL url;
-            url = new URL("http://200.168.104.216:7025/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
-            QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
-                    "SynchDeviceOperationsNBIService");
-            Service service = Service.create(url, qname);
-            synch = service.getPort(SynchDeviceOperationsService.class);
-            ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
-            ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        if (synch == null) {
+            try {
+                URL url;
+                url = new URL("http://200.168.104.216:7025/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
+                QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
+                        "SynchDeviceOperationsNBIService");
+                Service service = Service.create(url, qname);
+                synch = service.getPort(SynchDeviceOperationsService.class);
+                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
+                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -145,6 +149,11 @@ public class EquipamentoDAO {
     public NbiDeviceActionResult getDeviceOperationStatus(NbiDeviceData eqp, Long operationId) throws NBIException_Exception {
         this.initNbi();
         return nbi.getDeviceOperationStatus(eqp.getDeviceId(), operationId);
+    }
+
+    public void reboot(NbiDeviceData eqp) throws Exception {
+        this.initSynchDeviceOperations();
+        synch.reboot(NbiDecorator.cast(eqp.getDeviceId()), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
     }
 
     public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {

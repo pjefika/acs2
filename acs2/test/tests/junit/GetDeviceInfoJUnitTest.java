@@ -46,7 +46,7 @@ public class GetDeviceInfoJUnitTest {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(new Long(94015));
+            eqp = d.findDeviceByGUID(new Long(94012));
 
             SoutUtil.print(eqp);
 
