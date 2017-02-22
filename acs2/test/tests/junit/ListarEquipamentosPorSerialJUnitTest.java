@@ -49,7 +49,7 @@ public class ListarEquipamentosPorSerialJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("4D528439507847");
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("CP1302RM8V3");
 
             SoutUtil.print(eqp);
 

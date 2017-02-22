@@ -41,17 +41,18 @@ public class GetDeviceInfoJUnitTest {
     }
 
     @Test
-    public void hello() {
+    public void getDeviceInfo() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(new Long(94012));
+
+            eqp = d.findDeviceByGUID(new Long(90023));
 
             SoutUtil.print(eqp);
 
+            // d.release(eqp.getDeviceGUID());
             SoutUtil.print(d.getDeviceInfo(eqp));
-
             assertTrue(true);
 
         } catch (Exception ex) {

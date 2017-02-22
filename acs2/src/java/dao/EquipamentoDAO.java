@@ -89,6 +89,20 @@ public class EquipamentoDAO {
         return nbi.findDeviceByGUID(guid);
     }
 
+    public void capture(NbiDeviceData eqp) {
+
+    }
+
+    public void capture(Long guid) throws NBIException_Exception {
+        this.initNbi();
+        nbi.captureDevice(guid);
+    }
+
+    public void release(Long guid) throws NBIException_Exception {
+        this.initNbi();
+        nbi.releaseDevice(guid);
+    }
+
     public List<NbiDeviceData> listarEquipamentosPorMac(String mac) throws NBIException_Exception {
         NbiTemplate n = new NbiTemplate();
         n.setName("Find Devices By MacAddress");

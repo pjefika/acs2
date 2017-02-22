@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.view.Results;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
+import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.google.gson.Gson;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
@@ -31,11 +32,18 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/detalhe/{guid}")
     public void detalhes(String guid) {
         try {
-
             Gson gson = new Gson();
-            String json = gson.toJson(dao.findDeviceByGUID(new Long(guid)));
-
+            String json = gson.toJson(dao.findDeviceByGUID(new Long(guid)), NbiDeviceData.class);
             result.include("equipamento", json);
+        } catch (SOAPFaultException | NBIException_Exception ex) {
+            this.includeSerializer(ex);
+        }
+    }
+
+    @Path("/equipamento/detalhe/json/{guid}")
+    public void detalhesJson(String guid) {
+        try {
+            this.includeSerializer(dao.findDeviceByGUID(new Long(guid)));
         } catch (SOAPFaultException | NBIException_Exception ex) {
             this.includeSerializer(ex);
         }

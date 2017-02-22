@@ -2,16 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
            prefix="decorator"%>
-
-<div class="container">
-
-    <div class="page-header">
-        <h1>Detalhes Equipamento</h1>
-    </div>
-    <detalhe-equip v-bind:eqp="${equipamento}"></detalhe-equip>
-
-
-    <script type="text/html" id="detalhe-equip">
+<div class="container" id="detalhe">
+    <script type="text/html" id="detalhequip">
         <div class="row">
             <div class="col-md-4">
                 <div class="row">
@@ -22,9 +14,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="list-group">
-                            <li class="list-group-item"><label>MAC:</label> <span>8C:10:D4:DA:15:50</span></li>
-                            <li class="list-group-item"><label>IP:</label> <span>177.16.212.159</span></li>
-                            <li class="list-group-item"><label>Data Autenticação:</label> <span>07/02/2017 08:59:45</span></li>
+                            <li class="list-group-item"><label>MAC:</label> <span v-text="eqp.macAddress"></span></li>
+                            <li class="list-group-item"><label>DeviceGUID:</label> <span v-text="eqp.deviceGUID"></span></li>
+                            <li class="list-group-item"><label>Data Autenticação:</label> <span></span></li>
                         </ul>
                     </div>
                 </div>
@@ -62,4 +54,11 @@
             </div>
         </div>
     </script>
+
+    <div class="page-header">
+        <h1>Detalhes Equipamento</h1>
+    </div>
+    <detail v-bind:eqp-string='${equipamento}'></detail>
 </div>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>

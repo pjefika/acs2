@@ -13,7 +13,10 @@ var Equipamento = function(p) {
         this.deviceId = p.deviceId;
         this.macAddress = p.macAddress;
         this.manufacturer = p.manufacturer;
+        this.model = p.model;
+        this.modelName = p.modelName;
+        this.softwareVersion = p.softwareVersion;
         this.subscriberID = p.subscriberID;
+        this.ipAddress = p.ipAddress;
     }
-
 };

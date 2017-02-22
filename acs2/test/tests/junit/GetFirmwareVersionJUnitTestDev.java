@@ -44,13 +44,17 @@ public class GetFirmwareVersionJUnitTestDev {
     public void getFirmwareVersion() {
 
         try {
+
+            Long guid = new Long(94015);
             EquipamentoDAO d = new EquipamentoDAO();
 
+            //d.capture(guid);
+            //d.release(guid);
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(new Long(94015));
-
+            eqp = d.findDeviceByGUID(guid);
             SoutUtil.print(eqp);
             SoutUtil.print(d.getFirmwareVersion(eqp));
+
             assertTrue(true);
 
         } catch (Exception ex) {
