@@ -5,7 +5,7 @@
  */
 package dao;
 
-import dao.decorator.NbiDecorator;
+import dao.util.NbiDecorator;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
@@ -42,40 +42,8 @@ public class EquipamentoDAO {
     private SynchDeviceOperationsService synch;
 
     public EquipamentoDAO() {
-    }
-
-    public void initNbi() {
-        if (nbi == null) {
-            try {
-                URL url;
-                url = new URL("http://200.168.104.216:7035/NBIServiceImpl/NBIService?wsdl");
-                QName qname = new QName("http://nbi2.service.hdm.alcatel.com/",
-                        "NBIService");
-                Service service = Service.create(url, qname);
-                nbi = service.getPort(NBIService.class);
-                ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
-                ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    public void initSynchDeviceOperations() {
-        if (synch == null) {
-            try {
-                URL url;
-                url = new URL("http://200.168.104.216:7025/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
-                QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
-                        "SynchDeviceOperationsNBIService");
-                Service service = Service.create(url, qname);
-                synch = service.getPort(SynchDeviceOperationsService.class);
-                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
-                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
+        System.setProperty("http.proxyPort", "8080");
     }
 
     /**
@@ -217,7 +185,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
 
         this.initSynchDeviceOperations();
-        return (ExecuteFunctionResponse) synch.executeFunction(id, NbiDecorator.getEmptyJson(), 9526, opt, 10000, "dev");
+        return (ExecuteFunctionResponse) synch.executeFunction(id, NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
     }
 
     public NbiOperationStatus getDeviceOperationStatus(Long operationId) throws NBIException_Exception {
@@ -228,6 +196,41 @@ public class EquipamentoDAO {
     public List<NbiTemplate> templates() throws NBIException_Exception {
         this.initNbi();
         return nbi.getAvailableCriteriaTemplates();
+    }
+
+    public void initNbi() {
+        if (nbi == null) {
+            try {
+                URL url;
+                url = new URL("http://200.168.104.216:7015/NBIServiceImpl/NBIService?wsdl");
+                QName qname = new QName("http://nbi2.service.hdm.alcatel.com/",
+                        "NBIService");
+                Service service = Service.create(url, qname);
+                nbi = service.getPort(NBIService.class);
+                ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
+                ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void initSynchDeviceOperations() {
+        if (synch == null) {
+            try {
+                URL url;
+                url = new URL("http://200.168.104.216:7015/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
+                QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
+                        "SynchDeviceOperationsNBIService");
+                Service service = Service.create(url, qname);
+                synch = service.getPort(SynchDeviceOperationsService.class);
+                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
+                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
+
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
 }

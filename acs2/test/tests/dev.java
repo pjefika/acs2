@@ -6,10 +6,8 @@
 package tests;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
-import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
 import dao.EquipamentoDAO;
-import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
+import java.util.List;
 import util.SoutUtil;
 
 /**
@@ -22,22 +20,10 @@ public class dev {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
-            NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(new Long(94015));
-
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("LU1322503001553");
             SoutUtil.print(eqp);
-
-            try {
-                SoutUtil.print((ExecuteFunctionResponse) d.getDeviceInfo(eqp));
-            } catch (DeviceOperationException e) {
-                NbiOperationStatus s = d.getDeviceOperationStatus(e.getFaultInfo().getOperationId());
-                System.out.println(s.getStatus());
-            }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }

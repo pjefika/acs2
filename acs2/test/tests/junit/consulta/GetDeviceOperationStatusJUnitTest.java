@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit;
+package tests.junit.consulta;
 
-import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import dao.EquipamentoDAO;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,9 +19,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class ListarEquipamentosPorSerialJUnitTest {
+public class GetDeviceOperationStatusJUnitTest {
 
-    public ListarEquipamentosPorSerialJUnitTest() {
+    public GetDeviceOperationStatusJUnitTest() {
     }
 
     @BeforeClass
@@ -41,19 +40,18 @@ public class ListarEquipamentosPorSerialJUnitTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
-    public void listarEquipamentosPorSerial() {
+    public void getDeviceOperationStatus() {
         try {
+
+            Long guid = new Long(94015);
             EquipamentoDAO d = new EquipamentoDAO();
 
-            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("CP1302RM8V3");
-
-            SoutUtil.print(eqp);
+            NbiDeviceActionResult t = d.getDeviceOperationStatus(d.findDeviceByGUID(guid), new Long(158355));
+            SoutUtil.print(t);
 
             assertTrue(true);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

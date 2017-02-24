@@ -5,6 +5,7 @@
  */
 package util;
 
+import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
@@ -24,6 +25,9 @@ public class SoutUtil {
         System.out.println("isActivated: " + d.isActivated());
         System.out.println("isCaptured: " + d.isCaptured());
         System.out.println("isManaged: " + d.isManaged());
+        System.out.println("getConnectionRequestURL: " + d.getConnectionRequestURL());
+        System.out.println("getConnectionRequestUsername: " + d.getConnectionRequestUsername());
+        System.out.println("getConnectionRequestPassword: " + d.getConnectionRequestPassword());
         System.out.println("");
     }
 
@@ -31,6 +35,11 @@ public class SoutUtil {
         for (NbiDeviceData nbiDeviceData : ds) {
             print(nbiDeviceData);
         }
+    }
+
+    public static void print(NbiDeviceActionResult r) {
+        System.out.println("getFaultString: " + r.getFaultString());
+        System.out.println("getStatus: " + r.getStatus());
     }
 
     public static void print(ExecuteFunctionResponse e) {

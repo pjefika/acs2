@@ -3,29 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit;
+package tests.junit.consulta;
 
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import tests.dev;
 import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class FindDeviceByGUIDJUnitTest {
+public class ListarEquipamentosPorSerialJUnitTest {
 
-    public FindDeviceByGUIDJUnitTest() {
+    public ListarEquipamentosPorSerialJUnitTest() {
     }
 
     @BeforeClass
@@ -44,20 +41,20 @@ public class FindDeviceByGUIDJUnitTest {
     public void tearDown() {
     }
 
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
     @Test
-    public void findDeviceByGUID() {
-
+    public void listarEquipamentosPorSerial() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
-            NbiDeviceData eqp;
-
-            eqp = d.findDeviceByGUID(new Long(94015));
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("LU1322503001553");
             SoutUtil.print(eqp);
             assertTrue(true);
-        } catch (NBIException_Exception ex) {
-            Logger.getLogger(dev.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
             assertTrue(false);
         }
+
     }
 }

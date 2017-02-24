@@ -5,7 +5,7 @@
  */
 package tests;
 
-import tests.junit.GetFirmwareVersionJUnitTestDev;
+import tests.junit.consulta.GetFirmwareVersionJUnitTestDev;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;

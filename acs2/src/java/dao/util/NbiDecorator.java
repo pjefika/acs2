@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.decorator;
+package dao.util;
 
+import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
 import motive.hdm.synchdeviceops.NbiDeviceID;
@@ -71,6 +72,15 @@ public class NbiDecorator {
         a.setSerialNumber(id.getSerialNumber());
 
         return a;
+    }
+
+    public static NbiDeviceData adapter(NbiDeviceData d) {
+
+        d.setConnectionRequestURL("http://200.207.223.138:8031/ConnectionRequest");
+        d.setConnectionRequestUsername("telefonica");
+        d.setConnectionRequestPassword("telefonica");
+
+        return d;
     }
 
 }

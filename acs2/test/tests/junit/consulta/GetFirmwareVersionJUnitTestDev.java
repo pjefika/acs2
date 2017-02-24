@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit;
+package tests.junit.consulta;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
@@ -45,7 +45,7 @@ public class GetFirmwareVersionJUnitTestDev {
 
         try {
 
-            Long guid = new Long(94015);
+            Long guid = new Long(142012);
             EquipamentoDAO d = new EquipamentoDAO();
 
             //d.capture(guid);

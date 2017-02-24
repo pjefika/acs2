@@ -3,25 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit;
+package tests.junit.acao;
 
+import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.SoutUtil;
+import tests.junit.consulta.CheckOnlineJUnitTestDev;
 
 /**
  *
  * @author G0042204
  */
-public class GetDeviceInfoJUnitTest {
+public class RebootJUnitTest {
 
-    public GetDeviceInfoJUnitTest() {
+    public RebootJUnitTest() {
     }
 
     @BeforeClass
@@ -40,24 +43,25 @@ public class GetDeviceInfoJUnitTest {
     public void tearDown() {
     }
 
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
     @Test
-    public void getDeviceInfo() {
+    public void reboot() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
+            eqp = d.findDeviceByGUID(new Long(142012));
+//            eqp = d.findDeviceByGUID(new Long(23006));
 
-            eqp = d.findDeviceByGUID(new Long(90023));
+            d.reboot(eqp);
 
-            SoutUtil.print(eqp);
-
-            // d.release(eqp.getDeviceGUID());
-            SoutUtil.print(d.getDeviceInfo(eqp));
-            assertTrue(true);
-
+        } catch (NBIException_Exception ex) {
+            Logger.getLogger(CheckOnlineJUnitTestDev.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            ex.printStackTrace();
-            assertTrue(false);
+            Logger.getLogger(CheckOnlineJUnitTestDev.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 }
