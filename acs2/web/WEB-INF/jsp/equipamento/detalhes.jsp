@@ -14,15 +14,46 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="list-group">
-                            <li class="list-group-item"><label>Status: </label> <span v-if="eqp.activated">Ativo</span><span v-else>Inativo</span></li>
-                            <li class="list-group-item"><label>MAC:</label> <span v-text="eqp.macAddress"></span></li>
-                            <li class="list-group-item"><label>DeviceGUID:</label> <span v-text="eqp.deviceGUID"></span></li>                          
-                            <li class="list-group-item"><label>Fabricante:</label> <span v-text="eqp.manufacturer"></span></li>
-                            <li class="list-group-item"><label>Modelo:</label> <span v-text="eqp.model"></span></li>
-                            <li class="list-group-item"><label>Nome do Modelo:</label> <span v-text="eqp.modelName"></span></li>
-                            <li class="list-group-item"><label>Serial:</label> <span v-text="eqp.subscriberID"></span></li>
-                            <li class="list-group-item"><label>Autenticação:</label> <span v-text="eqp.dateFormat(eqp.dataAutenticacao)"></span></li>
-                            <li class="list-group-item"><label>IP:</label> <span v-text="eqp.ipAddress"></span></li>
+                            <li class="list-group-item">
+                                <label>Status: </label> 
+                                <span v-if="eqp.activated">Ativo</span>
+                                <span v-else>Inativo</span>
+                            </li>
+                            <li class="list-group-item">
+                                <label>MAC:</label>
+                                <span v-text="eqp.macAddress"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <label>DeviceGUID:</label> 
+                                <span v-text="eqp.deviceGUID"></span>
+                            </li>                          
+                            <li class="list-group-item">
+                                <label>Fabricante:</label> 
+                                <span v-text="eqp.manufacturer"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <label>Modelo:</label> 
+                                <span v-if="eqp.model === 'Device:1'">Canela</span>
+                                <span v-else-if="eqp.model === 'Device:2'">HG</span>
+                                <span v-else-if="eqp.model === 'Device:3'">Decoder</span>
+                                <span v-else>Não encontrado</span>
+                            </li>
+                            <li class="list-group-item">
+                                <label>Nome do Modelo:</label> 
+                                <span v-text="eqp.modelName"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <label>Serial:</label> 
+                                <span v-text="eqp.subscriberID"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <label>Autenticação:</label> 
+                                <span v-text="eqp.dateFormat(eqp.dataAutenticacao)"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <label>IP:</label> 
+                                <span v-text="eqp.ipAddress"></span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -37,14 +68,14 @@
                             <button type="button" class="list-group-item">Consultar LAN Host</button>
                             <button type="button" class="list-group-item">Consultar Port Mapping</button>
                             <button type="button" class="list-group-item">Consultar xDSL</button>
-                            <button type="button" class="list-group-item" @click="getFirmware()">Consultar Firmware*</button>
+                            <button type="button" class="list-group-item" @click="getFirmware()">Consultar Firmware</button>
                             <button type="button" class="list-group-item">Consultar DNS</button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="list-group">
                             <label class="list-group-item">Ação</label>
-                            <button type="button" class="list-group-item">Reboot</button>
+                            <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalReboot" data-backdrop="static">Reboot</button>
                             <button type="button" class="list-group-item">Reset de Fábrica</button>
                             <button type="button" class="list-group-item">Efetuar Traceroute</button>
                             <button type="button" class="list-group-item">Gerenciar DMZ</button>
@@ -52,38 +83,37 @@
                             <button type="button" class="list-group-item">Gerenciar Port Mapping</button>
                             <button type="button" class="list-group-item">Configurar Wifi</button>
                             <button type="button" class="list-group-item">Configurar Autenticação PPPoE</button>
-                            <button type="button" class="list-group-item">Atualizar Firmware*</button>
+                            <button type="button" class="list-group-item">Atualizar Firmware</button>
                             <button type="button" class="list-group-item">Alterar DNS</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modalReboot" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Reset</h4>
+                        </div>
+                        <div class="modal-body">
+                            Deseja resetar o modem?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            <button type="button" class="btn btn-primary" @click="reboot()">Resetar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>              
     </script>
 
     <div class="page-header">
         <h1>Detalhes Equipamento</h1>
     </div>
     <detail v-bind:eqp-string='${equipamento}'></detail>    
-
-    <!-- Modal -->
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal</h4>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary">Proncho</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>

@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 /* global Vue, Equipamento, eqpString */
+
+var url = "/acs/equipamento/";
+
 Vue.config.devtools = true;
 Vue.config.silent = true;
 
@@ -21,12 +24,86 @@ Vue.component("detail", {
         },
         eqp: {
             type: Equipamento,
-            default: function() {
+            default: function () {
                 return new Equipamento(this.eqpString);
-            },
+            }
         }
     },
-    data: function() {
+    methods: {
+        /*
+         * Comando engatilhado
+         */
+        reboot: function () {
+            $("#modalReboot").modal("hide");
+            $.ajax({
+                type: "POST",
+                url: url + "reboot/",
+                data: JSON.stringify(this.eqp),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                },
+                success: function () {                   
+                    alert("success");
+                },
+                error: function () {
+                    alert("Erro");
+                }
+            });
+        },
+        getFirmware: function () {
+            /*
+             * Comando engatilhado
+             */
+            $.ajax({
+                type: "POST",
+                url: url + "getFirmwareVersion/",
+                data: JSON.stringify(this.eqp),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                },
+                success: function () {
+
+                }
+            });
+        },
+        updateFirmware: function () {
+            /*
+             * Comando engatilhado
+             */
+            $.ajax({
+                type: "POST",
+                url: url + "updateFirmwareVersion/",
+                data: JSON.stringify(this.eqp),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                },
+                success: function () {
+
+                }
+            });
+        },
+        checkOnline: function () {
+            /*
+             * Comando engatilhado
+             */
+            $.ajax({
+                type: "POST",
+                url: url + "checkOnline/",
+                data: JSON.stringify(this.eqp),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                },
+                success: function () {
+
+                }
+            });
+        }
+    },
+    data: function () {
         return data;
     }
 });
@@ -34,7 +111,7 @@ Vue.component("detail", {
 new Vue({
     el: "#detalhe",
     data: data,
-    created: function() {
+    created: function () {
 
     },
     methods: {

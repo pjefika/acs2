@@ -5,8 +5,10 @@
  */
 package controller.equipamento;
 
+import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.view.Results;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
@@ -15,6 +17,7 @@ import controller.AbstractController;
 import dao.EquipamentoDAO;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
+import util.SoutUtil;
 
 /**
  *
@@ -48,16 +51,51 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer(ex);
         }
     }
-    
+
+    @Post
+    @Consumes("application/json")
     @Path("/equipamento/getFirmwareVersion/")
-    public void getFirmwareVersion(NbiDeviceData nbiDeviceData) {        
+    public void getFirmwareVersion(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getFirmwareVersion(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer(e);
         }
-    }    
+    }
 
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/updateFirmwareVersion/")
+    public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.firmwareUpdate(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/reboot/")
+    public void reboot(NbiDeviceData nbiDeviceData) {
+        try {
+            dao.reboot(nbiDeviceData);
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/checkOnline/")
+    public void checkOnline(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.checkOnline(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }        
+    }
+    
     @Override
     public void includeSerializer(Object a) {
         result.use(Results.json()).from(a).recursive().serialize();
