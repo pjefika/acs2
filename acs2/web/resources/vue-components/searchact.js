@@ -25,7 +25,7 @@ Vue.component("search-table", {
                         </tr>\n\
                     </thead>\n\
                     <tbody>\n\
-                        <tr v-for='eqp in listaEqp' :key='eqp.deviceGUID'>\n\
+                        <tr v-for='eqp in listaEqp' :key='eqp.deviceGUID' v-bind:class=''>\n\
                             <td>{{eqp.deviceGUID}}</td>\n\
                             <td>{{eqp.subscriberID}}</td>\n\
                             <td>{{eqp.ipAddress}}</td>\n\

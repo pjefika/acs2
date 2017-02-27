@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-
 // CLASSES
-var Equipamento = function(p) {
+var Equipamento = function (p) {
     if (p) {
         this.activated = p.activated;
         this.deviceGUID = p.deviceGUID;
@@ -18,5 +17,10 @@ var Equipamento = function(p) {
         this.softwareVersion = p.softwareVersion;
         this.subscriberID = p.subscriberID;
         this.ipAddress = p.ipAddress;
+        this.dataAutenticacao = new Date(p.lastActivationTime.year, p.lastActivationTime.month, p.lastActivationTime.day, p.lastActivationTime.hour, p.lastActivationTime.minute, p.lastActivationTime.second);
     }
+};
+
+Equipamento.prototype.dateFormat = function () {
+    return moment(this.dataAutenticacao).format('DD/MM/YYYY HH:mm:ss');
 };

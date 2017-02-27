@@ -8,15 +8,21 @@
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-12">
-                        <img src="http://lojadomodem.com.br/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/0/0/00_1_4.jpg" class="img-responsive" style="border: 3px solid green; padding: 0;">
+                        <img src="http://lojadomodem.com.br/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/0/0/00_1_4.jpg" class="img-responsive" style="border: 3px solid green; padding: 0; width: 100%;">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="list-group">
+                            <li class="list-group-item"><label>Status: </label> <span v-if="eqp.activated">Ativo</span><span v-else>Inativo</span></li>
                             <li class="list-group-item"><label>MAC:</label> <span v-text="eqp.macAddress"></span></li>
-                            <li class="list-group-item"><label>DeviceGUID:</label> <span v-text="eqp.deviceGUID"></span></li>
-                            <li class="list-group-item"><label>Data Autenticação:</label> <span></span></li>
+                            <li class="list-group-item"><label>DeviceGUID:</label> <span v-text="eqp.deviceGUID"></span></li>                          
+                            <li class="list-group-item"><label>Fabricante:</label> <span v-text="eqp.manufacturer"></span></li>
+                            <li class="list-group-item"><label>Modelo:</label> <span v-text="eqp.model"></span></li>
+                            <li class="list-group-item"><label>Nome do Modelo:</label> <span v-text="eqp.modelName"></span></li>
+                            <li class="list-group-item"><label>Serial:</label> <span v-text="eqp.subscriberID"></span></li>
+                            <li class="list-group-item"><label>Autenticação:</label> <span v-text="eqp.dateFormat(eqp.dataAutenticacao)"></span></li>
+                            <li class="list-group-item"><label>IP:</label> <span v-text="eqp.ipAddress"></span></li>
                         </ul>
                     </div>
                 </div>
@@ -31,7 +37,7 @@
                             <button type="button" class="list-group-item">Consultar LAN Host</button>
                             <button type="button" class="list-group-item">Consultar Port Mapping</button>
                             <button type="button" class="list-group-item">Consultar xDSL</button>
-                            <button type="button" class="list-group-item">Consultar Firmware</button>
+                            <button type="button" class="list-group-item" @click="getFirmware()">Consultar Firmware*</button>
                             <button type="button" class="list-group-item">Consultar DNS</button>
                         </div>
                     </div>
@@ -46,7 +52,7 @@
                             <button type="button" class="list-group-item">Gerenciar Port Mapping</button>
                             <button type="button" class="list-group-item">Configurar Wifi</button>
                             <button type="button" class="list-group-item">Configurar Autenticação PPPoE</button>
-                            <button type="button" class="list-group-item">Atualizar Firmware</button>
+                            <button type="button" class="list-group-item">Atualizar Firmware*</button>
                             <button type="button" class="list-group-item">Alterar DNS</button>
                         </div>
                     </div>
@@ -58,7 +64,27 @@
     <div class="page-header">
         <h1>Detalhes Equipamento</h1>
     </div>
-    <detail v-bind:eqp-string='${equipamento}'></detail>
+    <detail v-bind:eqp-string='${equipamento}'></detail>    
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Proncho</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>

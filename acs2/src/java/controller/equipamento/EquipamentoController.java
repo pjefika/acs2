@@ -48,6 +48,15 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer(ex);
         }
     }
+    
+    @Path("/equipamento/getFirmwareVersion/")
+    public void getFirmwareVersion(NbiDeviceData nbiDeviceData) {        
+        try {
+            this.includeSerializer(dao.getFirmwareVersion(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }    
 
     @Override
     public void includeSerializer(Object a) {
