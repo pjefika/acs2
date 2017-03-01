@@ -13,8 +13,6 @@ Vue.config.silent = true;
 var data = {
     inputToSearch: null
 };
-
-
 Vue.component("detail", {
     template: '#detalhequip',
     props: {
@@ -64,7 +62,10 @@ Vue.component("detail", {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
                 success: function () {
-
+                    $("#modalGetFirmware").modal("show");
+                },
+                error: function () {
+                    alert("Erro");
                 }
             });
         },

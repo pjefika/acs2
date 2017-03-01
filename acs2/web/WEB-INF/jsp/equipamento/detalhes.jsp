@@ -33,10 +33,7 @@
                             </li>
                             <li class="list-group-item">
                                 <label>Modelo:</label> 
-                                <span v-if="eqp.model === 'Device:1'">Canela</span>
-                                <span v-else-if="eqp.model === 'Device:2'">HG</span>
-                                <span v-else-if="eqp.model === 'Device:3'">Decoder</span>
-                                <span v-else>Não encontrado</span>
+                                <span v-text="eqp.model"></span>
                             </li>
                             <li class="list-group-item">
                                 <label>Nome do Modelo:</label> 
@@ -106,8 +103,25 @@
                         </div>
                     </div>
                 </div>
-            </div>  
-        </div>              
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modalGetFirmware" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Informação de Firmware</h4>
+                        </div>
+                        <div class="modal-body">
+                            Informações
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </script>
 
     <div class="page-header">

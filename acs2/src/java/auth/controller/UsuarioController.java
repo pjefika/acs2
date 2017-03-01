@@ -27,15 +27,13 @@ public class UsuarioController {
     public UsuarioController() {
 
     }
-
-    public void create() {
-
-    }
+    
     
     public void logar() {
         
     }
 
+    
     public void login(Usuario u) {
 
         try {
@@ -57,7 +55,7 @@ public class UsuarioController {
         } catch (Exception e) {
 
             result.include("mensagemFalha", e.getMessage());
-            result.forwardTo(this).create();
+            result.forwardTo(this).logar();
         }
     }
 

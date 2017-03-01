@@ -5,6 +5,7 @@
  */
 package controller.equipamento;
 
+import auth.annotation.Logado;
 import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
@@ -31,7 +32,8 @@ public class EquipamentoController extends AbstractController {
 
     public EquipamentoController() {
     }
-
+    
+    @Logado
     @Path("/equipamento/detalhe/{guid}")
     public void detalhes(String guid) {
         try {
