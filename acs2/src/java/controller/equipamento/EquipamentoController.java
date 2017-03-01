@@ -33,7 +33,7 @@ public class EquipamentoController extends AbstractController {
     public EquipamentoController() {
     }
     
-    @Logado
+    
     @Path("/equipamento/detalhe/{guid}")
     public void detalhes(String guid) {
         try {
@@ -94,7 +94,7 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.checkOnline(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer(e);
+            this.includeSerializer(false);
         }        
     }
     

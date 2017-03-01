@@ -30,7 +30,6 @@ public class SearchController extends AbstractController {
     }
 
     @Path("/busca")
-    @Logado
     public void create() {
     }
 

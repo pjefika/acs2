@@ -22,3 +22,11 @@ body {
 #enterButton {    
     width: 100%;    
 }
+
+.onlineGreen {
+    border: 3px solid green;
+}
+
+.offLineRed {
+    border: 3px solid red;
+}

@@ -26,20 +26,5 @@
     <br/>
     <br/>
     <search-table></search-table>
-
-    <!-- Modal -->
-    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Aguarde...</h4>
-                </div>
-                <div class="modal-body" style="text-align: center;">                    
-                    <img src="${pageContext.request.contextPath}/resources/imagens/loading.gif">                    
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/searchact.js"></script>

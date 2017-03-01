@@ -16,6 +16,9 @@ var data = {
 Vue.component("detail", {
     template: '#detalhequip',
     props: {
+        statsCheckOnline: {
+            type: Boolean
+        },
         eqpString: {
             type: String,
             required: true
@@ -26,6 +29,9 @@ Vue.component("detail", {
                 return new Equipamento(this.eqpString);
             }
         }
+    },
+    created: function () {
+        this.checkOnline();
     },
     methods: {
         /*
@@ -40,11 +46,14 @@ Vue.component("detail", {
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
+                    $("#loadingModal").modal("show");
                 },
-                success: function () {                   
+                success: function () {
+                    $("#loadingModal").modal("hide");
                     alert("success");
                 },
                 error: function () {
+                    $("#loadingModal").modal("hide");
                     alert("Erro");
                 }
             });
@@ -60,11 +69,14 @@ Vue.component("detail", {
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
+                    $("#loadingModal").modal("show");
                 },
                 success: function () {
+                    $("#loadingModal").modal("hide");
                     $("#modalGetFirmware").modal("show");
                 },
                 error: function () {
+                    $("#loadingModal").modal("hide");
                     alert("Erro");
                 }
             });
@@ -80,9 +92,13 @@ Vue.component("detail", {
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
+                    $("#loadingModal").modal("show");
                 },
                 success: function () {
-
+                    $("#loadingModal").modal("hide");
+                },
+                error: function () {
+                    $("#loadingModal").modal("hide");
                 }
             });
         },
@@ -97,9 +113,14 @@ Vue.component("detail", {
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
+                    $("#loadingModal").modal("show");
                 },
-                success: function () {
-
+                success: function (data) {
+                    this.statsCheckOnline = data;
+                    $("#loadingModal").modal("hide");
+                },
+                error: function () {
+                    $("#loadingModal").modal("hide");
                 }
             });
         }

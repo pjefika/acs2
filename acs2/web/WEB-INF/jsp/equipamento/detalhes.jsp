@@ -7,8 +7,8 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-12">
-                        <img src="http://lojadomodem.com.br/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/0/0/00_1_4.jpg" class="img-responsive" style="border: 3px solid green; padding: 0; width: 100%;">
+                    <div class="col-md-12" @click="checkOnline()">
+                        <img src="http://lojadomodem.com.br/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/0/0/00_1_4.jpg" class="img-responsive" style="padding: 0; width: 100%;">
                     </div>
                 </div>
                 <div class="row">
@@ -120,8 +120,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>            
+        </div>        
     </script>
 
     <div class="page-header">
