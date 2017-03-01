@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.view.Results;
 import controller.HomeController;
+import controller.search.SearchController;
 
 @Controller
 @RequestScoped
@@ -27,13 +28,11 @@ public class UsuarioController {
     public UsuarioController() {
 
     }
-    
-    
+
     public void logar() {
-        
+
     }
 
-    
     public void login(Usuario u) {
 
         try {
@@ -44,10 +43,10 @@ public class UsuarioController {
 
                 u = ws.consultarUsuario(u.getLogin());
                 session.setUsuario(u);
-                result.redirectTo(HomeController.class).index();
+                result.redirectTo(SearchController.class).create();
 
             } else {
-                
+
                 result.include("mensagemFalha", "Credênciais incorretas.");
                 result.forwardTo(this).logar();
             }
