@@ -31,7 +31,7 @@ Vue.component("search-table", {
                             <td>{{eqp.ipAddress}}</td>\n\
                             <td>{{eqp.macAddress}}</td>\n\
                             <td>{{eqp.manufacturer}}</td>\n\
-                            <td><a :href=\"'/acs/equipamento/detalhe/' + eqp.deviceGUID\">Selecionar</a></td>\n\
+                            <td><a v-if='eqp.deviceGUID!=null' :href=\"'/acs/equipamento/detalhe/' + eqp.deviceGUID\">Selecionar</a></td>\n\
                         </tr>\n\
                     </tbody>\n\
                 </table>",
@@ -55,6 +55,9 @@ Vue.component("search-action", {
     methods: {
         busca: function () {
             var self = this;
+            if(self.inputToSearch == null){
+                return;
+            }
             $("#loadingModal").modal({backdrop: "static"});
             $("#loadingModal").modal("show");
             
