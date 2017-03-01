@@ -5,7 +5,6 @@
  */
 package tests.junit.consulta;
 
-import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,15 +12,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class GetFirmwareVersionJUnitTestDev {
+public class GetAvailableFirmwareImagesJUnitTest {
 
-    public GetFirmwareVersionJUnitTestDev() {
+    public GetAvailableFirmwareImagesJUnitTest() {
     }
 
     @BeforeClass
@@ -41,25 +39,17 @@ public class GetFirmwareVersionJUnitTestDev {
     }
 
     @Test
-    public void getFirmwareVersion() {
-
+    public void getAvailableFirmwareImages() {
         try {
 
             Long guid = new Long(94019);
             EquipamentoDAO d = new EquipamentoDAO();
 
-            //d.capture(guid);
-            //d.release(guid);
-            NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(guid);
-            SoutUtil.print(eqp);
-
-            SoutUtil.print(d.getFirmwareVersion(eqp));
+            d.getAvailableFirmwareImages(d.findDeviceByGUID(guid));
 
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
         }
-
     }
 }

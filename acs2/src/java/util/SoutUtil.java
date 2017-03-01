@@ -8,6 +8,7 @@ package util;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
+import model.device.firmware.FirmwareInfo;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 
 /**
@@ -29,6 +30,11 @@ public class SoutUtil {
         System.out.println("getConnectionRequestUsername: " + d.getConnectionRequestUsername());
         System.out.println("getConnectionRequestPassword: " + d.getConnectionRequestPassword());
         System.out.println("");
+    }
+
+    public static void print(FirmwareInfo i) {
+        System.out.println("firmwareVersion: " + i.getFirmwareVersion());
+        System.out.println("preferredVersion: " + i.getPreferredVersion());
     }
 
     public static void print(List<NbiDeviceData> ds) {

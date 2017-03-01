@@ -37,6 +37,33 @@ public class NbiDecorator {
         return opt;
     }
 
+    public static NbiDeviceID adapter(NbiDeviceData d) {
+
+        NbiDeviceID id = new NbiDeviceID();
+        id.setOUI(d.getDeviceId().getOUI());
+        id.setProductClass(d.getDeviceId().getProductClass());
+        id.setProtocol(d.getDeviceId().getProtocol());
+        id.setSerialNumber(d.getDeviceId().getSerialNumber());
+
+        return id;
+    }
+
+    /**
+     *
+     * @param d
+     * @return
+     */
+    public static com.alcatel.hdm.service.nbi2.NbiDeviceID adapterAlter(NbiDeviceData d) {
+
+        com.alcatel.hdm.service.nbi2.NbiDeviceID id = new com.alcatel.hdm.service.nbi2.NbiDeviceID();
+        id.setOUI(d.getDeviceId().getOUI());
+        id.setProductClass(d.getDeviceId().getProductClass());
+        id.setProtocol(d.getDeviceId().getProtocol());
+        id.setSerialNumber(d.getDeviceId().getSerialNumber());
+
+        return id;
+    }
+
     public static com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault2() {
         com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationOptions opt = new com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationOptions();
 
@@ -73,14 +100,4 @@ public class NbiDecorator {
 
         return a;
     }
-
-    public static NbiDeviceData adapter(NbiDeviceData d) {
-
-        d.setConnectionRequestURL("http://200.207.223.138:8031/ConnectionRequest");
-        d.setConnectionRequestUsername("telefonica");
-        d.setConnectionRequestPassword("telefonica");
-
-        return d;
-    }
-
 }

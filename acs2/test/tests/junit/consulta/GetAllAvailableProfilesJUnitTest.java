@@ -19,9 +19,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetFirmwareVersionJUnitTestDev {
+public class GetAllAvailableProfilesJUnitTest {
 
-    public GetFirmwareVersionJUnitTestDev() {
+    public GetAllAvailableProfilesJUnitTest() {
     }
 
     @BeforeClass
@@ -41,25 +41,15 @@ public class GetFirmwareVersionJUnitTestDev {
     }
 
     @Test
-    public void getFirmwareVersion() {
-
+    public void getAllAvailableProfiles() {
         try {
 
             Long guid = new Long(94019);
             EquipamentoDAO d = new EquipamentoDAO();
 
-            //d.capture(guid);
-            //d.release(guid);
-            NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(guid);
-            SoutUtil.print(eqp);
-
-            SoutUtil.print(d.getFirmwareVersion(eqp));
-
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
         }
-
     }
 }

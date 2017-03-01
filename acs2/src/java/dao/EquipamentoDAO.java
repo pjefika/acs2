@@ -9,7 +9,9 @@ import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiFirmwareImageData;
 import com.alcatel.hdm.service.nbi2.NbiFunction;
+import com.alcatel.hdm.service.nbi2.NbiOperationProfile;
 import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
@@ -196,25 +198,15 @@ public class EquipamentoDAO {
 
     public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws Exception {
 
-        NbiDeviceID id = new NbiDeviceID();
-
-        id.setOUI(eqp.getDeviceId().getOUI());
-        id.setProductClass(eqp.getDeviceId().getProductClass());
-        id.setProtocol(eqp.getDeviceId().getProtocol());
-        id.setSerialNumber(eqp.getDeviceId().getSerialNumber());
-
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
 
         this.initSynchDeviceOperations();
 
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(id, NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
         JsonElement jelement = new JsonParser().parse(a.getValue());
         JsonObject jobject = jelement.getAsJsonObject();
-        String firmwareVersion = jobject.get("firmwareVersion").toString();
-        String preferredVersion = jobject.get("preferredVersion").toString();
-
-        System.out.println("firmwareVersion: " + firmwareVersion);
-        System.out.println("preferredVersion: " + preferredVersion);
+        String firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
+        String preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
 
         return new FirmwareInfo(firmwareVersion, preferredVersion);
     }
@@ -224,9 +216,11 @@ public class EquipamentoDAO {
         return nbi.getOperationStatus(operationId);
     }
 
-    public List<NbiTemplate> templates() throws NBIException_Exception {
+    public void getAvailableFirmwareImages(NbiDeviceData eqp) throws NBIException_Exception {
         this.initNbi();
-        return nbi.getAvailableCriteriaTemplates();
+        for (NbiFirmwareImageData o : nbi.getAvailableFirmwareImages(NbiDecorator.adapterAlter(eqp))) {
+            System.out.println(o.getName());
+        }
     }
 
     public void initNbi() {
@@ -237,11 +231,15 @@ public class EquipamentoDAO {
                 QName qname = new QName("http://nbi2.service.hdm.alcatel.com/",
                         "NBIService");
                 Service service = Service.create(url, qname);
-                nbi = service.getPort(NBIService.class);
+                nbi
+                        = service.getPort(NBIService.class
+                        );
                 ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
                 ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
+
             } catch (MalformedURLException ex) {
-                Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EquipamentoDAO.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -254,12 +252,15 @@ public class EquipamentoDAO {
                 QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
                         "SynchDeviceOperationsNBIService");
                 Service service = Service.create(url, qname);
-                synch = service.getPort(SynchDeviceOperationsService.class);
+                synch
+                        = service.getPort(SynchDeviceOperationsService.class
+                        );
                 ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
                 ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
 
             } catch (MalformedURLException ex) {
-                Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EquipamentoDAO.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
