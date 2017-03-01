@@ -13,6 +13,7 @@
         <link href="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/custom/custom.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/data-table/dataTables.min.css" rel="stylesheet" />
 
         <!-- import JavaScript -->
         <script src="${pageContext.request.contextPath}/resources/jquery-3.1.1/jquery-3.1.1.min.js"></script>
@@ -20,6 +21,7 @@
         <script src="${pageContext.request.contextPath}/resources/lodash/lodash.js"></script>
         <script src="${pageContext.request.contextPath}/resources/moment/moment.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/data-table/dataTables.min.js"></script>
 
         <decorator:head/>
     </head>

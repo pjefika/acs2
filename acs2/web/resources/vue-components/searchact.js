@@ -15,7 +15,8 @@ var data = {
     renderTable: false
 };
 Vue.component("search-table", {
-    template: "<table v-if='renderTable && listaEqp.length>0' id='leTable' class='table table-bordered small' >\n\
+    template: "<div v-if='renderTable'>\n\
+                <table v-if='listaEqp.length>0' id='leTable' class='table table-bordered small' >\n\
                     <thead>\n\
                         <tr>\n\
                             <th>Subscriber</th>\n\
@@ -36,7 +37,9 @@ Vue.component("search-table", {
                             <td><a v-if='eqp.deviceGUID!=null' :href=\"'/acs/equipamento/detalhe/' + eqp.deviceGUID\">Selecionar</a></td>\n\
                         </tr>\n\
                     </tbody>\n\
-                </table>",
+                </table>\n\
+                <div v-else class='alert alert-warning'>A pesquisa não obteve resultados</div>\n\
+                </div>",
     methods: {
     },
     data: function () {
@@ -71,15 +74,17 @@ Vue.component("search-action", {
                 }).done(function () {
                     $("#loadingModal").modal("hide");
                     self.renderTable = true;
+                    self.inputToSearch = null;
+                    self.picked = null;
+                    $('#leTable').DataTable().destroy();
+                    $(document).ready(function(){
+                        $('#leTable').DataTable({
+                            "language": {
+                                "url": "resources/data-table/pt-br.json"
+                            }
+                        });    
+                    })
                 });
-//            } else if (self.picked === "GUID") {
-//                console.log("Pesquisa por GUID");
-//                $.get(url + "guid/" + self.inputToSearch, function (data) {
-//                    self.listaEqp = data;
-//                }).done(function () {
-//                    $("#loadingModal").modal("hide");
-//                    self.renderTable = true;
-//                });
             } else if (self.picked === "Subscriber") {
                 console.log("Pesquisa por Subscriber");
                 $.get(url + "subscriber/" + self.inputToSearch, function (data) {
@@ -87,6 +92,17 @@ Vue.component("search-action", {
                 }).done(function () {
                     $("#loadingModal").modal("hide");
                     self.renderTable = true;
+                    self.inputToSearch = null;
+                    self.picked = null;
+                    $('#leTable').DataTable().destroy();
+                    $(document).ready(function(){
+                        $('#leTable').DataTable({
+                            "language": {
+                                "url": "resources/data-table/pt-br.json"
+                            }
+                        });       
+                    })
+                    
                 });
             } else if (self.picked === "Serial") {
                 console.log("Pesquisa por Serial");
@@ -95,11 +111,19 @@ Vue.component("search-action", {
                 }).done(function () {
                     $("#loadingModal").modal("hide");
                     self.renderTable = true;
+                    self.inputToSearch = null;
+                    self.picked = null;
+                    $('#leTable').DataTable().destroy();
+                    $(document).ready(function(){
+                        $('#leTable').DataTable({
+                            "language": {
+                                "url": "resources/data-table/pt-br.json"
+                            }
+                        });       
+                    })
                 });
             }
             
-            self.inputToSearch = null;
-            self.picked = null;
 
         },
         searchChange: function () {
@@ -110,13 +134,12 @@ Vue.component("search-action", {
             var regexMac = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/;
             var regexID = /^[0-9]{5}/;
             var regexSubs = /[a-zA-Z]{3}[-]?[A-Z0-9]{9}[-]?\d{3}/;
+            
             if(self.picked == null){
                 if (regexMac.test(self.inputToSearch)) {
                 self.picked = "MAC";
                 } else if (regexSubs.test(self.inputToSearch) || regexID.test(self.inputToSearch)) {
                     self.picked = "Subscriber";
-    //            } else if (regexID.test(self.inputToSearch)) {
-    //                self.picked = "GUID";
                 } else {
                     self.picked = "Serial";
                 }
