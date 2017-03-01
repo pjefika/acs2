@@ -53,7 +53,6 @@ public class GetFirmwareVersionJUnitTestDev {
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(guid);
             SoutUtil.print(eqp);
-            SoutUtil.print(d.getFirmwareVersion(eqp));
 
             assertTrue(true);
 
