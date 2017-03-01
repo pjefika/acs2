@@ -82,8 +82,6 @@
                 </div><!--/.nav-collapse -->                
             </div>            
         </nav>
-
-        <div>
             <decorator:body/>
             <!-- Loading Modal -->
             <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">

@@ -57,7 +57,7 @@ Vue.component("search-action", {
             var self = this;
             $("#loadingModal").modal({backdrop: "static"});
             $("#loadingModal").modal("show");
-
+            
             //Consulta
             if (self.picked === "MAC") {
                 console.log("Pesquisa por MAC");
@@ -67,14 +67,14 @@ Vue.component("search-action", {
                     $("#loadingModal").modal("hide");
                     self.renderTable = true;
                 });
-            } else if (self.picked === "GUID") {
-                console.log("Pesquisa por GUID");
-                $.get(url + "guid/" + self.inputToSearch, function (data) {
-                    self.listaEqp = data;
-                }).done(function () {
-                    $("#loadingModal").modal("hide");
-                    self.renderTable = true;
-                });
+//            } else if (self.picked === "GUID") {
+//                console.log("Pesquisa por GUID");
+//                $.get(url + "guid/" + self.inputToSearch, function (data) {
+//                    self.listaEqp = data;
+//                }).done(function () {
+//                    $("#loadingModal").modal("hide");
+//                    self.renderTable = true;
+//                });
             } else if (self.picked === "Subscriber") {
                 console.log("Pesquisa por Subscriber");
                 $.get(url + "subscriber/" + self.inputToSearch, function (data) {
@@ -104,10 +104,10 @@ Vue.component("search-action", {
             var regexSubs = /[a-zA-Z]{3}[-]?[A-Z0-9]{9}[-]?\d{3}/;
             if (regexMac.test(self.inputToSearch)) {
                 self.picked = "MAC";
-            } else if (regexSubs.test(self.inputToSearch)) {
+            } else if (regexSubs.test(self.inputToSearch) || regexID.test(self.inputToSearch)) {
                 self.picked = "Subscriber";
-            } else if (regexID.test(self.inputToSearch)) {
-                self.picked = "GUID";
+//            } else if (regexID.test(self.inputToSearch)) {
+//                self.picked = "GUID";
             } else {
                 self.picked = "Serial";
             }

@@ -13,9 +13,9 @@
         <label class="radio-inline">            
             <input type="radio" Value="MAC" v-model="picked" name="pickedSearch"/> MAC
         </label>
-        <label class="radio-inline">            
+<!--        <label class="radio-inline">            
             <input type="radio" Value="GUID" v-model="picked" name="pickedSearch"/> GUID
-        </label>
+        </label>-->
         <label class="radio-inline">            
             <input type="radio" Value="Subscriber" v-model="picked" name="pickedSearch"/> Subscriber
         </label>

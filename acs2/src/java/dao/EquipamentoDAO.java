@@ -5,7 +5,6 @@
  */
 package dao;
 
-import dao.util.NbiDecorator;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
@@ -20,8 +19,10 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTi
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDeviceOperationsService;
 import com.sun.xml.wss.XWSSConstants;
+import dao.util.NbiDecorator;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,34 +73,44 @@ public class EquipamentoDAO {
     }
 
     public List<NbiDeviceData> listarEquipamentosPorMac(String mac) throws NBIException_Exception {
-        NbiTemplate n = new NbiTemplate();
-        n.setName("Find Devices By MacAddress");
+        try {
+            NbiTemplate n = new NbiTemplate();
+            n.setName("Find Devices By MacAddress");
 
-        NbiParameter param = new NbiParameter();
+            NbiParameter param = new NbiParameter();
 
-        param.setName("macAddress");
-        param.setValue(mac);
+            param.setName("macAddress");
+            param.setValue(mac);
 
-        n.getParameters().add(param);
+            n.getParameters().add(param);
 
-        this.initNbi();
-        return nbi.findDevicesByTemplate(n, 1, -1);
+            this.initNbi();
+            return nbi.findDevicesByTemplate(n, 1, -1);
+        } catch (Exception e) {
+            return new ArrayList<NbiDeviceData>();
+        }
+        
     }
 
     public List<NbiDeviceData> listarEquipamentosPorSerial(String serial) throws NBIException_Exception {
 
-        NbiTemplate n = new NbiTemplate();
-        n.setName("ct.find.devices.serialNumber");
+        try {
+            NbiTemplate n = new NbiTemplate();
+            n.setName("ct.find.devices.serialNumber");
 
-        NbiParameter param = new NbiParameter();
+            NbiParameter param = new NbiParameter();
 
-        param.setName("serialNumber");
-        param.setValue(serial);
+            param.setName("serialNumber");
+            param.setValue(serial);
 
-        n.getParameters().add(param);
+            n.getParameters().add(param);
 
-        this.initNbi();
-        return nbi.findDevicesByTemplate(n, 1, -1);
+            this.initNbi();
+            return nbi.findDevicesByTemplate(n, 1, -1);
+        } catch (Exception e) {
+            return new ArrayList<NbiDeviceData>();
+        }
+        
     }
 
     public Boolean checkOnline(NbiDeviceData eqp) {
@@ -139,8 +150,13 @@ public class EquipamentoDAO {
     }
 
     public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {
-        this.initNbi();
-        return nbi.findDevicesBySubscriberId(subscriber);
+        try {
+            this.initNbi();
+            return nbi.findDevicesBySubscriberId(subscriber);
+        } catch (Exception e) {
+            return new ArrayList<NbiDeviceData>();
+        }
+        
     }
 
     /**
