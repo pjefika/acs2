@@ -15,10 +15,11 @@ var data = {
     renderTable: false
 };
 Vue.component("search-table", {
-    template: "<table v-if='renderTable' class='table table-bordered' style='text-align: center;'>\n\
+    template: "<table v-if='renderTable && listaEqp.length>0' id='leTable' class='table table-bordered small' >\n\
                     <thead>\n\
                         <tr>\n\
                             <th>Subscriber</th>\n\
+                            <th>Serial</th>\n\
                             <th>IP</th>\n\
                             <th>MAC</th>\n\
                             <th>Fabricante</th>\n\
@@ -28,6 +29,7 @@ Vue.component("search-table", {
                     <tbody>\n\
                         <tr v-for='eqp in listaEqp' :key='eqp.deviceGUID' v-bind:class=''>\n\
                             <td>{{eqp.subscriberID}}</td>\n\
+                            <td>{{eqp.deviceId.serialNumber}}</td>\n\
                             <td>{{eqp.ipAddress}}</td>\n\
                             <td>{{eqp.macAddress}}</td>\n\
                             <td>{{eqp.manufacturer}}</td>\n\
@@ -89,12 +91,15 @@ Vue.component("search-action", {
             } else if (self.picked === "Serial") {
                 console.log("Pesquisa por Serial");
                 $.get(url + "serial/" + self.inputToSearch, function (data) {
-                    self.listaEqp = data;
+                    self.listaEqp = data.list;
                 }).done(function () {
                     $("#loadingModal").modal("hide");
                     self.renderTable = true;
                 });
             }
+            
+            self.inputToSearch = null;
+            self.picked = null;
 
         },
         searchChange: function () {
@@ -105,15 +110,18 @@ Vue.component("search-action", {
             var regexMac = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/;
             var regexID = /^[0-9]{5}/;
             var regexSubs = /[a-zA-Z]{3}[-]?[A-Z0-9]{9}[-]?\d{3}/;
-            if (regexMac.test(self.inputToSearch)) {
+            if(self.picked == null){
+                if (regexMac.test(self.inputToSearch)) {
                 self.picked = "MAC";
-            } else if (regexSubs.test(self.inputToSearch) || regexID.test(self.inputToSearch)) {
-                self.picked = "Subscriber";
-//            } else if (regexID.test(self.inputToSearch)) {
-//                self.picked = "GUID";
-            } else {
-                self.picked = "Serial";
+                } else if (regexSubs.test(self.inputToSearch) || regexID.test(self.inputToSearch)) {
+                    self.picked = "Subscriber";
+    //            } else if (regexID.test(self.inputToSearch)) {
+    //                self.picked = "GUID";
+                } else {
+                    self.picked = "Serial";
+                }
             }
+            
             self.busca();
 
         }
