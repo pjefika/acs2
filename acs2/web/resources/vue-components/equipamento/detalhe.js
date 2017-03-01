@@ -16,9 +16,6 @@ var data = {
 Vue.component("detail", {
     template: '#detalhequip',
     props: {
-        statsCheckOnline: {
-            type: Boolean
-        },
         eqpString: {
             type: String,
             required: true
@@ -116,11 +113,16 @@ Vue.component("detail", {
                     $("#loadingModal").modal("show");
                 },
                 success: function (data) {
-                    this.statsCheckOnline = data;
                     $("#loadingModal").modal("hide");
+                    if (data.boolean) {
+                        $("#imgDetalhes").css("border", "3px solid green");
+                    } else {
+                        $("#imgDetalhes").css("border", "3px solid red");
+                    }
                 },
                 error: function () {
                     $("#loadingModal").modal("hide");
+                    $("#imgDetalhes").css("border", "3px solid red");
                 }
             });
         }

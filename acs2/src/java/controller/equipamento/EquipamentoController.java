@@ -32,8 +32,7 @@ public class EquipamentoController extends AbstractController {
 
     public EquipamentoController() {
     }
-    
-    
+
     @Path("/equipamento/detalhe/{guid}")
     public void detalhes(String guid) {
         try {
@@ -90,14 +89,10 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/checkOnline/")
-    public void checkOnline(NbiDeviceData nbiDeviceData) {
-        try {
-            this.includeSerializer(dao.checkOnline(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer(false);
-        }        
+    public void checkOnline(NbiDeviceData nbiDeviceData) {                
+        this.includeSerializer(dao.checkOnline(nbiDeviceData));
     }
-    
+
     @Override
     public void includeSerializer(Object a) {
         result.use(Results.json()).from(a).recursive().serialize();
