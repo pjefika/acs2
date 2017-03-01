@@ -45,7 +45,7 @@ Vue.component("search-action", {
     template: "<div class='row'>\n\
                     <div class='col-lg-6'>\n\
                         <div class='input-group'>\n\
-                            <input type='text' class='form-control' placeholder='Buscar...' v-model='inputToSearch' @change='searchChange()'>\n\
+                            <input type='text' class='form-control' autofocus placeholder='Buscar...' v-model='inputToSearch' @change='searchChange()' >\n\
                             <span class='input-group-btn'>\n\
                                 <button class='btn btn-default' type='button' @click='busca()'>Buscar</button>\n\
                             </span>\n\
@@ -111,8 +111,11 @@ Vue.component("search-action", {
             } else {
                 self.picked = "Serial";
             }
+            self.busca();
 
         }
+    },created: function() {
+        
     },
     data: function () {
         return data;
