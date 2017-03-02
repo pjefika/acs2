@@ -5,11 +5,12 @@
  */
 package tests.junit.consulta;
 
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.device.log.DeviceLog;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -52,10 +53,17 @@ public class GetDeviceLogJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
+            Long l = new Long(142014);
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(new Long(94019));
+            eqp = d.findDeviceByGUID(l);
 
-            SoutUtil.printl(d.getDeviceLog(eqp));
+            //d.capture(l);
+            // d.release(l);
+            List<DeviceLog> log = d.getDeviceLog(eqp);
+
+            SoutUtil.printl(log);
+
+            assertTrue(log.size() > 1);
 
         } catch (Exception ex) {
             Logger.getLogger(GetDeviceLogJUnitTest.class.getName()).log(Level.SEVERE, null, ex);

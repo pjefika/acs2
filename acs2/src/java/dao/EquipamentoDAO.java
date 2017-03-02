@@ -33,6 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
+import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
@@ -71,7 +72,7 @@ public class EquipamentoDAO {
     public Boolean reboot(NbiDeviceData eqp) {
         try {
             this.initSynchDeviceOperations();
-            synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
+            synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "efika");
             return true;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
@@ -79,8 +80,15 @@ public class EquipamentoDAO {
         }
     }
 
-    public void capture(NbiDeviceData eqp) {
-
+    public Boolean factoryReset(NbiDeviceData eqp) {
+        try {
+            this.initSynchDeviceOperations();
+            synch.factoryReset(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "efika");
+            return true;
+        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void capture(Long guid) throws NBIException_Exception {
@@ -212,6 +220,13 @@ public class EquipamentoDAO {
         return JsonUtil.firmwareInfo(a);
     }
 
+    public DdnsInfo getDdns(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 10000, "");
+        return JsonUtil.ddnsInfo(a);
+    }
+
     public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
@@ -228,6 +243,7 @@ public class EquipamentoDAO {
         this.initNbi();
         for (NbiFirmwareImageData o : nbi.getAvailableFirmwareImages(NbiDecorator.adapterAlter(eqp))) {
             System.out.println(o.getName());
+            System.out.println(o.getDescription());
         }
     }
 

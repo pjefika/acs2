@@ -22,9 +22,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class RebootJUnitTest {
+public class FactoryResetJUnitTest {
 
-    public RebootJUnitTest() {
+    public FactoryResetJUnitTest() {
     }
 
     @BeforeClass
@@ -53,15 +53,15 @@ public class RebootJUnitTest {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-            // eqp = d.findDeviceByGUID(new Long(142014));
-            eqp = d.findDeviceByGUID(new Long(23006));
+            eqp = d.findDeviceByGUID(new Long(142014));
+            // eqp = d.findDeviceByGUID(new Long(23006));
 
-            assertTrue(d.reboot(eqp));
+            assertTrue(d.factoryReset(eqp));
 
         } catch (NBIException_Exception ex) {
-            Logger.getLogger(RebootJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FactoryResetJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(RebootJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FactoryResetJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

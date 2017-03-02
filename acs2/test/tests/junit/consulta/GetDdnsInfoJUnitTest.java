@@ -5,11 +5,13 @@
  */
 package tests.junit.consulta;
 
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.device.ddns.DdnsInfo;
+import model.device.log.DeviceLog;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,9 +24,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class RebootJUnitTest {
+public class GetDdnsInfoJUnitTest {
 
-    public RebootJUnitTest() {
+    public GetDdnsInfoJUnitTest() {
     }
 
     @BeforeClass
@@ -47,21 +49,23 @@ public class RebootJUnitTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void reboot() {
+    public void getDeviceLog() {
 
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
+            Long l = new Long(142014);
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(new Long(94019));
-            // eqp = d.findDeviceByGUID(new Long(23006));
+            eqp = d.findDeviceByGUID(l);
 
-            assertTrue(d.reboot(eqp));
+            //d.capture(l);
+            // d.release(l);
+            DdnsInfo ddns = d.getDdns(eqp);
 
-        } catch (NBIException_Exception ex) {
-            Logger.getLogger(RebootJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            SoutUtil.print(ddns);
+
         } catch (Exception ex) {
-            Logger.getLogger(RebootJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GetDdnsInfoJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -8,6 +8,7 @@ package util;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
+import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
@@ -39,6 +40,14 @@ public class SoutUtil {
         System.out.println("preferredVersion: " + i.getPreferredVersion());
     }
 
+    public static void print(DdnsInfo d) {
+        System.out.println("Enable: " + d.getEnable());
+        System.out.println("Hostname: " + d.getHostname());
+        System.out.println("Provider: " + d.getProvider());
+        System.out.println("ProviderUrl: " + d.getProviderUrl());
+        System.out.println("User: " + d.getUser());
+    }
+
     public static void print(List<NbiDeviceData> ds) {
         for (NbiDeviceData nbiDeviceData : ds) {
             print(nbiDeviceData);
@@ -47,7 +56,7 @@ public class SoutUtil {
 
     public static void printl(List<DeviceLog> l) {
         for (DeviceLog nbiDeviceData : l) {
-            System.out.println(nbiDeviceData.getMensagem());
+            System.out.println("Mensagem: " + nbiDeviceData.getMensagem());
         }
     }
 

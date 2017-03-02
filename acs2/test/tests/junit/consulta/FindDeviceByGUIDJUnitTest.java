@@ -52,7 +52,7 @@ public class FindDeviceByGUIDJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(94019));
+            eqp = d.findDeviceByGUID(new Long(142014));
             SoutUtil.print(eqp);
             assertTrue(true);
         } catch (NBIException_Exception ex) {

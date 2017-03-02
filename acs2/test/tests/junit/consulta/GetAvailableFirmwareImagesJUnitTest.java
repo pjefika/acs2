@@ -42,7 +42,7 @@ public class GetAvailableFirmwareImagesJUnitTest {
     public void getAvailableFirmwareImages() {
         try {
 
-            Long guid = new Long(94019);
+            Long guid = new Long(142014);
             EquipamentoDAO d = new EquipamentoDAO();
 
             d.getAvailableFirmwareImages(d.findDeviceByGUID(guid));
