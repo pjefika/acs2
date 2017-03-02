@@ -7,19 +7,21 @@
 // CLASSES
 var Equipamento = function(p) {
     if (p) {
-        this.activated = p.activated;
-        this.deviceGUID = p.deviceGUID;
-        this.deviceId = p.deviceId;
-        this.macAddress = p.macAddress;
-        this.manufacturer = p.manufacturer;
-        this.model = p.model;
-        this.modelName = p.modelName;
-        this.softwareVersion = p.softwareVersion;
-        this.subscriberID = p.subscriberID;
-        this.ipAddress = p.ipAddress;
-        if (p.lastActivationTime) {
-            this.dataAutenticacao = new Date(p.lastActivationTime.year, p.lastActivationTime.month, p.lastActivationTime.day, p.lastActivationTime.hour, p.lastActivationTime.minute, p.lastActivationTime.second);
+        this.activated = p.eqp.activated;
+        this.deviceGUID = p.eqp.deviceGUID;
+        this.deviceId = p.eqp.deviceId;
+        this.macAddress = p.eqp.macAddress;
+        this.manufacturer = p.eqp.manufacturer;
+        this.model = p.eqp.model;
+        this.modelName = p.eqp.modelName;
+        this.softwareVersion = p.eqp.softwareVersion;
+        this.subscriberID = p.eqp.subscriberID;
+        this.ipAddress = p.eqp.ipAddress;
+        if (p.eqp.lastActivationTime) {
+            this.dataAutenticacao = new Date(p.eqp.lastActivationTime.year, p.eqp.lastActivationTime.month, p.eqp.lastActivationTime.day, p.eqp.lastActivationTime.hour, p.eqp.lastActivationTime.minute, p.eqp.lastActivationTime.second);
         }
+        this.checkOn = p.CheckOnline;
+        this.firmwareOk = p.firmWareOk;
     }
 };
 
