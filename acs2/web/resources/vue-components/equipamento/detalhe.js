@@ -28,8 +28,6 @@ Vue.component("detail", {
         }
     },
     created: function () {
-        
-                
     },
     methods: {
         reboot: function () {

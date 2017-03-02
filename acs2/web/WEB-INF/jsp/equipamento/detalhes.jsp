@@ -9,14 +9,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <img src="http://lojadomodem.com.br/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/0/0/00_1_4.jpg" 
-                             class="img-responsive"
+                             v-bind:class="['img-responsive', eqp.checkOn ? 'onlineGreen' : 'offLineRed']"
                              style="padding: 0; width: 100%;">                       
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="list-group">
-                            <li class="list-group-item">
+                            <li v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']">
                                 <label>CheckOnline: </label> 
                                 <span v-if="eqp.checkOn">Ativo</span>
                                 <span v-else>Inativo</span>
@@ -53,7 +53,7 @@
                             </li>
                             <li class="list-group-item">
                                 <label>Serial:</label> 
-                                <span v-text="eqp.subscriberID"></span>
+                                <span v-text="eqp.deviceId.serialNumber"></span>
                             </li>
                             <li class="list-group-item">
                                 <label>Autenticação:</label> 
