@@ -34,10 +34,13 @@ import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import model.device.firmware.FirmwareInfo;
+import model.device.log.DeviceLog;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.StringResponseDTO;
+import util.JsonUtil;
+import util.SoutUtil;
 
 /**
  *
@@ -63,6 +66,17 @@ public class EquipamentoDAO {
     public NbiDeviceData findDeviceByGUID(Long guid) throws NBIException_Exception {
         this.initNbi();
         return nbi.findDeviceByGUID(guid);
+    }
+
+    public Boolean reboot(NbiDeviceData eqp) {
+        try {
+            this.initSynchDeviceOperations();
+            synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
+            return true;
+        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void capture(NbiDeviceData eqp) {
@@ -134,7 +148,7 @@ public class EquipamentoDAO {
             this.initSynchDeviceOperations();
             synch.checkOnline(id, opt, 10000, "");
             return true;
-        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -149,11 +163,6 @@ public class EquipamentoDAO {
     public NbiDeviceActionResult getDeviceOperationStatus(NbiDeviceData eqp, Long operationId) throws NBIException_Exception {
         this.initNbi();
         return nbi.getDeviceOperationStatus(eqp.getDeviceId(), operationId);
-    }
-
-    public void reboot(NbiDeviceData eqp) throws Exception {
-        this.initSynchDeviceOperations();
-        synch.reboot(NbiDecorator.cast(eqp.getDeviceId()), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
     }
 
     public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {
@@ -197,18 +206,17 @@ public class EquipamentoDAO {
     }
 
     public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws Exception {
-
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-
         this.initSynchDeviceOperations();
-
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
-        String firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
-        String preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
+        return JsonUtil.firmwareInfo(a);
+    }
 
-        return new FirmwareInfo(firmwareVersion, preferredVersion);
+    public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9519, opt, 10000, "");
+        return JsonUtil.deviceLog(a);
     }
 
     public NbiOperationStatus getDeviceOperationStatus(Long operationId) throws NBIException_Exception {

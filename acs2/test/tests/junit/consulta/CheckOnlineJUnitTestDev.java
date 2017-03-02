@@ -53,10 +53,10 @@ public class CheckOnlineJUnitTestDev {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(new Long(142012));
+            eqp = d.findDeviceByGUID(new Long(94019));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 
-            d.checkOnline(eqp);
+            assertTrue(d.checkOnline(eqp));
 
         } catch (NBIException_Exception ex) {
             Logger.getLogger(CheckOnlineJUnitTestDev.class.getName()).log(Level.SEVERE, null, ex);

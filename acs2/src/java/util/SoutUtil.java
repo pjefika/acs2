@@ -9,6 +9,7 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
 import model.device.firmware.FirmwareInfo;
+import model.device.log.DeviceLog;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 
 /**
@@ -20,6 +21,7 @@ public class SoutUtil {
     public static void print(NbiDeviceData d) {
         System.out.println("DeviceGUID: " + d.getDeviceGUID());
         System.out.println("OUI: " + d.getDeviceId().getOUI());
+        System.out.println("SubscriberID: " + d.getSubscriberID());
         System.out.println("getProductClass: " + d.getDeviceId().getProductClass());
         System.out.println("getProtocol: " + d.getDeviceId().getProtocol());
         System.out.println("getSerialNumber: " + d.getDeviceId().getSerialNumber());
@@ -40,6 +42,12 @@ public class SoutUtil {
     public static void print(List<NbiDeviceData> ds) {
         for (NbiDeviceData nbiDeviceData : ds) {
             print(nbiDeviceData);
+        }
+    }
+
+    public static void printl(List<DeviceLog> l) {
+        for (DeviceLog nbiDeviceData : l) {
+            System.out.println(nbiDeviceData.getMensagem());
         }
     }
 

@@ -47,7 +47,7 @@ public class FindDevicesBySubscriberIdJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            List<NbiDeviceData> eqp = d.listarEquipamentosPorSubscriber("1234");
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorSubscriber("NO_SUBSCRIBER");
 
             for (NbiDeviceData nbiDeviceData : eqp) {
                 SoutUtil.print(nbiDeviceData);

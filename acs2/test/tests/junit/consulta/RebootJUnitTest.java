@@ -16,16 +16,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import tests.dev;
 import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class FindDeviceByGUIDJUnitTest {
+public class RebootJUnitTest {
 
-    public FindDeviceByGUIDJUnitTest() {
+    public RebootJUnitTest() {
     }
 
     @BeforeClass
@@ -44,20 +43,26 @@ public class FindDeviceByGUIDJUnitTest {
     public void tearDown() {
     }
 
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
     @Test
-    public void findDeviceByGUID() {
+    public void reboot() {
 
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-
             eqp = d.findDeviceByGUID(new Long(94019));
-            SoutUtil.print(eqp);
-            assertTrue(true);
+            // eqp = d.findDeviceByGUID(new Long(23006));
+
+            assertTrue(d.reboot(eqp));
+
         } catch (NBIException_Exception ex) {
-            Logger.getLogger(dev.class.getName()).log(Level.SEVERE, null, ex);
-            assertTrue(false);
+            Logger.getLogger(RebootJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(RebootJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 }
