@@ -54,7 +54,7 @@ public class GetDdnsInfoJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(142014);
+            Long l = new Long(89013);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
 
@@ -64,8 +64,11 @@ public class GetDdnsInfoJUnitTest {
 
             SoutUtil.print(ddns);
 
+            assertTrue(true);
+
         } catch (Exception ex) {
             Logger.getLogger(GetDdnsInfoJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertTrue(false);
         }
 
     }
