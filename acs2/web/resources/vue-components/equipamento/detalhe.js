@@ -131,13 +131,3 @@ Vue.component("detail", {
         return data;
     }
 });
-
-new Vue({
-    el: "#detalhe",
-    data: data,
-    created: function () {
-
-    },
-    methods: {
-    }
-});

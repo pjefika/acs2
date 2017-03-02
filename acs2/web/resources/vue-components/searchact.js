@@ -155,12 +155,3 @@ Vue.component("search-action", {
         return data;
     }
 });
-new Vue({
-    el: "#search",
-    data: data,
-    created: function () {
-
-    },
-    methods: {
-    }
-});
