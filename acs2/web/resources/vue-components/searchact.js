@@ -48,105 +48,100 @@ Vue.component("search-table", {
 });
 Vue.component("search-action", {
     template: "<div class='row'>\n\
-                    <div class='col-lg-6'>\n\
-                        <div class='input-group'>\n\
-                            <input type='text' class='form-control' autofocus placeholder='Buscar...' v-model='inputToSearch' @change='searchChange()' >\n\
-                            <span class='input-group-btn'>\n\
-                                <button class='btn btn-default' type='button' @click='busca()'>Buscar</button>\n\
-                            </span>\n\
-                        </div><!-- /input-group -->\n\
-                    </div><!-- /.col-lg-6 -->\n\
-                </div>",
+                    <div class='row'>\n\
+                        <div class='col-lg-12'>\n\
+                            <div class='form-group'>\n\
+                                <label>Designador</label>\n\
+                                <input type='text' class='form-control' @change='busca()' autofocus placeholder='Buscar por Designador...' v-model='subscriber'>\n\
+                            </div><!-- /input-group -->\n\
+                        </div><!-- /.col-lg-6 -->\n\
+                    </div>\n\
+                    <div class='row'>\n\
+                        <div class='col-lg-12'>\n\
+                            <div class='form-group'>\n\
+                                <label>Serial</label>\n\
+                                <input type='text' class='form-control' @change='busca()' autofocus placeholder='Buscar por Serial...' v-model='serial'>\n\
+                            </div><!-- /input-group -->\n\
+                        </div><!-- /.col-lg-6 -->\n\
+                    </div>\n\
+                    <div class='row'>\n\
+                        <div class='col-lg-12'>\n\
+                            <div class='form-group'>\n\
+                                <label>MAC</label>\n\
+                                <input type='text' class='form-control' @change='busca()' autofocus placeholder='Buscar por MAC...' v-model='mac'>\n\
+                            </div><!-- /input-group -->\n\
+                        </div><!-- /.col-lg-6 -->\n\
+                    </div>\n\
+                    <div class='row'>\n\
+                        <div class='col-lg-12 form-group'>\n\
+                            <label class='sr-only'>buscar</label>\n\
+                            <button class='btn btn-default' @click='busca()'>Buscar</button>\n\
+                        </div>\n\
+                    </div>\n\
+            </div>",
+    props:{
+        subscriber: {
+            type: String,
+            default: ''
+        },
+        serial: {
+            type: String,
+            default: ''
+        },
+        mac: {
+            type: String,
+            default: ''
+        },
+        leOpt: {
+            type: String,
+            default: ''
+        }
+    },
+    computed: {
+        lecrazy: function(){
+            if(this.subscriber.length>this.serial.length && this.subscriber.length>this.mac.length){
+                this.leOpt = "subscriber";
+                return this.subscriber;
+            }
+            if(this.serial.length>this.subscriber.length && this.serial.length>this.mac.length){
+                this.leOpt = "serial";
+                return this.serial;
+            }
+            if(this.mac.length>this.subscriber.length && this.mac.length>this.serial.length){
+                this.leOpt = "mac";
+                return this.mac;
+            }
+        }
+    },
     methods: {
         busca: function () {
             var self = this;
-            if(self.inputToSearch == null){
+            self.inputToSearch = this.lecrazy;
+            var picked = this.leOpt;
+            
+            if(self.inputToSearch == null || self.inputToSearch == ""){
                 return;
             }
+            
             $("#loadingModal").modal({backdrop: "static"});
             $("#loadingModal").modal("show");
             
             //Consulta
-            if (self.picked === "MAC") {
-                console.log("Pesquisa por MAC");
-                $.get(url + "mac/" + self.inputToSearch, function (data) {
-                    self.listaEqp = data.list;
-                }).done(function () {
-                    $("#loadingModal").modal("hide");
-                    self.renderTable = true;
-                    self.inputToSearch = null;
-                    self.picked = null;
-                    $('#leTable').DataTable().destroy();
-                    $(document).ready(function(){
-                        $('#leTable').DataTable({
-                            "language": {
-                                "url": "resources/data-table/pt-br.json"
-                            }
-                        });    
-                    })
-                });
-            } else if (self.picked === "Subscriber") {
-                console.log("Pesquisa por Subscriber");
-                $.get(url + "subscriber/" + self.inputToSearch, function (data) {
-                    self.listaEqp = data.list;
-                }).done(function () {
-                    $("#loadingModal").modal("hide");
-                    self.renderTable = true;
-                    self.inputToSearch = null;
-                    self.picked = null;
-                    $('#leTable').DataTable().destroy();
-                    $(document).ready(function(){
-                        $('#leTable').DataTable({
-                            "language": {
-                                "url": "resources/data-table/pt-br.json"
-                            }
-                        });       
-                    })
-                    
-                });
-            } else if (self.picked === "Serial") {
-                console.log("Pesquisa por Serial");
-                $.get(url + "serial/" + self.inputToSearch, function (data) {
-                    self.listaEqp = data.list;
-                }).done(function () {
-                    $("#loadingModal").modal("hide");
-                    self.renderTable = true;
-                    self.inputToSearch = null;
-                    self.picked = null;
-                    $('#leTable').DataTable().destroy();
-                    $(document).ready(function(){
-                        $('#leTable').DataTable({
-                            "language": {
-                                "url": "resources/data-table/pt-br.json"
-                            }
-                        });       
-                    })
-                });
-            }
-            
-
-        },
-        searchChange: function () {
-            var self = this;
-            //Tira os espaços da varivel
-            self.inputToSearch = self.inputToSearch.trim();
-            //Regexs
-            var regexMac = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/;
-            var regexID = /^[0-9]{5}/;
-            var regexSubs = /[a-zA-Z]{3}[-]?[A-Z0-9]{9}[-]?\d{3}/;
-            
-            if(self.picked == null){
-                if (regexMac.test(self.inputToSearch)) {
-                self.picked = "MAC";
-                } else if (regexSubs.test(self.inputToSearch) || regexID.test(self.inputToSearch)) {
-                    self.picked = "Subscriber";
-                } else {
-                    self.picked = "Serial";
-                }
-            }
-            
-            self.busca();
-
+            $.get(url + picked + "/" + self.inputToSearch, function (data) {
+                self.listaEqp = data.list;
+            }).done(function () {
+                $("#loadingModal").modal("hide");
+                self.renderTable = true;
+                self.inputToSearch = null;
+                $('#leTable').DataTable().destroy();
+                $(document).ready(function(){
+                    $('#leTable').DataTable({
+                        "language": {
+                            "url": "resources/data-table/pt-br.json"
+                        }
+                    });    
+                })
+            });
         }
     },created: function() {
         
