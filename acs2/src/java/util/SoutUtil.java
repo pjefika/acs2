@@ -25,10 +25,8 @@ public class SoutUtil {
         System.out.println("SubscriberID: " + d.getSubscriberID());
         System.out.println("getProductClass: " + d.getDeviceId().getProductClass());
         System.out.println("getProtocol: " + d.getDeviceId().getProtocol());
-        System.out.println("getSerialNumber: " + d.getDeviceId().getSerialNumber());
-        System.out.println("isActivated: " + d.isActivated());
-        System.out.println("isCaptured: " + d.isCaptured());
-        System.out.println("isManaged: " + d.isManaged());
+        System.out.println("SerialNumber: " + d.getDeviceId().getSerialNumber());
+        System.out.println("LastContactTime: " + d.getLastContactTime());
         System.out.println("getConnectionRequestURL: " + d.getConnectionRequestURL());
         System.out.println("getConnectionRequestUsername: " + d.getConnectionRequestUsername());
         System.out.println("getConnectionRequestPassword: " + d.getConnectionRequestPassword());

@@ -11,13 +11,9 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiFirmwareImageData;
 import com.alcatel.hdm.service.nbi2.NbiFunction;
-import com.alcatel.hdm.service.nbi2.NbiOperationProfile;
 import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
@@ -42,7 +38,6 @@ import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import util.JsonUtil;
-import util.SoutUtil;
 
 /**
  *
@@ -116,8 +111,8 @@ public class EquipamentoDAO {
 
             this.initNbi();
             return nbi.findDevicesByTemplate(n, 1, -1);
-        } catch (Exception e) {
-            return new ArrayList<NbiDeviceData>();
+        } catch (NBIException_Exception e) {
+            return new ArrayList<>();
         }
 
     }
@@ -137,8 +132,8 @@ public class EquipamentoDAO {
 
             this.initNbi();
             return nbi.findDevicesByTemplate(n, 1, -1);
-        } catch (Exception e) {
-            return new ArrayList<NbiDeviceData>();
+        } catch (NBIException_Exception e) {
+            return new ArrayList<>();
         }
 
     }
@@ -157,7 +152,8 @@ public class EquipamentoDAO {
             this.initSynchDeviceOperations();
             synch.checkOnline(id, opt, 10000, "");
             return true;
-        } catch (Exception e) {
+        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -178,8 +174,8 @@ public class EquipamentoDAO {
         try {
             this.initNbi();
             return nbi.findDevicesBySubscriberId(subscriber);
-        } catch (Exception e) {
-            return new ArrayList<NbiDeviceData>();
+        } catch (NBIException_Exception e) {
+            return new ArrayList<>();
         }
 
     }
