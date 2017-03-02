@@ -53,7 +53,10 @@ public class CheckOnlineJUnitTestDev {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(new Long(94019));
+//            eqp = d.findDeviceByGUID(new Long(142012));
+//            eqp = d.findDeviceByGUID(new Long(23006));
+            eqp = d.findDeviceByGUID(new Long(142014));
+//            eqp = d.findDeviceByGUID(new Long(23006));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 
             assertTrue(d.checkOnline(eqp));
