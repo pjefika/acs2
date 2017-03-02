@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
            prefix="decorator"%>
 
-<div class="container" id="search" v-cloack>
+<div class="container">
 
     <div class="page-header">
         <h1>Buscar Equipamentos</h1>

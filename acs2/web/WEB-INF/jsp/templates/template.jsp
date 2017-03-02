@@ -22,10 +22,12 @@
         <script src="${pageContext.request.contextPath}/resources/moment/moment.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/data-table/dataTables.min.js"></script>
+        
 
         <decorator:head/>
     </head>
     <body>       
+        
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -84,7 +86,10 @@
                 </div><!--/.nav-collapse -->                
             </div>            
         </nav>
+                <div id="instancia" v-cloak>
             <decorator:body/>
+                </div>
+            <script src="${pageContext.request.contextPath}/resources/vue-components/template.js"></script>
             <!-- Loading Modal -->
             <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog modal-sm" role="document">
@@ -102,3 +107,4 @@
         <!-- /container -->                  
     </body>
 </html>
+

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
            prefix="decorator"%>
-<div class="container" id="detalhe">
+<div class="container">
     <script type="text/html" id="detalhequip">
         <div class="row">
             <div class="col-md-4">
