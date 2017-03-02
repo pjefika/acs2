@@ -50,8 +50,6 @@ public class GetDeviceInfoJUnitTest {
             eqp = d.findDeviceByGUID(new Long(142012));
 
             SoutUtil.print(eqp);
-
-            // d.release(eqp.getDeviceGUID());
             SoutUtil.print(d.getDeviceInfo(eqp));
             assertTrue(true);
 

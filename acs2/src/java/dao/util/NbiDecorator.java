@@ -23,9 +23,29 @@ public class NbiDecorator {
 
         NbiSingleDeviceOperationCallBackInfo cb = new NbiSingleDeviceOperationCallBackInfo();
         cb.setRetry(false);
+
         opt.setDisableCaptureConstraint(true);
         opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(600);
+        opt.setExpirationTimeoutSeconds(60);
+        opt.setFailOnConnectionRequestFailure(true);
+        opt.setNBISingleDeviceOperationCallBackInfo(cb);
+        opt.setOpaqueTransactionId("teste5555");
+        opt.setPolicyClass("policytest");
+        opt.setPriority(100);
+        opt.setReplaceDeviceCachedDataRecord(false);
+        opt.setUpdateCachedDataRecord(true);
+
+        return opt;
+    }
+
+    public static com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault2() {
+        com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationOptions opt = new com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationOptions();
+
+        com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo cb = new com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo();
+        cb.setRetry(false);
+        opt.setDisableCaptureConstraint(true);
+        opt.setExecutionTimeoutSeconds(1200);
+        opt.setExpirationTimeoutSeconds(60);
         opt.setFailOnConnectionRequestFailure(true);
         opt.setNBISingleDeviceOperationCallBackInfo(cb);
         opt.setOpaqueTransactionId("teste5555");
@@ -62,25 +82,6 @@ public class NbiDecorator {
         id.setSerialNumber(d.getDeviceId().getSerialNumber());
 
         return id;
-    }
-
-    public static com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault2() {
-        com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationOptions opt = new com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationOptions();
-
-        com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo cb = new com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo();
-        cb.setRetry(false);
-        opt.setDisableCaptureConstraint(true);
-        opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(60);
-        opt.setFailOnConnectionRequestFailure(true);
-        opt.setNBISingleDeviceOperationCallBackInfo(cb);
-        opt.setOpaqueTransactionId("teste5555");
-        opt.setPolicyClass("policytest");
-        opt.setPriority(100);
-        opt.setReplaceDeviceCachedDataRecord(false);
-        opt.setUpdateCachedDataRecord(true);
-
-        return opt;
     }
 
     public static List<Object> getEmptyJson() {

@@ -13,6 +13,7 @@ import java.util.List;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.pppoe.PPPoECredentialsInfo;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 
 /**
@@ -65,6 +66,16 @@ public class JsonUtil {
         }
 
         return logs;
+    }
+
+    public static PPPoECredentialsInfo getPPPoECredentialsInfo(StringResponseDTO a) {
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonObject jobject = jelement.getAsJsonObject();
+
+        String username = jobject.get("Username").toString().replace("\"", "");
+        String password = jobject.get("Password").toString().replace("\"", "");
+
+        return new PPPoECredentialsInfo(username, password);
     }
 
 }

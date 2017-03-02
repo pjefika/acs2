@@ -10,7 +10,9 @@ import dao.EquipamentoDAO;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.device.ddns.DdnsInfo;
 import model.device.log.DeviceLog;
+import model.device.pppoe.PPPoECredentialsInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,9 +25,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetDeviceLogJUnitTest {
+public class GetPPPoECredentialsJUnitTest {
 
-    public GetDeviceLogJUnitTest() {
+    public GetPPPoECredentialsJUnitTest() {
     }
 
     @BeforeClass
@@ -48,27 +50,27 @@ public class GetDeviceLogJUnitTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void getDeviceLog() {
+    public void getPPPoECredentials() {
 
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(90024);
+            Long l = new Long(94019);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
 
             //d.capture(l);
             // d.release(l);
-            List<DeviceLog> log = d.getDeviceLog(eqp);
+            PPPoECredentialsInfo info = d.getPPPoECredentials(eqp);
 
-            SoutUtil.printl(log);
+            System.out.println(info.getUsername());
+            System.out.println(info.getPassword());
 
-            assertTrue(log.size() > 1);
+            assertTrue(true);
 
         } catch (Exception ex) {
-            Logger.getLogger(GetDeviceLogJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GetPPPoECredentialsJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
             assertTrue(false);
-
         }
 
     }

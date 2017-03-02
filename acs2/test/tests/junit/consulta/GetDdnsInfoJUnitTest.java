@@ -54,7 +54,7 @@ public class GetDdnsInfoJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(89013);
+            Long l = new Long(89018);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
 

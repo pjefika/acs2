@@ -19,8 +19,6 @@ var Equipamento = function(p) {
         this.ipAddress = p.ipAddress;
         if (p.lastActivationTime) {
             this.dataAutenticacao = new Date(p.lastActivationTime.year, p.lastActivationTime.month, p.lastActivationTime.day, p.lastActivationTime.hour, p.lastActivationTime.minute, p.lastActivationTime.second);
-        } else {
-            this.dataAutenticacao = null;
         }
     }
 };
