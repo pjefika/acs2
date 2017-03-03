@@ -67,11 +67,12 @@ public class EquipamentoDAO {
     public Boolean reboot(NbiDeviceData eqp) {
         try {
             this.initSynchDeviceOperations();
-            synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
+            synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 500, "");
             return true;
-        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
-            e.printStackTrace();
+        } catch (DeviceOperationException | NBIException | ProviderException e) {
             return false;
+        } catch (OperationTimeoutException ex) {
+            return true;
         }
     }
 

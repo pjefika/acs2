@@ -53,7 +53,7 @@ public class EquipamentoController extends AbstractController {
             }
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
-            jobj.add("CheckOnline", new Gson().toJsonTree(checkOnline));
+            jobj.add("CcheckOnline", new Gson().toJsonTree(checkOnline));
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
