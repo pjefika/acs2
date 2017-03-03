@@ -16,8 +16,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
+import model.device.firmware.FirmwareInfo;
 
 /**
  *
@@ -34,23 +37,29 @@ public class EquipamentoController extends AbstractController {
 
     @Path("/equipamento/detalhe/{guid}")
     public void detalhes(String guid) {
+
+        JsonObject jobj = new JsonObject();
+
+        NbiDeviceData ndd;
         try {
-            JsonObject jobj = new JsonObject();
-            NbiDeviceData ndd = dao.findDeviceByGUID(new Long(guid));
-            Boolean getFirmIsOk = dao.getFirmwareVersion(ndd).isOk();
+            ndd = dao.findDeviceByGUID(new Long(guid));
+
+            FirmwareInfo oi = dao.getFirmwareVersion(ndd);
             Boolean checkOnline = dao.checkOnline(ndd);
+
+            if (checkOnline) {
+                Boolean getFirmIsOk = dao.getFirmwareVersion(ndd).isOk();
+                jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
+            }
+
             jobj.add("eqp", new Gson().toJsonTree(ndd));
-            jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
-            jobj.add("CheckOnline", new Gson().toJsonTree(checkOnline));
-            String json = new Gson().toJson(jobj);
-//            Gson gson = new Gson();
-//            String json = gson.toJson(ndd, NbiDeviceData.class);                        
-//            result.include("firmwarePend", getFirmIsOk);
-//            result.include("checkOnline", checkOnline);            
-            result.include("equipamento", json);
-        } catch (Exception ex) {
-            this.includeSerializer(ex);
+            jobj.add("CcheckOnline", new Gson().toJsonTree(checkOnline));
+            result.include("equipamento", new Gson().toJson(jobj));
+
+        } catch (NBIException_Exception ex) {
+            result.include("exception", "Falha ao consultar Serviços Motive.");
         }
+
     }
 
     @Path("/equipamento/detalhe/json/{guid}")
@@ -94,7 +103,7 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer(e);
         }
     }
-    
+
     @Post
     @Consumes("application/json")
     @Path("/equipamento/factoryReset/")
@@ -111,17 +120,6 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/checkOnline/")
     public void checkOnline(NbiDeviceData nbiDeviceData) {
         this.includeSerializer(dao.checkOnline(nbiDeviceData));
-    }
-    
-    @Post
-    @Consumes("application/json")
-    @Path("/equipamento/getWifi/")
-    public void getWifi(NbiDeviceData nbiDeviceData) {
-        try {
-            this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
-        } catch (Exception ex) {
-            this.includeSerializer(ex);
-        }
     }
 
     @Override
