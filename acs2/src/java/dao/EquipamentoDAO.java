@@ -97,12 +97,10 @@ public class EquipamentoDAO {
     }
 
     public Boolean checkOnline(NbiDeviceData eqp) {
-
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-
         try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
-            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 10000, "");
+            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 1000, "");
             return true;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             return false;
@@ -185,11 +183,15 @@ public class EquipamentoDAO {
 //        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9527, opt, 10000, "");
 //        return JsonUtil.firmwareInfo(a);
 //    }
-    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws Exception {
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
-        return JsonUtil.firmwareInfo(a);
+    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) {
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
+            return JsonUtil.firmwareInfo(a);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public WifiInfo getWifiInfo(NbiDeviceData eqp) throws Exception {
