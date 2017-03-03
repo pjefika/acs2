@@ -33,6 +33,7 @@ import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.wifi.WifiInfo;
 import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.StringResponseDTO;
@@ -67,7 +68,7 @@ public class EquipamentoDAO {
     public Boolean reboot(NbiDeviceData eqp) {
         try {
             this.initSynchDeviceOperations();
-            synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "efika");
+            synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
             return true;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
@@ -78,7 +79,7 @@ public class EquipamentoDAO {
     public Boolean factoryReset(NbiDeviceData eqp) {
         try {
             this.initSynchDeviceOperations();
-            synch.factoryReset(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "efika");
+            synch.factoryReset(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
             return true;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
@@ -94,6 +95,41 @@ public class EquipamentoDAO {
     public void release(Long guid) throws NBIException_Exception {
         this.initNbi();
         nbi.releaseDevice(guid);
+    }
+
+    public Boolean checkOnline(NbiDeviceData eqp) {
+
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+
+        try {
+            this.initSynchDeviceOperations();
+            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 10000, "");
+            return true;
+        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+            return false;
+        }
+    }
+
+    public Long firmwareUpdate(NbiDeviceData eqp) throws NBIException_Exception {
+        this.initNbi();
+        NbiFunction func = new NbiFunction();
+        func.setFunctionCode(1200);
+        return nbi.createSingleDeviceOperationByDeviceGUID(eqp.getDeviceGUID(), func, NbiDecorator.getDeviceOperationOptionsDefault2());
+    }
+
+    public NbiDeviceActionResult getDeviceOperationStatus(NbiDeviceData eqp, Long operationId) throws NBIException_Exception {
+        this.initNbi();
+        return nbi.getDeviceOperationStatus(eqp.getDeviceId(), operationId);
+    }
+
+    public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {
+        try {
+            this.initNbi();
+            return nbi.findDevicesBySubscriberId(subscriber);
+        } catch (NBIException_Exception e) {
+            return new ArrayList<>();
+        }
+
     }
 
     public List<NbiDeviceData> listarEquipamentosPorMac(String mac) throws NBIException_Exception {
@@ -137,41 +173,6 @@ public class EquipamentoDAO {
 
     }
 
-    public Boolean checkOnline(NbiDeviceData eqp) {
-
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-
-        try {
-            this.initSynchDeviceOperations();
-            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 10000, "");
-            return true;
-        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
-            return false;
-        }
-    }
-
-    public Long firmwareUpdate(NbiDeviceData eqp) throws NBIException_Exception {
-        this.initNbi();
-        NbiFunction func = new NbiFunction();
-        func.setFunctionCode(1200);
-        return nbi.createSingleDeviceOperationByDeviceGUID(eqp.getDeviceGUID(), func, NbiDecorator.getDeviceOperationOptionsDefault2());
-    }
-
-    public NbiDeviceActionResult getDeviceOperationStatus(NbiDeviceData eqp, Long operationId) throws NBIException_Exception {
-        this.initNbi();
-        return nbi.getDeviceOperationStatus(eqp.getDeviceId(), operationId);
-    }
-
-    public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {
-        try {
-            this.initNbi();
-            return nbi.findDevicesBySubscriberId(subscriber);
-        } catch (NBIException_Exception e) {
-            return new ArrayList<>();
-        }
-
-    }
-
     /**
      * Utilizar output do método Find By GUID
      *
@@ -190,6 +191,13 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
         return JsonUtil.firmwareInfo(a);
+    }
+
+    public WifiInfo getWifiInfo(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9511, opt, 10000, "");
+        return JsonUtil.getWifiInfo(a);
     }
 
     public DdnsInfo getDdns(NbiDeviceData eqp) throws Exception {

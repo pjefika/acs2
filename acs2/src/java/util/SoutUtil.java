@@ -12,6 +12,7 @@ import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.wifi.WifiInfo;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 
 /**
@@ -56,6 +57,14 @@ public class SoutUtil {
     public static void print(PPPoECredentialsInfo info) {
         System.out.println("Username: " + info.getUsername());
         System.out.println("Password: " + info.getPassword());
+    }
+
+    public static void print(WifiInfo info) {
+        System.out.println("SSID: " + info.getSsid());
+        System.out.println("Password: " + info.getSsidPassword());
+        System.out.println("Frequency: " + info.getFrequency());
+        System.out.println("Enryptation: " + info.getEnryptation());
+
     }
 
     public static void printl(List<DeviceLog> l) {
