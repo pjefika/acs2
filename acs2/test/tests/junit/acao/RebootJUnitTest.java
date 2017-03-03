@@ -54,7 +54,7 @@ public class RebootJUnitTest {
 
             NbiDeviceData eqp;
             // eqp = d.findDeviceByGUID(new Long(142014));
-            eqp = d.findDeviceByGUID(new Long(23006));
+            eqp = d.findDeviceByGUID(new Long(139020));
 
             assertTrue(d.reboot(eqp));
 

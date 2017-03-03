@@ -47,10 +47,10 @@ public class GetDeviceInfoJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(142012));
+            eqp = d.findDeviceByGUID(new Long(139020));
 
             SoutUtil.print(eqp);
-            SoutUtil.print(d.getDeviceInfo(eqp));
+            // SoutUtil.print(d.getDeviceInfo(eqp));
             assertTrue(true);
 
         } catch (Exception ex) {

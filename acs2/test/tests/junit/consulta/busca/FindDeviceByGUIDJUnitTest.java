@@ -3,26 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.busca;
 
+import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tests.dev;
 import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class FindDevicesBySubscriberIdJUnitTest {
+public class FindDeviceByGUIDJUnitTest {
 
-    public FindDevicesBySubscriberIdJUnitTest() {
+    public FindDeviceByGUIDJUnitTest() {
     }
 
     @BeforeClass
@@ -42,22 +45,19 @@ public class FindDevicesBySubscriberIdJUnitTest {
     }
 
     @Test
-    public void findDevicesBySubscriberId() {
+    public void findDeviceByGUID() {
 
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            List<NbiDeviceData> eqp = d.listarEquipamentosPorSubscriber("NO_SUBSCRIBER");
+            NbiDeviceData eqp;
 
-            for (NbiDeviceData nbiDeviceData : eqp) {
-                SoutUtil.print(nbiDeviceData);
-                System.out.println("-----------------");
-            }
+            eqp = d.findDeviceByGUID(new Long(142014));
+            SoutUtil.print(eqp);
             assertTrue(true);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (NBIException_Exception ex) {
+            Logger.getLogger(dev.class.getName()).log(Level.SEVERE, null, ex);
             assertTrue(false);
         }
-
     }
 }

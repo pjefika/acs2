@@ -7,11 +7,9 @@ package tests.junit.consulta;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.device.ddns.DdnsInfo;
-import model.device.log.DeviceLog;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -54,7 +52,7 @@ public class GetDdnsInfoJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(90024);
+            Long l = new Long(139020);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
 

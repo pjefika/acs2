@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.busca;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
@@ -20,9 +20,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class ListarEquipamentosPorSerialJUnitTest {
+public class FindDevicesBySerialJUnitTest {
 
-    public ListarEquipamentosPorSerialJUnitTest() {
+    public FindDevicesBySerialJUnitTest() {
     }
 
     @BeforeClass
@@ -48,7 +48,7 @@ public class ListarEquipamentosPorSerialJUnitTest {
     public void listarEquipamentosPorSerial() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("LU1322503001553");
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("E041369C0BE8");
             SoutUtil.print(eqp);
             assertTrue(true);
         } catch (Exception ex) {

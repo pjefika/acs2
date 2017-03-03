@@ -71,7 +71,6 @@ public class JsonUtil {
     public static PPPoECredentialsInfo getPPPoECredentialsInfo(StringResponseDTO a) {
         JsonElement jelement = new JsonParser().parse(a.getValue());
         JsonObject jobject = jelement.getAsJsonObject();
-
         String username = jobject.get("Username").toString().replace("\"", "");
         String password = jobject.get("Password").toString().replace("\"", "");
 

@@ -44,8 +44,7 @@ public class GetAllAvailableProfilesJUnitTest {
     public void getAllAvailableProfiles() {
         try {
 
-            Long guid = new Long(94019);
-            EquipamentoDAO d = new EquipamentoDAO();
+            Long guid = new Long(139020);
 
         } catch (Exception ex) {
             ex.printStackTrace();

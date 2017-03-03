@@ -33,7 +33,6 @@ import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
 import model.device.pppoe.PPPoECredentialsInfo;
-import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.StringResponseDTO;
@@ -50,8 +49,8 @@ public class EquipamentoDAO {
     private SynchDeviceOperationsService synch;
 
     public EquipamentoDAO() {
-        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
-        System.setProperty("http.proxyPort", "8080");
+//        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
+//        System.setProperty("http.proxyPort", "8080");
     }
 
     /**
@@ -139,21 +138,14 @@ public class EquipamentoDAO {
     }
 
     public Boolean checkOnline(NbiDeviceData eqp) {
-        NbiDeviceID id = new NbiDeviceID();
-
-        id.setOUI(eqp.getDeviceId().getOUI());
-        id.setProductClass(eqp.getDeviceId().getProductClass());
-        id.setProtocol(eqp.getDeviceId().getProtocol());
-        id.setSerialNumber(eqp.getDeviceId().getSerialNumber());
 
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
 
         try {
             this.initSynchDeviceOperations();
-            synch.checkOnline(id, opt, 10000, "");
+            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 10000, "");
             return true;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -185,31 +177,14 @@ public class EquipamentoDAO {
      *
      * @param eqp
      * @return
-     * @throws
-     * com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException
      * @throws java.lang.Exception
      */
-    public ExecuteFunctionResponse getDeviceInfo(NbiDeviceData eqp) throws Exception {
-
-        NbiDeviceID id = new NbiDeviceID();
-
-        id.setOUI(eqp.getDeviceId().getOUI());
-        id.setProductClass(eqp.getDeviceId().getProductClass());
-        id.setProtocol(eqp.getDeviceId().getProtocol());
-        id.setSerialNumber(eqp.getDeviceId().getSerialNumber());
-
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-
-        this.initSynchDeviceOperations();
-
-        try {
-            return (ExecuteFunctionResponse) synch.executeFunction(id, NbiDecorator.getEmptyJson(), 9527, opt, 10000, "");
-        } catch (DeviceOperationException e) {
-            System.out.println("OperationId: " + e.getFaultInfo().getOperationId());
-            throw e;
-        }
-    }
-
+//    public ExecuteFunctionResponse getDeviceInfo(NbiDeviceData eqp) throws Exception {
+//        this.initSynchDeviceOperations();
+//        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+//        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9527, opt, 10000, "");
+//        return JsonUtil.firmwareInfo(a);
+//    }
     public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
@@ -220,7 +195,7 @@ public class EquipamentoDAO {
     public DdnsInfo getDdns(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 10000, "efika");
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 10000, "");
         return JsonUtil.ddnsInfo(a);
     }
 
@@ -231,11 +206,17 @@ public class EquipamentoDAO {
         return JsonUtil.deviceLog(a);
     }
 
-    public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) throws Exception {
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9523, opt, 10000, "efika");
-        return JsonUtil.getPPPoECredentialsInfo(a);
+    public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) {
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9523, opt, 10000, "");
+            return JsonUtil.getPPPoECredentialsInfo(a);
+        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public NbiOperationStatus getDeviceOperationStatus(Long operationId) throws NBIException_Exception {

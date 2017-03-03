@@ -5,6 +5,7 @@
  */
 package tests.junit.consulta;
 
+import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import java.util.List;
@@ -50,28 +51,21 @@ public class GetPPPoECredentialsJUnitTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void getPPPoECredentials() {
+    public void getPPPoECredentials() throws NBIException_Exception {
 
-        try {
-            EquipamentoDAO d = new EquipamentoDAO();
+        EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(90024);
-            NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(l);
+        Long l = new Long(139020);
+        NbiDeviceData eqp;
+        eqp = d.findDeviceByGUID(l);
 
-            //d.capture(l);
-            // d.release(l);
-            PPPoECredentialsInfo info = d.getPPPoECredentials(eqp);
+        //d.capture(l);
+        // d.release(l);
+        PPPoECredentialsInfo info = d.getPPPoECredentials(eqp);
 
-            System.out.println(info.getUsername());
-            System.out.println(info.getPassword());
+        SoutUtil.print(info);
 
-            assertTrue(true);
-
-        } catch (Exception ex) {
-            Logger.getLogger(GetPPPoECredentialsJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
-            assertTrue(false);
-        }
+        assertTrue(true);
 
     }
 }

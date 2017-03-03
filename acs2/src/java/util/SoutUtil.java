@@ -11,6 +11,7 @@ import java.util.List;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.pppoe.PPPoECredentialsInfo;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 
 /**
@@ -50,6 +51,11 @@ public class SoutUtil {
         for (NbiDeviceData nbiDeviceData : ds) {
             print(nbiDeviceData);
         }
+    }
+
+    public static void print(PPPoECredentialsInfo info) {
+        System.out.println("Username: " + info.getUsername());
+        System.out.println("Password: " + info.getPassword());
     }
 
     public static void printl(List<DeviceLog> l) {
