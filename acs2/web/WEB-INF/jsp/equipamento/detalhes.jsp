@@ -7,8 +7,9 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12" @click="checkOnline()">
                         <img src="http://lojadomodem.com.br/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/0/0/00_1_4.jpg" 
+                             id="imgDetalhes"
                              v-bind:class="['img-responsive', eqp.checkOn ? 'onlineGreen' : 'offLineRed']"
                              style="padding: 0; width: 100%;">                       
                     </div>
@@ -16,7 +17,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="list-group">
-                            <li v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']">
+                            <li id="chOn" v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']">
                                 <label>CheckOnline: </label> 
                                 <span v-if="eqp.checkOn">Ativo</span>
                                 <span v-else>Inativo</span>

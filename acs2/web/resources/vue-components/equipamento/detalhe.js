@@ -109,7 +109,34 @@ Vue.component("detail", {
                     $("#loadingModal").modal("hide");
                 }
             });
-        }       
+        },
+        checkOnline: function () {
+            $.ajax({
+                type: "POST",
+                url: url + "checkOnline/",
+                data: JSON.stringify(this.eqp),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    $("#loadingModal").modal("show");
+                },
+                success: function (data) {
+                    $("#loadingModal").modal("hide");
+                    if (data.boolean) {
+                        $("#chOn").addClass("alert-success");
+                        $("#imgDetalhes").css("border", "3px solid green");
+                    } else {
+                        $("#chOn").addClass("alert-danger");
+                        $("#imgDetalhes").css("border", "3px solid red");
+                    }
+                },
+                error: function () {
+                    $("#loadingModal").modal("hide");
+                    $("#chOn").addClass("alert-danger");
+                    $("#imgDetalhes").css("border", "3px solid red");
+                }
+            });
+        }
     },
     data: function () {
         return data;
