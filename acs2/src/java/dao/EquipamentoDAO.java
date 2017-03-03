@@ -34,7 +34,6 @@ import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
-import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import util.JsonUtil;
@@ -50,8 +49,8 @@ public class EquipamentoDAO {
     private SynchDeviceOperationsService synch;
 
     public EquipamentoDAO() {
-//        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
-//        System.setProperty("http.proxyPort", "8080");
+        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
+        System.setProperty("http.proxyPort", "8080");
     }
 
     /**
