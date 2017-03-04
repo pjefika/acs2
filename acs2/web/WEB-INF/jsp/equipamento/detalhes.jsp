@@ -6,24 +6,25 @@
     <script type="text/html" id="detalhequip">
         <div>
             <div class="page-header">
-                <h1>Detalhes Equipamento</h1>
+                <h1>Detalhes Equipamento: <span v-text="eqp.deviceId.serialNumber"></span></h1>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="http://lojadomodem.com.br/media/catalog/product/cache/1/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/0/0/00_1_4.jpg"
-                                 v-bind:class="['img-responsive', eqp.checkOn ? 'onlineGreen' : 'offLineRed']"
-                                 style="padding: 0; width: 100%;">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
                             <ul class="list-group">
                                 <li v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']">
-                                    <label>CheckOnline: </label>
+                                    <label>Status: </label>
                                     <span v-if="eqp.checkOn">Ativo</span>
                                     <span v-else>Inativo</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Serial:</label>
+                                    <span v-text="eqp.deviceId.serialNumber"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>MAC:</label>
+                                    <span v-text="eqp.macAddress"></span>
                                 </li>
                                 <li class="list-group-item">
                                     <label>Firmware: </label>
@@ -31,13 +32,17 @@
                                     <span v-else>Desatualizado</span>
                                     <button class="btn btn-danger" type="button" @click="updateFirmware()">Atualizar</button>
                                 </li>
+                                <!--                                <li class="list-group-item">
+                                                                    <label>Status: </label>
+                                                                    <span v-text="eqp.activated"></span>
+                                                                </li>-->
                                 <li class="list-group-item">
-                                    <label>Status: </label>
-                                    <span v-text="eqp.activated"></span>
+                                    <label>Nome do Modelo:</label>
+                                    <span v-text="eqp.modelName"></span>
                                 </li>
                                 <li class="list-group-item">
-                                    <label>MAC:</label>
-                                    <span v-text="eqp.macAddress"></span>
+                                    <label>IP:</label>
+                                    <span v-text="eqp.ipAddress"></span>
                                 </li>
                                 <li class="list-group-item">
                                     <label>DeviceGUID:</label>
@@ -47,26 +52,15 @@
                                     <label>Fabricante:</label>
                                     <span v-text="eqp.manufacturer"></span>
                                 </li>
+                                <!--                                <li class="list-group-item">
+                                                                    <label>Modelo:</label>
+                                                                    <span v-text="eqp.model"></span>
+                                                                </li>-->
                                 <li class="list-group-item">
-                                    <label>Modelo:</label>
-                                    <span v-text="eqp.model"></span>
-                                </li>
-                                <li class="list-group-item">
-                                    <label>Nome do Modelo:</label>
-                                    <span v-text="eqp.modelName"></span>
-                                </li>
-                                <li class="list-group-item">
-                                    <label>Serial:</label>
-                                    <span v-text="eqp.deviceId.serialNumber"></span>
-                                </li>
-                                <li class="list-group-item">
-                                    <label>Autenticação:</label>
+                                    <label>Data Autenticação:</label>
                                     <span v-text="eqp.dateFormat(eqp.dataAutenticacao)"></span>
                                 </li>
-                                <li class="list-group-item">
-                                    <label>IP:</label>
-                                    <span v-text="eqp.ipAddress"></span>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -75,7 +69,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="list-group">
-                                <label class="list-group-item">Consulta</label>
+                                <label class="list-group-item">Consultas</label>
                                 <button type="button" class="list-group-item">Consultar WAN</button>
                                 <button type="button" class="list-group-item">Consultar Interface</button>
                                 <button type="button" class="list-group-item">Consultar LAN Host</button>
@@ -86,7 +80,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="list-group">
-                                <label class="list-group-item">Ação</label>
+                                <label class="list-group-item">Ações</label>
                                 <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalReboot" data-backdrop="static">Reboot</button>
                                 <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalFactory" data-backdrop="static">Reset de Fábrica</button>
                                 <button type="button" class="list-group-item">Efetuar Traceroute</button>
