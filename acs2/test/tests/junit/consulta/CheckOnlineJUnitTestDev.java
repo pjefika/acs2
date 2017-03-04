@@ -58,13 +58,11 @@ public class CheckOnlineJUnitTestDev {
             eqp = d.findDeviceByGUID(new Long(139020));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 //            eqp = d.findDeviceByGUID(new Long(23006));
-
             assertTrue(d.checkOnline(eqp));
 
         } catch (NBIException_Exception ex) {
-            Logger.getLogger(CheckOnlineJUnitTestDev.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(CheckOnlineJUnitTestDev.class.getName()).log(Level.SEVERE, null, ex);
+            assertTrue(false);
+
         }
 
     }

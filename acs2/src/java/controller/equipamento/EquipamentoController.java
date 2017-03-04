@@ -44,12 +44,14 @@ public class EquipamentoController extends AbstractController {
         try {
             ndd = dao.findDeviceByGUID(new Long(guid));
 
-            FirmwareInfo oi = dao.getFirmwareVersion(ndd);
             Boolean checkOnline = dao.checkOnline(ndd);
 
             if (checkOnline) {
-                Boolean getFirmIsOk = dao.getFirmwareVersion(ndd).isOk();
-                jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
+                FirmwareInfo oi = dao.getFirmwareVersion(ndd);
+                if (oi != null) {
+                    Boolean getFirmIsOk = oi.isOk();
+                    jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
+                }
             }
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));

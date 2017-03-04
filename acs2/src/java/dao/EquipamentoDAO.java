@@ -101,7 +101,7 @@ public class EquipamentoDAO {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
-            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 1000, "");
+            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 10000, "");
             return true;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             return false;
