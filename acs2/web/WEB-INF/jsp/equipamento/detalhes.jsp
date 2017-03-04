@@ -6,7 +6,7 @@
     <script type="text/html" id="detalhequip">
         <div>
             <div class="page-header">
-                <h1>Detalhes Equipamento: <span v-text="eqp.deviceId.serialNumber"></span></h1>
+                <h1>Detalhes do Equipamento: <span v-text="eqp.deviceId.serialNumber"></span></h1>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -32,26 +32,30 @@
                                     <span v-else>Desatualizado</span>
                                     <button class="btn btn-danger" type="button" @click="updateFirmware()">Atualizar</button>
                                 </li>
-                                <!--                                <li class="list-group-item">
-                                                                    <label>Status: </label>
-                                                                    <span v-text="eqp.activated"></span>
-                                                                </li>-->
+                                <!--
+                                    <li class="list-group-item">
+                                        <label>Status: </label>
+                                        <span v-text="eqp.activated"></span>
+                                    </li>
+                                -->
                                 <li class="list-group-item">
                                     <label>Nome do Modelo:</label>
                                     <span v-text="eqp.modelName"></span>
                                 </li>
                                 <li class="list-group-item">
+                                    <label>Fabricante:</label>
+                                    <span v-text="eqp.manufacturer"></span>
+                                </li>
+                                <li class="list-group-item">
                                     <label>IP:</label>
                                     <span v-text="eqp.ipAddress"></span>
                                 </li>
+                                <!--
                                 <li class="list-group-item">
                                     <label>DeviceGUID:</label>
                                     <span v-text="eqp.deviceGUID"></span>
                                 </li>
-                                <li class="list-group-item">
-                                    <label>Fabricante:</label>
-                                    <span v-text="eqp.manufacturer"></span>
-                                </li>
+                                -->
                                 <!--                                <li class="list-group-item">
                                                                     <label>Modelo:</label>
                                                                     <span v-text="eqp.model"></span>

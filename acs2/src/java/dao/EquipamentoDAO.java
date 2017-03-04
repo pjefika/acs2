@@ -124,17 +124,18 @@ public class EquipamentoDAO {
         return nbi.getDeviceOperationStatus(eqp.getDeviceId(), operationId);
     }
 
-    public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {
+    public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) {
         try {
             this.initNbi();
             return nbi.findDevicesBySubscriberId(subscriber);
-        } catch (NBIException_Exception e) {
+        } catch (Exception e) {
+            //e.printStackTrace();
             return new ArrayList<>();
         }
 
     }
 
-    public List<NbiDeviceData> listarEquipamentosPorMac(String mac) throws NBIException_Exception {
+    public List<NbiDeviceData> listarEquipamentosPorMac(String mac) {
         try {
             NbiTemplate n = new NbiTemplate();
             n.setName("Find Devices By MacAddress");
@@ -148,13 +149,13 @@ public class EquipamentoDAO {
 
             this.initNbi();
             return nbi.findDevicesByTemplate(n, 1, -1);
-        } catch (NBIException_Exception e) {
+        } catch (Exception e) {
             return new ArrayList<>();
         }
 
     }
 
-    public List<NbiDeviceData> listarEquipamentosPorSerial(String serial) throws NBIException_Exception {
+    public List<NbiDeviceData> listarEquipamentosPorSerial(String serial) {
 
         try {
             NbiTemplate n = new NbiTemplate();
@@ -169,10 +170,9 @@ public class EquipamentoDAO {
 
             this.initNbi();
             return nbi.findDevicesByTemplate(n, 1, -1);
-        } catch (NBIException_Exception e) {
+        } catch (Exception e) {
             return new ArrayList<>();
         }
-
     }
 
     /**
