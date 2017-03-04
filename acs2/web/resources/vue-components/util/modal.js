@@ -15,7 +15,7 @@ Vue.component("modal", {
                             <h4 class='modal-title' id='myModalLabel'>Configurações Rede WiFi</h4>\n\
                         </div>\n\
                         <div class='modal-body'>\n\
-                          {{ body }} <component  v-bind:is='body'></component> \n\
+                          <component v-bind:eqp-string='eqpString' v-bind:is='body'></component> \n\
                         </div>\n\
                     </div>\n\
                 </div>\n\

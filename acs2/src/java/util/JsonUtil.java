@@ -38,7 +38,7 @@ public class JsonUtil {
         JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
 
-        System.out.println(jobject.toString());
+        System.out.println("FullJson: " + jobject.toString());
 
         String index = jobject.get("index").toString().replace("\"", "");
         String authentication = jobject.get("authentication").toString().replace("\"", "");

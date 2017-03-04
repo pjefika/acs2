@@ -144,6 +144,7 @@
 
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/wifiInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>
