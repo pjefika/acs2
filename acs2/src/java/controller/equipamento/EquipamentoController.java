@@ -16,8 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
@@ -44,16 +42,18 @@ public class EquipamentoController extends AbstractController {
         try {
             ndd = dao.findDeviceByGUID(new Long(guid));
 
-            FirmwareInfo oi = dao.getFirmwareVersion(ndd);
             Boolean checkOnline = dao.checkOnline(ndd);
 
             if (checkOnline) {
-                Boolean getFirmIsOk = dao.getFirmwareVersion(ndd).isOk();
-                jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
+                FirmwareInfo oi = dao.getFirmwareVersion(ndd);
+                if (oi != null) {
+                    Boolean getFirmIsOk = oi.isOk();
+                    jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
+                }
             }
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
-            jobj.add("CcheckOnline", new Gson().toJsonTree(checkOnline));
+            jobj.add("checkOn", new Gson().toJsonTree(checkOnline));
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {

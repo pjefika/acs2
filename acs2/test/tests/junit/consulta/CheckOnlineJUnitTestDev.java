@@ -65,6 +65,8 @@ public class CheckOnlineJUnitTestDev {
 
         } catch (Exception e) {
             e.printStackTrace();
+            assertTrue(false);
+
         }
 
     }
