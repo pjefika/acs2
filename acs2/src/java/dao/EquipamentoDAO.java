@@ -67,7 +67,7 @@ public class EquipamentoDAO {
     public Boolean reboot(NbiDeviceData eqp) {
         try {
             this.initSynchDeviceOperations();
-            synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 500, "");
+            synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
             return true;
         } catch (DeviceOperationException | NBIException | ProviderException e) {
             return false;
@@ -97,11 +97,15 @@ public class EquipamentoDAO {
         nbi.releaseDevice(guid);
     }
 
+    /**
+     * *
+     * Pendencia na tratativa de Exceção
+     */
     public Boolean checkOnline(NbiDeviceData eqp) {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
-            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 1000, "");
+            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 10000, "");
             return true;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             return false;
