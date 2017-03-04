@@ -9,14 +9,9 @@
         <h1>Buscar Equipamentos</h1>
     </div>
     <div class="row">
-        <div class="col-lg-4">
-            <search-action></search-action>    
-        </div>
-        <div class="col-lg-8">
-            <search-table></search-table>
-        </div>
+        <search-action></search-action>
     </div>
-    
-    
+
+
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/searchact.js"></script>

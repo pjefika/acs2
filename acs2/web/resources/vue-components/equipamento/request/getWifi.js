@@ -11,7 +11,7 @@ Vue.component("getWifi", {
             type: String,
             required: true
         },
-        eqp: {
+        equipamento: {
             type: Equipamento,
             default: function() {
                 return new Equipamento(this.eqpString);
