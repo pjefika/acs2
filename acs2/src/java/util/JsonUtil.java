@@ -56,8 +56,8 @@ public class JsonUtil {
         i.setBroadcastEnabled(broadcastEnabled);
         i.setChannel(channel);
         i.setOperStatus(operStatus);
-        i.setEnryptation(encryptation);
-        i.setRadioStatus(radioStatus);
+        i.setEncryptation(encryptation);
+        i.setRadioEnabled(radioStatus);
         i.setSsid(ssid);
         i.setStandard(standard);
         i.setSsidPassword(password);

@@ -17,8 +17,8 @@ public class WifiInfo {
             broadcastEnabled,
             channel,
             operStatus,
-            enryptation,
-            radioStatus,
+            encryptation,
+            radioEnabled,
             ssid,
             standard,
             ssidPassword;
@@ -74,20 +74,20 @@ public class WifiInfo {
         this.operStatus = operStatus;
     }
 
-    public String getEnryptation() {
-        return enryptation;
+    public String getEncryptation() {
+        return encryptation;
     }
 
-    public void setEnryptation(String enryptation) {
-        this.enryptation = enryptation;
+    public void setEncryptation(String encryptation) {
+        this.encryptation = encryptation;
     }
 
-    public String getRadioStatus() {
-        return radioStatus;
+    public String getRadioEnabled() {
+        return radioEnabled;
     }
 
-    public void setRadioStatus(String radioStatus) {
-        this.radioStatus = radioStatus;
+    public void setRadioEnabled(String radioEnabled) {
+        this.radioEnabled = radioEnabled;
     }
 
     public String getSsid() {

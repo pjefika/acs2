@@ -31,6 +31,7 @@ Vue.component("getWifi", {
     },
     methods: {
         getWifi: function() {
+            var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "getWifiInfo/",
@@ -41,7 +42,7 @@ Vue.component("getWifi", {
                 },
                 success: function(data) {
                     console.log(data.wifiInfo)
-                    this.infoCache = new WifiInfo(data.wifiInfo);
+                    self.infoCache = new WifiInfo(data.wifiInfo);
                 },
                 error: function(e) {
                     console.log(e)
@@ -49,9 +50,36 @@ Vue.component("getWifi", {
             });
         }
     },
-    template: "<div>\n\
+    template: "<div class='form'>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>SSID (Nome da Rede WiFi)</label>\n\
+                        <input class='form-control' v-model='infoCache.ssid'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Senha</label>\n\
+                        <input class='form-control' v-model='infoCache.ssidPassword'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Encriptação</label>\n\
+                        <input class='form-control' v-model='infoCache.encryptation'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Status</label>\n\
+                        <input class='form-control' v-model='infoCache.operStatus'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Canal</label>\n\
+                        <input class='form-control' v-model='infoCache.channel'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Broadcast</label>\n\
+                        <input class='form-control' v-model='infoCache.broadcastEnabled'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Radio</label>\n\
+                        <input class='form-control' v-model='infoCache.radioEnabled'>\n\
+                    </div>\n\
                     <button type='button' class='btn btn-primary' @click='getWifi()'>getWifi</button>\n\
-                    <span v-text='infoCache'></span>\n\
                </div>"
 });
 
