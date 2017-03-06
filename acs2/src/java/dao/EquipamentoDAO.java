@@ -14,6 +14,7 @@ import com.alcatel.hdm.service.nbi2.NbiFunction;
 import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
+import com.google.gson.Gson;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
@@ -204,6 +205,25 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9511, opt, 10000, "");
         return JsonUtil.getWifiInfo(a);
+    }
+
+    public Boolean setWifiInfo(NbiDeviceData eqp, WifiInfo wifi) throws Exception {
+
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+
+            List<Object> json = NbiDecorator.getEmptyJson();
+            json.set(0, new Gson().toJsonTree(wifi));
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 10000, "");
+            return true;
+        } catch (DeviceOperationException | OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
+            return true;
+        } catch (NBIException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public DdnsInfo getDdns(NbiDeviceData eqp) throws Exception {
