@@ -52,6 +52,9 @@ Vue.component("getWifi", {
                     console.log(e)
                 }
             });
+        },
+        setWifi: function(){
+            
         }
     },
     template: "<div class='form'>\n\
