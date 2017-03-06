@@ -35,6 +35,7 @@ import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoSet;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import util.JsonUtil;
@@ -207,20 +208,27 @@ public class EquipamentoDAO {
         return JsonUtil.getWifiInfo(a);
     }
 
+    /**
+     * Somente parâmetros alteraveis podem ser serializados para essa chamada
+     */
     public Boolean setWifiInfo(NbiDeviceData eqp, WifiInfo wifi) throws Exception {
 
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
 
+            String jsonWifi = JsonUtil.serialize(wifi, wifi.getClass());
             List<Object> json = NbiDecorator.getEmptyJson();
-            json.set(0, new Gson().toJsonTree(wifi));
+            json.set(0, jsonWifi);
+
+            System.out.println(jsonWifi);
+
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 10000, "");
             return true;
-        } catch (DeviceOperationException | OperationTimeoutException | ProviderException e) {
+        } catch (OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
             return true;
-        } catch (NBIException e) {
+        } catch (DeviceOperationException | NBIException e) {
             e.printStackTrace();
             return false;
         }

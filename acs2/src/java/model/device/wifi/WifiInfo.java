@@ -9,17 +9,13 @@ package model.device.wifi;
  *
  * @author G0042204
  */
-public class WifiInfo {
+public class WifiInfo extends WifiInfoSet {
 
     private String index,
             frequency,
             authentication,
             broadcastEnabled,
-            channel,
-            operStatus,
             encryptation,
-            radioEnabled,
-            ssid,
             standard,
             ssidPassword;
 
@@ -58,44 +54,12 @@ public class WifiInfo {
         this.broadcastEnabled = broadcastEnabled;
     }
 
-    public String getChannel() {
-        return channel;
-    }
-
-    public void setChannel(String channel) {
-        this.channel = channel;
-    }
-
-    public String getOperStatus() {
-        return operStatus;
-    }
-
-    public void setOperStatus(String operStatus) {
-        this.operStatus = operStatus;
-    }
-
     public String getEncryptation() {
         return encryptation;
     }
 
     public void setEncryptation(String encryptation) {
         this.encryptation = encryptation;
-    }
-
-    public String getRadioEnabled() {
-        return radioEnabled;
-    }
-
-    public void setRadioEnabled(String radioEnabled) {
-        this.radioEnabled = radioEnabled;
-    }
-
-    public String getSsid() {
-        return ssid;
-    }
-
-    public void setSsid(String ssid) {
-        this.ssid = ssid;
     }
 
     public String getStandard() {
@@ -113,5 +77,4 @@ public class WifiInfo {
     public void setSsidPassword(String ssidPassword) {
         this.ssidPassword = ssidPassword;
     }
-
 }

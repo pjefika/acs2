@@ -5,9 +5,11 @@
  */
 package util;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import model.device.ddns.DdnsInfo;
@@ -31,6 +33,10 @@ public class JsonUtil {
         return new FirmwareInfo(firmwareVersion, preferredVersion);
     }
 
+    public static String serialize(Object o, Type a) {
+        return new Gson().toJsonTree(o, a).toString().replace("\"", "'");
+    }
+
     public static WifiInfo getWifiInfo(StringResponseDTO a) {
 
         WifiInfo i = new WifiInfo();
@@ -38,8 +44,7 @@ public class JsonUtil {
         JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
 
-        System.out.println("FullJson: " + jobject.toString());
-
+        // System.out.println("FullJson: " + jobject.toString());
         String index = jobject.get("index").toString().replace("\"", "");
         String authentication = jobject.get("authentication").toString().replace("\"", "");
         String broadcastEnabled = jobject.get("broadcastEnabled").toString().replace("\"", "");
@@ -101,6 +106,11 @@ public class JsonUtil {
         }
 
         return logs;
+    }
+
+    public static String removeBracket(String json) {
+        return json;
+        // .replace("[", "").replace("]", "").replace("\"", "\"\"");
     }
 
     public static PPPoECredentialsInfo getPPPoECredentialsInfo(StringResponseDTO a) {
