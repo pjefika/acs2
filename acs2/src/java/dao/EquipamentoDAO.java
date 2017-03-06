@@ -210,6 +210,11 @@ public class EquipamentoDAO {
 
     /**
      * Somente parâmetros alteraveis podem ser serializados para essa chamada
+     *
+     * @param eqp
+     * @param wifi
+     * @return
+     * @throws Exception
      */
     public Boolean setWifiInfo(NbiDeviceData eqp, WifiInfo wifi) throws Exception {
 
@@ -217,7 +222,9 @@ public class EquipamentoDAO {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
 
-            String jsonWifi = JsonUtil.serialize(wifi, wifi.getClass());
+            WifiInfoSet adapter = NbiDecorator.getWifiInfoSet(wifi);
+
+            String jsonWifi = JsonUtil.serialize(adapter, adapter.getClass());
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonWifi);
 

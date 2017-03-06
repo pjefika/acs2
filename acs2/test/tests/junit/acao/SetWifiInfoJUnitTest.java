@@ -5,11 +5,8 @@
  */
 package tests.junit.acao;
 
-import tests.junit.consulta.*;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.List;
-import model.device.log.DeviceLog;
 import model.device.wifi.WifiInfo;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -60,7 +57,7 @@ public class SetWifiInfoJUnitTest {
             /**
              * Alterções
              */
-            info.setSsid("Teste Efika");
+            info.setSsid("Teste Efika - Set Wifi");
             //info.setSsid("Teste Efika");
 
             assertTrue(d.setWifiInfo(eqp, info));

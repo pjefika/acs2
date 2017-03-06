@@ -8,6 +8,8 @@ package dao.util;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
+import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoSet;
 import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationCallBackInfo;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
@@ -55,6 +57,10 @@ public class NbiDecorator {
         opt.setUpdateCachedDataRecord(true);
 
         return opt;
+    }
+
+    public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
+        return new WifiInfoSet(i.getOperStatus(), i.getSsid(), i.getChannel(), i.getRadioEnabled());
     }
 
     public static NbiDeviceID adapter(NbiDeviceData d) {

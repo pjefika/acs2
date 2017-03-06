@@ -20,6 +20,13 @@ public class WifiInfoSet {
 
     }
 
+    public WifiInfoSet(String operStatus, String ssid, String channel, String radioEnabled) {
+        this.operStatus = operStatus;
+        this.ssid = ssid;
+        this.channel = channel;
+        this.radioEnabled = radioEnabled;
+    }
+
     public String getOperStatus() {
         return operStatus;
     }
