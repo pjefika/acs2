@@ -59,14 +59,13 @@ public class CheckOnlineJUnitTestDev {
 //            eqp = d.findDeviceByGUID(new Long(23006));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 
-            Boolean r = d.checkOnline(eqp);
+          Boolean r = d.checkOnline(eqp);
 
             assertTrue(r);
 
         } catch (Exception e) {
             e.printStackTrace();
             assertTrue(false);
-
         }
 
     }

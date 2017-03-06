@@ -16,10 +16,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
 import model.device.wifi.WifiInfo;
+
 
 /**
  *
@@ -55,6 +58,7 @@ public class EquipamentoController extends AbstractController {
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
             jobj.add("checkOn", new Gson().toJsonTree(checkOnline));
+
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
