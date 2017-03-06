@@ -63,7 +63,7 @@ public class SoutUtil {
         System.out.println("SSID: " + info.getSsid());
         System.out.println("Password: " + info.getSsidPassword());
         System.out.println("Frequency: " + info.getFrequency());
-        System.out.println("Enryptation: " + info.getEnryptation());
+        System.out.println("Enryptation: " + info.getEncryptation());
 
     }
 

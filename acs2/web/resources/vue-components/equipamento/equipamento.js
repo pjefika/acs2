@@ -20,7 +20,7 @@ var Equipamento = function(p) {
         if (p.eqp.lastActivationTime) {
             this.dataAutenticacao = new Date(p.eqp.lastActivationTime.year, p.eqp.lastActivationTime.month, p.eqp.lastActivationTime.day, p.eqp.lastActivationTime.hour, p.eqp.lastActivationTime.minute, p.eqp.lastActivationTime.second);
         }
-        this.checkOn = p.CheckOnline;
+        this.checkOn = p.checkOn;
         this.firmwareOk = p.firmWareOk;
     }
 };

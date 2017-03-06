@@ -3,16 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global Vue, Equipamento, eqpString, CheckOnline */
+/* global Vue, Equipamento, eqpString, CheckOnline, vm */
 
 var url = "/acs/equipamento/";
 
 Vue.config.devtools = true;
 Vue.config.silent = true;
 
-var data = {
-
-};
 Vue.component("detail", {
     template: '#detalhequip',
     props: {
@@ -22,123 +19,94 @@ Vue.component("detail", {
         },
         eqp: {
             type: Equipamento,
-            default: function () {
+            default: function() {
                 return new Equipamento(this.eqpString);
             }
         }
     },
-    created: function () {
-    },
     methods: {
-        reboot: function () {
+        reboot: function() {
             $("#modalReboot").modal("hide");
             $.ajax({
                 type: "POST",
                 url: url + "reboot/",
                 data: JSON.stringify(this.eqp),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     $("#loadingModal").modal("show");
                 },
-                success: function () {
+                success: function() {
                     $("#loadingModal").modal("hide");
                     alert("success");
                 },
-                error: function () {
+                error: function() {
                     $("#loadingModal").modal("hide");
                     alert("Erro");
                 }
             });
         },
-        factoryReset: function () {
+        factoryReset: function() {
             $("#modalFactory").modal("hide");
             $.ajax({
                 type: "POST",
                 url: url + "factoryReset/",
                 data: JSON.stringify(this.eqp),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     $("#loadingModal").modal("show");
                 },
-                success: function () {
+                success: function() {
                     $("#loadingModal").modal("hide");
                     alert("success");
                 },
-                error: function () {
+                error: function() {
                     $("#loadingModal").modal("hide");
                     alert("Erro");
                 }
             });
         },
-        getFirmware: function () {
+        getFirmware: function() {
             $.ajax({
                 type: "POST",
                 url: url + "getFirmwareVersion/",
                 data: JSON.stringify(this.eqp),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     $("#loadingModal").modal("show");
                 },
-                success: function () {
+                success: function() {
                     $("#loadingModal").modal("hide");
                     $("#modalGetFirmware").modal("show");
                 },
-                error: function () {
+                error: function() {
                     $("#loadingModal").modal("hide");
                     alert("Erro");
                 }
             });
         },
-        updateFirmware: function () {
+        updateFirmware: function() {
             $.ajax({
                 type: "POST",
                 url: url + "updateFirmwareVersion/",
                 data: JSON.stringify(this.eqp),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     $("#loadingModal").modal("show");
                 },
-                success: function () {
+                success: function() {
                     $("#loadingModal").modal("hide");
                 },
-                error: function () {
+                error: function() {
                     $("#loadingModal").modal("hide");
-                }
-            });
-        },
-        checkOnline: function () {
-            $.ajax({
-                type: "POST",
-                url: url + "checkOnline/",
-                data: JSON.stringify(this.eqp),
-                dataType: "json",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    $("#loadingModal").modal("show");
-                },
-                success: function (data) {
-                    $("#loadingModal").modal("hide");
-                    if (data.boolean) {
-                        $("#chOn").addClass("alert-success");
-                        $("#imgDetalhes").css("border", "3px solid green");
-                    } else {
-                        $("#chOn").addClass("alert-danger");
-                        $("#imgDetalhes").css("border", "3px solid red");
-                    }
-                },
-                error: function () {
-                    $("#loadingModal").modal("hide");
-                    $("#chOn").addClass("alert-danger");
-                    $("#imgDetalhes").css("border", "3px solid red");
                 }
             });
         }
     },
-    data: function () {
+    data: function() {
         return data;
     }
 });

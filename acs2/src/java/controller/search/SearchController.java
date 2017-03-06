@@ -43,38 +43,23 @@ public class SearchController extends AbstractController {
      */
     @Path("/busca/listar/serial/{serial}")
     public void listarPorSerial(String serial) {
-        try {
-            this.includeSerializer(dao.listarEquipamentosPorSerial(serial));
-        } catch (NBIException_Exception ex) {
-            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
-            this.includeSerializer(ex);
-        }
+        this.includeSerializer(dao.listarEquipamentosPorSerial(serial));
     }
 
     @Path("/busca/listar/subscriber/{subscriber}")
     public void listarPorSubscriber(String subscriber) {
-        try {
-            this.includeSerializer(dao.listarEquipamentosPorSubscriber(subscriber));
-        } catch (NBIException_Exception ex) {
-            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
-            this.includeSerializer(ex);
-        }
+        this.includeSerializer(dao.listarEquipamentosPorSubscriber(subscriber));
     }
 
     @Path("/busca/listar/mac/{mac}")
     public void listarPorMac(String mac) {
-        try {
-            this.includeSerializer(dao.listarEquipamentosPorMac(mac.toUpperCase()));
-        } catch (NBIException_Exception ex) {
-            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
-            this.includeSerializer(ex);
-        }
+        this.includeSerializer(dao.listarEquipamentosPorMac(mac.toUpperCase()));
     }
-    
+
     @Path("/busca/listar/guid/{guid}")
     public void listarPorGuid(Long guid) {
-        try {            
-            this.includeSerializer(dao.findDeviceByGUID(guid));            
+        try {
+            this.includeSerializer(dao.findDeviceByGUID(guid));
         } catch (NBIException_Exception ex) {
             Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
             this.includeSerializer(ex);

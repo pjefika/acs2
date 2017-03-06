@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
+import model.device.wifi.WifiInfo;
+
 
 /**
  *
@@ -55,7 +57,8 @@ public class EquipamentoController extends AbstractController {
             }
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
-            jobj.add("CcheckOnline", new Gson().toJsonTree(checkOnline));
+            jobj.add("checkOn", new Gson().toJsonTree(checkOnline));
+
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
@@ -79,6 +82,17 @@ public class EquipamentoController extends AbstractController {
     public void getFirmwareVersion(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getFirmwareVersion(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getWifiInfo/")
+    public void getWifiInfo(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer(e);
         }
