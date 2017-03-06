@@ -83,7 +83,6 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer(e);
         }
     }
-    
 
     @Post
     @Consumes("application/json")
