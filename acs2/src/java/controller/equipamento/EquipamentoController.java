@@ -16,12 +16,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
-import model.device.wifi.WifiInfo;
 
 
 /**
@@ -86,6 +83,7 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer(e);
         }
     }
+    
 
     @Post
     @Consumes("application/json")
