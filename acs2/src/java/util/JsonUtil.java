@@ -15,6 +15,7 @@ import java.util.List;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
 import motive.hdm.synchdeviceops.StringResponseDTO;
@@ -35,6 +36,33 @@ public class JsonUtil {
 
     public static String serialize(Object o, Type a) {
         return new Gson().toJsonTree(o, a).toString().replace("\"", "'");
+    }
+
+    public static PortMappingInfo getPortMappingInfo(StringResponseDTO a) {
+
+        PortMappingInfo i = new PortMappingInfo();
+
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+        JsonObject jobject = jelement.getAsJsonObject();
+
+        // System.out.println("FullJson: " + jobject.toString());
+        String externalPort = jobject.get("externalPort").toString().replace("\"", "");
+        String internalClient = jobject.get("internalClient").toString().replace("\"", "");
+        String internalPort = jobject.get("internalPort").toString().replace("\"", "");
+        String portMapName = jobject.get("portMapName").toString().replace("\"", "");
+        String enable = jobject.get("enable").toString().replace("\"", "");
+        String protocol = jobject.get("protocol").toString().replace("\"", "");
+        String remoteHost = jobject.get("remoteHost").toString().replace("\"", "");
+
+        i.setExternalPort(externalPort);
+        i.setInternalClient(internalClient);
+        i.setInternalPort(internalPort);
+        i.setPortMapName(portMapName);
+        i.setEnable(enable);;
+        i.setProtocol(protocol);
+        i.setRemoteHost(remoteHost);
+
+        return i;
     }
 
     public static WifiInfo getWifiInfo(StringResponseDTO a) {

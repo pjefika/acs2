@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
 
-
 /**
  *
  * @author G0042204
@@ -90,6 +89,17 @@ public class EquipamentoController extends AbstractController {
     public void getWifiInfo(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getPortMappingInfo/")
+    public void getPortMappingInfo(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer(e);
         }
