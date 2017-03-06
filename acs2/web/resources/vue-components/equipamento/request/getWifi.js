@@ -11,6 +11,9 @@ Vue.component("getWifi", {
     data: function() {
         return {infoCache: {}}
     },
+    mounted: function(){
+      this.getWifi();  
+    },
     props: {
         eqpString: {
             type: String,
@@ -43,7 +46,7 @@ Vue.component("getWifi", {
                     $('#leLoading').show();
                 },
                 success: function(data) {
-                    console.log(data.wifiInfo)
+                    console.log(this.url)
                     self.infoCache = new WifiInfo(data.wifiInfo);
                     $('#leForm').show();
                     $('#leLoading').hide();
@@ -54,7 +57,27 @@ Vue.component("getWifi", {
             });
         },
         setWifi: function(){
-            
+            var self = this;
+            $.ajax({
+                type: "POST",
+                url: url + "setWifiInfo/",
+                data: JSON.stringify(this.equipamento),
+                dataType: "json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    $('#leForm').hide();
+                    $('#leLoading').show();
+                },
+                success: function(data) {
+                    console.log(this.url)
+                    self.infoCache = new WifiInfo(data.wifiInfo);
+                    $('#leForm').show();
+                    $('#leLoading').hide();
+                },
+                error: function(e) {
+                    console.log(e)
+                }
+            });
         }
     },
     template: "<div class='form'>\n\
@@ -87,7 +110,10 @@ Vue.component("getWifi", {
                             <label for='ssid'>Radio</label>\n\
                             <input class='form-control' v-model='infoCache.radioEnabled'>\n\
                         </div>\n\
-                        <button type='button' class='btn btn-primary' @click='getWifi()'>getWifi</button>\n\
+                        <div class='form-group'>\n\
+                            <button type='button' class='btn btn-primary col-sm-4 ' @click='getWifi()'>getWifi</button>\n\
+                            <button type='button' class='btn btn-default col-sm-4 pull-right' @click='setWifi()'>setWifi</button>\n\
+                        </div>\n\
                     </div>\n\
                     <div id='leLoading' style='display:none'><img src='/acs/resources/imagens/loading.gif'><br>Aguarde...</div>\n\
                </div>"

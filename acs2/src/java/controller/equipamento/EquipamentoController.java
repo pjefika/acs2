@@ -130,6 +130,20 @@ public class EquipamentoController extends AbstractController {
 
     @Post
     @Consumes("application/json")
+    @Path("/equipamento/setWifiInfo/")
+    public void setWifi(NbiDeviceData nbiDeviceData) {
+        try {
+            System.out.println(nbiDeviceData.toString());
+            this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
+            
+//            dao.setWifiInfo(nbiDeviceData, info);
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
     @Path("/equipamento/checkOnline/")
     public void checkOnline(NbiDeviceData nbiDeviceData) {
         this.includeSerializer(dao.checkOnline(nbiDeviceData));
