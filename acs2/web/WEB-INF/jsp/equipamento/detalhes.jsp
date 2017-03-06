@@ -91,7 +91,7 @@
                                 <button type="button" class="list-group-item">Gerenciar DMZ</button>
                                 <button type="button" class="list-group-item">Efetuar Ping</button>
                                 <button type="button" class="list-group-item">Gerenciar Port Mapping</button>
-                                <button type="button" class="list-group-item">Configurar Wifi</button>
+                                <button type="button" class="list-group-item" @click="getWifi()">Configurar Wifi</button>
                                 <button type="button" class="list-group-item">Configurar Autenticação PPPoE</button>
                                 <button type="button" class="list-group-item">Alterar DNS</button>
                             </div>
@@ -137,11 +137,13 @@
             </div>
 
         </div>
+            
+
     </script>
 
     <detail v-bind:eqp-string='${equipamento}'></detail>
-    <modal v-bind:eqp-string='${equipamento}' body="get-wifi"></modal>
-
+    <modal v-bind:eqp-string='${equipamento}' body="get-wifi" titulo="Configurações WiFi" le-id="wifi"></modal>
+    
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/wifiInfo.js"></script>
