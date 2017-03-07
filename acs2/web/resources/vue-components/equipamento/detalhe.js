@@ -123,6 +123,27 @@ Vue.component("detail", {
                     $("#loadingModal").modal("hide");
                 }
             });
+        },
+        checkOnline: function () {
+            var self = this;
+            $.ajax({
+                type: "POST",
+                url: url + "checkOnline/",
+                data: JSON.stringify(this.eqp),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    $("#loadingModal").modal("show");
+                },
+                success: function (data) {
+                    console.log(data);                    
+                    self.eqp.checkOn = data.boolean;                    
+                    $("#loadingModal").modal("hide");
+                },
+                error: function () {
+                    $("#loadingModal").modal("hide");
+                }
+            });
         }
     },
     data: function() {
