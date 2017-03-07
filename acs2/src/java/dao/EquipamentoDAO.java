@@ -33,6 +33,7 @@ import javax.xml.ws.Service;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoSet;
@@ -293,6 +294,13 @@ public class EquipamentoDAO {
             System.out.println(o.getName());
             System.out.println(o.getDescription());
         }
+    }
+    
+    public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 10000, "");
+        return JsonUtil.getPortMappingInfo(a);
     }
 
     public void initNbi() {

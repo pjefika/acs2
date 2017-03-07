@@ -77,7 +77,7 @@
                                 <button type="button" class="list-group-item">Consultar WAN</button>
                                 <button type="button" class="list-group-item">Consultar Interface</button>
                                 <button type="button" class="list-group-item">Consultar LAN Host</button>
-                                <button type="button" class="list-group-item">Consultar Port Mapping</button>
+                                <button type="button" class="list-group-item" data-toggle="modal" data-target="#modaldefault" data-backdrop="static">Consultar Port Mapping</button>
                                 <button type="button" class="list-group-item">Consultar xDSL</button>
                                 <button type="button" class="list-group-item">Consultar DNS</button>
                                 <button type="button" class="list-group-item" data-toggle="modal" data-target="#modaldefault" data-backdrop="static">Consultar PPPoE</button>
@@ -141,7 +141,7 @@
     </script>
 
     <detail v-bind:eqp-string='${equipamento}'></detail>
-    <modal v-bind:eqp-string='${equipamento}' body="pppoeCredentials"></modal>
+    <modal v-bind:eqp-string='${equipamento}' body="portMapping"></modal>
 
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
@@ -152,3 +152,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pPPoECredentialsInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/pPPoECredentials.js"></script>
+
+
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/portMappingInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/portMapping.js"></script>

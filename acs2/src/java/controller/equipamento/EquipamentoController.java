@@ -168,6 +168,17 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer(e);
         }
     }
+    
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getPortMapping/")
+    public void getPortMappingInfo (NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getPortMapping(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
 
     @Override
     public void includeSerializer(Object a) {
