@@ -9,10 +9,8 @@
 var url = "/acs/equipamento/";
 
 Vue.component("pppoeCredentials", {
-    data: function () {
-        return {
-            infoPPPoE: {}
-        };
+    data: function() {
+        return {pppoeusrepass: {}}
     },
     props: {
         eqpString: {
@@ -34,6 +32,7 @@ Vue.component("pppoeCredentials", {
     },
     methods: {
         getPPPoECredentials: function () {
+            var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "getPPPoe/",
@@ -44,25 +43,52 @@ Vue.component("pppoeCredentials", {
                     $("#loadingModal").modal("show");
                 },
                 success: function (data) {
-                    this.infoPPPoE = new pPPoEC(data.ppPoECredentialsInfo);
-                    console.log(this.infoPPPoE);
+                    self.pppoeusrepass = new pPPoEC(data.ppPoECredentialsInfo);                    
                     $("#loadingModal").modal("hide");
                 },
-                error: function () {
+                error: function (e) {
+                    console.log(e);
                     $("#loadingModal").modal("hide");
                 }
             });
+        },
+        setPPPoECredentials: function () {
+            var self = this;
+            var _data = {};
+            _data.nbiDeviceData = self.equipamento;
+            _data.pPPoECredentialsInfo = self.pppoeusrepass;
+            
+            $.ajax({
+                type: "POST",
+                url: url + "setPPPoe/",
+                data: JSON.stringify(_data),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    $("#loadingModal").modal("show");
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#loadingModal").modal("hide");
+                },
+                error: function (e) {
+                    console.log(e);
+                    $("#loadingModal").modal("hide");
+                }
+            });            
         }
     },
     template: "<div class='form'>\n\
                     <div class='form-group'>\n\
                         <label for='username'>Username</label>\n\
-                        <input class='form-control' v-model='infoPPPoE.username'>\n\
+                        <input class='form-control' v-model='pppoeusrepass.username'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='password'>Password</label>\n\
-                        <input class='form-control' v-model='infoPPPoE.password'>\n\
+                        <input class='form-control' v-model='pppoeusrepass.password'>\n\
                     </div>\n\
                     <button type='button' class='btn btn-primary' @click='getPPPoECredentials'>Buscar</button>\n\
+                    <button type='button' class='btn btn-warning' @click='setPPPoECredentials'>Modificar</button>\n\
                </div>"
+
 });

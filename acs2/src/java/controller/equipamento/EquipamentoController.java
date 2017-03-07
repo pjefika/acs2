@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.serialization.gson.WithRoot;
 import br.com.caelum.vraptor.view.Results;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
@@ -147,7 +148,7 @@ public class EquipamentoController extends AbstractController {
     }
 
     @Post
-    @Consumes("application/json")
+    @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setPPPoe/")
     public void setPPPoECredentials(NbiDeviceData nbiDeviceData, PPPoECredentialsInfo pPPoECredentialsInfo) {
         try {
