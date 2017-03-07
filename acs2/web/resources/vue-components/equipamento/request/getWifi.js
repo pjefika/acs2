@@ -12,7 +12,10 @@ Vue.component("getWifi", {
         return {infoCache: {}}
     },
     mounted: function(){
-      this.getWifi();  
+        var self = this
+      $('#leForm').closest('.modal').on('show.bs.modal', function () {
+        self.getWifi();
+      })
     },
     props: {
         eqpString: {

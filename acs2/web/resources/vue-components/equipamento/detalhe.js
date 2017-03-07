@@ -26,7 +26,7 @@ Vue.component("detail", {
     },
     methods: {
         getWifi : function(){
-          $("#wifi").modal("show");  
+          $("#wifi").modal("show");    
         },
         reboot: function() {
             $("#modalReboot").modal("hide");
