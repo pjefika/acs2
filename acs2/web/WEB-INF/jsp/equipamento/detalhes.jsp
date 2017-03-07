@@ -80,6 +80,7 @@
                                 <button type="button" class="list-group-item">Consultar Port Mapping</button>
                                 <button type="button" class="list-group-item">Consultar xDSL</button>
                                 <button type="button" class="list-group-item">Consultar DNS</button>
+                                <button type="button" class="list-group-item" data-toggle="modal" data-target="#modaldefault" data-backdrop="static">Consultar PPPoE</button>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -140,7 +141,7 @@
     </script>
 
     <detail v-bind:eqp-string='${equipamento}'></detail>
-    <modal v-bind:eqp-string='${equipamento}' body="get-wifi"></modal>
+    <modal v-bind:eqp-string='${equipamento}' body="pppoeCredentials"></modal>
 
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
@@ -148,3 +149,6 @@
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pPPoECredentialsInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/pPPoECredentials.js"></script>

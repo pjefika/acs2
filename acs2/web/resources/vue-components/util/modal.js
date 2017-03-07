@@ -12,7 +12,7 @@ Vue.component("modal", {
                     <div class='modal-content'>\n\
                         <div class='modal-header'>\n\
                             <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>\n\
-                            <h4 class='modal-title' id='myModalLabel'>Configurações Rede WiFi</h4>\n\
+                            <h4 class='modal-title' id='myModalLabel'>Generic Modal</h4>\n\
                         </div>\n\
                         <div class='modal-body'>\n\
                           <component v-bind:eqp-string='eqpString' v-bind:is='body'></component> \n\
@@ -21,9 +21,9 @@ Vue.component("modal", {
                 </div>\n\
             </div>",
     mounted: function() {
-        if (this.body) {
-            $("#modaldefault").modal("show");
-        }
+//        if (this.body) {
+//            $("#modaldefault").modal("show");
+//        }
 
     }
 });

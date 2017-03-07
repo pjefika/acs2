@@ -19,7 +19,7 @@ import dao.EquipamentoDAO;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
-
+import model.device.pppoe.PPPoECredentialsInfo;
 
 /**
  *
@@ -133,6 +133,39 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/checkOnline/")
     public void checkOnline(NbiDeviceData nbiDeviceData) {
         this.includeSerializer(dao.checkOnline(nbiDeviceData));
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getPPPoe/")
+    public void getPPPoECredentials(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getPPPoECredentials(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/setPPPoe/")
+    public void setPPPoECredentials(NbiDeviceData nbiDeviceData, PPPoECredentialsInfo pPPoECredentialsInfo) {
+        try {
+            this.includeSerializer(dao.setPPPoECredentials(nbiDeviceData, pPPoECredentialsInfo));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getDdns/")
+    public void getDdns(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getDdns(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
     }
 
     @Override

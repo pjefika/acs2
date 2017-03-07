@@ -265,7 +265,21 @@ public class EquipamentoDAO {
             e.printStackTrace();
             return null;
         }
+    }
 
+    public StringResponseDTO setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfo pPPoECredentialsInfo) {
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();            
+            String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
+            List<Object> json = NbiDecorator.getEmptyJson();
+            json.set(0, jsonPppoe);            
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 10000, "");
+            return a;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;            
+        }
     }
 
     public NbiOperationStatus getDeviceOperationStatus(Long operationId) throws NBIException_Exception {

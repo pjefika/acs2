@@ -104,6 +104,25 @@ Vue.component("detail", {
                     $("#loadingModal").modal("hide");
                 }
             });
+        },        
+        getDdns: function () {
+            $.ajax({
+                type: "POST",
+                url: url + "getDdns/",
+                data: JSON.stringify(this.eqp),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    $("#loadingModal").modal("show");
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#loadingModal").modal("hide");
+                },
+                error: function () {
+                    $("#loadingModal").modal("hide");
+                }
+            });
         }
     },
     data: function() {
