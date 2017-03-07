@@ -21,7 +21,6 @@ import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
 import model.device.wifi.WifiInfo;
-import util.SoutUtil;
 
 /**
  *
@@ -134,7 +133,8 @@ public class EquipamentoController extends AbstractController {
     @Consumes(value = "application/json", options = WithRoot.class)
     public void setWifi(NbiDeviceData nbiDeviceData, WifiInfo info) {
         try {
-            this.includeSerializer(dao.setWifiInfo(nbiDeviceData, info));
+            dao.setWifiInfo(nbiDeviceData, info);
+            this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
         } catch (Exception e) {
             e.printStackTrace();
         }

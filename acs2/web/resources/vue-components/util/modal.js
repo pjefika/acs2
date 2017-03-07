@@ -15,15 +15,22 @@ Vue.component("modal", {
                             <h4 class='modal-title'>{{titulo}}</h4>\n\
                         </div>\n\
                         <div class='modal-body text-center'>\n\
-                          <component v-bind:eqp-string='eqpString' v-bind:is='body'></component> \n\
+                            <div class='body-content'>\n\
+                                <component v-bind:eqp-string='eqpString' v-bind:is='body'></component> \n\
+                            </div>\n\
+                            <div class='leLoading' style='display:none'>\n\
+                                <img src='/acs/resources/imagens/loading.gif'><br>\n\
+                                Aguarde...\n\
+                            </div>\n\
                         </div>\n\
                     </div>\n\
                 </div>\n\
             </div>",
-    mounted: function() {
-//        if (this.body) {
-//              $("#"+this.leId).modal("show");
-//        }
+    methods:{
+        loadingRequest: function() {
+            $('#'+this.leId).find('.body-content').toggle();
+            $('#'+this.leId).find('.leLoading').toggle();
+        }
     }
 });
 

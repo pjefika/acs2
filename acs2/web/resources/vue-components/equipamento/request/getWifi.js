@@ -39,26 +39,26 @@ Vue.component("getWifi", {
         getWifi: function() {
             var self = this;
 
-            console.log(this.equipamento)
+            console.log(self.equipamento)
 
             $.ajax({
                 type: "POST",
                 url: url + "getWifiInfo/",
-                data: JSON.stringify(this.equipamento),
+                data: JSON.stringify(self.equipamento),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    $('#leForm').hide();
-                    $('#leLoading').show();
+                    self.$parent.loadingRequest();
                 },
                 success: function(data) {
                     console.log(this.url)
                     self.infoCache = new WifiInfo(data.wifiInfo);
-                    $('#leForm').show();
-                    $('#leLoading').hide();
                 },
                 error: function(e) {
                     console.log(e)
+                },
+                complete: function(){
+                    self.$parent.loadingRequest();
                 }
             });
         },
@@ -81,17 +81,17 @@ Vue.component("getWifi", {
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    $('#leForm').hide();
-                    $('#leLoading').show();
+                    self.$parent.loadingRequest();
                 },
                 success: function(data) {
                     console.log(this.url)
                     self.infoCache = new WifiInfo(data.wifiInfo);
-                    $('#leForm').show();
-                    $('#leLoading').hide();
                 },
                 error: function(e) {
                     console.log(e)
+                },
+                complete: function(){
+                    self.$parent.loadingRequest();
                 }
             });
         }
@@ -131,7 +131,6 @@ Vue.component("getWifi", {
                             <button type='button' class='btn btn-primary' @click='setWifi()'>Alterar</button>\n\
                         </div>\n\
                     </div>\n\
-                    <div id='leLoading' style='display:none'><img src='/acs/resources/imagens/loading.gif'><br>Aguarde...</div>\n\
                </div>"
 });
 
