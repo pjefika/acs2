@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+/* global moment */
+
 // CLASSES
 var Equipamento = function(p) {
     if (p) {
@@ -17,19 +19,20 @@ var Equipamento = function(p) {
         this.softwareVersion = p.eqp.softwareVersion;
         this.subscriberID = p.eqp.subscriberID;
         this.ipAddress = p.eqp.ipAddress;
-        if (p.eqp.lastActivationTime) {
-            this.dataAutenticacao = new Date(p.eqp.lastActivationTime.year, p.eqp.lastActivationTime.month, p.eqp.lastActivationTime.day, p.eqp.lastActivationTime.hour, p.eqp.lastActivationTime.minute, p.eqp.lastActivationTime.second);
-        }
         this.checkOn = p.checkOn;
         this.firmwareOk = p.firmWareOk;
     }
 };
 
+
 Equipamento.prototype.dateFormat = function() {
-    if (this.dataAutenticacao) {
-        return moment(this.dataAutenticacao).format('DD/MM/YYYY HH:mm:ss');
+    return moment(Equipamento.dataAutenticacao).format('DD/MM/YYYY HH:mm:ss');
+};
+
+Equipamento.prototype.dataAutenticacao = function() {
+    if (Equipamento.lastActivationTime) {
+        return Equipamento.dateFormat(new Date(Equipamento.lastActivationTime.year, Equipamento.lastActivationTime.month, Equipamento.lastActivationTime.day, Equipamento.lastActivationTime.hour, Equipamento.lastActivationTime.minute, Equipamento.lastActivationTime.second));
     } else {
         return "#####";
     }
-
 };

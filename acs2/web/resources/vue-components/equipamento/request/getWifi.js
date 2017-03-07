@@ -11,11 +11,11 @@ Vue.component("getWifi", {
     data: function() {
         return {infoCache: {}}
     },
-    mounted: function(){
+    mounted: function() {
         var self = this
-      $('#leForm').closest('.modal').on('show.bs.modal', function () {
-        self.getWifi();
-      })
+        $('#leForm').closest('.modal').on('show.bs.modal', function() {
+            self.getWifi();
+        })
     },
     props: {
         eqpString: {
@@ -38,6 +38,9 @@ Vue.component("getWifi", {
     methods: {
         getWifi: function() {
             var self = this;
+
+            console.log(this.equipamento)
+
             $.ajax({
                 type: "POST",
                 url: url + "getWifiInfo/",
@@ -59,12 +62,22 @@ Vue.component("getWifi", {
                 }
             });
         },
-        setWifi: function(){
+        setWifi: function() {
             var self = this;
+
+
+            /**
+             * Utilizar este padrão para enviar duas variaveis json para a controller
+             * @type type
+             */
+            var _data = {};
+            _data.nbiDeviceData = self.equipamento;
+            _data.info = self.infoCache;
+
             $.ajax({
                 type: "POST",
                 url: url + "setWifiInfo/",
-                data: JSON.stringify(this.equipamento),
+                data: JSON.stringify(_data),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
@@ -113,9 +126,9 @@ Vue.component("getWifi", {
                             <label for='ssid'>Radio</label>\n\
                             <input class='form-control' v-model='infoCache.radioEnabled'>\n\
                         </div>\n\
-                        <div class='form-group'>\n\
-                            <button type='button' class='btn btn-primary col-sm-4 ' @click='getWifi()'>getWifi</button>\n\
-                            <button type='button' class='btn btn-default col-sm-4 pull-right' @click='setWifi()'>setWifi</button>\n\
+                        <div class='modal-footer'>\n\
+                            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
+                            <button type='button' class='btn btn-primary' @click='setWifi()'>Alterar</button>\n\
                         </div>\n\
                     </div>\n\
                     <div id='leLoading' style='display:none'><img src='/acs/resources/imagens/loading.gif'><br>Aguarde...</div>\n\
