@@ -12,7 +12,11 @@ Vue.component("portMapping", {
     data: function () {
         return {
             pMapping: {}
-        }
+        };
+    },
+    mounted: function () {
+        var self = this;
+        self.getPortMapping();
     },
     props: {
         eqpString: {

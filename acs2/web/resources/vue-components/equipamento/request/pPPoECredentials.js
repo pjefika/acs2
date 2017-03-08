@@ -9,8 +9,12 @@
 var url = "/acs/equipamento/";
 
 Vue.component("pppoeCredentials", {
-    data: function() {
+    data: function () {
         return {pppoeusrepass: {}}
+    },
+    mounted: function () {
+        var self = this;
+        self.getPPPoECredentials();
     },
     props: {
         eqpString: {
@@ -43,7 +47,7 @@ Vue.component("pppoeCredentials", {
                     $("#loadingModal").modal("show");
                 },
                 success: function (data) {
-                    self.pppoeusrepass = new pPPoEC(data.ppPoECredentialsInfo);                    
+                    self.pppoeusrepass = new pPPoEC(data.ppPoECredentialsInfo);
                     $("#loadingModal").modal("hide");
                 },
                 error: function (e) {
@@ -57,7 +61,7 @@ Vue.component("pppoeCredentials", {
             var _data = {};
             _data.nbiDeviceData = self.equipamento;
             _data.pPPoECredentialsInfo = self.pppoeusrepass;
-            
+
             $.ajax({
                 type: "POST",
                 url: url + "setPPPoe/",
@@ -75,7 +79,7 @@ Vue.component("pppoeCredentials", {
                     console.log(e);
                     $("#loadingModal").modal("hide");
                 }
-            });            
+            });
         }
     },
     template: "<div class='form'>\n\

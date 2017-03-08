@@ -141,7 +141,7 @@
     </script>
 
     <detail v-bind:eqp-string='${equipamento}'></detail>
-    <modal v-bind:eqp-string='${equipamento}' body="portMapping"></modal>
+    <modal v-bind:eqp-string='${equipamento}' body="pppoeCredentials"></modal>
 
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>

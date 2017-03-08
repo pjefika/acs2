@@ -299,7 +299,7 @@ public class EquipamentoDAO {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 10000, "");
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 15000, "");
             return JsonUtil.getPortMappingInfo(a);
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();

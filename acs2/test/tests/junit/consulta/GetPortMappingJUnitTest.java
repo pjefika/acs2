@@ -47,7 +47,7 @@ public class GetPortMappingJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(142014));
+            eqp = d.findDeviceByGUID(new Long(104016));
 
             PortMappingInfo info = d.getPortMapping(eqp);
 
