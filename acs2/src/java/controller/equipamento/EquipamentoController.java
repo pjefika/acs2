@@ -92,7 +92,8 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer(e);
+            e.printStackTrace();
+            this.includeSerializer("Erro");
         }
     }
 

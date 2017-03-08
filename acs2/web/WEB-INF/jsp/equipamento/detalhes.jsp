@@ -5,6 +5,7 @@
 <div class="container">
     <script type="text/html" id="detalhequip">
         <div>
+            <acs-modal v-bind:data='${equipamento}' v-bind:body="modal.comp" v-bind:titulo="modal.titulo"></acs-modal>
             <div class="page-header">
                 <h1>Detalhes do Equipamento: <span v-text="eqp.deviceId.serialNumber"></span></h1>
             </div>
@@ -38,12 +39,6 @@
                                     <span v-else>Desatualizado</span>
                                     <button class="btn btn-danger" type="button" @click="updateFirmware()">Atualizar</button>
                                 </li>
-                                <!--
-                                    <li class="list-group-item">
-                                        <label>Status: </label>
-                                        <span v-text="eqp.activated"></span>
-                                    </li>
-                                -->
                                 <li class="list-group-item">
                                     <label>Nome do Modelo:</label>
                                     <span v-text="eqp.modelName"></span>
@@ -56,16 +51,6 @@
                                     <label>IP:</label>
                                     <span v-text="eqp.ipAddress"></span>
                                 </li>
-                                <!--
-                                <li class="list-group-item">
-                                    <label>DeviceGUID:</label>
-                                    <span v-text="eqp.deviceGUID"></span>
-                                </li>
-                                -->
-                                <!--                                <li class="list-group-item">
-                                                                    <label>Modelo:</label>
-                                                                    <span v-text="eqp.model"></span>
-                                                                </li>-->
                                 <li class="list-group-item">
                                     <label>Data Autenticação:</label>
                                     <span v-text="eqp.dataAutenticacao()"></span>
@@ -80,7 +65,7 @@
                         <div class="col-md-6">
                             <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Consultas</label>
-                                <acs-button acao="Consultar WAN" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar WAN" v-bind:ativo="eqp.checkOn" @click="setComp('get-wifi','Consultar WAN')"></acs-button>
                                 <acs-button acao="Consultar Interface" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar LAN Host" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar Port Mapping" v-bind:ativo="eqp.checkOn"></acs-button>
@@ -97,63 +82,26 @@
                                 <button type="button" class="list-group-item">Gerenciar DMZ</button>
                                 <button type="button" class="list-group-item">Efetuar Ping</button>
                                 <button type="button" class="list-group-item">Gerenciar Port Mapping</button>
-                                <button type="button" class="list-group-item" @click="getWifi()">Configurar Wifi</button>
+                                <acs-button acao="Configurar Wifi" v-bind:ativo="eqp.checkOn" v-on:click="setComp('get-wifi','Configurar Wifi')"></acs-button>
+
                                 <button type="button" class="list-group-item">Configurar Autenticação PPPoE</button>
                                 <button type="button" class="list-group-item">Alterar DNS</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Modal -->
-                <div class="modal fade" id="modalReboot" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog modal-sm" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Reset</h4>
-                            </div>
-                            <div class="modal-body">
-                                Deseja resetar o modem?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                <button type="button" class="btn btn-primary" @click="reboot()">Resetar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="modalFactory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog modal-sm" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Reset de Fábrica</h4>
-                            </div>
-                            <div class="modal-body">
-                                Deseja realizar o reset de fabrica no modem?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                <button type="button" class="btn btn-primary" @click="factoryReset()">Resetar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-
         </div>
-
-
     </script>
 
     <detail v-bind:eqp-string='${equipamento}'></detail>
-    <modal v-bind:eqp-string='${equipamento}' body="get-wifi" titulo="Configurações WiFi" le-id="wifi"></modal>
+
+
 
 </div>
+<script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/wifiInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/acsButton.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>

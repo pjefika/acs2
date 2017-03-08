@@ -13,7 +13,7 @@ Vue.component("getWifi", {
     },
     mounted: function() {
         var self = this
-        $('#leForm').closest('.modal').on('show.bs.modal', function() {
+        $('.modal').closest('.modal').on('show.bs.modal', function() {
             self.getWifi();
         })
     },
@@ -46,7 +46,7 @@ Vue.component("getWifi", {
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    self.$parent.loadingRequest();
+                    // self.$parent.loadingRequest();
                 },
                 success: function(data) {
                     console.log(this.url)
@@ -56,7 +56,7 @@ Vue.component("getWifi", {
                     console.log(e)
                 },
                 complete: function() {
-                    self.$parent.loadingRequest();
+                    // self.$parent.loadingRequest();
                 }
             });
         },

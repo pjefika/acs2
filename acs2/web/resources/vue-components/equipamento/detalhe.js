@@ -11,6 +11,14 @@ Vue.config.devtools = true;
 Vue.config.silent = true;
 
 Vue.component("detail", {
+    data: function() {
+        return {
+            modal: {
+                comp: 'get-wifi',
+                titulo: 'Titulo Dev'
+            }
+        };
+    },
     template: '#detalhequip',
     props: {
         eqpString: {
@@ -25,8 +33,9 @@ Vue.component("detail", {
         }
     },
     methods: {
-        getWifi : function(){
-          $("#wifi").modal("show");    
+        setComp: function(comp, t) {
+            var self = this;
+            console.log(self.modal)
         },
         reboot: function() {
             $("#modalReboot").modal("hide");
@@ -108,8 +117,5 @@ Vue.component("detail", {
                 }
             });
         }
-    },
-    data: function() {
-        return data;
     }
 });
