@@ -301,7 +301,8 @@ public class EquipamentoDAO {
             this.initSynchDeviceOperations();
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 10000, "");
             return JsonUtil.getPortMappingInfo(a);
-        } catch (Exception e) {
+        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
             return null;
         }
     }
