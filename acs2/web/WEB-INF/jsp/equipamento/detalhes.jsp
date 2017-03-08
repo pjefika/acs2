@@ -76,14 +76,14 @@
                         <div class="col-md-6">
                             <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Ações</label>
-                                <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalReboot" data-backdrop="static">Reboot</button>
+                                <acs-button acao="Reboot" comp="reboot" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalFactory" data-backdrop="static">Reset de Fábrica</button>
                                 <button type="button" class="list-group-item">Efetuar Traceroute</button>
                                 <button type="button" class="list-group-item">Gerenciar DMZ</button>
                                 <button type="button" class="list-group-item">Efetuar Ping</button>
-                                <button type="button" class="list-group-item">Gerenciar Port Mapping</button>
+                                <acs-button acao="Gerenciar Port Mapping" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <button type="button" class="list-group-item">Configurar Autenticação PPPoE</button>
+                                <acs-button acao="Configurar Autenticação PPPoE" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <button type="button" class="list-group-item">Alterar DNS</button>
                             </div>
                         </div>
@@ -102,5 +102,6 @@
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/wifiInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/acsButton.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>

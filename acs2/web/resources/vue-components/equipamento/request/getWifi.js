@@ -9,15 +9,11 @@ var url = "/acs/equipamento/";
 
 Vue.component("getWifi", {
     data: function() {
-        return {infoCache: {},
-                alertPanel: {}}
+        return data;
     },
     mounted: function() {
         var self = this
-        $('.modal').on('show.bs.modal', function() {
-            self.getWifi();
-        });
-
+        self.getWifi();
     },
     props: {
         eqpString: {
@@ -46,9 +42,6 @@ Vue.component("getWifi", {
     methods: {
         getWifi: function() {
             var self = this;
-
-            self.modal.comp = 'get-wifi';
-
             $.ajax({
                 type: "POST",
                 url: url + "getWifiInfo/",
@@ -60,11 +53,11 @@ Vue.component("getWifi", {
                 },
                 success: function(data) {
                     self.infoCache = new WifiInfo(data.wifiInfo);
-                    self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display:'block'}
+                    self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display: 'block'}
                 },
                 error: function(e) {
                     console.log(e)
-                    self.alertPanel = {tipo: 'danger', mensagem: 'Falha na execução', display:'block'}
+                    self.alertPanel = {tipo: 'danger', mensagem: 'Falha na execução', display: 'block'}
                 },
                 complete: function() {
                 }
@@ -94,11 +87,11 @@ Vue.component("getWifi", {
                 success: function(data) {
                     console.log(this.url)
                     self.infoCache = new WifiInfo(data.wifiInfo);
-                    self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display:'block'}
+                    self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display: 'block'}
                 },
                 error: function(e) {
                     console.log(e)
-                    self.alertPanel = {tipo: 'danger', mensagem: 'Falha na execução', display:'block'}
+                    self.alertPanel = {tipo: 'danger', mensagem: 'Falha na execução', display: 'block'}
                 },
                 complete: function() {
 //                    self.$parent.loadingRequest();
@@ -106,42 +99,42 @@ Vue.component("getWifi", {
             });
         }
     },
-    template: "<div class='form'>\n\
+    template: "<div>\n\
+                <div class='modal-body'>\n\
                     <component is='alertpanel' :msg='alertPanel'></component>\n\
-                    <div id='leForm'>\n\
-                        <div class='form-group'>\n\
-                            <label for='ssid'>SSID (Nome da Rede WiFi)</label>\n\
-                            <input class='form-control' v-model='infoCache.ssid'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='ssid'>Senha</label>\n\
-                            <input class='form-control' v-model='infoCache.ssidPassword'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='ssid'>Encriptação</label>\n\
-                            <input class='form-control' v-model='infoCache.encryptation'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='ssid'>Status</label>\n\
-                            <input class='form-control' v-model='infoCache.operStatus'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='ssid'>Canal</label>\n\
-                            <input class='form-control' v-model='infoCache.channel'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='ssid'>Broadcast</label>\n\
-                            <input class='form-control' v-model='infoCache.broadcastEnabled'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='ssid'>Radio</label>\n\
-                            <input class='form-control' v-model='infoCache.radioEnabled'>\n\
-                        </div>\n\
-                        <div class='modal-footer'>\n\
-                            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
-                            <button type='button' class='btn btn-primary' @click='setWifi()'>Alterar</button>\n\
-                        </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>SSID (Nome da Rede WiFi)</label>\n\
+                        <input class='form-control' v-model='infoCache.ssid'>\n\
                     </div>\n\
-               </div>"
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Senha</label>\n\
+                        <input class='form-control' v-model='infoCache.ssidPassword'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Encriptação</label>\n\
+                        <input class='form-control' v-model='infoCache.encryptation'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Status</label>\n\
+                        <input class='form-control' v-model='infoCache.operStatus'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Canal</label>\n\
+                        <input class='form-control' v-model='infoCache.channel'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Broadcast</label>\n\
+                        <input class='form-control' v-model='infoCache.broadcastEnabled'>\n\
+                    </div>\n\
+                    <div class='form-group'>\n\
+                        <label for='ssid'>Radio</label>\n\
+                        <input class='form-control' v-model='infoCache.radioEnabled'>\n\
+                    </div>\n\
+                </div>\n\
+                <div class='modal-footer'>\n\
+                    <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
+                    <button type='button' class='btn btn-primary' @click='setWifi()'>Alterar</button>\n\
+                </div>\n\
+            </div>"
 });
 

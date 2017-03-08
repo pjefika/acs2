@@ -9,7 +9,7 @@ var url = "/acs/equipamento/";
 
 Vue.component("acsButton", {
     data: function() {
-        return {dev: {}}
+        return data;
     },
     template: '<button type="button" class="list-group-item" @click="setComp()" v-bind:class="{disabled: !ativo}">{{acao}}</button>',
     props: {
@@ -19,6 +19,9 @@ Vue.component("acsButton", {
             default: function() {
                 return "Ação";
             }
+        },
+        exec: {
+            type: Function
         },
         comp: {
             type: String,
@@ -38,9 +41,10 @@ Vue.component("acsButton", {
             if (!self.ativo) {
                 return;
             }
-
             vm.modal.titulo = self.acao;
             vm.modal.comp = self.comp;
+            vm.modal.comp.$emit('init');
+
             $("#actionModal").modal("show");
         }
     }
