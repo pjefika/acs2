@@ -7,11 +7,11 @@
 
 var url = "/acs/equipamento/";
 
-Vue.config.devtools = true;
-Vue.config.silent = true;
-
 Vue.component("acsButton", {
-    template: '<button type="button" class="list-group-item" @click="run()" v-bind:class="{disabled: !ativo}">{{acao}}</button>',
+    data: function() {
+        return {dev: {}}
+    },
+    template: '<button type="button" class="list-group-item" @click="setComp()" v-bind:class="{disabled: !ativo}">{{acao}}</button>',
     props: {
         acao: {
             type: String,
@@ -19,6 +19,10 @@ Vue.component("acsButton", {
             default: function() {
                 return "Ação";
             }
+        },
+        comp: {
+            type: String,
+            required: true
         },
         ativo: {
             type: Boolean,
@@ -29,12 +33,24 @@ Vue.component("acsButton", {
         }
     },
     methods: {
-        run: function() {
+        setComp: function() {
             var self = this;
             if (!self.ativo) {
                 return;
             }
+
+            vm.modal.titulo = self.acao;
+            vm.modal.comp = self.comp;
             $("#actionModal").modal("show");
         }
     }
+});
+
+
+
+
+Vue.component("loading", {
+    template: '<div class="modal-body" style="text-align: center;">\n\
+                    <img src="/acs/resources/imagens/loading.gif">\n\
+               </div>'
 });

@@ -9,13 +9,14 @@ var url = "/acs/equipamento/";
 
 Vue.component("getWifi", {
     data: function() {
-        return {infoCache: {}}
+        return data;
     },
     mounted: function() {
         var self = this
-        $('.modal').closest('.modal').on('show.bs.modal', function() {
+        $('.modal').on('show.bs.modal', function() {
             self.getWifi();
-        })
+        });
+
     },
     props: {
         eqpString: {
@@ -33,11 +34,19 @@ Vue.component("getWifi", {
             default: function() {
                 return new WifiInfo();
             }
+        },
+        infoCache: {
+            type: WifiInfo,
+            default: function() {
+                return new WifiInfo();
+            }
         }
     },
     methods: {
         getWifi: function() {
             var self = this;
+
+            self.modal.comp = 'get-wifi';
 
             $.ajax({
                 type: "POST",
@@ -49,14 +58,13 @@ Vue.component("getWifi", {
                     // self.$parent.loadingRequest();
                 },
                 success: function(data) {
-                    console.log(this.url)
                     self.infoCache = new WifiInfo(data.wifiInfo);
+
                 },
                 error: function(e) {
                     console.log(e)
                 },
                 complete: function() {
-                    // self.$parent.loadingRequest();
                 }
             });
         },

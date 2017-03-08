@@ -37,7 +37,7 @@
                                     <label>Firmware: </label>
                                     <span v-if="eqp.firmwareOk">Atualizado</span>
                                     <span v-else>Desatualizado</span>
-                                    <button class="btn btn-danger" type="button" @click="updateFirmware()">Atualizar</button>
+                                    <button class="btn btn-danger" type="button">Atualizar</button>
                                 </li>
                                 <li class="list-group-item">
                                     <label>Nome do Modelo:</label>
@@ -65,12 +65,12 @@
                         <div class="col-md-6">
                             <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Consultas</label>
-                                <acs-button acao="Consultar WAN" v-bind:ativo="eqp.checkOn" @click="setComp('get-wifi','Consultar WAN')"></acs-button>
-                                <acs-button acao="Consultar Interface" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar LAN Host" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar Port Mapping" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar xDSL" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar DNS" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar WAN" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar Interface" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar LAN Host" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar Port Mapping" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar xDSL" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar DNS" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -82,8 +82,7 @@
                                 <button type="button" class="list-group-item">Gerenciar DMZ</button>
                                 <button type="button" class="list-group-item">Efetuar Ping</button>
                                 <button type="button" class="list-group-item">Gerenciar Port Mapping</button>
-                                <acs-button acao="Configurar Wifi" v-bind:ativo="eqp.checkOn" v-on:click="setComp('get-wifi','Configurar Wifi')"></acs-button>
-
+                                <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <button type="button" class="list-group-item">Configurar Autenticação PPPoE</button>
                                 <button type="button" class="list-group-item">Alterar DNS</button>
                             </div>

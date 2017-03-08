@@ -7,17 +7,9 @@
 
 var url = "/acs/equipamento/";
 
-Vue.config.devtools = true;
-Vue.config.silent = true;
-
 Vue.component("detail", {
     data: function() {
-        return {
-            modal: {
-                comp: 'get-wifi',
-                titulo: 'Titulo Dev'
-            }
-        };
+        return data;
     },
     template: '#detalhequip',
     props: {
@@ -33,89 +25,6 @@ Vue.component("detail", {
         }
     },
     methods: {
-        setComp: function(comp, t) {
-            var self = this;
-            console.log(self.modal)
-        },
-        reboot: function() {
-            $("#modalReboot").modal("hide");
-            $.ajax({
-                type: "POST",
-                url: url + "reboot/",
-                data: JSON.stringify(this.eqp),
-                dataType: "json",
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    $("#loadingModal").modal("show");
-                },
-                success: function() {
-                    $("#loadingModal").modal("hide");
-                    alert("success");
-                },
-                error: function() {
-                    $("#loadingModal").modal("hide");
-                    alert("Erro");
-                }
-            });
-        },
-        factoryReset: function() {
-            $("#modalFactory").modal("hide");
-            $.ajax({
-                type: "POST",
-                url: url + "factoryReset/",
-                data: JSON.stringify(this.eqp),
-                dataType: "json",
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    $("#loadingModal").modal("show");
-                },
-                success: function() {
-                    $("#loadingModal").modal("hide");
-                    alert("success");
-                },
-                error: function() {
-                    $("#loadingModal").modal("hide");
-                    alert("Erro");
-                }
-            });
-        },
-        getFirmware: function() {
-            $.ajax({
-                type: "POST",
-                url: url + "getFirmwareVersion/",
-                data: JSON.stringify(this.eqp),
-                dataType: "json",
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    $("#loadingModal").modal("show");
-                },
-                success: function() {
-                    $("#loadingModal").modal("hide");
-                    $("#modalGetFirmware").modal("show");
-                },
-                error: function() {
-                    $("#loadingModal").modal("hide");
-                    alert("Erro");
-                }
-            });
-        },
-        updateFirmware: function() {
-            $.ajax({
-                type: "POST",
-                url: url + "updateFirmwareVersion/",
-                data: JSON.stringify(this.eqp),
-                dataType: "json",
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    $("#loadingModal").modal("show");
-                },
-                success: function() {
-                    $("#loadingModal").modal("hide");
-                },
-                error: function() {
-                    $("#loadingModal").modal("hide");
-                }
-            });
-        }
     }
 });
+

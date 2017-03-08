@@ -4,7 +4,15 @@
  * and open the template in the editor.
  */
 
-var data = {};
+Vue.config.devtools = true;
+Vue.config.silent = true;
+
+var data = {
+    modal: {
+        comp: 'get-wifi',
+        titulo: 'Titulo Dev'
+    }
+};
 
 var vm = new Vue({
     el: "#instancia",
