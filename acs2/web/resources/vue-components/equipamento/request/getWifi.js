@@ -9,7 +9,8 @@ var url = "/acs/equipamento/";
 
 Vue.component("getWifi", {
     data: function() {
-        return data;
+        return {infoCache: {},
+                alertPanel: {}}
     },
     mounted: function() {
         var self = this
@@ -59,10 +60,11 @@ Vue.component("getWifi", {
                 },
                 success: function(data) {
                     self.infoCache = new WifiInfo(data.wifiInfo);
-
+                    self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display:'block'}
                 },
                 error: function(e) {
                     console.log(e)
+                    self.alertPanel = {tipo: 'danger', mensagem: 'Falha na execução', display:'block'}
                 },
                 complete: function() {
                 }
@@ -87,22 +89,25 @@ Vue.component("getWifi", {
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    self.$parent.loadingRequest();
+//                    self.$parent.loadingRequest();
                 },
                 success: function(data) {
                     console.log(this.url)
                     self.infoCache = new WifiInfo(data.wifiInfo);
+                    self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display:'block'}
                 },
                 error: function(e) {
                     console.log(e)
+                    self.alertPanel = {tipo: 'danger', mensagem: 'Falha na execução', display:'block'}
                 },
                 complete: function() {
-                    self.$parent.loadingRequest();
+//                    self.$parent.loadingRequest();
                 }
             });
         }
     },
     template: "<div class='form'>\n\
+                    <component is='alertpanel' :msg='alertPanel'></component>\n\
                     <div id='leForm'>\n\
                         <div class='form-group'>\n\
                             <label for='ssid'>SSID (Nome da Rede WiFi)</label>\n\
