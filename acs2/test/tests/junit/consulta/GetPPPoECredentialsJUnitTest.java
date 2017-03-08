@@ -55,7 +55,7 @@ public class GetPPPoECredentialsJUnitTest {
 
         EquipamentoDAO d = new EquipamentoDAO();
 
-        Long l = new Long(139020);
+        Long l = new Long(104016);
         NbiDeviceData eqp;
         eqp = d.findDeviceByGUID(l);
 

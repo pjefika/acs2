@@ -57,6 +57,27 @@ Vue.component("portMapping", {
         },
         setPortMapping: function () {
             var self = this;
+            var _data = {};
+            _data.nbiDeviceData = self.equipamento;
+            _data.pMapping = self.pMapping;            
+            $.ajax({
+                type: "POST",
+                url: url + "setPortMapping/",
+                data: JSON.stringify(_data),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    $("#loadingModal").modal("show");
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#loadingModal").modal("hide");
+                },
+                error: function (e) {
+                    console.log(e);
+                    $("#loadingModal").modal("hide");
+                }
+            }); 
         }
     },    
     template: "<div class='form'>\n\
@@ -89,5 +110,6 @@ Vue.component("portMapping", {
                         <input class='form-control' v-model='pMapping.remoteHost'>\n\
                     </div>\n\
                     <button type='button' class='btn btn-primary' @click='getPortMapping()'>Buscar</button>\n\
+                    <button type='button' class='btn btn-warning' @click='setPortMapping()'>Modificar</button>\n\
                </div>"
 });

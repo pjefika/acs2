@@ -14,7 +14,6 @@ import com.alcatel.hdm.service.nbi2.NbiFunction;
 import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
-import com.google.gson.Gson;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
@@ -271,15 +270,15 @@ public class EquipamentoDAO {
     public StringResponseDTO setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfo pPPoECredentialsInfo) {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();            
+            this.initSynchDeviceOperations();
             String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
             List<Object> json = NbiDecorator.getEmptyJson();
-            json.set(0, jsonPppoe);            
+            json.set(0, jsonPppoe);
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 10000, "");
             return a;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;            
+            return null;
         }
     }
 
@@ -295,12 +294,31 @@ public class EquipamentoDAO {
             System.out.println(o.getDescription());
         }
     }
-    
+
     public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 10000, "");
-        return JsonUtil.getPortMappingInfo(a);
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 10000, "");
+            return JsonUtil.getPortMappingInfo(a);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public StringResponseDTO setPortMapping(NbiDeviceData eqp, PortMappingInfo portMappingInfo) {
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+            String jsonPppoe = JsonUtil.serialize(portMappingInfo, portMappingInfo.getClass());
+            List<Object> json = NbiDecorator.getEmptyJson();
+            json.set(0, jsonPppoe);
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 10000, "");
+            return a;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void initNbi() {
