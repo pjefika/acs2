@@ -39,12 +39,10 @@ Vue.component("getWifi", {
         getWifi: function() {
             var self = this;
 
-            console.log(self.equipamento)
-
             $.ajax({
                 type: "POST",
                 url: url + "getWifiInfo/",
-                data: JSON.stringify(self.equipamento),
+                data: JSON.stringify(self.equipamento.flush()),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
@@ -57,7 +55,7 @@ Vue.component("getWifi", {
                 error: function(e) {
                     console.log(e)
                 },
-                complete: function(){
+                complete: function() {
                     self.$parent.loadingRequest();
                 }
             });
@@ -90,7 +88,7 @@ Vue.component("getWifi", {
                 error: function(e) {
                     console.log(e)
                 },
-                complete: function(){
+                complete: function() {
                     self.$parent.loadingRequest();
                 }
             });

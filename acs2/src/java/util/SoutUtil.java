@@ -32,6 +32,7 @@ public class SoutUtil {
         System.out.println("getConnectionRequestURL: " + d.getConnectionRequestURL());
         System.out.println("getConnectionRequestUsername: " + d.getConnectionRequestUsername());
         System.out.println("getConnectionRequestPassword: " + d.getConnectionRequestPassword());
+        System.out.println("Type: " + d.getType());
         System.out.println("");
     }
 

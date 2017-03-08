@@ -21,18 +21,27 @@ var Equipamento = function(p) {
         this.ipAddress = p.eqp.ipAddress;
         this.checkOn = p.checkOn;
         this.firmwareOk = p.firmWareOk;
+        this.type = p.eqp.type;
+        this.lastActivationTime = p.eqp.lastActivationTime;
     }
 };
 
-
-Equipamento.prototype.dateFormat = function() {
-    return moment(Equipamento.dataAutenticacao).format('DD/MM/YYYY HH:mm:ss');
+Equipamento.prototype.isModem = function() {
+    return this.type === 0;
 };
 
 Equipamento.prototype.dataAutenticacao = function() {
-    if (Equipamento.lastActivationTime) {
-        return Equipamento.dateFormat(new Date(Equipamento.lastActivationTime.year, Equipamento.lastActivationTime.month, Equipamento.lastActivationTime.day, Equipamento.lastActivationTime.hour, Equipamento.lastActivationTime.minute, Equipamento.lastActivationTime.second));
-    } else {
-        return "#####";
-    }
+    return moment(new Date(this.lastActivationTime.year, this.lastActivationTime.month, this.lastActivationTime.day, this.lastActivationTime.hour, this.lastActivationTime.minute, this.lastActivationTime.second)).format('DD/MM/YYYY HH:mm:ss');
+};
+
+/**
+ * Método necessário para limpar campos adicionais antes de passar para a controller Vraptor
+ * @returns {Equipamento.prototype}
+ */
+Equipamento.prototype.flush = function() {
+    var _flush = this;
+    delete _flush.firmwareOk;
+    delete _flush.checkOn;
+    delete _flush.lastActivationTime;
+    return _flush;
 };

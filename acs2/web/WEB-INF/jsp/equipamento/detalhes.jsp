@@ -26,6 +26,12 @@
                                     <label>MAC:</label>
                                     <span v-text="eqp.macAddress"></span>
                                 </li>
+
+                                <li class="list-group-item">
+                                    <label>Subscriber Id:</label>
+                                    <span v-text="eqp.subscriberID"></span>
+                                </li>
+
                                 <li class="list-group-item">
                                     <label>Firmware: </label>
                                     <span v-if="eqp.firmwareOk">Atualizado</span>
@@ -62,7 +68,7 @@
                                                                 </li>-->
                                 <li class="list-group-item">
                                     <label>Data Autenticação:</label>
-                                    <span v-text="eqp.dateFormat(eqp.dataAutenticacao)"></span>
+                                    <span v-text="eqp.dataAutenticacao()"></span>
                                 </li>
 
                             </ul>
@@ -72,18 +78,18 @@
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="list-group">
+                            <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Consultas</label>
-                                <button type="button" class="list-group-item">Consultar WAN</button>
-                                <button type="button" class="list-group-item">Consultar Interface</button>
-                                <button type="button" class="list-group-item">Consultar LAN Host</button>
-                                <button type="button" class="list-group-item">Consultar Port Mapping</button>
-                                <button type="button" class="list-group-item">Consultar xDSL</button>
-                                <button type="button" class="list-group-item">Consultar DNS</button>
+                                <acs-button acao="Consultar WAN" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar Interface" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar LAN Host" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar Port Mapping" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar xDSL" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar DNS" v-bind:ativo="eqp.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="list-group">
+                            <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Ações</label>
                                 <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalReboot" data-backdrop="static">Reboot</button>
                                 <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalFactory" data-backdrop="static">Reset de Fábrica</button>
@@ -137,16 +143,17 @@
             </div>
 
         </div>
-            
+
 
     </script>
 
     <detail v-bind:eqp-string='${equipamento}'></detail>
     <modal v-bind:eqp-string='${equipamento}' body="get-wifi" titulo="Configurações WiFi" le-id="wifi"></modal>
-    
+
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/wifiInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/acsButton.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>
