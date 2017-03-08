@@ -90,6 +90,8 @@
             <decorator:body/>
         </div>
         <script src="${pageContext.request.contextPath}/resources/vue-components/template.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/vue-components/util/alertPanel.js"></script>
         <!-- Loading Modal -->
         <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-sm" role="document">
