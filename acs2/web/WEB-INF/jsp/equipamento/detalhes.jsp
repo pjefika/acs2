@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
            prefix="decorator"%>
 
-<script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>

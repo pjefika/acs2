@@ -11,6 +11,9 @@ Vue.component("getWifi", {
     mounted: function() {
         this.getWifi();
     },
+    data: function(){
+      return {mensagem: '', erro: ''}  
+    },
     props: {
         eqpString: {
             type: String,
@@ -27,6 +30,9 @@ Vue.component("getWifi", {
             default: function() {
                 return new WifiInfo();
             }
+        },
+        alertPanel: {
+            type:Object
         }
     },
     methods: {
@@ -43,11 +49,10 @@ Vue.component("getWifi", {
                 },
                 success: function(data) {
                     self.info = new WifiInfo(data.wifiInfo);
-                    self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display: 'block'}
                 },
                 error: function(e) {
-                    console.log(e)
-                    self.alertPanel = {tipo: 'danger', mensagem: 'Falha na execução', display: 'block'}
+                    self.mensagem = 'Falha ao buscar informações';
+                    self.erro = 'true';
                 },
                 complete: function() {
                 }
@@ -74,13 +79,13 @@ Vue.component("getWifi", {
 //                    self.$parent.loadingRequest();
                 },
                 success: function(data) {
-                    console.log(this.url)
                     self.info = new WifiInfo(data.wifiInfo);
-                    self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display: 'block'}
+                    self.mensagem = 'Sucesso na execução';
+                    self.erro = '';
                 },
                 error: function(e) {
-                    console.log(e)
-                    self.alertPanel = {tipo: 'danger', mensagem: 'Falha na execução', display: 'block'}
+                    self.mensagem = 'Falha ao executar ação.';
+                    self.erro = 's';
                 },
                 complete: function() {
 //                    self.$parent.loadingRequest();
@@ -90,7 +95,7 @@ Vue.component("getWifi", {
     },
     template: "<div>\n\
                 <div class='modal-body'>\n\
-                    <component is='alertpanel' :msg='alertPanel'></component>\n\
+                    <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>SSID (Nome da Rede WiFi)</label>\n\
                         <input class='form-control' v-model='info.ssid'>\n\

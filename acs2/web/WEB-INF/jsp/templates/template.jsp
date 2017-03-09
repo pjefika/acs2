@@ -103,6 +103,8 @@
     </div>
     <!-- /container -->
     <script src="${pageContext.request.contextPath}/resources/vue-components/template.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vue-components/util/alertPanel.js"></script>
 </body>
 </html>
 
