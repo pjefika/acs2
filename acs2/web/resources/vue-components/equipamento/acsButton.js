@@ -28,22 +28,29 @@ Vue.component("acsButton", {
             type: Boolean,
             required: true,
             default: function() {
-                return false;
+                return true;
             }
         }
     },
     methods: {
         setComp: function() {
             var self = this;
-            if (!self.ativo) {
-                return;
+            if (self.ativo) {
+                self.ativo = false
+                vm.modal = {
+                    titulo: self.acao,
+                    comp: self.comp
+                };
+                setTimeout(function(){
+                    $("#actionModal").modal("show");    
+                    self.ativo = true
+                },500)
+                
+
+                
             }
 
-            vm.modal = {
-                titulo: self.acao,
-                comp: self.comp
-            };
-            $("#actionModal").modal("show");
+            
         }
     }
 });
