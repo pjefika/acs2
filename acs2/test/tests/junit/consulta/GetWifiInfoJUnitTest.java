@@ -50,7 +50,7 @@ public class GetWifiInfoJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(139020));
+            eqp = d.findDeviceByGUID(new Long(142014));
 
             WifiInfo info = d.getWifiInfo(eqp);
 

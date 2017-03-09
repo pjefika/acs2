@@ -22,12 +22,10 @@
         <script src="${pageContext.request.contextPath}/resources/moment/moment.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/data-table/dataTables.min.js"></script>
-        
-
         <decorator:head/>
     </head>
-    <body>       
-        
+    <body>
+
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -83,28 +81,30 @@
                             </li>
                         </ul>
                     </c:if>
-                </div><!--/.nav-collapse -->                
-            </div>            
+                </div><!--/.nav-collapse -->
+            </div>
         </nav>
-                <div id="instancia" v-cloak>
+        <div id="instancia" v-cloak>
             <decorator:body/>
-                </div>
-            <script src="${pageContext.request.contextPath}/resources/vue-components/template.js"></script>
-            <!-- Loading Modal -->
-            <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel">Aguarde ...</h4>
-                        </div>
-                        <div class="modal-body" style="text-align: center;">                    
-                            <img src="${pageContext.request.contextPath}/resources/imagens/loading.gif">                    
-                        </div>
+        </div>
+        <!-- Loading Modal -->
+        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Aguarde ...</h4>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        <img src="${pageContext.request.contextPath}/resources/imagens/loading.gif">
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /container -->                  
-    </body>
+    </div>
+    <!-- /container -->
+    <script src="${pageContext.request.contextPath}/resources/vue-components/template.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vue-components/util/alertPanel.js"></script>
+</body>
 </html>
 

@@ -18,9 +18,5 @@ var WifiInfo = function(p) {
         this.ssid = p.ssid;
         this.standard = p.standard;
         this.ssidPassword = p.ssidPassword;
-
-        console.log("WifiInfo construt")
-        console.log(this)
-
     }
 };

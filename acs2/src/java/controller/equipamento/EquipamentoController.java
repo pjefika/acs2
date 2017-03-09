@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.serialization.gson.WithRoot;
 import br.com.caelum.vraptor.view.Results;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
@@ -19,6 +20,8 @@ import dao.EquipamentoDAO;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
+import model.device.wifi.WifiInfo;
+
 
 /**
  *
@@ -90,7 +93,8 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer(e);
+            e.printStackTrace();
+            this.includeSerializer("Erro");
         }
     }
 
@@ -135,6 +139,17 @@ public class EquipamentoController extends AbstractController {
             dao.factoryReset(nbiDeviceData);
         } catch (Exception e) {
             this.includeSerializer(e);
+        }
+    }
+
+    @Post("/equipamento/setWifiInfo/")
+    @Consumes(value = "application/json", options = WithRoot.class)
+    public void setWifi(NbiDeviceData nbiDeviceData, WifiInfo info) {
+        try {
+            dao.setWifiInfo(nbiDeviceData, info);
+            this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
