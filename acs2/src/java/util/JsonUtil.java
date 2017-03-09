@@ -15,6 +15,7 @@ import java.util.List;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.ping.PingInfo;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
@@ -64,6 +65,26 @@ public class JsonUtil {
 
         return i;
     }
+    
+    public static PingInfo getPing(StringResponseDTO a) {        
+        PingInfo i = new PingInfo();        
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+        JsonObject jobject = jelement.getAsJsonObject();        
+        String repetitions = jobject.get("repetitions").toString().replace("\"", "");
+        String hostAddress = jobject.get("hostAddress").toString().replace("\"", "");
+        String qtdFailures = jobject.get("qtdFailures").toString().replace("\"", "");
+        String qtdSuccess = jobject.get("qtdSuccess").toString().replace("\"", "");
+        String avgRespTime = jobject.get("avgRespTime").toString().replace("\"", "");
+        String status = jobject.get("status").toString().replace("\"", "");        
+        i.setRepetitions(repetitions);
+        i.setHostAddress(hostAddress);
+        i.setQtdFailures(qtdFailures);
+        i.setQtdSuccess(qtdSuccess);
+        i.setAvgRespTime(avgRespTime);
+        i.setStatus(status);        
+        return i;        
+    }
+    
 
     public static WifiInfo getWifiInfo(StringResponseDTO a) {
 

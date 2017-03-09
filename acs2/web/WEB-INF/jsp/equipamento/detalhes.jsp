@@ -90,7 +90,7 @@
                                 <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalFactory" data-backdrop="static">Reset de Fábrica</button>
                                 <button type="button" class="list-group-item">Efetuar Traceroute</button>
                                 <button type="button" class="list-group-item">Gerenciar DMZ</button>
-                                <button type="button" class="list-group-item">Efetuar Ping</button>
+                                <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Gerenciar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Autenticação PPPoE" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
@@ -117,4 +117,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/portMappingInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/portMapping.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pingInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getPing.js"></script>
     

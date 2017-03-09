@@ -11,6 +11,7 @@ import java.util.List;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.ping.PingInfo;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
@@ -81,6 +82,15 @@ public class SoutUtil {
 
     public static void print(NbiDeviceActionResult r) {
         System.out.println("getFaultString: " + r.getFaultString());
+        System.out.println("getStatus: " + r.getStatus());
+    }
+    
+    public static void print(PingInfo r) {
+        System.out.println("getRepetitions: " + r.getRepetitions());
+        System.out.println("getHostAddress: " + r.getHostAddress());
+        System.out.println("getAvgRespTime: " + r.getAvgRespTime());
+        System.out.println("getQtdFailures: " + r.getQtdFailures());
+        System.out.println("getQtdSuccess: " + r.getQtdSuccess());
         System.out.println("getStatus: " + r.getStatus());
     }
 

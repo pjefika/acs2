@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-/* global Vue, pPPoEC */
+/* global ping, Vue */
 
 var url = "/acs/equipamento/";
 
-Vue.component("pppoeCredentials", {
+Vue.component("getPing", {    
     data: function () {
         return {
             mensagem: '',
@@ -17,7 +17,7 @@ Vue.component("pppoeCredentials", {
     },
     mounted: function () {
         var self = this;
-        self.getPPPoECredentials();
+        self.getPing();
     },
     props: {
         eqpString: {
@@ -30,55 +30,34 @@ Vue.component("pppoeCredentials", {
                 return new Equipamento(this.eqpString);
             }
         },
-        pPPoEcred: {
-            type: pPPoEC,
+        info: {
+            type: ping,
             default: function () {
-                return new pPPoEC();
+                return new ping();
             }
         },
         alertPanel: {
-            type:Object
+            type: Object
         }
     },
     methods: {
-        getPPPoECredentials: function () {
+        getPing: function () {
             var self = this;
             $.ajax({
                 type: "POST",
-                url: url + "getPPPoe/",
+                url: url + "ping/",
                 data: JSON.stringify(this.equipamento.flush()),
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
                 success: function (data) {
-                    self.pPPoEcred = new pPPoEC(data.ppPoECredentialsInfo);
+                    self.info = new pPPoEC(data.ppPoECredentialsInfo);
+                    console.log(self.info);
                 },
                 error: function (e) {
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
-                    console.log(e);
-                }
-            });
-        },
-        setPPPoECredentials: function () {
-            var self = this;
-            var _data = {};
-            _data.nbiDeviceData = self.equipamento;
-            _data.pPPoECredentialsInfo = self.pPPoEcred;
-
-            $.ajax({
-                type: "POST",
-                url: url + "setPPPoe/",
-                data: JSON.stringify(_data),
-                dataType: "json",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                },
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function (e) {
                     console.log(e);
                 }
             });
@@ -89,16 +68,31 @@ Vue.component("pppoeCredentials", {
                         <div class='modal-body'>\n\
                             <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                             <div class='form-group'>\n\
-                                <label for='username'>Username</label>\n\
-                                <input class='form-control' v-model='pPPoEcred.username'>\n\
+                                <label for='username'>Repetitions</label>\n\
+                                <input class='form-control' v-model='info.repetitions'>\n\
                             </div>\n\
                             <div class='form-group'>\n\
-                                <label for='password'>Password</label>\n\
-                                <input class='form-control' v-model='pPPoEcred.password'>\n\
+                                <label for='username'>HostAddress</label>\n\
+                                <input class='form-control' v-model='info.hostAddress'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='username'>QtdFailures</label>\n\
+                                <input class='form-control' v-model='info.qtdFailures'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='username'>QtdSuccess</label>\n\
+                                <input class='form-control' v-model='info.qtdSuccess'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='username'>AvgRespTime</label>\n\
+                                <input class='form-control' v-model='info.avgRespTime'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='username'>Status</label>\n\
+                                <input class='form-control' v-model='info.status'>\n\
                             </div>\n\
                         </div>\n\
                         <div class='modal-footer'>\n\
-                            <button type='button' class='btn btn-warning' @click='setPPPoECredentials'>Modificar</button>\n\
                         </div>\n\
                     </div>\n\
                </div>"
