@@ -45,7 +45,7 @@ Vue.component("getWifi", {
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    // self.$parent.loadingRequest();
+                    self.$parent.loading = true
                 },
                 success: function(data) {
                     self.info = new WifiInfo(data.wifiInfo);
@@ -55,6 +55,7 @@ Vue.component("getWifi", {
                     self.erro = 'true';
                 },
                 complete: function() {
+                    self.$parent.loading = false
                 }
             });
         },
@@ -76,7 +77,7 @@ Vue.component("getWifi", {
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-//                    self.$parent.loadingRequest();
+                    self.$parent.loading = true
                 },
                 success: function(data) {
                     self.info = new WifiInfo(data.wifiInfo);
@@ -88,7 +89,7 @@ Vue.component("getWifi", {
                     self.erro = 's';
                 },
                 complete: function() {
-//                    self.$parent.loadingRequest();
+                    self.$parent.loading = false
                 }
             });
         }

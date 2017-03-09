@@ -41,10 +41,10 @@ Vue.component("acsButton", {
                     titulo: self.acao,
                     comp: self.comp
                 };
-                setTimeout(function(){
+                vm.nextTick(function(){
                     $("#actionModal").modal("show");    
                     self.ativo = true
-                },500)
+                })
                 
 
                 
