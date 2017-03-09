@@ -11,6 +11,7 @@ import java.util.List;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
@@ -65,7 +66,11 @@ public class SoutUtil {
         System.out.println("Password: " + info.getSsidPassword());
         System.out.println("Frequency: " + info.getFrequency());
         System.out.println("Enryptation: " + info.getEncryptation());
+    }
 
+    public static void print(PortMappingInfo info) {
+        System.out.println("ExternalPort: " + info.getExternalPort());
+        System.out.println("InternalClient: " + info.getInternalClient());
     }
 
     public static void printl(List<DeviceLog> l) {

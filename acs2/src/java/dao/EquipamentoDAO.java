@@ -14,7 +14,6 @@ import com.alcatel.hdm.service.nbi2.NbiFunction;
 import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
-import com.google.gson.Gson;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
@@ -33,6 +32,7 @@ import javax.xml.ws.Service;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoSet;
@@ -206,6 +206,13 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9511, opt, 10000, "");
         return JsonUtil.getWifiInfo(a);
+    }
+
+    public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 10000, "");
+        return JsonUtil.getPortMappingInfo(a);
     }
 
     /**
