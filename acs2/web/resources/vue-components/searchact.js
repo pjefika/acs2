@@ -5,9 +5,6 @@
  */
 /* global Vue */
 var url = "/acs/busca/listar/";
-Vue.config.devtools = true;
-Vue.config.silent = true;
-
 var data = {
     inputToSearch: null,
     listaEqp: [],

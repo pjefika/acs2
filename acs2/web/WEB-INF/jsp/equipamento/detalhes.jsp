@@ -2,6 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
            prefix="decorator"%>
+
+<script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/acsButton.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>
+
 <div class="container">
     <script type="text/html" id="detalhequip">
         <div>
@@ -92,16 +101,5 @@
             </div>
         </div>
     </script>
-
-    <detail v-bind:eqp-string='${equipamento}'></detail>
-
-
-
+    <detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>
 </div>
-<script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/wifiInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/acsButton.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>

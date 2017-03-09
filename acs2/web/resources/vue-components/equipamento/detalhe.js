@@ -7,12 +7,25 @@
 
 var url = "/acs/equipamento/";
 
+
+
+Vue.config.devtools = true;
+Vue.config.silent = true;
+
+
 Vue.component("detail", {
-    data: function() {
-        return data;
-    },
     template: '#detalhequip',
     props: {
+        modal: {
+            type: Object,
+            required: true,
+            default: function() {
+                return {
+                    comp: 'get-wifi',
+                    titulo: 'Titulo Dev'
+                }
+            }
+        },
         eqpString: {
             type: String,
             required: true
@@ -27,4 +40,3 @@ Vue.component("detail", {
     methods: {
     }
 });
-

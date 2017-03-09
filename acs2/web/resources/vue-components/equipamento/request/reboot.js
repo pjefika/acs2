@@ -6,9 +6,6 @@
 /* global Vue */
 var url = "/acs/equipamento/";
 Vue.component("reboot", {
-    data: function() {
-        return data;
-    },
     props: {
         eqpString: {
             type: String,
@@ -26,7 +23,7 @@ Vue.component("reboot", {
             default: function() {
                 return "Deseja resetar o modem?";
             }
-        },
+        }
     },
     methods: {
         reboot: function() {

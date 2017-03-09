@@ -8,10 +8,7 @@ var url = "/acs/equipamento/";
 
 
 Vue.component("getWifi", {
-    data: function() {
-        return data;
-    },
-    mounted: function() {
+    activated: function() {
         var self = this
         self.getWifi();
     },
@@ -31,12 +28,6 @@ Vue.component("getWifi", {
             default: function() {
                 return new WifiInfo();
             }
-        },
-        infoCache: {
-            type: WifiInfo,
-            default: function() {
-                return new WifiInfo();
-            }
         }
     },
     methods: {
@@ -52,7 +43,7 @@ Vue.component("getWifi", {
                     // self.$parent.loadingRequest();
                 },
                 success: function(data) {
-                    self.infoCache = new WifiInfo(data.wifiInfo);
+                    self.info = new WifiInfo(data.wifiInfo);
                     self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display: 'block'}
                 },
                 error: function(e) {
@@ -73,7 +64,7 @@ Vue.component("getWifi", {
              */
             var _data = {};
             _data.nbiDeviceData = self.equipamento;
-            _data.info = self.infoCache;
+            _data.info = self.info;
 
             $.ajax({
                 type: "POST",
@@ -86,7 +77,7 @@ Vue.component("getWifi", {
                 },
                 success: function(data) {
                     console.log(this.url)
-                    self.infoCache = new WifiInfo(data.wifiInfo);
+                    self.info = new WifiInfo(data.wifiInfo);
                     self.alertPanel = {tipo: 'success', mensagem: 'Sucesso na execução', display: 'block'}
                 },
                 error: function(e) {
@@ -104,31 +95,31 @@ Vue.component("getWifi", {
                     <component is='alertpanel' :msg='alertPanel'></component>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>SSID (Nome da Rede WiFi)</label>\n\
-                        <input class='form-control' v-model='infoCache.ssid'>\n\
+                        <input class='form-control' v-model='info.ssid'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Senha</label>\n\
-                        <input class='form-control' v-model='infoCache.ssidPassword'>\n\
+                        <input class='form-control' v-model='info.ssidPassword'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Encriptação</label>\n\
-                        <input class='form-control' v-model='infoCache.encryptation'>\n\
+                        <input class='form-control' v-model='info.encryptation'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Status</label>\n\
-                        <input class='form-control' v-model='infoCache.operStatus'>\n\
+                        <input class='form-control' v-model='info.operStatus'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Canal</label>\n\
-                        <input class='form-control' v-model='infoCache.channel'>\n\
+                        <input class='form-control' v-model='info.channel'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Broadcast</label>\n\
-                        <input class='form-control' v-model='infoCache.broadcastEnabled'>\n\
+                        <input class='form-control' v-model='info.broadcastEnabled'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Radio</label>\n\
-                        <input class='form-control' v-model='infoCache.radioEnabled'>\n\
+                        <input class='form-control' v-model='info.radioEnabled'>\n\
                     </div>\n\
                 </div>\n\
                 <div class='modal-footer'>\n\
