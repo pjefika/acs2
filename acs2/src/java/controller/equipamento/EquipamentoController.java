@@ -20,6 +20,9 @@ import dao.EquipamentoDAO;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
+import model.device.portmapping.PortMappingInfo;
+import model.device.pppoe.PPPoECredentialsInfo;
+import util.JsonUtil;
 import model.device.wifi.WifiInfo;
 
 
@@ -82,7 +85,7 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getFirmwareVersion(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer(e);
+            this.includeSerializer("Erro no comando getFirmwareVersion");
         }
     }
 
@@ -93,8 +96,8 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
         } catch (Exception e) {
+            this.includeSerializer("Erro no comando getWifiInfo");
             e.printStackTrace();
-            this.includeSerializer("Erro");
         }
     }
 
@@ -116,7 +119,7 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.firmwareUpdate(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer(e);
+            this.includeSerializer("Erro no comando updateFirmwareVersion");
         }
     }
 
@@ -127,7 +130,7 @@ public class EquipamentoController extends AbstractController {
         try {
             dao.reboot(nbiDeviceData);
         } catch (Exception e) {
-            this.includeSerializer(e);
+            this.includeSerializer("Erro no comando reboot");
         }
     }
 
@@ -138,7 +141,7 @@ public class EquipamentoController extends AbstractController {
         try {
             dao.factoryReset(nbiDeviceData);
         } catch (Exception e) {
-            this.includeSerializer(e);
+            this.includeSerializer("Erro no comando factoryReset");
         }
     }
 
@@ -160,6 +163,67 @@ public class EquipamentoController extends AbstractController {
         this.includeSerializer(dao.checkOnline(nbiDeviceData));
     }
 
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getPPPoe/")
+    public void getPPPoECredentials(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getPPPoECredentials(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer("Erro no comando getPPPoECredentials");
+        }
+    }
+
+    @Post
+    @Consumes(value = "application/json", options = WithRoot.class)
+    @Path("/equipamento/setPPPoe/")
+    public void setPPPoECredentials(NbiDeviceData nbiDeviceData, PPPoECredentialsInfo pPPoECredentialsInfo) {
+        try {
+            this.includeSerializer(dao.setPPPoECredentials(nbiDeviceData, pPPoECredentialsInfo));
+        } catch (Exception e) {
+            this.includeSerializer("Erro no comando setPPPoECredentials");
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getDdns/")
+    public void getDdns(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getDdns(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer("Erro no comando getDdns");
+        }
+    }
+    
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getPortMapping/")
+    public void getPortMappingInfo (NbiDeviceData nbiDeviceData) {
+        try {
+            
+            System.out.println(nbiDeviceData.getDeviceId().getOUI());
+            
+            this.includeSerializer(dao.getPortMapping(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer("Erro no comando getPortMappingInfo");
+        }
+    }
+
+    @Post
+    @Consumes(value = "application/json", options = WithRoot.class)
+    @Path("/equipamento/setPortMapping/")
+    public void setPortMappingInfo(NbiDeviceData nbiDeviceData, PortMappingInfo portMappingInfo) {
+        try {
+            
+            System.out.println(portMappingInfo.getEnable());
+            
+            //this.includeSerializer(dao.setPortMapping(nbiDeviceData, portMappingInfo));
+        } catch (Exception e) {
+            this.includeSerializer("Erro no comando setPortMappingInfo");
+        }
+    }
+    
     @Override
     public void includeSerializer(Object a) {
         result.use(Results.json()).from(a).recursive().serialize();

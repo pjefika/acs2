@@ -38,5 +38,6 @@ Vue.component("detail", {
         }
     },
     methods: {
+
     }
 });

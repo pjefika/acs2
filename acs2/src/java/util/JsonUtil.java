@@ -150,4 +150,31 @@ public class JsonUtil {
         return new PPPoECredentialsInfo(username, password);
     }
 
+    public static PortMappingInfo getPortMappingInfo(StringResponseDTO a) {
+
+        PortMappingInfo i = new PortMappingInfo();
+
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+        JsonObject jobject = jelement.getAsJsonObject();
+
+        // System.out.println("FullJson: " + jobject.toString());
+        String externalPort = jobject.get("externalPort").toString().replace("\"", "");
+        String internalClient = jobject.get("internalClient").toString().replace("\"", "");
+        String internalPort = jobject.get("internalPort").toString().replace("\"", "");
+        String portMapName = jobject.get("portMapName").toString().replace("\"", "");
+        String enable = jobject.get("enable").toString().replace("\"", "");
+        String protocol = jobject.get("protocol").toString().replace("\"", "");
+        String remoteHost = jobject.get("remoteHost").toString().replace("\"", "");
+
+        i.setExternalPort(externalPort);
+        i.setInternalClient(internalClient);
+        i.setInternalPort(internalPort);
+        i.setPortMapName(portMapName);
+        i.setEnable(enable);;
+        i.setProtocol(protocol);
+        i.setRemoteHost(remoteHost);
+
+        return i;
+    }
+
 }

@@ -272,7 +272,21 @@ public class EquipamentoDAO {
             e.printStackTrace();
             return null;
         }
+    }
 
+    public StringResponseDTO setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfo pPPoECredentialsInfo) {
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+            String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
+            List<Object> json = NbiDecorator.getEmptyJson();
+            json.set(0, jsonPppoe);
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 10000, "");
+            return a;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public NbiOperationStatus getDeviceOperationStatus(Long operationId) throws NBIException_Exception {
@@ -285,6 +299,33 @@ public class EquipamentoDAO {
         for (NbiFirmwareImageData o : nbi.getAvailableFirmwareImages(NbiDecorator.adapterAlter(eqp))) {
             System.out.println(o.getName());
             System.out.println(o.getDescription());
+        }
+    }
+
+    public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 15000, "");
+            return JsonUtil.getPortMappingInfo(a);
+        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public StringResponseDTO setPortMapping(NbiDeviceData eqp, PortMappingInfo portMappingInfo) {
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+            String jsonPppoe = JsonUtil.serialize(portMappingInfo, portMappingInfo.getClass());
+            List<Object> json = NbiDecorator.getEmptyJson();
+            json.set(0, jsonPppoe);
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 10000, "");
+            return a;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

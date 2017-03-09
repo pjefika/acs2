@@ -55,7 +55,7 @@ public class CheckOnlineJUnitTestDev {
             NbiDeviceData eqp;
 //            eqp = d.findDeviceByGUID(new Long(142012));
 //            eqp = d.findDeviceByGUID(new Long(23006));
-            eqp = d.findDeviceByGUID(new Long(139020));
+            eqp = d.findDeviceByGUID(new Long(102015));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 

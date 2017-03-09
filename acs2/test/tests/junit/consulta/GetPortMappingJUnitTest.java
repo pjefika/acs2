@@ -7,6 +7,15 @@ package tests.junit.consulta;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+
+import model.device.portmapping.PortMappingInfo;
+import org.junit.After;
+import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import java.util.List;
 import model.device.log.DeviceLog;
 import model.device.portmapping.PortMappingInfo;
@@ -17,11 +26,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 import util.SoutUtil;
 
 /**
  *
- * @author G0042204
+ * @author G0034481
  */
 public class GetPortMappingJUnitTest {
 
@@ -51,7 +61,8 @@ public class GetPortMappingJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(139020));
+            eqp = d.findDeviceByGUID(new Long(104016));
+
 
             PortMappingInfo info = d.getPortMapping(eqp);
 

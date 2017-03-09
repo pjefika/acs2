@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="list-group">
-                                <li v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']">
+                                <li v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']" @click="checkOnline()">
                                     <label>Status: </label>
                                     <span v-if="eqp.checkOn">Ativo</span>
                                     <span v-else>Inativo</span>
@@ -101,5 +101,19 @@
             </div>
         </div>
     </script>
-    <detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>
+
+<detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>
 </div>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/equipamento.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/wifiInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pPPoECredentialsInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/pPPoECredentials.js"></script>
+
+
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/portMappingInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/portMapping.js"></script>
+    

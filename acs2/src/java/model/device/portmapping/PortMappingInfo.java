@@ -7,7 +7,7 @@ package model.device.portmapping;
 
 /**
  *
- * @author G0042204
+ * @author Le Agente
  */
 public class PortMappingInfo {
 
