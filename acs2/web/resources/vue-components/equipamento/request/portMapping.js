@@ -84,36 +84,42 @@ Vue.component("portMapping", {
             }); 
         }
     },    
-    template: "<div class='form'>\n\
-                    <div class='form-group'>\n\
-                        <label for='username'>enable</label>\n\
-                        <input class='form-control' v-model='pMapping.enable'>\n\
+    template: "\
+                <div>\n\
+                    <div class='modal-body'>\n\
+                        <div class='form'>\n\
+                        <div class='form-group'>\n\
+                            <label for='username'>enable</label>\n\
+                            <input class='form-control' v-model='pMapping.enable'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label for='password'>externalPort</label>\n\
+                            <input class='form-control' v-model='pMapping.externalPort'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label for='password'>internalClient</label>\n\
+                            <input class='form-control' v-model='pMapping.internalClient'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label for='password'>internalPort</label>\n\
+                            <input class='form-control' v-model='pMapping.internalPort'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label for='password'>portMapName</label>\n\
+                            <input class='form-control' v-model='pMapping.portMapName'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label for='password'>protocol</label>\n\
+                            <input class='form-control' v-model='pMapping.protocol'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label for='password'>remoteHost</label>\n\
+                            <input class='form-control' v-model='pMapping.remoteHost'>\n\
+                        </div>\n\
                     </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='password'>externalPort</label>\n\
-                        <input class='form-control' v-model='pMapping.externalPort'>\n\
+                    <div class='modal-footer'>\n\
+                        <button type='button' class='btn btn-primary' @click='getPortMapping()'>Buscar</button>\n\
+                        <button type='button' class='btn btn-warning' @click='setPortMapping()'>Modificar</button>\n\
                     </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='password'>internalClient</label>\n\
-                        <input class='form-control' v-model='pMapping.internalClient'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='password'>internalPort</label>\n\
-                        <input class='form-control' v-model='pMapping.internalPort'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='password'>portMapName</label>\n\
-                        <input class='form-control' v-model='pMapping.portMapName'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='password'>protocol</label>\n\
-                        <input class='form-control' v-model='pMapping.protocol'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='password'>remoteHost</label>\n\
-                        <input class='form-control' v-model='pMapping.remoteHost'>\n\
-                    </div>\n\
-                    <button type='button' class='btn btn-primary' @click='getPortMapping()'>Buscar</button>\n\
-                    <button type='button' class='btn btn-warning' @click='setPortMapping()'>Modificar</button>\n\
                </div>"
 });
