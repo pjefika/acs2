@@ -41,25 +41,11 @@ Vue.component("acsButton", {
                     titulo: self.acao,
                     comp: self.comp
                 };
-                vm.nextTick(function(){
+                Vue.nextTick(function(){
                     $("#actionModal").modal("show");    
                     self.ativo = true
                 })
-                
-
-                
             }
-
-            
         }
     }
-});
-
-
-
-
-Vue.component("loading", {
-    template: '<div class="modal-body" style="text-align: center;">\n\
-                    <img src="/acs/resources/imagens/loading.gif">\n\
-               </div>'
 });
