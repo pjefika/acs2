@@ -104,13 +104,10 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/getPortMapping/")
     public void getPortMappingInfo (NbiDeviceData nbiDeviceData) {
-        try {
-            
-            System.out.println(nbiDeviceData.getDeviceId().getOUI());
-            
+        try {           
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer("Erro no comando getPortMappingInfo");
+            this.includeSerializer(e);
         }
     }
 
