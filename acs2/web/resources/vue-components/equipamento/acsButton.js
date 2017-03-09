@@ -39,12 +39,10 @@ Vue.component("acsButton", {
                 return;
             }
 
-            vm.modal.comp = 'loading';
-
-            vm.$emit('event')
-            vm.modal.titulo = self.acao;
-            vm.modal.comp = self.comp;
-
+            vm.modal = {
+                titulo: self.acao,
+                comp: self.comp
+            };
             $("#actionModal").modal("show");
         }
     }

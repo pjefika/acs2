@@ -8,9 +8,8 @@ var url = "/acs/equipamento/";
 
 
 Vue.component("getWifi", {
-    activated: function() {
-        var self = this
-        self.getWifi();
+    mounted: function() {
+        this.getWifi();
     },
     props: {
         eqpString: {
@@ -56,7 +55,6 @@ Vue.component("getWifi", {
         },
         setWifi: function() {
             var self = this;
-
 
             /**
              * Utilizar este padrão para enviar duas variaveis json para a controller

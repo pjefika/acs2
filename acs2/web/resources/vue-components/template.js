@@ -14,19 +14,15 @@ var vm = new Vue({
     data: {
         modal: {
             comp: 'loading',
-            titulo: 'Carregando'
+            titulo: 'Carregando...'
         }
     },
     watch: {
-        modal: function(val) {
-            console.log(val);
+        modal: function(m, oldVal) {
+//            if (m.comp === "get-wifi") {
+//                var _comp = vm.$children[0].$children[0].$children[0];
+//                _comp.getWifi();
+//            }
         }
-    }
-});
-
-vm.$on('event', function() {
-    var _comp = vm.$children[0].$children[0].$children[0];
-    if (_comp.$options._componentTag === "get-wifi") {
-        _comp.getWifi();
     }
 });
