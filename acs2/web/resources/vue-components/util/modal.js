@@ -28,13 +28,11 @@ Vue.component("acsModal", {
                     <div class='modal-content'>\n\
                         <div class='modal-header'>\n\
                             <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>\n\
-
                             <h4 class='modal-title' v-text='titulo'></h4>\n\
                         </div>\n\
                         <component v-bind:eqp-string='data' v-bind:is='body'></component>\n\
                     </div>\n\
                 </div>\n\
-
             </div>"
 });
 

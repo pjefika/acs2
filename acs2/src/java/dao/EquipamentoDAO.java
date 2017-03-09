@@ -209,10 +209,15 @@ public class EquipamentoDAO {
     }
 
     public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 10000, "");
-        return JsonUtil.getPortMappingInfo(a);
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 15000, "");
+            return JsonUtil.getPortMappingInfo(a);
+        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -302,17 +307,7 @@ public class EquipamentoDAO {
         }
     }
 
-    public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
-        try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 15000, "");
-            return JsonUtil.getPortMappingInfo(a);
-        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    
 
     public StringResponseDTO setPortMapping(NbiDeviceData eqp, PortMappingInfo portMappingInfo) {
         try {

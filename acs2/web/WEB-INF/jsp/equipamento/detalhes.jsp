@@ -90,7 +90,7 @@
                                 <button type="button" class="list-group-item">Efetuar Traceroute</button>
                                 <button type="button" class="list-group-item">Gerenciar DMZ</button>
                                 <button type="button" class="list-group-item">Efetuar Ping</button>
-                                <acs-button acao="Gerenciar Port Mapping" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Gerenciar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Autenticação PPPoE" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <button type="button" class="list-group-item">Alterar DNS</button>
