@@ -208,6 +208,13 @@ public class EquipamentoDAO {
         return JsonUtil.getWifiInfo(a);
     }
 
+    public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 10000, "");
+        return JsonUtil.getPortMappingInfo(a);
+    }
+
     /**
      * Somente parâmetros alteraveis podem ser serializados para essa chamada
      *

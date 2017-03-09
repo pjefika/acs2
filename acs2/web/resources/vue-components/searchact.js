@@ -5,9 +5,6 @@
  */
 /* global Vue */
 var url = "/acs/busca/listar/";
-Vue.config.devtools = true;
-Vue.config.silent = true;
-
 var data = {
     inputToSearch: null,
     listaEqp: [],
@@ -51,38 +48,38 @@ Vue.component("search-table", {
     }
 });
 Vue.component("search-action", {
-    template: "<div class='col-lg-4'>\n\
-                <div class='row'>\n\
-                    <div class='row'>\n\
-                        <div class='col-lg-12'>\n\
-                            <div class='form-group'>\n\
-                                <label>Designador</label>\n\
-                                <input type='text' class='form-control' @change='busca()' autofocus placeholder='Buscar por Designador...' v-model='subscriber'>\n\
-                            </div><!-- /input-group -->\n\
-                        </div><!-- /.col-lg-6 -->\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-lg-12'>\n\
-                            <div class='form-group'>\n\
-                                <label>Serial</label>\n\
-                                <input type='text' class='form-control' @change='busca()' autofocus placeholder='Buscar por Serial...' v-model='serial'>\n\
-                            </div><!-- /input-group -->\n\
-                        </div><!-- /.col-lg-6 -->\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-lg-12'>\n\
-                            <div class='form-group'>\n\
-                                <label>MAC</label>\n\
-                                <input type='text' class='form-control' @change='busca()' autofocus placeholder='Buscar por MAC...' v-model='mac'>\n\
-                            </div><!-- /input-group -->\n\
-                        </div><!-- /.col-lg-6 -->\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-lg-12 form-group'>\n\
-                            <label class='sr-only'>buscar</label>\n\
-                            <button class='btn btn-default' @click='busca()'>Buscar</button>\n\
+    template: "<div class='row'>\n\
+                    <div class='col-lg-4'>\n\
+                        <div class='row'>\n\
+                            <div class='col-lg-12'>\n\
+                                <div class='form-group'>\n\
+                                    <label>Designador</label>\n\
+                                    <input type='text' class='form-control' @change='busca()' autofocus placeholder='Buscar por Designador...' v-model='subscriber'>\n\
+                                </div><!-- /input-group -->\n\
+                            </div><!-- /.col-lg-6 -->\n\
                         </div>\n\
-                    </div>\n\
+                        <div class='row'>\n\
+                            <div class='col-lg-12'>\n\
+                                <div class='form-group'>\n\
+                                    <label>Serial</label>\n\
+                                    <input type='text' class='form-control' @change='busca()' autofocus placeholder='Buscar por Serial...' v-model='serial'>\n\
+                                </div><!-- /input-group -->\n\
+                            </div><!-- /.col-lg-6 -->\n\
+                        </div>\n\
+                        <div class='row'>\n\
+                            <div class='col-lg-12'>\n\
+                                <div class='form-group'>\n\
+                                    <label>MAC</label>\n\
+                                    <input type='text' class='form-control' @change='busca()' autofocus placeholder='Buscar por MAC...' v-model='mac'>\n\
+                                </div><!-- /input-group -->\n\
+                            </div><!-- /.col-lg-6 -->\n\
+                        </div>\n\
+                        <div class='row'>\n\
+                            <div class='col-lg-12 form-group'>\n\
+                                <label class='sr-only'>buscar</label>\n\
+                                <button class='btn btn-default' @click='busca()'>Buscar</button>\n\
+                            </div>\n\
+                        </div>\n\
                 </div>\n\
                 <div class='col-lg-8'>\n\
                     <search-table v-bind:render-table='this.renderTable' v-bind:lista-eqp='listaEqp'></search-table>\n\

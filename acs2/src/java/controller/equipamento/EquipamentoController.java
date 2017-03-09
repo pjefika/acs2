@@ -23,6 +23,8 @@ import model.device.firmware.FirmwareInfo;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import util.JsonUtil;
+import model.device.wifi.WifiInfo;
+
 
 /**
  *
@@ -95,6 +97,18 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando getWifiInfo");
+            e.printStackTrace();
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getPortMappingInfo/")
+    public void getPortMappingInfo(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getPortMapping(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
         }
     }
 
@@ -128,6 +142,17 @@ public class EquipamentoController extends AbstractController {
             dao.factoryReset(nbiDeviceData);
         } catch (Exception e) {
             this.includeSerializer("Erro no comando factoryReset");
+        }
+    }
+
+    @Post("/equipamento/setWifiInfo/")
+    @Consumes(value = "application/json", options = WithRoot.class)
+    public void setWifi(NbiDeviceData nbiDeviceData, WifiInfo info) {
+        try {
+            dao.setWifiInfo(nbiDeviceData, info);
+            this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

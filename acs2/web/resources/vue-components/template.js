@@ -4,9 +4,25 @@
  * and open the template in the editor.
  */
 
-var data = {};
+/* global Vue */
+
+Vue.config.devtools = true;
+Vue.config.silent = true;
 
 var vm = new Vue({
     el: "#instancia",
-    data: data
+    data: {
+        modal: {
+            comp: 'loading',
+            titulo: 'Carregando...'
+        }
+    },
+    watch: {
+        modal: function(m, oldVal) {
+//            if (m.comp === "get-wifi") {
+//                var _comp = vm.$children[0].$children[0].$children[0];
+//                _comp.getWifi();
+//            }
+        }
+    }
 });
