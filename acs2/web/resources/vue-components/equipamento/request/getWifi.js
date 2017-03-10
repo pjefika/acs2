@@ -61,7 +61,6 @@ Vue.component("getWifi", {
         },
         setWifi: function() {
             var self = this;
-
             /**
              * Utilizar este padrão para enviar duas variaveis json para a controller
              * @type type

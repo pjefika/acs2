@@ -19,6 +19,7 @@ import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoFull;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 
 /**
@@ -70,6 +71,39 @@ public class JsonUtil {
     public static WifiInfo getWifiInfo(StringResponseDTO a) {
 
         WifiInfo i = new WifiInfo();
+
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+        JsonObject jobject = jelement.getAsJsonObject();
+
+        // System.out.println("FullJson: " + jobject.toString());
+        String index = jobject.get("index").toString().replace("\"", "");
+        String authentication = jobject.get("authentication").toString().replace("\"", "");
+        String broadcastEnabled = jobject.get("broadcastEnabled").toString().replace("\"", "");
+        String channel = jobject.get("Channel").toString().replace("\"", "");
+        String operStatus = jobject.get("operStatus").toString().replace("\"", "");
+        String encryptation = jobject.get("encryptation").toString().replace("\"", "");
+        String radioStatus = jobject.get("RadioEnabled").toString().replace("\"", "");
+        String ssid = jobject.get("SSID").toString().replace("\"", "");
+        String standard = jobject.get("Standard").toString().replace("\"", "");
+        String password = jobject.get("ssidPassword").toString().replace("\"", "");
+
+        i.setIndex(index);
+        i.setAuthentication(authentication);
+        i.setBroadcastEnabled(broadcastEnabled);
+        i.setChannel(channel);
+        i.setOperStatus(operStatus);
+        i.setEncryptation(encryptation);
+        i.setRadioEnabled(radioStatus);
+        i.setSsid(ssid);
+        i.setStandard(standard);
+        i.setSsidPassword(password);
+
+        return i;
+    }
+    
+    public static WifiInfoFull getWifiInfoFull(StringResponseDTO a) {
+
+        WifiInfoFull i = new WifiInfoFull();
 
         JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
