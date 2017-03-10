@@ -12,11 +12,9 @@ Vue.component("getPing", {
     data: function () {
         return {
             mensagem: '',
-            erro: ''
+            erro: '',
+            infoPing: {}
         };
-    },
-    mounted: function () {
-        var self = this;
     },
     props: {
         eqpString: {
@@ -27,12 +25,6 @@ Vue.component("getPing", {
             type: Equipamento,
             default: function () {
                 return new Equipamento(this.eqpString);
-            }
-        },
-        infoPing: {
-            type: Ping,
-            default: function () {
-                return new Ping();
             }
         },
         request: {
