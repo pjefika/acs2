@@ -76,11 +76,12 @@ Vue.component("getPing", {
                                 <label for='username'>Endereço</label>\n\
                                 <input class='form-control' v-model='request'>\n\
                             </div>\n\
-                            <button class='btn btn-default' type='button' @click='getPing()'>Buscar</button>\n\
                             <hr/>\n\
-                            <div>\n\
-                                <tabela-ping v-bind:info-ping='infoPing'></tabela-ping>\n\
-                            </div>\n\
+                            <tabela-ping v-bind:info-ping='infoPing'></tabela-ping>\n\
+                        </div>\n\
+                        <div class='modal-footer'>\n\
+                            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
+                            <button class='btn btn-primary' type='button' @click='getPing()'>Buscar</button>\n\
                         </div>\n\
                     </div>\n\
                </div>"
@@ -90,7 +91,7 @@ Vue.component("tabelaPing", {
     props: [
         "infoPing"
     ],
-    template: "<table class='table table-bordered'>\n\
+    template: "<table class='table table-bordered' v-if='infoPing.hostAddress'>\n\
                     <thead>\n\
                         <tr>\n\
                             <th colspan='2' style='text-align: center;'>Reposta Ping</th>\n\
