@@ -93,7 +93,7 @@
                                 <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Gerenciar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Configurar Autenticação PPPoE" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <button type="button" class="list-group-item">Alterar DNS</button>
                             </div>
                         </div>

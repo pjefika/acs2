@@ -21,6 +21,7 @@ Vue.component("alertpanel", {
     methods: {
         fecha: function () {
             this.mensagem = ''
+            this.$parent.mensagem = ''
         }
     }
 });

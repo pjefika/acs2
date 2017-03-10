@@ -87,23 +87,12 @@
         <div id="instancia" v-cloak>
             <decorator:body/>
         </div>
-        <!-- Loading Modal -->
-        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">Aguarde ...</h4>
-                    </div>
-                    <div class="modal-body" style="text-align: center;">
-                        <img src="${pageContext.request.contextPath}/resources/imagens/loading.gif">
-                    </div>
-                </div>
-            </div>
-        </div>
+       
     </div>
     <!-- /container -->
     <script src="${pageContext.request.contextPath}/resources/vue-components/template.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vue-components/util/loading.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vue-components/util/alertPanel.js"></script>
 </body>
 </html>

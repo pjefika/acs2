@@ -15,7 +15,7 @@ import java.util.List;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
-import model.device.ping.PingInfo;
+import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
@@ -64,25 +64,6 @@ public class JsonUtil {
         i.setRemoteHost(remoteHost);
 
         return i;
-    }
-    
-    public static PingInfo getPing(StringResponseDTO a) {        
-        PingInfo i = new PingInfo();        
-        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
-        JsonObject jobject = jelement.getAsJsonObject();        
-        String repetitions = jobject.get("repetitions").toString().replace("\"", "");
-        String hostAddress = jobject.get("hostAddress").toString().replace("\"", "");
-        String qtdFailures = jobject.get("qtdFailures").toString().replace("\"", "");
-        String qtdSuccess = jobject.get("qtdSuccess").toString().replace("\"", "");
-        String avgRespTime = jobject.get("avgRespTime").toString().replace("\"", "");
-        String status = jobject.get("status").toString().replace("\"", "");        
-        i.setRepetitions(repetitions);
-        i.setHostAddress(hostAddress);
-        i.setQtdFailures(qtdFailures);
-        i.setQtdSuccess(qtdSuccess);
-        i.setAvgRespTime(avgRespTime);
-        i.setStatus(status);        
-        return i;        
     }
     
 
@@ -155,6 +136,29 @@ public class JsonUtil {
         }
 
         return logs;
+    }
+
+    public static PingResponse pingResponse(StringResponseDTO a) {
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonObject jobject = jelement.getAsJsonObject();
+
+        String status = jobject.get("status").toString().replace("\"", "");
+        String avgRespTime = jobject.get("avgRespTime").toString().replace("\"", "");
+        String qtdSuccess = jobject.get("qtdSuccess").toString().replace("\"", "");
+        String qtdFailures = jobject.get("qtdFailures").toString().replace("\"", "");
+        String hostAddress = jobject.get("hostAddress").toString().replace("\"", "");
+        String repetitions = jobject.get("repetitions").toString().replace("\"", "");
+
+        PingResponse r = new PingResponse();
+
+        r.setStatus(status);
+        r.setAvgRespTime(avgRespTime);
+        r.setQtdSuccess(qtdSuccess);
+        r.setQtdFailures(qtdFailures);
+        r.setHostAddress(hostAddress);
+        r.setRepetitions(repetitions);
+
+        return r;
     }
 
     public static String removeBracket(String json) {

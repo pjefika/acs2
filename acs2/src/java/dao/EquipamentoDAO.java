@@ -32,7 +32,8 @@ import javax.xml.ws.Service;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
-import model.device.ping.PingInfo;
+import model.device.ping.PingRequest;
+import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
@@ -280,6 +281,22 @@ public class EquipamentoDAO {
         }
     }
 
+    public PingResponse pingDiagnostic(NbiDeviceData eqp, PingRequest p) throws Exception {
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+            String jsonPppoe = JsonUtil.serialize(p, p.getClass());
+            List<Object> json = NbiDecorator.getEmptyJson();
+            json.set(0, jsonPppoe);
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 10000, "");
+            System.out.println(a.getValue());
+            return JsonUtil.pingResponse(a);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public StringResponseDTO setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfo pPPoECredentialsInfo) {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
@@ -306,7 +323,8 @@ public class EquipamentoDAO {
             System.out.println(o.getName());
             System.out.println(o.getDescription());
         }
-    }   
+    }
+
 
     public StringResponseDTO setPortMapping(NbiDeviceData eqp, PortMappingInfo portMappingInfo) {
         try {
@@ -321,13 +339,6 @@ public class EquipamentoDAO {
             e.printStackTrace();
             return null;
         }
-    }
-    
-    public PingInfo getPing(NbiDeviceData eqp) throws Exception {
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9530, opt, 10000, "");
-        return JsonUtil.getPing(a);
     }
 
     public void initNbi() {

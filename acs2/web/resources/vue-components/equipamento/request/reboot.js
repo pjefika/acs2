@@ -21,7 +21,7 @@ Vue.component("reboot", {
             type: String,
             required: true,
             default: function() {
-                return "Deseja resetar o modem?";
+                return "Deseja reiniciar o modem?";
             }
         }
     },
@@ -49,7 +49,7 @@ Vue.component("reboot", {
     },
     template: "<div>\n\
                 <div class='modal-body'>\n\  \n\
-                    <component is='alertpanel' :msg='alertPanel'></component>\n\
+                    <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                     <span v-text='texto'></span>\n\
                 </div>\n\
                 <div class='modal-footer'>\n\

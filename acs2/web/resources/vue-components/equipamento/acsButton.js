@@ -45,17 +45,7 @@ Vue.component("acsButton", {
                     $("#actionModal").modal("show");    
                     self.ativo = true
                 })
-                
-
-                
             }
-
-            
         }
     }
-});
-Vue.component("loading", {
-    template: '<div class="modal-body" style="text-align: center;">\n\
-                    <img src="/acs/resources/imagens/loading.gif">\n\
-               </div>'
 });

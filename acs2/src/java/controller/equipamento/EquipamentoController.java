@@ -20,6 +20,7 @@ import dao.EquipamentoDAO;
 import javax.inject.Inject;
 import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
+import model.device.ping.PingRequest;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
@@ -98,7 +99,7 @@ public class EquipamentoController extends AbstractController {
             e.printStackTrace();
         }
     }
-    
+
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getPortMapping/")
@@ -193,13 +194,24 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer("Erro no comando getDdns");
         }
     }
-    
+
+    @Post
+    @Consumes(value = "application/json", options = WithRoot.class)
+    @Path("/equipamento/pingDiagnostic/")
+    public void pingDiagnostic(NbiDeviceData nbiDeviceData, PingRequest ping) {
+        try {
+            this.includeSerializer(dao.pingDiagnostic(nbiDeviceData, ping));
+        } catch (Exception e) {
+            this.includeSerializer("Erro no comando pingDiagnostic");
+        }
+    }
+  
     @Post
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setPortMapping/")
     public void setPortMappingInfo(NbiDeviceData nbiDeviceData, PortMappingInfo portMappingInfo) {
         try {
-            
+
             System.out.println(portMappingInfo.getEnable());
 
             //this.includeSerializer(dao.setPortMapping(nbiDeviceData, portMappingInfo));
@@ -207,18 +219,7 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer("Erro no comando setPortMappingInfo");
         }
     }
-    
-    @Post
-    @Consumes("application/json")
-    @Path("/equipamento/ping/")
-    public void getPing(NbiDeviceData nbiDeviceData) {
-        try {
-            this.includeSerializer(dao.getPing(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer(e);
-        }
-    }
-    
+  
     @Override
     public void includeSerializer(Object a) {
         result.use(Results.json()).from(a).recursive().serialize();

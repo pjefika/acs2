@@ -45,7 +45,7 @@ public class GetFirmwareVersionJUnitTestDev {
 
         try {
 
-            Long guid = new Long(102015);
+            Long guid = new Long(142014);
             EquipamentoDAO d = new EquipamentoDAO();
 
             //d.capture(guid);
