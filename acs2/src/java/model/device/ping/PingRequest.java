@@ -15,6 +15,7 @@ public class PingRequest {
 
     public PingRequest() {
         this.$interface = "Device.IP.Interface.1";
+        this.qtdRequisitions = "3";
     }
 
     public String getDestAddress() {
