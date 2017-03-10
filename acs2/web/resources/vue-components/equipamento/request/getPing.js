@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global ping, Vue */
+/* global ping, Vue, Ping */
 
 var url = "/acs/equipamento/";
 
@@ -48,8 +48,8 @@ Vue.component("getPing", {
         getPing: function () {
             var self = this;
             var _data = {};
-            _data.nbiDeviceData = this.equipamento.flush();
-            _data.request = this.request;
+            _data.nbiDeviceData = self.equipamento.flush();
+            _data.request = self.request;
             $.ajax({
                 type: "POST",
                 url: url + "pingDiagnostic/",
@@ -57,6 +57,7 @@ Vue.component("getPing", {
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
+                    self.$parent.loading = true;
                 },
                 success: function (data) {
                     self.infoPing = data.pingResponse;
@@ -66,8 +67,13 @@ Vue.component("getPing", {
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                     console.log(e);
+                },
+                complete: function () {
+                    self.$parent.loading = false;
                 }
             });
+
+
         }
     },
     template: "<div>\n\
@@ -80,40 +86,47 @@ Vue.component("getPing", {
                             </div>\n\
                             <button class='btn btn-default' type='button' @click='getPing()'>Buscar</button>\n\
                             <hr/>\n\
-                            <div v-if='infoPing.hostAddress'>\n\
-                                <table class='table table-bordered'>\n\
-                                    <thead>\n\
-                                        <tr>\n\
-                                            <th colspan='2' style='text-align: center;'>Reposta Ping</th>\n\
-                                        </tr>\n\
-                                        <tr>\n\
-                                            <th>Endereço</th>\n\
-                                            <td>{{infoPing.hostAddress}}</td>\n\
-                                        </tr>\n\
-                                        <tr>\n\
-                                            <th>Repetições</th>\n\
-                                            <td>{{infoPing.repetitions}}</td>\n\
-                                        </tr>\n\
-                                        <tr>\n\
-                                            <th>Quantidade Falha</th>\n\
-                                            <td>{{infoPing.qtdFailures}}</td>\n\
-                                        </tr>\n\
-                                        <tr>\n\
-                                            <th>Quantidade Sucesso</th>\n\
-                                            <td>{{infoPing.qtdSuccess}}</td>\n\
-                                        </tr>\n\
-                                        <tr>\n\
-                                            <th>Tempo de resposta</th>\n\
-                                            <td>{{infoPing.avgRespTime}}</td>\n\
-                                        </tr>\n\
-                                        <tr>\n\
-                                            <th>Status</th>\n\
-                                            <td>{{infoPing.status}}</td>\n\
-                                        </tr>\n\
-                                    </thead>\n\
-                            </table>\n\
-                        </div>\n\
+                            <div>\n\
+                                <tabela-ping v-bind:info-ping='infoPing'></tabela-ping>\n\
+                            </div>\n\
                         </div>\n\
                     </div>\n\
                </div>"
+});
+
+Vue.component("tabelaPing", {
+    props: [
+        "infoPing"
+    ],
+    template: "<table class='table table-bordered'>\n\
+                    <thead>\n\
+                        <tr>\n\
+                            <th colspan='2' style='text-align: center;'>Reposta Ping</th>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Endereço</th>\n\
+                            <td>{{infoPing.hostAddress}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Repetições</th>\n\
+                            <td>{{infoPing.repetitions}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Quantidade Falha</th>\n\
+                            <td>{{infoPing.qtdFailures}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Quantidade Sucesso</th>\n\
+                            <td>{{infoPing.qtdSuccess}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Tempo de resposta</th>\n\
+                            <td>{{infoPing.avgRespTime}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Status</th>\n\
+                            <td>{{infoPing.status}}</td>\n\
+                        </tr>\n\
+                    </thead>\n\
+                </table>"
 });
