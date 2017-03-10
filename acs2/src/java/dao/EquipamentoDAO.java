@@ -269,6 +269,13 @@ public class EquipamentoDAO {
         return JsonUtil.deviceLog(a);
     }
 
+    public void getInterfaceStatistics(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 30000, "");
+        System.out.println(a.getValue());
+    }
+
     public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
@@ -324,7 +331,6 @@ public class EquipamentoDAO {
             System.out.println(o.getDescription());
         }
     }
-
 
     public StringResponseDTO setPortMapping(NbiDeviceData eqp, PortMappingInfo portMappingInfo) {
         try {
