@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global Vue */
+/* global Vue, WifiInfoFull, Equipamento */
 var url = "/acs/equipamento/";
 
 
@@ -26,9 +26,9 @@ Vue.component("getWifi", {
             }
         },
         info: {
-            type: WifiInfo,
+            type: Object,
             default: function() {
-                return new WifiInfo();
+                return new WifiInfoFull();
             }
         },
         alertPanel: {
@@ -40,7 +40,7 @@ Vue.component("getWifi", {
             var self = this;
             $.ajax({
                 type: "POST",
-                url: url + "getWifiInfo/",
+                url: url + "getWifiInfoFull/",
                 data: JSON.stringify(self.equipamento.flush()),
                 dataType: "json",
                 beforeSend: function(xhr) {
@@ -48,9 +48,10 @@ Vue.component("getWifi", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    self.info = new WifiInfo(data.wifiInfo);
+                    self.info = new WifiInfoFull(data.wifiInfoFull);
                 },
                 error: function(e) {
+                    console.log(e)
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                 },
@@ -71,7 +72,7 @@ Vue.component("getWifi", {
 
             $.ajax({
                 type: "POST",
-                url: url + "setWifiInfo/",
+                url: url + "setWifiInfoFull/",
                 data: JSON.stringify(_data),
                 dataType: "json",
                 beforeSend: function(xhr) {
@@ -79,7 +80,7 @@ Vue.component("getWifi", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    self.info = new WifiInfo(data.wifiInfo);
+                    self.info = new WifiInfoFull(data.wifiInfoFull);
                     self.mensagem = 'Sucesso na execução';
                     self.erro = '';
                 },
@@ -102,11 +103,11 @@ Vue.component("getWifi", {
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Senha</label>\n\
-                        <input class='form-control' v-model='info.ssidPassword'>\n\
+                        <input class='form-control' v-model='info.key'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Encriptação</label>\n\
-                        <input class='form-control' v-model='info.encryptation'>\n\
+                        <input class='form-control' v-model='info.encType'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Status</label>\n\
@@ -118,11 +119,11 @@ Vue.component("getWifi", {
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Broadcast</label>\n\
-                        <input class='form-control' v-model='info.broadcastEnabled'>\n\
+                        <input class='form-control' v-model='info.bcEnabled'>\n\
                     </div>\n\
                     <div class='form-group'>\n\
                         <label for='ssid'>Radio</label>\n\
-                        <input class='form-control' v-model='info.radioEnabled'>\n\
+                        <input class='form-control' v-model='info.radioStatus'>\n\
                     </div>\n\
                 </div>\n\
                 <div class='modal-footer'>\n\

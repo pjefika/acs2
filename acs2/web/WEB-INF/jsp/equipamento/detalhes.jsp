@@ -106,14 +106,13 @@
 <detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pPPoECredentialsInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/pPPoECredentials.js"></script>
 
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfoFull.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/portMappingInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/portMapping.js"></script>

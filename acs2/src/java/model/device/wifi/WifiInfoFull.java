@@ -12,9 +12,7 @@ package model.device.wifi;
  */
 public class WifiInfoFull extends WifiInfoSet {
 
-    private String operStatus,
-                admStatus,
-                ssid,
+    private String admStatus,
                 authMode,
                 encType,
                 key,
@@ -23,13 +21,12 @@ public class WifiInfoFull extends WifiInfoSet {
                 radioStatus, 
                 standard,
                 wpsDeviceName,
-                wpsDevicePassword;
+                wpsDevicePassword,
+                maxBitRate;
 
     
    
-    private Integer channel,
-                    maxBitRate,
-                    signal;
+    private Integer signal;
     
     private Boolean bcEnabled,
                     macAddrControl,
@@ -42,26 +39,11 @@ public class WifiInfoFull extends WifiInfoSet {
                         pctRecv,
                         errSent,
                         errRecv;
+                        
 
             
 
     public WifiInfoFull() {
-    }
-
-    public String getOperStatus() {
-        return operStatus;
-    }
-
-    public void setOperStatus(String operStatus) {
-        this.operStatus = operStatus;
-    }
-
-    public String getSsid() {
-        return ssid;
-    }
-
-    public void setSsid(String ssid) {
-        this.ssid = ssid;
     }
 
     public String getAuthMode() {
@@ -136,21 +118,11 @@ public class WifiInfoFull extends WifiInfoSet {
         this.wpsDevicePassword = wpsDevicePassword;
     }
 
-    @Override
-    public Integer getChannel() {
-        return channel;
-    }
-
-    @Override
-    public void setChannel(Integer channel) {
-        this.channel = channel;
-    }
-
-    public Integer getMaxBitRate() {
+    public String getMaxBitRate() {
         return maxBitRate;
     }
 
-    public void setMaxBitRate(Integer maxBitRate) {
+    public void setMaxBitRate(String maxBitRate) {
         this.maxBitRate = maxBitRate;
     }
 

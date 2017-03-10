@@ -14,6 +14,7 @@ import model.device.log.DeviceLog;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoFull;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 
 /**
@@ -66,6 +67,17 @@ public class SoutUtil {
         System.out.println("Password: " + info.getSsidPassword());
         System.out.println("Frequency: " + info.getFrequency());
         System.out.println("Enryptation: " + info.getEncryptation());
+    }
+
+    public static void print(WifiInfoFull info) {
+        System.out.println("SSID: " + info.getSsid());
+        System.out.println("Senha: " + info.getKey());
+        System.out.println("Encriptacao: " + info.getEncType());
+        System.out.println("Status: " + info.getOperStatus());
+        System.out.println("Canal: " + info.getChannel());
+        System.out.println("Broadcast: " + info.getBcEnabled());
+        System.out.println("Radio: " + info.getRadioStatus());
+        
     }
 
     public static void print(PortMappingInfo info) {

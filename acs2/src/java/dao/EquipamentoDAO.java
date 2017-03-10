@@ -262,6 +262,31 @@ public class EquipamentoDAO {
             return false;
         }
     }
+    
+    public Boolean setWifiInfoFull(NbiDeviceData eqp, WifiInfoFull wifi) throws Exception {
+
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+
+            WifiInfoSet adapter = NbiDecorator.getWifiInfoSetFull(wifi);
+
+            String jsonWifi = JsonUtil.serialize(adapter, adapter.getClass());
+            List<Object> json = NbiDecorator.getEmptyJson();
+            json.set(0, jsonWifi);
+
+            System.out.println(jsonWifi);
+
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 10000, "");
+            return true;
+        } catch (OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
+            return true;
+        } catch (DeviceOperationException | NBIException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public DdnsInfo getDdns(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();

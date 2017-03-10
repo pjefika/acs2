@@ -79,7 +79,7 @@ public class JsonUtil {
         String index = jobject.get("index").toString();
         String authentication = jobject.get("authentication").toString().replace("\"", "");
         String broadcastEnabled = jobject.get("broadcastEnabled").toString().replace("\"", "");
-        Integer channel = jobject.get("Channel").getAsInt();
+        String channel = jobject.get("Channel").toString().replace("\"", "");
         String operStatus = jobject.get("operStatus").toString().replace("\"", "");
         String encryptation = jobject.get("encryptation").toString().replace("\"", "");
         String radioStatus = jobject.get("RadioEnabled").toString().replace("\"", "");
@@ -105,15 +105,15 @@ public class JsonUtil {
 
         WifiInfoFull i = new WifiInfoFull();
 
-        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", "").replace("\"\"", "\""));
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
 
         // System.out.println("FullJson: " + jobject.toString());
         String admStatus = jobject.get("admStatus").toString().replace("\"", "");
         String operStatus = jobject.get("operStatus").toString().replace("\"", "");
-        Integer channel = jobject.get("Channel").getAsInt();
+        String channel = jobject.get("channel").toString().replace("\"", "");
         Boolean bcEnabled = jobject.get("bcEnabled").getAsBoolean();
-        Integer maxBitRate = jobject.get("maxBitRate").getAsInt();
+        String maxBitRate = jobject.get("maxBitRate").toString().replace("\"", "");
         Integer signal = jobject.get("signal").getAsInt();
         String ssid = jobject.get("ssid").toString().replace("\"", "");
         String authMode = jobject.get("authMode").toString().replace("\"", "");
