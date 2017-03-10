@@ -31,6 +31,7 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
+import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
 import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
@@ -210,6 +211,16 @@ public class EquipamentoDAO {
         return JsonUtil.getWifiInfo(a);
     }
 
+    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception {
+
+        List<LanDevice> lst = new ArrayList<>();
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 10000, "");
+
+        return JsonUtil.getLanHosts(a);
+    }
+
     public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
@@ -324,7 +335,6 @@ public class EquipamentoDAO {
             System.out.println(o.getDescription());
         }
     }
-
 
     public StringResponseDTO setPortMapping(NbiDeviceData eqp, PortMappingInfo portMappingInfo) {
         try {

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
+import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
@@ -65,7 +66,6 @@ public class JsonUtil {
 
         return i;
     }
-    
 
     public static WifiInfo getWifiInfo(StringResponseDTO a) {
 
@@ -136,6 +136,32 @@ public class JsonUtil {
         }
 
         return logs;
+    }
+
+    public static List<LanDevice> getLanHosts(StringResponseDTO a) {
+
+        List<LanDevice> lst = new ArrayList<>();
+
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonObject jobject = jelement.getAsJsonObject();
+
+        Integer qtn = new Integer(jobject.get("HostNumberOfEntries").toString().replace("\"", ""));
+
+        for (int i = 1; i < qtn; i++) {
+
+            LanDevice l = new LanDevice();
+
+            l.setIpAddress(jobject.get("Host." + i + ".IPAddress").toString().replace("\"", ""));
+            l.setAddressSource(jobject.get("Host." + i + ".AddressSource").toString().replace("\"", ""));
+            l.setLeaseTimeRemaining(jobject.get("Host." + i + ".LeaseTimeRemaining").toString().replace("\"", ""));
+            l.setMacAddress(jobject.get("Host." + i + ".MACAddress").toString().replace("\"", ""));
+            l.setHostName(jobject.get("Host." + i + ".HostName").toString().replace("\"", ""));
+            l.setInterfaceType(jobject.get("Host." + i + ".InterfaceType").toString().replace("\"", ""));
+            l.setAtivo(Boolean.valueOf(jobject.get("Host." + i + ".Active").toString().replace("\"", "")));
+
+            lst.add(l);
+        }
+        return lst;
     }
 
     public static PingResponse pingResponse(StringResponseDTO a) {
