@@ -325,6 +325,7 @@ public class EquipamentoDAO {
         }
     }
 
+
     public StringResponseDTO setPortMapping(NbiDeviceData eqp, PortMappingInfo portMappingInfo) {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();

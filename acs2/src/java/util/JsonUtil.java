@@ -65,6 +65,7 @@ public class JsonUtil {
 
         return i;
     }
+    
 
     public static WifiInfo getWifiInfo(StringResponseDTO a) {
 

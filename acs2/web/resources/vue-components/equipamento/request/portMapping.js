@@ -11,7 +11,8 @@ var url = "/acs/equipamento/";
 Vue.component("portMapping", {
     data: function () {
         return {
-            pMapping: {}
+            mensagem: '',
+            erro: ''
         };
     },
     mounted: function () {
@@ -34,6 +35,9 @@ Vue.component("portMapping", {
             default: function () {
                 return new portMapping();
             }
+        },
+        alertPanel: {
+            type:Object
         }
     },
     methods: {
@@ -42,20 +46,18 @@ Vue.component("portMapping", {
             $.ajax({
                 type: "POST",
                 url: url + "getPortMapping/",
-                data: JSON.stringify(this.equipamento),
+                data: JSON.stringify(this.equipamento.flush()),
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    $("#loadingModal").modal("show");
                 },
                 success: function (data) {
-                    self.pMapping = new portMapping(data.portMappingInfo);   
-                    console.log(self.pMapping);
-                    $("#loadingModal").modal("hide");
+                    self.portingMappingE = new portMapping(data.portMappingInfo);   
                 },
                 error: function (e) {
-                    console.log(e);
-                    $("#loadingModal").modal("hide");
+                    self.mensagem = 'Falha ao buscar informações';
+                    self.erro = 'true';
+                    //console.log(e);
                 }
             });
         },
@@ -63,7 +65,7 @@ Vue.component("portMapping", {
             var self = this;
             var _data = {};
             _data.nbiDeviceData = self.equipamento;
-            _data.pMapping = self.pMapping;            
+            _data.pMapping = self.portingMappingE;            
             $.ajax({
                 type: "POST",
                 url: url + "setPortMapping/",
@@ -71,55 +73,55 @@ Vue.component("portMapping", {
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    $("#loadingModal").modal("show");
                 },
                 success: function (data) {
+                    self.mensagem = 'Falha ao buscar informações';
+                    self.erro = 'true';
                     console.log(data);
-                    $("#loadingModal").modal("hide");
                 },
                 error: function (e) {
                     console.log(e);
-                    $("#loadingModal").modal("hide");
                 }
             }); 
         }
     },    
     template: "\
                 <div>\n\
-                    <div class='modal-body'>\n\
-                        <div class='form'>\n\
-                        <div class='form-group'>\n\
-                            <label for='username'>enable</label>\n\
-                            <input class='form-control' v-model='pMapping.enable'>\n\
+                    <div class='form'>\n\
+                        <div class='modal-body'>\n\
+                            <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
+                            <div class='form-group'>\n\
+                                <label for='username'>enable</label>\n\
+                                <input class='form-control' v-model='portingMappingE.enable'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='password'>externalPort</label>\n\
+                                <input class='form-control' v-model='portingMappingE.externalPort'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='password'>internalClient</label>\n\
+                                <input class='form-control' v-model='portingMappingE.internalClient'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='password'>internalPort</label>\n\
+                                <input class='form-control' v-model='portingMappingE.internalPort'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='password'>portMapName</label>\n\
+                                <input class='form-control' v-model='portingMappingE.portMapName'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='password'>protocol</label>\n\
+                                <input class='form-control' v-model='portingMappingE.protocol'>\n\
+                            </div>\n\
+                            <div class='form-group'>\n\
+                                <label for='password'>remoteHost</label>\n\
+                                <input class='form-control' v-model='portingMappingE.remoteHost'>\n\
+                            </div>\n\
                         </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='password'>externalPort</label>\n\
-                            <input class='form-control' v-model='pMapping.externalPort'>\n\
+                        <div class='modal-footer'>\n\
+                            <button type='button' class='btn btn-warning' @click='setPortMapping()'>Modificar</button>\n\
                         </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='password'>internalClient</label>\n\
-                            <input class='form-control' v-model='pMapping.internalClient'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='password'>internalPort</label>\n\
-                            <input class='form-control' v-model='pMapping.internalPort'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='password'>portMapName</label>\n\
-                            <input class='form-control' v-model='pMapping.portMapName'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='password'>protocol</label>\n\
-                            <input class='form-control' v-model='pMapping.protocol'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label for='password'>remoteHost</label>\n\
-                            <input class='form-control' v-model='pMapping.remoteHost'>\n\
-                        </div>\n\
-                    </div>\n\
-                    <div class='modal-footer'>\n\
-                        <button type='button' class='btn btn-primary' @click='getPortMapping()'>Buscar</button>\n\
-                        <button type='button' class='btn btn-warning' @click='setPortMapping()'>Modificar</button>\n\
                     </div>\n\
                </div>"
 });
