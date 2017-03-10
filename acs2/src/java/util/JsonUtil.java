@@ -15,6 +15,7 @@ import java.util.List;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
@@ -134,6 +135,29 @@ public class JsonUtil {
         }
 
         return logs;
+    }
+
+    public static PingResponse pingResponse(StringResponseDTO a) {
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonObject jobject = jelement.getAsJsonObject();
+
+        String status = jobject.get("status").toString().replace("\"", "");
+        String avgRespTime = jobject.get("avgRespTime").toString().replace("\"", "");
+        String qtdSuccess = jobject.get("qtdSuccess").toString().replace("\"", "");
+        String qtdFailures = jobject.get("qtdFailures").toString().replace("\"", "");
+        String hostAddress = jobject.get("hostAddress").toString().replace("\"", "");
+        String repetitions = jobject.get("repetitions").toString().replace("\"", "");
+
+        PingResponse r = new PingResponse();
+
+        r.setStatus(status);
+        r.setAvgRespTime(avgRespTime);
+        r.setQtdSuccess(qtdSuccess);
+        r.setQtdFailures(qtdFailures);
+        r.setHostAddress(hostAddress);
+        r.setRepetitions(repetitions);
+
+        return r;
     }
 
     public static String removeBracket(String json) {

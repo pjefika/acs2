@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.acao;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import model.device.ping.PingRequest;
+import model.device.wifi.WifiInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,9 +21,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetDeviceInfoJUnitTest {
+public class PingDiagnosticJUnitTest {
 
-    public GetDeviceInfoJUnitTest() {
+    public PingDiagnosticJUnitTest() {
     }
 
     @BeforeClass
@@ -41,7 +43,7 @@ public class GetDeviceInfoJUnitTest {
     }
 
     @Test
-    public void getDeviceInfo() {
+    public void pingDiagnostic() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
@@ -49,9 +51,12 @@ public class GetDeviceInfoJUnitTest {
 
             eqp = d.findDeviceByGUID(new Long(142014));
 
-            SoutUtil.print(eqp);
-            // SoutUtil.print(d.getDeviceInfo(eqp));
-            assertTrue(true);
+            PingRequest p = new PingRequest();
+
+            p.setDestAddress("www.google.com.br");
+            p.setQtdRequisitions("3");
+
+            d.pingDiagnostic(eqp, p);
 
         } catch (Exception ex) {
             ex.printStackTrace();
