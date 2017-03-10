@@ -13,14 +13,15 @@ public class WifiInfoSet {
 
     private String operStatus,
             ssid,
-            channel,
             radioEnabled;
+    
+    private Integer channel;
 
     public WifiInfoSet() {
 
     }
 
-    public WifiInfoSet(String operStatus, String ssid, String channel, String radioEnabled) {
+    public WifiInfoSet(String operStatus, String ssid, Integer channel, String radioEnabled) {
         this.operStatus = operStatus;
         this.ssid = ssid;
         this.channel = channel;
@@ -43,11 +44,11 @@ public class WifiInfoSet {
         this.ssid = ssid;
     }
 
-    public String getChannel() {
+    public Integer getChannel() {
         return channel;
     }
 
-    public void setChannel(String channel) {
+    public void setChannel(Integer channel) {
         this.channel = channel;
     }
 

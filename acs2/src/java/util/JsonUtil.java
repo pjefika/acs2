@@ -76,10 +76,10 @@ public class JsonUtil {
         JsonObject jobject = jelement.getAsJsonObject();
 
         // System.out.println("FullJson: " + jobject.toString());
-        String index = jobject.get("index").toString().replace("\"", "");
+        String index = jobject.get("index").toString();
         String authentication = jobject.get("authentication").toString().replace("\"", "");
         String broadcastEnabled = jobject.get("broadcastEnabled").toString().replace("\"", "");
-        String channel = jobject.get("Channel").toString().replace("\"", "");
+        Integer channel = jobject.get("Channel").getAsInt();
         String operStatus = jobject.get("operStatus").toString().replace("\"", "");
         String encryptation = jobject.get("encryptation").toString().replace("\"", "");
         String radioStatus = jobject.get("RadioEnabled").toString().replace("\"", "");
@@ -105,31 +105,63 @@ public class JsonUtil {
 
         WifiInfoFull i = new WifiInfoFull();
 
-        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", "").replace("\"\"", "\""));
         JsonObject jobject = jelement.getAsJsonObject();
 
         // System.out.println("FullJson: " + jobject.toString());
-        String index = jobject.get("index").toString().replace("\"", "");
-        String authentication = jobject.get("authentication").toString().replace("\"", "");
-        String broadcastEnabled = jobject.get("broadcastEnabled").toString().replace("\"", "");
-        String channel = jobject.get("Channel").toString().replace("\"", "");
+        String admStatus = jobject.get("admStatus").toString().replace("\"", "");
         String operStatus = jobject.get("operStatus").toString().replace("\"", "");
-        String encryptation = jobject.get("encryptation").toString().replace("\"", "");
-        String radioStatus = jobject.get("RadioEnabled").toString().replace("\"", "");
-        String ssid = jobject.get("SSID").toString().replace("\"", "");
-        String standard = jobject.get("Standard").toString().replace("\"", "");
-        String password = jobject.get("ssidPassword").toString().replace("\"", "");
+        Integer channel = jobject.get("Channel").getAsInt();
+        Boolean bcEnabled = jobject.get("bcEnabled").getAsBoolean();
+        Integer maxBitRate = jobject.get("maxBitRate").getAsInt();
+        Integer signal = jobject.get("signal").getAsInt();
+        String ssid = jobject.get("ssid").toString().replace("\"", "");
+        String authMode = jobject.get("authMode").toString().replace("\"", "");
+        String encType = jobject.get("encType").toString().replace("\"", "");
+        String key = jobject.get("key").toString().replace("\"", "");
+        String wepKeyIndex = jobject.get("wepKeyIndex").toString().replace("\"", "");
+        Boolean macAddrControl = jobject.get("macAddrControl").getAsBoolean();
+        String macAddress = jobject.get("macAddress").toString().replace("\"", "");
+        String radioStatus = jobject.get("radioStatus").toString().replace("\"", "");
+        String standard = jobject.get("standard").toString().replace("\"", "");
+        String bytesSent = jobject.get("bytesSent").toString().replace("\"", "");
+        String bytesRecv = jobject.get("bytesRecv").toString().replace("\"", "");
+        String pctSent = jobject.get("pctSent").toString().replace("\"", "");
+        String pctRecv = jobject.get("pctRecv").toString().replace("\"", "");
+        String errSent = jobject.get("errSent").toString().replace("\"", "");
+        String errRecv = jobject.get("errRecv").toString().replace("\"", "");
+        Boolean wpsEnabled = jobject.get("wpsEnabled").getAsBoolean();
+        String wpsDeviceName = jobject.get("wpsDeviceName").toString().replace("\"", "");
+        String wpsDevicePassword = jobject.get("wpsDevicePassword").toString().replace("\"", "");
 
-        i.setIndex(index);
-        i.setAuthentication(authentication);
-        i.setBroadcastEnabled(broadcastEnabled);
-        i.setChannel(channel);
-        i.setOperStatus(operStatus);
-        i.setEncryptation(encryptation);
-        i.setRadioEnabled(radioStatus);
         i.setSsid(ssid);
+        i.setAdmStatus(admStatus);
+        i.setAuthMode(authMode);
+        i.setBcEnabled(bcEnabled);
+        i.setBytesRecv(bytesRecv);
+        i.setBytesSent(bytesSent);
+        i.setChannel(channel);
+        i.setEncType(encType);
+        i.setErrRecv(errRecv);
+        i.setErrSent(errSent);
+        i.setKey(key);
+        i.setMacAddrControl(macAddrControl);
+        i.setMacAddress(macAddress);
+        i.setMaxBitRate(maxBitRate);
+        i.setOperStatus(operStatus);
+        i.setPctSent(pctSent);
+        i.setPctRecv(pctRecv);
+        i.setRadioEnabled(radioStatus);
+        i.setRadioStatus(radioStatus);
+        i.setSignal(signal);
         i.setStandard(standard);
-        i.setSsidPassword(password);
+        i.setWepKeyIndex(wepKeyIndex);
+        i.setWpsDeviceName(wpsDeviceName);
+        i.setWpsDevicePassword(wpsDevicePassword);
+        i.setWpsEnabled(wpsEnabled);
+        
+        
+
 
         return i;
     }
