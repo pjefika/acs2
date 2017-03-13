@@ -23,12 +23,6 @@ Vue.component("getLanHosts", {
                 return new Equipamento(this.eqpString);
             }
         },
-        info: {
-            type: WifiInfo,
-            default: function() {
-                return new WifiInfo();
-            }
-        },
         alertPanel: {
             type: Object
         }
