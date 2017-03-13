@@ -6,10 +6,18 @@
 
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfo.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pPPoECredentialsInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/pPPoECredentials.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/portMappingInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/portMapping.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pingInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getPing.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/acsButton.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>
+
 
 <div class="container">
     <script type="text/html" id="detalhequip">
@@ -87,9 +95,9 @@
                             <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Ações</label>
                                 <acs-button acao="Reboot" comp="reboot" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalFactory" data-backdrop="static">Reset de Fábrica</button>
-                                <button type="button" class="list-group-item">Efetuar Traceroute</button>
-                                <button type="button" class="list-group-item">Gerenciar DMZ</button>
+                                <!--                                <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalFactory" data-backdrop="static">Reset de Fábrica</button>
+                                                                <button type="button" class="list-group-item">Efetuar Traceroute</button>
+                                                                <button type="button" class="list-group-item">Gerenciar DMZ</button>-->
                                 <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Gerenciar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
@@ -103,21 +111,6 @@
         </div>
     </script>
 
-<detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>
+    <detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>
 </div>
-<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/util/modal.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pPPoECredentialsInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/pPPoECredentials.js"></script>
-
-
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/portMappingInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/portMapping.js"></script>
-
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pingInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getPing.js"></script>
-    
