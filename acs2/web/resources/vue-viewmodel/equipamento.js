@@ -7,7 +7,7 @@
 /* global moment */
 
 // CLASSES
-var Equipamento = function(p) {
+var Equipamento = function (p) {
     if (p) {
         this.activated = p.eqp.activated;
         this.deviceGUID = p.eqp.deviceGUID;
@@ -26,19 +26,24 @@ var Equipamento = function(p) {
     }
 };
 
-Equipamento.prototype.isModem = function() {
+Equipamento.prototype.isModem = function () {
     return this.type === 0;
 };
 
-Equipamento.prototype.dataAutenticacao = function() {
-    return moment(new Date(this.lastActivationTime.year, this.lastActivationTime.month, this.lastActivationTime.day, this.lastActivationTime.hour, this.lastActivationTime.minute, this.lastActivationTime.second)).format('DD/MM/YYYY HH:mm:ss');
+Equipamento.prototype.dataAutenticacao = function () {
+
+    if (this.lastActivationTime) {
+        return moment(new Date(this.lastActivationTime.year, this.lastActivationTime.month, this.lastActivationTime.day, this.lastActivationTime.hour, this.lastActivationTime.minute, this.lastActivationTime.second)).format('DD/MM/YYYY HH:mm:ss');
+    } else {
+        return null;
+    }
 };
 
 /**
  * Método necessário para limpar campos adicionais antes de passar para a controller Vraptor
  * @returns {Equipamento.prototype}
  */
-Equipamento.prototype.flush = function() {
+Equipamento.prototype.flush = function () {
     var _flush = this;
     delete _flush.firmwareOk;
     delete _flush.checkOn;

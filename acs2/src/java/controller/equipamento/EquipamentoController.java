@@ -106,7 +106,7 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer(e);
+            this.includeSerializer("Erro ao buscar getPortMapping");
         }
     }
 
@@ -117,7 +117,7 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getLanHosts(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer(e);
+            this.includeSerializer("Erro ao buscar getLanHosts");
         }
     }
 

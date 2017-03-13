@@ -20,7 +20,7 @@
 
 
 <div class="container">
-    <script type="text/html" id="detalhequip">
+    <script type="text/html" id="detalhequip">        
         <div>
             <acs-modal v-bind:data='${equipamento}' v-bind:body="modal.comp" v-bind:titulo="modal.titulo"></acs-modal>
             <div class="page-header">

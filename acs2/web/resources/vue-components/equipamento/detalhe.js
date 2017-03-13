@@ -19,7 +19,7 @@ Vue.component("detail", {
         modal: {
             type: Object,
             required: true,
-            default: function() {
+            default: function () {
                 return {
                     comp: 'get-wifi',
                     titulo: 'Titulo Dev'
@@ -32,12 +32,34 @@ Vue.component("detail", {
         },
         eqp: {
             type: Equipamento,
-            default: function() {
+            default: function () {
                 return new Equipamento(this.eqpString);
             }
         }
     },
+    mounted: function () {
+//        var self = this;
+//        setInterval(function () {          
+//            self.checkOnline();
+//        }, 10000);
+    },
     methods: {
-
+        checkOnline: _.debounce(function () {
+            var self = this;
+            var aux = self.eqp;
+            $.ajax({
+                type: "POST",
+                url: url + "checkOnline/",
+                data: JSON.stringify(aux.flush()),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                },
+                success: function (data) {                    
+                    self.eqp.checkOn = data.boolean;
+                    console.log(self.eqp.checkOn);
+                }
+            });
+        }, 5000)
     }
 });
