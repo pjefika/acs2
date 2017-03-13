@@ -7,7 +7,7 @@ package tests.junit.consulta;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoFull;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -20,9 +20,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetWifiInfoJUnitTest {
+public class GetWifiInfoFullJUnitTest1 {
 
-    public GetWifiInfoJUnitTest() {
+    public GetWifiInfoFullJUnitTest1() {
     }
 
     @BeforeClass
@@ -48,9 +48,9 @@ public class GetWifiInfoJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(89013));
+            eqp = d.findDeviceByGUID(new Long(102015));
 
-            WifiInfo info = d.getWifiInfo(eqp);
+            WifiInfoFull info = d.getWifiInfoFull(eqp);
 
             SoutUtil.print(info);
 

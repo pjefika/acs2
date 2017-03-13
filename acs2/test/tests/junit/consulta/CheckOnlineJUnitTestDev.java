@@ -5,18 +5,14 @@
  */
 package tests.junit.consulta;
 
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import util.SoutUtil;
 
 /**
  *
@@ -55,7 +51,7 @@ public class CheckOnlineJUnitTestDev {
             NbiDeviceData eqp;
 //            eqp = d.findDeviceByGUID(new Long(142012));
 //            eqp = d.findDeviceByGUID(new Long(23006));
-            eqp = d.findDeviceByGUID(new Long(102015));
+            eqp = d.findDeviceByGUID(new Long(89013));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 

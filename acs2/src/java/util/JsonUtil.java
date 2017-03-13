@@ -21,6 +21,7 @@ import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoFull;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 
 /**
@@ -84,7 +85,7 @@ public class JsonUtil {
         JsonObject jobject = jelement.getAsJsonObject();
 
         // System.out.println("FullJson: " + jobject.toString());
-        String index = jobject.get("index").toString().replace("\"", "");
+        String index = jobject.get("index").toString();
         String authentication = jobject.get("authentication").toString().replace("\"", "");
         String broadcastEnabled = jobject.get("broadcastEnabled").toString().replace("\"", "");
         String channel = jobject.get("Channel").toString().replace("\"", "");
@@ -101,10 +102,74 @@ public class JsonUtil {
         i.setChannel(channel);
         i.setOperStatus(operStatus);
         i.setEncryptation(encryptation);
-        i.setRadioEnabled(radioStatus);
+        i.setRadioOperStatus(radioStatus);
         i.setSsid(ssid);
         i.setStandard(standard);
         i.setSsidPassword(password);
+
+        return i;
+    }
+    
+    public static WifiInfoFull getWifiInfoFull(StringResponseDTO a) {
+
+        WifiInfoFull i = new WifiInfoFull();
+
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+        JsonObject jobject = jelement.getAsJsonObject();
+
+        // System.out.println("FullJson: " + jobject.toString());
+        String admStatus = jobject.get("admStatus").toString().replace("\"", "");
+        String operStatus = jobject.get("operStatus").toString().replace("\"", "");
+        String channel = jobject.get("channel").toString().replace("\"", "");
+        Boolean bcEnabled = jobject.get("bcEnabled").getAsBoolean();
+        String maxBitRate = jobject.get("maxBitRate").toString().replace("\"", "");
+        Integer signal = jobject.get("signal").getAsInt();
+        String ssid = jobject.get("ssid").toString().replace("\"", "");
+        String authMode = jobject.get("authMode").toString().replace("\"", "");
+        String encType = jobject.get("encType").toString().replace("\"", "");
+        String key = jobject.get("key").toString().replace("\"", "");
+        String wepKeyIndex = jobject.get("wepKeyIndex").toString().replace("\"", "");
+        Boolean macAddrControl = jobject.get("macAddrControl").getAsBoolean();
+        String macAddress = jobject.get("macAddress").toString().replace("\"", "");
+        String radioStatus = jobject.get("radioStatus").toString().replace("\"", "");
+        String standard = jobject.get("standard").toString().replace("\"", "");
+        String bytesSent = jobject.get("bytesSent").toString().replace("\"", "");
+        String bytesRecv = jobject.get("bytesRecv").toString().replace("\"", "");
+        String pctSent = jobject.get("pctSent").toString().replace("\"", "");
+        String pctRecv = jobject.get("pctRecv").toString().replace("\"", "");
+        String errSent = jobject.get("errSent").toString().replace("\"", "");
+        String errRecv = jobject.get("errRecv").toString().replace("\"", "");
+        Boolean wpsEnabled = jobject.get("wpsEnabled").getAsBoolean();
+        String wpsDeviceName = jobject.get("wpsDeviceName").toString().replace("\"", "");
+        String wpsDevicePassword = jobject.get("wpsDevicePassword").toString().replace("\"", "");
+
+        i.setSsid(ssid);
+        i.setAdmStatus(admStatus);
+        i.setAuthMode(authMode);
+        i.setBcEnabled(bcEnabled);
+        i.setBytesRecv(bytesRecv);
+        i.setBytesSent(bytesSent);
+        i.setChannel(channel);
+        i.setEncType(encType);
+        i.setErrRecv(errRecv);
+        i.setErrSent(errSent);
+        i.setKey(key);
+        i.setMacAddrControl(macAddrControl);
+        i.setMacAddress(macAddress);
+        i.setMaxBitRate(maxBitRate);
+        i.setOperStatus(operStatus);
+        i.setPctSent(pctSent);
+        i.setPctRecv(pctRecv);
+        i.setRadioStatus(radioStatus);
+        i.setSignal(signal);
+        i.setStandard(standard);
+        i.setWepKeyIndex(wepKeyIndex);
+        i.setWpsDeviceName(wpsDeviceName);
+        i.setWpsDevicePassword(wpsDevicePassword);
+        i.setWpsEnabled(wpsEnabled);
+        
+        
+
 
         return i;
     }

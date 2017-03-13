@@ -7,7 +7,7 @@ package tests.junit.consulta;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoFull;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -20,9 +20,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetWifiInfoJUnitTest {
+public class SetWifiInfoFullJUnitTest {
 
-    public GetWifiInfoJUnitTest() {
+    public SetWifiInfoFullJUnitTest() {
     }
 
     @BeforeClass
@@ -42,20 +42,28 @@ public class GetWifiInfoJUnitTest {
     }
 
     @Test
-    public void getDeviceInfo() {
+    public void setDeviceInfo() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(89013));
+            eqp = d.findDeviceByGUID(new Long(104016));
 
-            WifiInfo info = d.getWifiInfo(eqp);
+            WifiInfoFull info = d.getWifiInfoFull(eqp);
 
-            SoutUtil.print(info);
+            info.setSsid("GVT-68D1");
+            info.setAuthMode("None");
+            info.setEncType("None");
+            info.setBcEnabled(Boolean.FALSE);
+            info.setChannel("1");
+            info.setStandard("b");
+            
+            info.setKey("1303000712");
+            assertTrue(d.setWifiInfoFull(eqp, info));
 
-            assertTrue(true);
-
+            SoutUtil.print(d.getWifiInfoFull(eqp));
+            
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

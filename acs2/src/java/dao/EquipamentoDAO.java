@@ -40,6 +40,7 @@ import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.traceroute.TraceRouteRequest;
 import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiInfoSet;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.StringResponseDTO;
@@ -230,6 +231,13 @@ public class EquipamentoDAO {
         return JsonUtil.dmzInfo(a);
     }
 
+    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 60000, "");
+        return JsonUtil.getWifiInfoFull(a);
+    }
+
     public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
@@ -285,6 +293,31 @@ public class EquipamentoDAO {
             System.out.println(jsonWifi);
 
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 10000, "");
+            return true;
+        } catch (OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
+            return true;
+        } catch (DeviceOperationException | NBIException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public Boolean setWifiInfoFull(NbiDeviceData eqp, WifiInfoFull wifi) throws Exception {
+
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+
+            WifiInfoSet adapter = NbiDecorator.getWifiInfoSetFull(wifi);
+
+            String jsonWifi = JsonUtil.serialize(adapter, adapter.getClass());
+            List<Object> json = NbiDecorator.getEmptyJson();
+            json.set(0, jsonWifi);
+
+            System.out.println(jsonWifi);
+
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
             return true;
         } catch (OperationTimeoutException | ProviderException e) {
             e.printStackTrace();

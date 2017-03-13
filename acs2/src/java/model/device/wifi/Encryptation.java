@@ -15,7 +15,7 @@ import java.util.List;
  */
 public enum Encryptation {
 
-    WEP("WEP", "None", "None"), WPA("WPA", "PSKAuthentication", "TKIPEncryption"), WPA2("WPA2", "PSKAuthentication", "TKIPEncryption");
+    WEP("WEP", "None", "None"), WPA("WPA", "PSKAuthentication", "TKIPEncryption"), WPA2("WPA2", "EAPandPSKAuthentication", "TKIPandAESEncryption");
 
     private String nome, authentication, encryptation;
 
