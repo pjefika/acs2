@@ -302,6 +302,14 @@ public class EquipamentoDAO {
         return JsonUtil.ddnsInfo(a);
     }
 
+    public void xDSLDiagnostic(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9514, opt, 10000, "");
+
+        System.out.println(a.getValue());
+    }
+
     public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
