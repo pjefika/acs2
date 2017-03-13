@@ -32,6 +32,7 @@ import javax.xml.ws.Service;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
+import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
 import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
@@ -210,7 +211,17 @@ public class EquipamentoDAO {
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9511, opt, 10000, "");
         return JsonUtil.getWifiInfo(a);
     }
+  
+    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception {
 
+        List<LanDevice> lst = new ArrayList<>();
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 10000, "");
+
+        return JsonUtil.getLanHosts(a);
+    }
+      
     public DmzInfo getDmzInfo(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
