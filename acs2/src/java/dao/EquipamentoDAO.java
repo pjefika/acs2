@@ -297,7 +297,7 @@ public class EquipamentoDAO {
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonPppoe);
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 10000, "");
-            System.out.println(a.getValue());
+            //System.out.println(a.getValue());
             return JsonUtil.pingResponse(a);
         } catch (Exception e) {
             e.printStackTrace();

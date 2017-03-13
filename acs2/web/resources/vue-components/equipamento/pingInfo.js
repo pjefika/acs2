@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var ping = function (p) {    
+var Ping = function (p) {    
     if (p) {
         this.repetitions = p.repetitions;
         this.hostAddress = p.hostAddress;
