@@ -18,7 +18,6 @@ import com.google.gson.JsonObject;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
 import javax.inject.Inject;
-import javax.xml.ws.soap.SOAPFaultException;
 import model.device.firmware.FirmwareInfo;
 import model.device.ping.PingRequest;
 import model.device.portmapping.PortMappingInfo;
@@ -72,7 +71,7 @@ public class EquipamentoController extends AbstractController {
     public void detalhesJson(String guid) {
         try {
             this.includeSerializer(dao.findDeviceByGUID(new Long(guid)));
-        } catch (SOAPFaultException | NBIException_Exception ex) {
+        } catch (NBIException_Exception ex) {
             this.includeSerializer(ex);
         }
     }
