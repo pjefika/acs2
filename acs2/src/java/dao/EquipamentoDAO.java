@@ -38,6 +38,7 @@ import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.traceroute.TraceRouteRequest;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoSet;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
@@ -235,6 +236,26 @@ public class EquipamentoDAO {
             this.initSynchDeviceOperations();
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 15000, "");
             return JsonUtil.getPortMappingInfo(a);
+        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PortMappingInfo traceroute(NbiDeviceData eqp, TraceRouteRequest trace) throws Exception {
+        try {
+            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+            this.initSynchDeviceOperations();
+
+            String traceStr = JsonUtil.serialize(trace, trace.getClass());
+            List<Object> json = NbiDecorator.getEmptyJson();
+            json.set(0, traceStr);
+
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9524, opt, 15000, "");
+
+            System.out.println(a.getValue());
+
+            return null;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
             return null;
