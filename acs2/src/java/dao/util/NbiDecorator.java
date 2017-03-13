@@ -61,11 +61,11 @@ public class NbiDecorator {
     }
 
     public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
-        return new WifiInfoSet(i.getOperStatus(), i.getSsid(), i.getChannel(), i.getRadioEnabled());
+        return new WifiInfoSet(i.getOperStatus(), i.getSsid(), i.getChannel());
     }
     
     public static WifiInfoSet getWifiInfoSetFull(WifiInfoFull i) {
-        return new WifiInfoSet(i.getOperStatus(), i.getSsid(), i.getChannel(), i.getRadioEnabled());
+        return new WifiInfoSet(i);
     }
 
     public static NbiDeviceID adapter(NbiDeviceData d) {

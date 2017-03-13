@@ -93,7 +93,7 @@ public class JsonUtil {
         i.setChannel(channel);
         i.setOperStatus(operStatus);
         i.setEncryptation(encryptation);
-        i.setRadioEnabled(radioStatus);
+        i.setRadioOperStatus(radioStatus);
         i.setSsid(ssid);
         i.setStandard(standard);
         i.setSsidPassword(password);
@@ -151,7 +151,6 @@ public class JsonUtil {
         i.setOperStatus(operStatus);
         i.setPctSent(pctSent);
         i.setPctRecv(pctRecv);
-        i.setRadioEnabled(radioStatus);
         i.setRadioStatus(radioStatus);
         i.setSignal(signal);
         i.setStandard(standard);

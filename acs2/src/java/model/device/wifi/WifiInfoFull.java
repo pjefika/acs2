@@ -7,12 +7,15 @@ package model.device.wifi;
 
 
 /**
- *
+ *extends WifiInfoSet
  * @author G0042204
  */
-public class WifiInfoFull extends WifiInfoSet {
+public class WifiInfoFull  {
 
     private String admStatus,
+                operStatus,
+                ssid,
+                channel,
                 authMode,
                 encType,
                 key,
@@ -24,8 +27,30 @@ public class WifiInfoFull extends WifiInfoSet {
                 wpsDevicePassword,
                 maxBitRate;
 
-    
-   
+    public String getOperStatus() {
+        return operStatus;
+    }
+
+    public void setOperStatus(String operStatus) {
+        this.operStatus = operStatus;
+    }
+
+    public String getSsid() {
+        return ssid;
+    }
+
+    public void setSsid(String ssid) {
+        this.ssid = ssid;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
     private Integer signal;
     
     private Boolean bcEnabled,
