@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
+import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
@@ -210,6 +211,13 @@ public class EquipamentoDAO {
         return JsonUtil.getWifiInfo(a);
     }
 
+    public DmzInfo getDmzInfo(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9503, opt, 10000, "");
+        return JsonUtil.dmzInfo(a);
+    }
+
     public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
@@ -324,7 +332,6 @@ public class EquipamentoDAO {
             System.out.println(o.getDescription());
         }
     }
-
 
     public StringResponseDTO setPortMapping(NbiDeviceData eqp, PortMappingInfo portMappingInfo) {
         try {
