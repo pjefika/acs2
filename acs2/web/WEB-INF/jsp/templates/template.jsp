@@ -35,7 +35,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="${linkTo[HomeController].index()}">ACS_2</a>
+                    <a class="navbar-brand" href="${linkTo[HomeController].index()}">ACS</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse" v-cloak>
                     <c:if test="${sessionUsuarioEfika.logado}">
@@ -52,13 +52,6 @@
                                                 <div class="col-lg-4">
                                                     <p class="text-center">
                                                         <img src="http://portalcolaboradores/idc/portalcolaboradores/userimages/${sessionUsuarioEfika.usuario.login}.jpg" alt="User" class="img-rounded" style="width: 90px; height: 100px;">
-                                                    </p>
-                                                </div>
-                                                <div class="col-lg-7">
-                                                    <p class="text-left"><strong>Nome</strong></p>
-                                                    <p class="text-left small">nome.sobrenome@telefonica.com</p>
-                                                    <p class="text-left">
-                                                        <a href="#" class="btn btn-primary btn-block btn-sm">Meu Perfil</a>
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-1"></div>
@@ -87,7 +80,7 @@
         <div id="instancia" v-cloak>
             <decorator:body/>
         </div>
-       
+
     </div>
     <!-- /container -->
     <script src="${pageContext.request.contextPath}/resources/vue-components/template.js"></script>
