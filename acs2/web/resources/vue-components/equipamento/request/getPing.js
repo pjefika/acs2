@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -9,7 +9,7 @@
 var url = "/acs/equipamento/";
 
 Vue.component("getPing", {
-    data: function () {
+    data: function() {
         return {
             mensagem: '',
             erro: '',
@@ -23,7 +23,7 @@ Vue.component("getPing", {
         },
         equipamento: {
             type: Equipamento,
-            default: function () {
+            default: function() {
                 return new Equipamento(this.eqpString);
             }
         },
@@ -37,7 +37,7 @@ Vue.component("getPing", {
         }
     },
     methods: {
-        getPing: function () {
+        getPing: function() {
             var self = this;
             var _data = {};
             _data.nbiDeviceData = self.equipamento.flush();
@@ -47,20 +47,20 @@ Vue.component("getPing", {
                 url: url + "pingDiagnostic/",
                 data: JSON.stringify(_data),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true;
                 },
-                success: function (data) {
+                success: function(data) {
                     self.infoPing = data.pingResponse;
                     console.log(data);
                 },
-                error: function (e) {
+                error: function(e) {
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                     console.log(e);
                 },
-                complete: function () {
+                complete: function() {
                     self.$parent.loading = false;
                 }
             });
@@ -91,10 +91,10 @@ Vue.component("tabelaPing", {
     props: [
         "infoPing"
     ],
-    template: "<table class='table table-bordered' v-if='infoPing.hostAddress'>\n\
+    template: "<table class='table table-bordered small' v-if='infoPing.hostAddress'>\n\
                     <thead>\n\
                         <tr>\n\
-                            <th colspan='2' style='text-align: center;'>Reposta Ping</th>\n\
+                            <th colspan='2' style='text-align: center;'>Resposta Ping</th>\n\
                         </tr>\n\
                         <tr>\n\
                             <th>Endereço</th>\n\
