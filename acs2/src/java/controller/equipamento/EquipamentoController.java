@@ -88,6 +88,7 @@ public class EquipamentoController extends AbstractController {
         }
     }
 
+
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getLanHosts/")
@@ -98,7 +99,7 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer("Erro no comando getLanHosts");
         }
     }
-
+  
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWifiInfo/")
@@ -138,7 +139,7 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/reboot/")
     public void reboot(NbiDeviceData nbiDeviceData) {
         try {
-            dao.reboot(nbiDeviceData);
+            this.includeSerializer(dao.reboot(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando reboot");
         }
@@ -209,8 +210,10 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/pingDiagnostic/")
-    public void pingDiagnostic(NbiDeviceData nbiDeviceData, PingRequest ping) {
+    public void pingDiagnostic(NbiDeviceData nbiDeviceData, String request) {
         try {
+            PingRequest ping = new PingRequest();
+            ping.setDestAddress(request);
             this.includeSerializer(dao.pingDiagnostic(nbiDeviceData, ping));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando pingDiagnostic");

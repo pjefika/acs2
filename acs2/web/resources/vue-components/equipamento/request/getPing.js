@@ -4,20 +4,17 @@
  * and open the template in the editor.
  */
 
-/* global ping, Vue */
+/* global ping, Vue, Ping */
 
 var url = "/acs/equipamento/";
 
-Vue.component("getPing", {    
+Vue.component("getPing", {
     data: function () {
         return {
             mensagem: '',
-            erro: ''
+            erro: '',
+            infoPing: {}
         };
-    },
-    mounted: function () {
-        var self = this;
-        self.getPing();
     },
     props: {
         eqpString: {
@@ -30,11 +27,10 @@ Vue.component("getPing", {
                 return new Equipamento(this.eqpString);
             }
         },
-        info: {
-            type: ping,
-            default: function () {
-                return new ping();
-            }
+        request: {
+            type: String,
+            required: true,
+            default: "www.google.com"
         },
         alertPanel: {
             type: Object
@@ -43,24 +39,33 @@ Vue.component("getPing", {
     methods: {
         getPing: function () {
             var self = this;
+            var _data = {};
+            _data.nbiDeviceData = self.equipamento.flush();
+            _data.request = self.request;
             $.ajax({
                 type: "POST",
-                url: url + "ping/",
-                data: JSON.stringify(this.equipamento.flush()),
+                url: url + "pingDiagnostic/",
+                data: JSON.stringify(_data),
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
+                    self.$parent.loading = true;
                 },
                 success: function (data) {
-                    self.info = new pPPoEC(data.ppPoECredentialsInfo);
-                    console.log(self.info);
+                    self.infoPing = data.pingResponse;
+                    console.log(data);
                 },
                 error: function (e) {
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                     console.log(e);
+                },
+                complete: function () {
+                    self.$parent.loading = false;
                 }
             });
+
+
         }
     },
     template: "<div>\n\
@@ -68,32 +73,53 @@ Vue.component("getPing", {
                         <div class='modal-body'>\n\
                             <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                             <div class='form-group'>\n\
-                                <label for='username'>Repetitions</label>\n\
-                                <input class='form-control' v-model='info.repetitions'>\n\
+                                <label for='username'>Endereço</label>\n\
+                                <input class='form-control' v-model='request'>\n\
                             </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='username'>HostAddress</label>\n\
-                                <input class='form-control' v-model='info.hostAddress'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='username'>QtdFailures</label>\n\
-                                <input class='form-control' v-model='info.qtdFailures'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='username'>QtdSuccess</label>\n\
-                                <input class='form-control' v-model='info.qtdSuccess'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='username'>AvgRespTime</label>\n\
-                                <input class='form-control' v-model='info.avgRespTime'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='username'>Status</label>\n\
-                                <input class='form-control' v-model='info.status'>\n\
-                            </div>\n\
+                            <hr/>\n\
+                            <tabela-ping v-bind:info-ping='infoPing'></tabela-ping>\n\
                         </div>\n\
                         <div class='modal-footer'>\n\
+                            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
+                            <button class='btn btn-primary' type='button' @click='getPing()'>Buscar</button>\n\
                         </div>\n\
                     </div>\n\
                </div>"
+});
+
+Vue.component("tabelaPing", {
+    props: [
+        "infoPing"
+    ],
+    template: "<table class='table table-bordered' v-if='infoPing.hostAddress'>\n\
+                    <thead>\n\
+                        <tr>\n\
+                            <th colspan='2' style='text-align: center;'>Reposta Ping</th>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Endereço</th>\n\
+                            <td>{{infoPing.hostAddress}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Repetições</th>\n\
+                            <td>{{infoPing.repetitions}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Quantidade Falha</th>\n\
+                            <td>{{infoPing.qtdFailures}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Quantidade Sucesso</th>\n\
+                            <td>{{infoPing.qtdSuccess}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Tempo de resposta</th>\n\
+                            <td>{{infoPing.avgRespTime}}</td>\n\
+                        </tr>\n\
+                        <tr>\n\
+                            <th>Status</th>\n\
+                            <td>{{infoPing.status}}</td>\n\
+                        </tr>\n\
+                    </thead>\n\
+                </table>"
 });

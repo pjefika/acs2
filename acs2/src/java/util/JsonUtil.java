@@ -12,6 +12,7 @@ import com.google.gson.JsonParser;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.lanhost.LanDevice;
@@ -34,6 +35,14 @@ public class JsonUtil {
         String firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
         String preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
         return new FirmwareInfo(firmwareVersion, preferredVersion);
+    }
+
+    public static DmzInfo dmzInfo(StringResponseDTO a) {
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonObject jobject = jelement.getAsJsonObject();
+        String Enable = jobject.get("Enable").toString().replace("\"", "");
+        String IPAddress = jobject.get("IPAddress").toString().replace("\"", "");
+        return new DmzInfo(new Boolean(Enable), IPAddress);
     }
 
     public static String serialize(Object o, Type a) {
