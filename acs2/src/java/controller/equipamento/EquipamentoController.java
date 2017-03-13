@@ -88,18 +88,6 @@ public class EquipamentoController extends AbstractController {
         }
     }
 
-
-    @Post
-    @Consumes("application/json")
-    @Path("/equipamento/getLanHosts/")
-    public void getLanHosts(NbiDeviceData nbiDeviceData) {
-        try {
-            this.includeSerializer(dao.getLanHosts(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando getLanHosts");
-        }
-    }
-  
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWifiInfo/")
@@ -118,6 +106,17 @@ public class EquipamentoController extends AbstractController {
     public void getPortMappingInfo(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getLanHosts/")
+    public void getLanHosts(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getLanHosts(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer(e);
         }
