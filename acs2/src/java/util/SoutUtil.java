@@ -8,6 +8,7 @@ package util;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
+import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
@@ -41,6 +42,11 @@ public class SoutUtil {
     public static void print(FirmwareInfo i) {
         System.out.println("firmwareVersion: " + i.getFirmwareVersion());
         System.out.println("preferredVersion: " + i.getPreferredVersion());
+    }
+
+    public static void print(DmzInfo i) {
+        System.out.println("IPAddress: " + i.getIPAddress());
+        System.out.println("Enable: " + i.getEnable());
     }
 
     public static void print(DdnsInfo d) {

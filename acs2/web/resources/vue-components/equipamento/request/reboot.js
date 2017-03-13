@@ -6,6 +6,9 @@
 /* global Vue */
 var url = "/acs/equipamento/";
 Vue.component("reboot", {
+    data: function() {
+        return {mensagem: '', erro: '', texto: 'Deseja reiniciar o modem?'}
+    },
     props: {
         eqpString: {
             type: String,
@@ -16,46 +19,42 @@ Vue.component("reboot", {
             default: function() {
                 return new Equipamento(this.eqpString);
             }
-        },
-        texto: {
-            type: String,
-            required: true,
-            default: function() {
-                return "Deseja reiniciar o modem?";
-            }
         }
     },
     methods: {
         reboot: function() {
+            var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "reboot/",
-                data: JSON.stringify(this.equipamento.flush()),
+                data: JSON.stringify(self.equipamento.flush()),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    $("#loadingModal").modal("show");
+                    self.$parent.loading = true
                 },
-                success: function() {
-                    $("#loadingModal").modal("hide");
-                    alert("success");
+                success: function(data) {
+                    // self.info = new WifiInfo(data.wifiInfo);
                 },
-                error: function() {
-                    $("#loadingModal").modal("hide");
-                    alert("Erro");
+                error: function(e) {
+                    self.mensagem = 'Falha ao buscar informações';
+                    self.erro = 'true';
+                },
+                complete: function() {
+                    self.$parent.loading = false
                 }
             });
         }
     },
     template: "<div>\n\
-                <div class='modal-body'>\n\  \n\
-                    <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
-                    <span v-text='texto'></span>\n\
-                </div>\n\
-                <div class='modal-footer'>\n\
-                    <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                    <button type='button' class='btn btn-primary' @click='reboot()'>Resetar</button>\n\
-                </div>\n\
-            </div>"
+                    <div class='modal-body'>\n\  \n\
+                        <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
+                        <span v-text='texto'></span>\n\
+                    </div>\n\
+                    <div class='modal-footer'>\n\
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
+                        <button type='button' class='btn btn-primary' @click='reboot()'>Reiniciar</button>\n\
+                    </div>\n\
+                </div>"
 });
 

@@ -50,6 +50,7 @@ Vue.component("pppoeCredentials", {
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
+                    self.$parent.loading = true;
                 },
                 success: function (data) {
                     self.pPPoEcred = new pPPoEC(data.ppPoECredentialsInfo);
@@ -58,6 +59,9 @@ Vue.component("pppoeCredentials", {
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                     console.log(e);
+                },
+                complete: function () {
+                    self.$parent.loading = false;
                 }
             });
         },
