@@ -20,6 +20,7 @@ import model.device.log.DeviceLog;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import motive.hdm.synchdeviceops.StringResponseDTO;
@@ -173,6 +174,35 @@ public class JsonUtil {
 
         return i;
     }
+    
+    
+     public static WanInfo getWanInfo(StringResponseDTO a) {
+
+        WanInfo i = new WanInfo();
+
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+        JsonObject jobject = jelement.getAsJsonObject();
+        
+        String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
+        String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
+        String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
+        String EthernetPacketsReceived = jobject.get("EthernetPacketsReceived").toString().replace("\"", "");
+        String EthernetErrorsSent = jobject.get("EthernetErrorsSent").toString().replace("\"", "");
+        String EthernetErrorsReceived = jobject.get("EthernetErrorsReceived").toString().replace("\"", "");
+        String EthernetDiscardPacketsSent = jobject.get("EthernetDiscardPacketsSent").toString().replace("\"", "");
+        String EthernetDiscardPacketsReceived = jobject.get("EthernetDiscardPacketsReceived").toString().replace("\"", "");
+        
+        i.setEthernetBytesReceived(EthernetBytesReceived);
+        i.setEthernetBytesSent(EthernetBytesSent);
+        i.setEthernetDiscardPacketsReceived(EthernetDiscardPacketsReceived);
+        i.setEthernetDiscardPacketsSent(EthernetDiscardPacketsSent);
+        i.setEthernetErrorsReceived(EthernetErrorsReceived);
+        i.setEthernetErrorsSent(EthernetErrorsSent);
+        i.setEthernetPacketsReceived(EthernetPacketsReceived);
+        i.setEthernetPacketsSent(EthernetPacketsSent);
+        
+        return i;
+     }
 
     public static DdnsInfo ddnsInfo(StringResponseDTO a) {
 
