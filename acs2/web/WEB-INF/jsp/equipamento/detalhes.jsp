@@ -88,7 +88,6 @@
                                 <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar xDSL" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar DNS" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar PPPoE Credentials" comp="pppoe-credentials" v-bind:ativo="eqp.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
