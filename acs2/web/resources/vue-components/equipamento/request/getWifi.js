@@ -95,35 +95,23 @@ Vue.component("getWifi", {
         }
     },
     template: "<div>\n\
-                <div class='modal-body'>\n\
-                    <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
-                    <div class='form-group'>\n\
+                <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
+                <div class='modal-body row'>\n\
+                    <div class='form-group col-md-6'>\n\
+                        <label for='ssid'>Estado da Rede Wifi</label>\n\
+                        <input class='form-control' disabled v-model='info.operStatus'>\n\
+                    </div>\n\
+                    <div class='form-group col-md-6'>\n\
                         <label for='ssid'>SSID (Nome da Rede WiFi)</label>\n\
                         <input class='form-control' v-model='info.ssid'>\n\
                     </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Senha</label>\n\
-                        <input class='form-control' v-model='info.key'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Encriptação</label>\n\
-                        <input class='form-control' v-model='info.encType'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Status</label>\n\
-                        <input class='form-control' v-model='info.operStatus'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
+                    <div class='form-group col-md-6'>\n\
                         <label for='ssid'>Canal</label>\n\
-                        <input class='form-control' v-model='info.channel'>\n\
+                        <input class='form-control' type='number' min='1' max='13' v-model='info.channel'>\n\
                     </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Broadcast</label>\n\
-                        <input class='form-control' v-model='info.bcEnabled'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Radio</label>\n\
-                        <input class='form-control' v-model='info.radioStatus'>\n\
+                    <div class='form-group col-md-6'>\n\
+                        <label for='senha'>Senha</label>\n\
+                        <input class='form-control' v-model='info.key'>\n\
                     </div>\n\
                 </div>\n\
                 <div class='modal-footer'>\n\

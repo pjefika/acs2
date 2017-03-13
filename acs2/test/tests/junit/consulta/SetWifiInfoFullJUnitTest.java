@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import util.SoutUtil;
 
 /**
  *
@@ -47,16 +48,22 @@ public class SetWifiInfoFullJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(142014));
+            eqp = d.findDeviceByGUID(new Long(104016));
 
             WifiInfoFull info = d.getWifiInfoFull(eqp);
 
-            info.setSsid("GVT-68D0");
-//            info.setAuthMode("None");
-//            info.setEncType("None");
-//            info.setKey("");
+            info.setSsid("GVT-68D1");
+            info.setAuthMode("None");
+            info.setEncType("None");
+            info.setBcEnabled(Boolean.FALSE);
+            info.setChannel("1");
+            info.setStandard("b");
+            
+            info.setKey("1303000712");
             assertTrue(d.setWifiInfoFull(eqp, info));
 
+            SoutUtil.print(d.getWifiInfoFull(eqp));
+            
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

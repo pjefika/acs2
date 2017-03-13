@@ -37,11 +37,12 @@ public class WifiInfoSet {
        this.broadcastEnable = getInfo.getBcEnabled().toString();
        this.channel = getInfo.getChannel();
        this.encryptation = getInfo.getEncType();
-//       this.operStatus = getInfo.getOperStatus();
-//       this.password = getInfo.getKey();
+       this.password = getInfo.getKey();
        this.radioOperStatus = getInfo.getRadioStatus();
        this.ssid = getInfo.getSsid();
        this.standard = getInfo.getStandard();
+//       this.beaconType = "";
+       
     }
     
     public String getRadioOperStatus() {

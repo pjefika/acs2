@@ -76,7 +76,9 @@ public class SoutUtil {
         System.out.println("Status: " + info.getOperStatus());
         System.out.println("Canal: " + info.getChannel());
         System.out.println("Broadcast: " + info.getBcEnabled());
-        System.out.println("Radio: " + info.getRadioStatus());
+        System.out.println("Auth: " + info.getAuthMode());
+        System.out.println("Standard: " + info.getStandard());
+        
         
     }
 
