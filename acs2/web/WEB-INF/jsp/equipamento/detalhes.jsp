@@ -93,7 +93,7 @@
                         <div class="col-md-6">
                             <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Ações</label>
-                                <acs-button acao="Reboot" comp="reboot" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Reiniciar" comp="reboot" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <!--                                <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalFactory" data-backdrop="static">Reset de Fábrica</button>
                                                                 <button type="button" class="list-group-item">Efetuar Traceroute</button>
                                                                 <button type="button" class="list-group-item">Gerenciar DMZ</button>-->

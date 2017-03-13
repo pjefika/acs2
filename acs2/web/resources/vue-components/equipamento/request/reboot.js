@@ -53,7 +53,7 @@ Vue.component("reboot", {
                     </div>\n\
                     <div class='modal-footer'>\n\
                         <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                        <button type='button' class='btn btn-primary' @click='reboot()'>Resetar</button>\n\
+                        <button type='button' class='btn btn-primary' @click='reboot()'>Reiniciar</button>\n\
                     </div>\n\
                 </div>"
 });
