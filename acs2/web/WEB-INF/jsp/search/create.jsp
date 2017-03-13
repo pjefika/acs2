@@ -4,14 +4,11 @@
            prefix="decorator"%>
 
 <div class="container">
-
     <div class="page-header">
         <h1>Buscar Equipamentos</h1>
     </div>
     <div class="row">
-        <search-action></search-action>
+        <component :is="currentView"></component>
     </div>
-
-
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/searchact.js"></script>

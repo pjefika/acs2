@@ -99,7 +99,7 @@ public class EquipamentoController extends AbstractController {
             e.printStackTrace();
         }
     }
-    
+
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWifiInfoFull/")
@@ -119,7 +119,7 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer(e);
+            this.includeSerializer("Erro no comando getPortMapping");
         }
     }
 
@@ -130,7 +130,7 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getLanHosts(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer(e);
+            this.includeSerializer("Erro no comando getLanHosts");
         }
     }
 
@@ -177,7 +177,7 @@ public class EquipamentoController extends AbstractController {
             e.printStackTrace();
         }
     }
-    
+
     @Post("/equipamento/setWifiInfoFull/")
     @Consumes(value = "application/json", options = WithRoot.class)
     public void setWifiFull(NbiDeviceData nbiDeviceData, WifiInfoFull info) {

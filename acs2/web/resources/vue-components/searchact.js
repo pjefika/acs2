@@ -5,14 +5,16 @@
  */
 /* global Vue */
 var url = "/acs/busca/listar/";
+
 var data = {
     inputToSearch: null,
     listaEqp: [],
     picked: null,
-    renderTable: false
+    renderTable: false,
+    currentView: 'search-action'
 };
 
-Vue.component("search-table", {
+Vue.component("searchTable", {
     props: ['inputToSearch', 'listaEqp', 'picked', 'renderTable'],
     template: "<div v-if='this.renderTable'>\n\
                     <table v-if='this.listaEqp' id='leTable' class='table table-bordered small' >\n\
@@ -47,7 +49,8 @@ Vue.component("search-table", {
         return data;
     }
 });
-Vue.component("search-action", {
+
+Vue.component("searchAction", {
     template: "<div class='row'>\n\
                     <div class='col-lg-4'>\n\
                         <div class='row'>\n\
