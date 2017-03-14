@@ -18,6 +18,8 @@ var vm = new Vue({
         },
         currentView: 'searchAction'
     },
+    created: function() {
+    },
     watch: {
         modal: function(m, oldVal) {
 //            if (m.comp === "get-wifi") {
