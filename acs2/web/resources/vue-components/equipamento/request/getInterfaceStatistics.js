@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+/* global InterfaceStatistics */
+
 Vue.component("getInterfaceStatistics", {
     props:{
         eqpString: {
@@ -42,7 +44,7 @@ Vue.component("getInterfaceStatistics", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    self.info = new InterfaceStatistics(data.wanInfo);
+                    self.info = new InterfaceStatistics(data.interfaceStatistics);
                 },
                 error: function(e) {
                     console.log(e)
@@ -59,7 +61,37 @@ Vue.component("getInterfaceStatistics", {
             <div>\n\
                 <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                 <div class='modal-body'>\n\
-                    \n\
+                    <div class='form-inline row'>\n\
+                        <div class='form-group col-md-6'>\n\
+                            <label for='ifType'>ifType</label>\n\
+                            {{info.ifType}}\n\
+                        </div>\n\
+                    <div class='form-inline row'>\n\
+                        <div class='form-group col-md-6'>\n\
+                            <label for='ifName'>ifName</label>\n\
+                            {{info.ifName}}\n\
+                        </div>\n\
+                        <div v-show='\"operStatus\" != \"Up\"' class='form-group col-md-6'>\n\
+                            <label for='adminStatus'>adminStatus</label>\n\
+                            {{info.adminStatus}}\n\
+                        </div>\n\
+                        <div v-show='\"operStatus\" == \"Up\"' class='form-group col-md-6'>\n\
+                            <label for='operStatus'>operStatus</label>\n\
+                            {{info.operStatus}}\n\
+                        </div>\n\
+                        <div class='form-group col-md-6'>\n\
+                            <label for='ipAddress'>ipAddress</label>\n\
+                            {{info.ipAddress}}\n\
+                        </div>\n\
+                        <div class='form-group col-md-6'>\n\
+                            <label for='ipAddrType'>ipAddrType</label>\n\
+                            {{info.ipAddrType}}\n\
+                        </div>\n\
+                        <div class='form-group col-md-6'>\n\
+                            <label for='macAddress'>macAddress</label>\n\
+                            {{info.macAddress}}\n\
+                        </div>\n\
+                    </div>\n\
                     <table class='table table-bordered table-condensed'>\n\
                         <thead>\n\
                             <tr>\n\

@@ -7,16 +7,12 @@ package tests.junit.consulta;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.List;
-import model.device.log.DeviceLog;
-import model.device.wifi.WifiInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.SoutUtil;
 
 /**
  *
@@ -50,7 +46,7 @@ public class GetInterfaceStatisticsJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(142014));
+            eqp = d.findDeviceByGUID(new Long(82018));
 
             d.getInterfaceStatistics(eqp);
 

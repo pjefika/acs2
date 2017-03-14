@@ -7,7 +7,7 @@
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfoFull.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wanInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/intertfaceStatistics.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/interfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getInterfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWan.js"></script>
@@ -87,7 +87,7 @@
                             <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Consultas</label>
                                 <acs-button acao="Consultar WAN" comp="get-wan" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar Interface" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar Interface" comp="get-interface-statistics" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar LAN Host" comp="get-lan-hosts" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar xDSL" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>

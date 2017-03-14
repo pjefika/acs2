@@ -6,9 +6,12 @@
 package util;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -308,47 +311,67 @@ public class JsonUtil {
     
     public static InterfaceStatistics getInterfaceStatistics(StringResponseDTO a){
         
-        InterfaceStatistics i = new InterfaceStatistics();
+//        String result = "{\"list\":"+a.getValue()+"}";
         
-        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
-        JsonObject jobject = jelement.getAsJsonObject();
+        JsonReader reader = new JsonReader(new StringReader(a.getValue()));
+        reader.setLenient(true);
         
-        String ifType = jobject.get("ifType").toString().replace("\"", "");
-        String adminStatus = jobject.get("adminStatus").toString().replace("\"", "");
-        String operStatus = jobject.get("operStatus").toString().replace("\"", "");
-        String ifName = jobject.get("ifName").toString().replace("\"", "");
-        String ipAddress = jobject.get("ipAddress").toString().replace("\"", "");
-        String ipAddrType = jobject.get("ipAddrType").toString().replace("\"", "");
-        String macAddress = jobject.get("macAddress").toString().replace("\"", "");
-        String bytesSent = jobject.get("bytesSent").toString().replace("\"", "");
-        String bytesRecv = jobject.get("bytesRecv").toString().replace("\"", "");
-        String errSent = jobject.get("errSent").toString().replace("\"", "");
-        String errRecv = jobject.get("errRecv").toString().replace("\"", "");
-        String pctSent = jobject.get("pctSent").toString().replace("\"", "");
-        String pctRecv = jobject.get("pctRecv").toString().replace("\"", "");
-        String mcSent = jobject.get("mcSent").toString().replace("\"", "");
-        String mcRecv = jobject.get("mcRecv").toString().replace("\"", "");
-        String bcSent = jobject.get("bcSent").toString().replace("\"", "");
-        String bcRecv = jobject.get("bcRecv").toString().replace("\"", "");
+        JsonElement jelement = new JsonParser().parse(reader);
+        JsonArray jarray = jelement.getAsJsonArray();
         
-        i.setAdminStatus(adminStatus);
-        i.setBcRecv(bcRecv);
-        i.setBcSent(bcSent);
-        i.setBytesRecv(bytesRecv);
-        i.setBytesSent(bytesSent);
-        i.setErrRecv(errRecv);
-        i.setErrSent(errSent);
-        i.setIfName(ifName);
-        i.setIfType(ifType);
-        i.setIpAddrType(ipAddrType);
-        i.setMacAddress(macAddress);
-        i.setMcRecv(mcRecv);
-        i.setMcSent(mcSent);
-        i.setOperStatus(operStatus);
-        i.setPctRecv(pctRecv);
-        i.setPctSent(pctSent);
+        List<InterfaceStatistics> list = new ArrayList<>();
+        for (JsonElement jsonElement : jarray) {
+            JsonObject jobject = jsonElement.getAsJsonObject();
+            InterfaceStatistics i = new InterfaceStatistics();
+
+            String ifType = jobject.get("ifType").toString().replace("\"", "");
+            String adminStatus = jobject.get("adminStatus").toString().replace("\"", "");
+            String operStatus = jobject.get("operStatus").toString().replace("\"", "");
+            String ifName = jobject.get("ifName").toString().replace("\"", "");
+            String ipAddress = jobject.get("ipAddress").toString().replace("\"", "");
+            String ipAddrType = jobject.get("ipAddrType").toString().replace("\"", "");
+            String macAddress = jobject.get("macAddress").toString().replace("\"", "");
+            String bytesSent = jobject.get("bytesSent").toString().replace("\"", "");
+            String bytesRecv = jobject.get("bytesRecv").toString().replace("\"", "");
+            String errSent = jobject.get("errSent").toString().replace("\"", "");
+            String errRecv = jobject.get("errRecv").toString().replace("\"", "");
+            String pctSent = jobject.get("pctSent").toString().replace("\"", "");
+            String pctRecv = jobject.get("pctRecv").toString().replace("\"", "");
+            String mcSent = jobject.get("mcSent").toString().replace("\"", "");
+            String mcRecv = jobject.get("mcRecv").toString().replace("\"", "");
+            String bcSent = jobject.get("bcSent").toString().replace("\"", "");
+            String bcRecv = jobject.get("bcRecv").toString().replace("\"", "");
+            
+            i.setAdminStatus(adminStatus);
+            i.setIpAddress(ipAddress);
+            i.setBcRecv(bcRecv);
+            i.setBcSent(bcSent);
+            i.setBytesRecv(bytesRecv);
+            i.setBytesSent(bytesSent);
+            i.setErrRecv(errRecv);
+            i.setErrSent(errSent);
+            i.setIfName(ifName);
+            i.setIfType(ifType);
+            i.setIpAddrType(ipAddrType);
+            i.setMacAddress(macAddress);
+            i.setMcRecv(mcRecv);
+            i.setMcSent(mcSent);
+            i.setOperStatus(operStatus);
+            i.setPctRecv(pctRecv);
+            i.setPctSent(pctSent);
+            
+            list.add(i);
+        }
+
+        for (InterfaceStatistics interfaceStatistics : list) {
+            System.out.println(interfaceStatistics.getIfType());
+        }
         
-        return i;
+        
+        
+
+        
+        return null;
     }
 
 }

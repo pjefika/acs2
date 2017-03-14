@@ -341,6 +341,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 10000, "");
+        
         return JsonUtil.ddnsInfo(a);
     }
 
@@ -363,7 +364,9 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 30000, "");
-        return JsonUtil.getInterfaceStatistics(a);
+        JsonUtil.getInterfaceStatistics(a);
+        return null;
+//return JsonUtil.getInterfaceStatistics(a);
     }
 
     public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) {

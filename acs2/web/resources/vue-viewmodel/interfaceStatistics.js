@@ -5,7 +5,7 @@
  */
 
 // CLASSES
-var WanInfo = function(p) {
+var InterfaceStatistics = function(p) {
     if (p) {
         this.ifType = p.ifType;
         this.adminStatus = p.adminStatus;
