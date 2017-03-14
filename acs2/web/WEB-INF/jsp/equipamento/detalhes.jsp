@@ -35,6 +35,7 @@
                                     <label>Status: </label>
                                     <span v-if="eqp.checkOn">Ativo</span>
                                     <span v-else>Inativo</span>
+                                    <span v-text="eqp.checkOn">Inativo</span>
                                 </li>
                                 <li class="list-group-item">
                                     <label>Serial:</label>

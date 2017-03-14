@@ -64,7 +64,6 @@ public class EquipamentoController extends AbstractController {
         } catch (NBIException_Exception ex) {
             result.include("exception", "Falha ao consultar Serviços Motive.");
         }
-
     }
 
     @Path("/equipamento/detalhe/json/{guid}")

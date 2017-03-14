@@ -24,6 +24,7 @@ var Equipamento = function (p) {
         this.type = p.eqp.type;
         this.lastActivationTime = p.eqp.lastActivationTime;
     }
+    
 };
 
 Equipamento.prototype.isModem = function () {

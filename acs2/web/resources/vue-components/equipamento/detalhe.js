@@ -7,11 +7,8 @@
 
 var url = "/acs/equipamento/";
 
-
-
 Vue.config.devtools = true;
 Vue.config.silent = true;
-
 
 Vue.component("detail", {
     template: '#detalhequip',
@@ -38,28 +35,28 @@ Vue.component("detail", {
         }
     },
     mounted: function () {
-//        var self = this;
-//        setInterval(function () {          
-//            self.checkOnline();
-//        }, 10000);
+        var self = this;
+        setInterval(function () {
+            console.log("Check Online");
+            self.checkOnline();
+        }, 10000);
     },
     methods: {
         checkOnline: _.debounce(function () {
-            var self = this;
-            var aux = self.eqp;
+            var self = this;                        
             $.ajax({
                 type: "POST",
                 url: url + "checkOnline/",
-                data: JSON.stringify(aux.flush()),
+                data: JSON.stringify(self.eqp.flush()),
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-                success: function (data) {                    
+                success: function (data) {
+                    self.eqp = new Equipamento(self.eqpString);
                     self.eqp.checkOn = data.boolean;
-                    console.log(self.eqp.checkOn);
                 }
             });
-        }, 5000)
+        }, 1000)
     }
 });
