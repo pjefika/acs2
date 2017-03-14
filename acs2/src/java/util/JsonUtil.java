@@ -15,6 +15,7 @@ import java.util.List;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
+import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
 import model.device.ping.PingResponse;
@@ -303,6 +304,51 @@ public class JsonUtil {
         String password = jobject.get("Password").toString().replace("\"", "");
 
         return new PPPoECredentialsInfo(username, password);
+    }
+    
+    public static InterfaceStatistics getInterfaceStatistics(StringResponseDTO a){
+        
+        InterfaceStatistics i = new InterfaceStatistics();
+        
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+        JsonObject jobject = jelement.getAsJsonObject();
+        
+        String ifType = jobject.get("ifType").toString().replace("\"", "");
+        String adminStatus = jobject.get("adminStatus").toString().replace("\"", "");
+        String operStatus = jobject.get("operStatus").toString().replace("\"", "");
+        String ifName = jobject.get("ifName").toString().replace("\"", "");
+        String ipAddress = jobject.get("ipAddress").toString().replace("\"", "");
+        String ipAddrType = jobject.get("ipAddrType").toString().replace("\"", "");
+        String macAddress = jobject.get("macAddress").toString().replace("\"", "");
+        String bytesSent = jobject.get("bytesSent").toString().replace("\"", "");
+        String bytesRecv = jobject.get("bytesRecv").toString().replace("\"", "");
+        String errSent = jobject.get("errSent").toString().replace("\"", "");
+        String errRecv = jobject.get("errRecv").toString().replace("\"", "");
+        String pctSent = jobject.get("pctSent").toString().replace("\"", "");
+        String pctRecv = jobject.get("pctRecv").toString().replace("\"", "");
+        String mcSent = jobject.get("mcSent").toString().replace("\"", "");
+        String mcRecv = jobject.get("mcRecv").toString().replace("\"", "");
+        String bcSent = jobject.get("bcSent").toString().replace("\"", "");
+        String bcRecv = jobject.get("bcRecv").toString().replace("\"", "");
+        
+        i.setAdminStatus(adminStatus);
+        i.setBcRecv(bcRecv);
+        i.setBcSent(bcSent);
+        i.setBytesRecv(bytesRecv);
+        i.setBytesSent(bytesSent);
+        i.setErrRecv(errRecv);
+        i.setErrSent(errSent);
+        i.setIfName(ifName);
+        i.setIfType(ifType);
+        i.setIpAddrType(ipAddrType);
+        i.setMacAddress(macAddress);
+        i.setMcRecv(mcRecv);
+        i.setMcSent(mcSent);
+        i.setOperStatus(operStatus);
+        i.setPctRecv(pctRecv);
+        i.setPctSent(pctSent);
+        
+        return i;
     }
 
 }

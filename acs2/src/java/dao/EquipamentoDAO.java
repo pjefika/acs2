@@ -32,6 +32,7 @@ import javax.xml.ws.Service;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
+import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
 import model.device.ping.PingRequest;
@@ -358,11 +359,11 @@ public class EquipamentoDAO {
         return JsonUtil.deviceLog(a);
     }
 
-    public void getInterfaceStatistics(NbiDeviceData eqp) throws Exception {
+    public InterfaceStatistics getInterfaceStatistics(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 30000, "");
-        System.out.println(a.getValue());
+        return JsonUtil.getInterfaceStatistics(a);
     }
 
     public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) {

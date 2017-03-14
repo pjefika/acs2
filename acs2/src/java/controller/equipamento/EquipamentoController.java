@@ -123,6 +123,18 @@ public class EquipamentoController extends AbstractController {
             e.printStackTrace();
         }
     }
+    
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getInterfaceStatistics/")
+    public void getInterfaceStatistics(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getInterfaceStatistics(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer("Erro no comando getInterfaceStatistics");
+            e.printStackTrace();
+        }
+    }
 
     @Post
     @Consumes("application/json")

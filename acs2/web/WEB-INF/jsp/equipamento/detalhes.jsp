@@ -7,7 +7,9 @@
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfoFull.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wanInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/intertfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getInterfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWan.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getLanHosts.js"></script>
