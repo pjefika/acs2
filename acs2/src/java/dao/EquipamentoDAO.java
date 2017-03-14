@@ -214,14 +214,14 @@ public class EquipamentoDAO {
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9511, opt, 10000, "");
         return JsonUtil.getWifiInfo(a);
     }
-    
-    public WanInfo getWanInfo(NbiDeviceData eqp) throws Exception{
+
+    public WanInfo getWanInfo(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9515, opt, 10000, "");
         return JsonUtil.getWanInfo(a);
     }
-  
+
     public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception {
 
         List<LanDevice> lst = new ArrayList<>();
@@ -231,7 +231,7 @@ public class EquipamentoDAO {
 
         return JsonUtil.getLanHosts(a);
     }
-      
+
     public DmzInfo getDmzInfo(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
@@ -246,11 +246,11 @@ public class EquipamentoDAO {
         return JsonUtil.getWifiInfoFull(a);
     }
 
-    public PortMappingInfo getPortMapping(NbiDeviceData eqp) throws Exception {
+    public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws Exception {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 15000, "");
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
             return JsonUtil.getPortMappingInfo(a);
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
@@ -310,7 +310,7 @@ public class EquipamentoDAO {
             return false;
         }
     }
-    
+
     public Boolean setWifiInfoFull(NbiDeviceData eqp, WifiInfoFull wifi) throws Exception {
 
         try {
