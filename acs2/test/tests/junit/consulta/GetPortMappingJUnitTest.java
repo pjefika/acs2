@@ -55,19 +55,18 @@ public class GetPortMappingJUnitTest {
     }
 
     @Test
-    public void getPortMapping() {
+    public void getDeviceInfo() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(102015));
+            eqp = d.findDeviceByGUID(new Long(104016));
 
-            List<PortMappingInfo> info = d.getPortMapping(eqp);
 
-            for (PortMappingInfo portMappingInfo : info) {
-                SoutUtil.print(portMappingInfo);
-            }
+            PortMappingInfo info = d.getPortMapping(eqp);
+
+            SoutUtil.print(info);
 
             assertTrue(true);
 

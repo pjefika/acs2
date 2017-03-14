@@ -6,8 +6,6 @@
 package util;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -46,50 +44,38 @@ public class JsonUtil {
         JsonObject jobject = jelement.getAsJsonObject();
         String Enable = jobject.get("Enable").toString().replace("\"", "");
         String IPAddress = jobject.get("IPAddress").toString().replace("\"", "");
-        return new DmzInfo(Boolean.valueOf(Enable), IPAddress);
+        return new DmzInfo(new Boolean(Enable), IPAddress);
     }
 
     public static String serialize(Object o, Type a) {
         return new Gson().toJsonTree(o, a).toString().replace("\"", "'");
     }
 
-    public static List<PortMappingInfo> getPortMappingInfo(StringResponseDTO a) {
+    public static PortMappingInfo getPortMappingInfo(StringResponseDTO a) {
 
-        List<PortMappingInfo> lst = new ArrayList<>();
-        JsonArray j = new JsonParser().parse(a.getValue()).getAsJsonArray();
+        PortMappingInfo i = new PortMappingInfo();
 
-        for (int k = 0; k < j.size(); k++) {
-            PortMappingInfo i = new PortMappingInfo();
+        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+        JsonObject jobject = jelement.getAsJsonObject();
 
-            JsonObject jobject = j.get(k).getAsJsonObject();
+        // System.out.println("FullJson: " + jobject.toString());
+        String externalPort = jobject.get("externalPort").toString().replace("\"", "");
+        String internalClient = jobject.get("internalClient").toString().replace("\"", "");
+        String internalPort = jobject.get("internalPort").toString().replace("\"", "");
+        String portMapName = jobject.get("portMapName").toString().replace("\"", "");
+        String enable = jobject.get("enable").toString().replace("\"", "");
+        String protocol = jobject.get("protocol").toString().replace("\"", "");
+        String remoteHost = jobject.get("remoteHost").toString().replace("\"", "");
 
-            String externalPort;
+        i.setExternalPort(externalPort);
+        i.setInternalClient(internalClient);
+        i.setInternalPort(internalPort);
+        i.setPortMapName(portMapName);
+        i.setEnable(enable);;
+        i.setProtocol(protocol);
+        i.setRemoteHost(remoteHost);
 
-            try {
-                externalPort = jobject.get("externalPort").toString().replace("\"", "");
-            } catch (Exception e) {
-                externalPort = "";
-            }
-
-            String internalClient = jobject.get("internalClient").toString().replace("\"", "");
-            String internalPort = jobject.get("internalPort").toString().replace("\"", "");
-            String portMapName = jobject.get("portMapName").toString().replace("\"", "");
-            String enable = jobject.get("enable").toString().replace("\"", "");
-            String protocol = jobject.get("protocol").toString().replace("\"", "");
-            String remoteHost = jobject.get("remoteHost").toString().replace("\"", "");
-
-            i.setExternalPort(externalPort);
-            i.setInternalClient(internalClient);
-            i.setInternalPort(internalPort);
-            i.setPortMapName(portMapName);
-            i.setEnable(enable);
-            i.setProtocol(protocol);
-            i.setRemoteHost(remoteHost);
-
-            lst.add(i);
-        }
-
-        return lst;
+        return i;
     }
 
     public static WifiInfo getWifiInfo(StringResponseDTO a) {
@@ -124,7 +110,7 @@ public class JsonUtil {
 
         return i;
     }
-
+    
     public static WifiInfoFull getWifiInfoFull(StringResponseDTO a) {
 
         WifiInfoFull i = new WifiInfoFull();
@@ -182,17 +168,21 @@ public class JsonUtil {
         i.setWpsDeviceName(wpsDeviceName);
         i.setWpsDevicePassword(wpsDevicePassword);
         i.setWpsEnabled(wpsEnabled);
+        
+        
+
 
         return i;
     }
-
-    public static WanInfo getWanInfo(StringResponseDTO a) {
+    
+    
+     public static WanInfo getWanInfo(StringResponseDTO a) {
 
         WanInfo i = new WanInfo();
 
         JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
-
+        
         String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
         String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
         String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
@@ -201,7 +191,7 @@ public class JsonUtil {
         String EthernetErrorsReceived = jobject.get("EthernetErrorsReceived").toString().replace("\"", "");
         String EthernetDiscardPacketsSent = jobject.get("EthernetDiscardPacketsSent").toString().replace("\"", "");
         String EthernetDiscardPacketsReceived = jobject.get("EthernetDiscardPacketsReceived").toString().replace("\"", "");
-
+        
         i.setEthernetBytesReceived(EthernetBytesReceived);
         i.setEthernetBytesSent(EthernetBytesSent);
         i.setEthernetDiscardPacketsReceived(EthernetDiscardPacketsReceived);
@@ -210,9 +200,9 @@ public class JsonUtil {
         i.setEthernetErrorsSent(EthernetErrorsSent);
         i.setEthernetPacketsReceived(EthernetPacketsReceived);
         i.setEthernetPacketsSent(EthernetPacketsSent);
-
+        
         return i;
-    }
+     }
 
     public static DdnsInfo ddnsInfo(StringResponseDTO a) {
 
@@ -302,7 +292,8 @@ public class JsonUtil {
     }
 
     public static String removeBracket(String json) {
-        return json.replace("[", "").replace("]", "").replace("\"", "\"\"");
+        return json;
+        // .replace("[", "").replace("]", "").replace("\"", "\"\"");
     }
 
     public static PPPoECredentialsInfo getPPPoECredentialsInfo(StringResponseDTO a) {
