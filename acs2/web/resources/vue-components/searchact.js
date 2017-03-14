@@ -11,7 +11,7 @@ var data = {
     listaEqp: [],
     picked: null,
     renderTable: false,
-    currentView: 'search-action'
+    currentView: 'searchAction'
 };
 
 Vue.component("searchTable", {
@@ -45,7 +45,7 @@ Vue.component("searchTable", {
                 ",
     methods: {
     },
-    data: function() {
+    data: function () {
         return data;
     }
 });
@@ -121,7 +121,7 @@ Vue.component("searchAction", {
         }
     },
     computed: {
-        lecrazy: function() {
+        lecrazy: function () {
             if (this.subscriber.length > this.serial.length && this.subscriber.length > this.mac.length) {
                 this.leOpt = "subscriber";
                 return this.subscriber;
@@ -137,7 +137,7 @@ Vue.component("searchAction", {
         }
     },
     methods: {
-        busca: function() {
+        busca: function () {
             var self = this;
             self.inputToSearch = this.lecrazy;
             var picked = this.leOpt;
@@ -149,27 +149,57 @@ Vue.component("searchAction", {
             $("#loadingModal").modal({backdrop: "static"});
             $("#loadingModal").modal("show");
 
-            //Consulta
-            $.get(url + picked + "/" + self.inputToSearch, function(data) {
-                self.listaEqp = data.list;
-            }).done(function() {
-                $("#loadingModal").modal("hide");
-                self.renderTable = true;
-                self.inputToSearch = null;
-                $('#leTable').DataTable().destroy();
-                $(document).ready(function() {
-                    $('#leTable').DataTable({
-                        "language": {
-                            "url": "resources/data-table/pt-br.json"
-                        }
+            $.ajax({
+                type: "GET",
+                url: url + picked + "/" + self.inputToSearch,
+                beforeSend: function () {
+                    self.$root.currentView = "loading";
+                },
+                success: function (data) {
+                    self.$root.currentView = "searchAction";
+                    Vue.nextTick(function () {
+                        self.listaEqp = data.list;
                     });
-                })
+                },
+                error: function (e) {
+                    self.mensagem = 'Falha ao buscar informações';
+                    self.erro = 'true';
+                    console.log(e);
+                },
+                complete: function () {
+                    self.renderTable = true;
+                    self.inputToSearch = null;
+                    $('#leTable').DataTable().destroy();
+                    $(document).ready(function () {
+                        $('#leTable').DataTable({
+                            "language": {
+                                "url": "resources/data-table/pt-br.json"
+                            }
+                        });
+                    });
+                }
             });
+//            //Consulta
+//            $.get(url + picked + "/" + self.inputToSearch, function (data) {
+//                self.listaEqp = data.list;
+//            }).done(function () {
+//                $("#loadingModal").modal("hide");
+//                self.renderTable = true;
+//                self.inputToSearch = null;
+//                $('#leTable').DataTable().destroy();
+//                $(document).ready(function () {
+//                    $('#leTable').DataTable({
+//                        "language": {
+//                            "url": "resources/data-table/pt-br.json"
+//                        }
+//                    });
+//                })
+//            });
         }
-    }, created: function() {
+    }, created: function () {
 
     },
-    data: function() {
+    data: function () {
         return data;
     }
 });
