@@ -36,14 +36,22 @@ Vue.component("acsButton", {
         setComp: function() {
             var self = this;
             if (self.ativo) {
-                self.ativo = false
+
                 vm.modal = {
-                    titulo: self.acao,
-                    comp: self.comp
+                    titulo: 'Carregando...',
+                    comp: 'loading'
                 };
-                Vue.nextTick(function(){
-                    $("#actionModal").modal("show");    
+
+                Vue.nextTick(function() {
+                    self.ativo = false
+                    vm.modal = {
+                        titulo: self.acao,
+                        comp: self.comp
+                    };
+
+                    $("#actionModal").modal("show");
                     self.ativo = true
+
                 })
             }
         }

@@ -17,6 +17,8 @@ var vm = new Vue({
             titulo: 'Carregando...'
         }
     },
+    created: function() {
+    },
     watch: {
         modal: function(m, oldVal) {
 //            if (m.comp === "get-wifi") {

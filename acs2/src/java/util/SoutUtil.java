@@ -84,13 +84,14 @@ public class SoutUtil {
         System.out.println("Broadcast: " + info.getBcEnabled());
         System.out.println("Auth: " + info.getAuthMode());
         System.out.println("Standard: " + info.getStandard());
-        
-        
+
     }
 
     public static void print(PortMappingInfo info) {
         System.out.println("ExternalPort: " + info.getExternalPort());
         System.out.println("InternalClient: " + info.getInternalClient());
+        System.out.println("RemoteHost: " + info.getRemoteHost());
+        System.out.println("PortMapName: " + info.getPortMapName());
     }
 
     public static void printl(List<DeviceLog> l) {
