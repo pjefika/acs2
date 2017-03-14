@@ -16,8 +16,8 @@ var data = {
 
 Vue.component("searchTable", {
     props: ['inputToSearch', 'listaEqp', 'picked', 'renderTable'],
-    template: "<div v-if='this.renderTable'>\n\
-                    <table v-if='this.listaEqp' id='leTable' cellspacing='0' class='table table-striped table-bordered small' >\n\
+    template: "<div v-show='this.renderTable'>\n\
+                    <table v-show='this.listaEqp' id='leTable' cellspacing='0' class='table table-striped table-bordered small' >\n\
                         <thead>\n\
                             <tr>\n\
                                 <th>Subscriber</th>\n\
@@ -45,6 +45,9 @@ Vue.component("searchTable", {
                 ",
     methods: {
     },
+    mounted: function() {
+    },
+
     data: function() {
         return data;
     }
@@ -146,9 +149,6 @@ Vue.component("searchAction", {
                 return;
             }
 
-            $("#loadingModal").modal({backdrop: "static"});
-            $("#loadingModal").modal("show");
-
             $.ajax({
                 type: "GET",
                 url: url + picked + "/" + self.inputToSearch,
@@ -169,8 +169,9 @@ Vue.component("searchAction", {
                 complete: function() {
                     self.renderTable = true;
                     self.inputToSearch = null;
-                    $('#leTable').DataTable().destroy();
+
                     $(document).ready(function() {
+                        $('#leTable').DataTable().destroy();
                         $('#leTable').DataTable({
                             "language": {
                                 "url": "resources/data-table/pt-br.json"
