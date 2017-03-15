@@ -6,6 +6,7 @@
 
 /* global InterfaceStatistics, Equipamento */
 
+
 Vue.component("getInterfaceStatistics", {
     props: {
         eqpString: {
