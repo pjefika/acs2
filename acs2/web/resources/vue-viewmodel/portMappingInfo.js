@@ -15,3 +15,14 @@ var PortMapping = function(p) {
         this.remoteHost = p.remoteHost;
     }
 };
+
+
+PortMapping.prototype.equals = function(p) {
+    return (this.externalPort === p.externalPort &&
+            this.internalClient === p.internalClient &&
+            this.internalPort === p.internalPort &&
+            this.portMapName === p.portMapName &&
+            this.enable === p.enable &&
+            this.protocol === p.protocol &&
+            this.remoteHost === p.remoteHost);
+};
