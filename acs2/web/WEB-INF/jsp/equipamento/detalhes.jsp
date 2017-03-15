@@ -13,6 +13,7 @@
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWan.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/factoryReset.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getLanHosts.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/pPPoECredentials.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/portMapping.js"></script>
@@ -103,6 +104,7 @@
                                 <acs-button acao="Gerenciar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Reset de Fábrica" comp="reset-factory" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <button type="button" class="list-group-item">Alterar DNS</button>
                             </div>
                         </div>
