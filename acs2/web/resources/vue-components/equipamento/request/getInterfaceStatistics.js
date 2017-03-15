@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global InterfaceStatistics */
+/* global InterfaceStatistics, Equipamento */
 
 Vue.component("getInterfaceStatistics", {
     props:{
@@ -17,6 +17,9 @@ Vue.component("getInterfaceStatistics", {
             default: function() {
                 return new Equipamento(this.eqpString);
             }
+        },
+        infoList: {
+            type: Array
         },
         info: {
             type: InterfaceStatistics,
@@ -44,7 +47,8 @@ Vue.component("getInterfaceStatistics", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    self.info = new InterfaceStatistics(data.interfaceStatistics);
+//                    self.infoList = data;
+                       console.log(data);
                 },
                 error: function(e) {
                     console.log(e)
