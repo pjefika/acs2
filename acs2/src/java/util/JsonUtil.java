@@ -16,6 +16,7 @@ import java.util.List;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
+import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
 import model.device.ping.PingResponse;
@@ -312,6 +313,70 @@ public class JsonUtil {
         String password = jobject.get("Password").toString().replace("\"", "");
 
         return new PPPoECredentialsInfo(username, password);
+    }
+
+    public static List<InterfaceStatistics> getInterfaceStatistics(StringResponseDTO a) {
+
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonArray jarray = jelement.getAsJsonArray();
+
+        List<InterfaceStatistics> list = new ArrayList<>();
+        for (JsonElement jsonElement : jarray) {
+            JsonObject jobject = jsonElement.getAsJsonObject();
+
+            InterfaceStatistics i = new InterfaceStatistics();
+
+            String operStatus = jobject.get("operStatus") != null ? jobject.get("operStatus").toString().replace("\"", "") : "";
+            String ipAddress = jobject.get("ipAddress") != null ? jobject.get("ipAddress").toString().replace("\"", "") : "";
+            if (operStatus.contentEquals("Up") && !(ipAddress.isEmpty())) {
+                String ifType;
+                if (jobject.get("ifType") != null) {
+                    ifType = jobject.get("ifType").toString().replace("\"", "");
+                } else if (jobject.get("iftype") != null) {
+                    ifType = jobject.get("iftype").toString().replace("\"", "");
+                } else {
+                    ifType = "";
+                }
+                String adminStatus = jobject.get("adminStatus") != null ? jobject.get("adminStatus").toString().replace("\"", "") : "";
+                String ifName = jobject.get("ifName") != null ? jobject.get("ifName").toString().replace("\"", "") : "";
+                
+                String ipAddrType = jobject.get("ipAddrType") != null ? jobject.get("ipAddrType").toString().replace("\"", "") : "";
+                String macAddress = jobject.get("macAddress") != null ? jobject.get("macAddress").toString().replace("\"", "") : "";
+                String bytesSent = jobject.get("bytesSent") != null ? jobject.get("bytesSent").toString().replace("\"", "") : "";
+                String bytesRecv = jobject.get("bytesRecv") != null ? jobject.get("bytesRecv").toString().replace("\"", "") : "";
+                String errSent = jobject.get("errSent") != null ? jobject.get("errSent").toString().replace("\"", "") : "";
+                String errRecv = jobject.get("errRecv") != null ? jobject.get("errRecv").toString().replace("\"", "") : "";
+                String pctSent = jobject.get("pctSent") != null ? jobject.get("pctSent").toString().replace("\"", "") : "";
+                String pctRecv = jobject.get("pctRecv") != null ? jobject.get("pctRecv").toString().replace("\"", "") : "";
+                String mcSent = jobject.get("mcSent") != null ? jobject.get("mcSent").toString().replace("\"", "") : "";
+                String mcRecv = jobject.get("mcRecv") != null ? jobject.get("mcRecv").toString().replace("\"", "") : "";
+                String bcSent = jobject.get("bcSent") != null ? jobject.get("bcSent").toString().replace("\"", "") : "";
+                String bcRecv = jobject.get("bcRecv") != null ? jobject.get("bcRecv").toString().replace("\"", "") : "";
+
+                i.setAdminStatus(adminStatus);
+                i.setIpAddress(ipAddress);
+                i.setBcRecv(bcRecv);
+                i.setBcSent(bcSent);
+                i.setBytesRecv(bytesRecv);
+                i.setBytesSent(bytesSent);
+                i.setErrRecv(errRecv);
+                i.setErrSent(errSent);
+                i.setIfName(ifName);
+                i.setIfType(ifType);
+                i.setIpAddrType(ipAddrType);
+                i.setMacAddress(macAddress);
+                i.setMcRecv(mcRecv);
+                i.setMcSent(mcSent);
+                i.setOperStatus(operStatus);
+                i.setPctRecv(pctRecv);
+                i.setPctSent(pctSent);
+
+                list.add(i);
+            }
+
+        }
+
+        return list;
     }
 
 }
