@@ -1,23 +1,16 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-/* global Vue, portMapping */
-
+/* global Vue, PortMapping */
 var url = "/acs/equipamento/";
-
 Vue.component("portMapping", {
-    data: function () {
-        return {
-            mensagem: '',
-            erro: ''
-        };
+    mounted: function() {
+        this.getLanHosts();
     },
-    mounted: function () {
-        var self = this;
-        self.getPortMapping();
+    data: function() {
+        return {mensagem: '', erro: '', ports: []}
     },
     props: {
         eqpString: {
@@ -26,106 +19,88 @@ Vue.component("portMapping", {
         },
         equipamento: {
             type: Equipamento,
-            default: function () {
+            default: function() {
                 return new Equipamento(this.eqpString);
             }
         },
-        portingMappingE: {
-            type: portMapping,
-            default: function () {
-                return new portMapping();
-            }
-        },
         alertPanel: {
-            type:Object
+            type: Object
         }
     },
     methods: {
-        getPortMapping: function () {
+        getLanHosts: function() {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "getPortMapping/",
-                data: JSON.stringify(this.equipamento.flush()),
+                data: JSON.stringify(self.equipamento.flush()),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    self.$parent.loading = true;
+                    self.$parent.loading = true
                 },
-                success: function (data) {
-                    self.portingMappingE = new portMapping(data.portMappingInfo);   
+                success: function(data) {
+                    self.ports = data.list;
                 },
-                error: function (e) {
+                error: function(e) {
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
-                    //console.log(e);
                 },
-                complete: function () {
-                    self.$parent.loading = false;
+                complete: function() {
+                    self.$parent.loading = false
                 }
             });
-        },
-        setPortMapping: function () {
-            var self = this;
-            var _data = {};
-            _data.nbiDeviceData = self.equipamento;
-            _data.pMapping = self.portingMappingE;            
-            $.ajax({
-                type: "POST",
-                url: url + "setPortMapping/",
-                data: JSON.stringify(_data),
-                dataType: "json",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                },
-                success: function (data) {
-                    self.mensagem = 'Falha ao buscar informações';
-                    self.erro = 'true';
-                    console.log(data);
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            }); 
         }
-    },    
-    template: "\
-                <div>\n\
-                    <div class='form'>\n\
-                        <div class='modal-body'>\n\
-                            <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
-                            <div class='form-group'>\n\
-                                <label for='username'>enable</label>\n\
-                                <input class='form-control' v-model='portingMappingE.enable'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='password'>externalPort</label>\n\
-                                <input class='form-control' v-model='portingMappingE.externalPort'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='password'>internalClient</label>\n\
-                                <input class='form-control' v-model='portingMappingE.internalClient'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='password'>internalPort</label>\n\
-                                <input class='form-control' v-model='portingMappingE.internalPort'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='password'>portMapName</label>\n\
-                                <input class='form-control' v-model='portingMappingE.portMapName'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='password'>protocol</label>\n\
-                                <input class='form-control' v-model='portingMappingE.protocol'>\n\
-                            </div>\n\
-                            <div class='form-group'>\n\
-                                <label for='password'>remoteHost</label>\n\
-                                <input class='form-control' v-model='portingMappingE.remoteHost'>\n\
-                            </div>\n\
-                        </div>\n\
-                        <div class='modal-footer'>\n\
-                            <button type='button' class='btn btn-warning' @click='setPortMapping()'>Modificar</button>\n\
-                        </div>\n\
+    },
+    template: "<div>\n\
+                <div class='modal-body'>\n\
+                    <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
+                    <div class='form-group'>\n\
+                        <port-table :ports='ports'></lan-table>\n\
                     </div>\n\
-               </div>"
+                </div>\n\
+                <div class='modal-footer'>\n\
+                    <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
+                </div>\n\
+            </div>"
+});
+Vue.component("PortTable", {
+    props: {
+        ports: {
+            type: Array,
+            required: true
+        }
+    },
+    template: "\
+            <div>\n\
+                <table class='table table-bordered small'>\n\
+                    <thead>\n\
+                        <tr>\n\
+                            <th>Porta Externa</th>\n\
+                            <th>Porta Interna</th>\n\
+                            <th>IP Interno</th>\n\
+                            <th>Protocolo</th>\n\
+                            <th>Estado</th>\n\
+                        </tr>\n\
+                    </thead>\n\
+                    <tbody>\n\
+                        <tr is='port-row' v-for='port in ports' :port='port'></tr>\n\
+                    </tbody>\n\
+                </table>\n\
+            </div>"
+});
+Vue.component("PortRow", {
+    props: ['port'],
+    template: "<tr>\n\
+                    <td>{{port.externalPort}}</td>\n\
+                    <td>{{port.internalPort}}</td>\n\
+                    <td>{{port.internalClient}}</td>\n\
+                    <td>{{port.protocol}}</td>\n\
+                    <td>\n\
+                        <div>\n\
+                            <div v-if='port.enable'>Ativo</div>\n\
+                            <div v-else>Inativo</div>\n\
+                        </div>\n\
+                    </td>\n\
+                </tr>"
 });

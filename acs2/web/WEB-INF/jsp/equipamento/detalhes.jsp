@@ -8,16 +8,17 @@
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfoFull.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wanInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/interfaceStatistics.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/portMappingInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/pingInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/pPPoECredentialsInfo.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getInterfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWan.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getLanHosts.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pPPoECredentialsInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/pPPoECredentials.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/portMappingInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/portMapping.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/pingInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getPing.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/acsButton.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/detalhe.js"></script>

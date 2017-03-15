@@ -16,8 +16,8 @@ var data = {
 
 Vue.component("searchTable", {
     props: ['inputToSearch', 'listaEqp', 'picked', 'renderTable'],
-    template: "<div v-if='this.renderTable'>\n\
-                    <table v-if='this.listaEqp' id='leTable' class='table table-bordered small' >\n\
+    template: "<div v-show='this.renderTable'>\n\
+                    <table v-show='this.listaEqp' id='leTable' cellspacing='0' class='table table-striped table-bordered small' >\n\
                         <thead>\n\
                             <tr>\n\
                                 <th>Subscriber</th>\n\
@@ -45,7 +45,10 @@ Vue.component("searchTable", {
                 ",
     methods: {
     },
-    data: function () {
+    mounted: function() {
+    },
+
+    data: function() {
         return data;
     }
 });
@@ -121,7 +124,7 @@ Vue.component("searchAction", {
         }
     },
     computed: {
-        lecrazy: function () {
+        lecrazy: function() {
             if (this.subscriber.length > this.serial.length && this.subscriber.length > this.mac.length) {
                 this.leOpt = "subscriber";
                 return this.subscriber;
@@ -137,7 +140,7 @@ Vue.component("searchAction", {
         }
     },
     methods: {
-        busca: function () {
+        busca: function() {
             var self = this;
             self.inputToSearch = this.lecrazy;
             var picked = this.leOpt;
@@ -146,31 +149,29 @@ Vue.component("searchAction", {
                 return;
             }
 
-            $("#loadingModal").modal({backdrop: "static"});
-            $("#loadingModal").modal("show");
-
             $.ajax({
                 type: "GET",
                 url: url + picked + "/" + self.inputToSearch,
-                beforeSend: function () {
+                beforeSend: function() {
                     self.$root.currentView = "loading";
                 },
-                success: function (data) {
+                success: function(data) {
                     self.$root.currentView = "searchAction";
-                    Vue.nextTick(function () {
+                    Vue.nextTick(function() {
                         self.listaEqp = data.list;
                     });
                 },
-                error: function (e) {
+                error: function(e) {
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                     console.log(e);
                 },
-                complete: function () {
+                complete: function() {
                     self.renderTable = true;
                     self.inputToSearch = null;
-                    $('#leTable').DataTable().destroy();
-                    $(document).ready(function () {
+
+                    $(document).ready(function() {
+                        $('#leTable').DataTable().destroy();
                         $('#leTable').DataTable({
                             "language": {
                                 "url": "resources/data-table/pt-br.json"
@@ -196,10 +197,10 @@ Vue.component("searchAction", {
 //                })
 //            });
         }
-    }, created: function () {
+    }, created: function() {
 
     },
-    data: function () {
+    data: function() {
         return data;
     }
 });
