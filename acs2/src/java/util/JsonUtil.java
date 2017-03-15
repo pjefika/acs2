@@ -58,8 +58,7 @@ public class JsonUtil {
         List<PortMappingInfo> lst = new ArrayList<>();
         JsonArray j = new JsonParser().parse(a.getValue()).getAsJsonArray();
 
-        System.out.println("Array: " + j.toString());
-
+//        System.out.println("Array: " + j.toString());
         for (int k = 0; k < j.size(); k++) {
             PortMappingInfo i = new PortMappingInfo();
 
