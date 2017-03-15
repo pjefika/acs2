@@ -56,7 +56,7 @@ public class GetPortMappingJUnitTest {
     }
 
     @Test
-    public void getDeviceInfo() {
+    public void getPortMapping() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 

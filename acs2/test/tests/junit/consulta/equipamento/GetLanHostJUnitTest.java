@@ -46,7 +46,7 @@ public class GetLanHostJUnitTest {
     }
 
     @Test
-    public void getDeviceInfo() {
+    public void getLanHosts() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 

@@ -21,9 +21,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetWifiInfoFullJUnitTest1 {
+public class GetWifiInfoFullJUnitTest {
 
-    public GetWifiInfoFullJUnitTest1() {
+    public GetWifiInfoFullJUnitTest() {
     }
 
     @BeforeClass
@@ -43,7 +43,7 @@ public class GetWifiInfoFullJUnitTest1 {
     }
 
     @Test
-    public void getDeviceInfo() {
+    public void getWifiInfoFull() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 

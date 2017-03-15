@@ -43,7 +43,7 @@ public class GetWifiInfoJUnitTest {
     }
 
     @Test
-    public void getDeviceInfo() {
+    public void getWifiInfo() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
