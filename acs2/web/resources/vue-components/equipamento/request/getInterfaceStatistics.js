@@ -7,55 +7,57 @@
 /* global InterfaceStatistics, Equipamento */
 
 Vue.component("getInterfaceStatistics", {
-    props:{
+    props: {
         eqpString: {
             type: String,
             required: true
         },
         equipamento: {
             type: Equipamento,
-            default: function() {
+            default: function () {
                 return new Equipamento(this.eqpString);
             }
         },
         infoList: {
-            type: Array
+            type: Object,
+            default: {
+                list: []
+            }
         },
         info: {
             type: InterfaceStatistics,
-            default: function(){
-                    return new InterfaceStatistics();
+            default: function () {
+                return new InterfaceStatistics();
             }
         }
     },
-    data: function(){
-      return {mensagem: '', erro: ''}  
+    data: function () {
+        return {mensagem: '', erro: ''}
     },
-    mounted: function(){
+    mounted: function () {
         this.getInterfaceStatistics();
     },
     methods: {
-        getInterfaceStatistics: function() {
+        getInterfaceStatistics: function () {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "getInterfaceStatistics/",
                 data: JSON.stringify(self.equipamento.flush()),
                 dataType: "json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true
                 },
-                success: function(data) {
-//                    self.infoList = data;
-                       console.log(data);
+                success: function (data) {
+                    self.infoList = data;
                 },
-                error: function(e) {
+                error: function (e) {
                     console.log(e)
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                 },
-                complete: function() {
+                complete: function () {
                     self.$parent.loading = false
                 }
             });
@@ -65,12 +67,26 @@ Vue.component("getInterfaceStatistics", {
             <div>\n\
                 <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                 <div class='modal-body'>\n\
+                    <div v-for='info in infoList.list'>\n\
+                        <infoStatistics :info='info'></infoStatistics>\n\
+                    </div>\n\
+                </div>\n\
+                <div class='modal-footer'>\n\
+                    <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
+                    <button type='button' class='btn btn-primary' @click='getInterfaceStatistics()'>Consultar</button>\n\
+                </div>\n\
+            </div>"
+})
+
+Vue.component("infoStatistics", {
+    props: ["info"],
+    template: "\
+                <div>\n\
                     <div class='form-inline row'>\n\
                         <div class='form-group col-md-6'>\n\
                             <label for='ifType'>ifType</label>\n\
                             {{info.ifType}}\n\
                         </div>\n\
-                    <div class='form-inline row'>\n\
                         <div class='form-group col-md-6'>\n\
                             <label for='ifName'>ifName</label>\n\
                             {{info.ifName}}\n\
@@ -132,10 +148,5 @@ Vue.component("getInterfaceStatistics", {
                             </tr>\n\
                         </tbody>\n\
                     </table>\n\
-                </div>\n\
-                <div class='modal-footer'>\n\
-                    <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
-                    <button type='button' class='btn btn-primary' @click='getWan()'>Consultar</button>\n\
-                </div>\n\
-            </div>"
+                </div>"
 })

@@ -112,7 +112,7 @@ public class JsonUtil {
 
         return i;
     }
-    
+
     public static WifiInfoFull getWifiInfoFull(StringResponseDTO a) {
 
         WifiInfoFull i = new WifiInfoFull();
@@ -170,21 +170,17 @@ public class JsonUtil {
         i.setWpsDeviceName(wpsDeviceName);
         i.setWpsDevicePassword(wpsDevicePassword);
         i.setWpsEnabled(wpsEnabled);
-        
-        
-
 
         return i;
     }
-    
-    
-     public static WanInfo getWanInfo(StringResponseDTO a) {
+
+    public static WanInfo getWanInfo(StringResponseDTO a) {
 
         WanInfo i = new WanInfo();
 
         JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
-        
+
         String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
         String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
         String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
@@ -193,7 +189,7 @@ public class JsonUtil {
         String EthernetErrorsReceived = jobject.get("EthernetErrorsReceived").toString().replace("\"", "");
         String EthernetDiscardPacketsSent = jobject.get("EthernetDiscardPacketsSent").toString().replace("\"", "");
         String EthernetDiscardPacketsReceived = jobject.get("EthernetDiscardPacketsReceived").toString().replace("\"", "");
-        
+
         i.setEthernetBytesReceived(EthernetBytesReceived);
         i.setEthernetBytesSent(EthernetBytesSent);
         i.setEthernetDiscardPacketsReceived(EthernetDiscardPacketsReceived);
@@ -202,9 +198,9 @@ public class JsonUtil {
         i.setEthernetErrorsSent(EthernetErrorsSent);
         i.setEthernetPacketsReceived(EthernetPacketsReceived);
         i.setEthernetPacketsSent(EthernetPacketsSent);
-        
+
         return i;
-     }
+    }
 
     public static DdnsInfo ddnsInfo(StringResponseDTO a) {
 
@@ -306,63 +302,66 @@ public class JsonUtil {
 
         return new PPPoECredentialsInfo(username, password);
     }
-    
-    public static List<InterfaceStatistics> getInterfaceStatistics(StringResponseDTO a){
-        
+
+    public static List<InterfaceStatistics> getInterfaceStatistics(StringResponseDTO a) {
+
         JsonElement jelement = new JsonParser().parse(a.getValue());
         JsonArray jarray = jelement.getAsJsonArray();
-        
+
         List<InterfaceStatistics> list = new ArrayList<>();
         for (JsonElement jsonElement : jarray) {
             JsonObject jobject = jsonElement.getAsJsonObject();
-            System.out.println(jobject.toString());
-                   
+
             InterfaceStatistics i = new InterfaceStatistics();
 
-            String ifType;
-            if(jobject.get("ifType") != null){
-                ifType = jobject.get("ifType").toString().replace("\"", "");
-            }else if(jobject.get("iftype") != null){
-                ifType = jobject.get("iftype").toString().replace("\"", "");
-            }else{
-                ifType = "";
-            }
-            String adminStatus = jobject.get("adminStatus") != null ? jobject.get("adminStatus").toString().replace("\"", "") : "";
             String operStatus = jobject.get("operStatus") != null ? jobject.get("operStatus").toString().replace("\"", "") : "";
-            String ifName = jobject.get("ifName") != null ? jobject.get("ifName").toString().replace("\"", "") : "";
             String ipAddress = jobject.get("ipAddress") != null ? jobject.get("ipAddress").toString().replace("\"", "") : "";
-            String ipAddrType = jobject.get("ipAddrType") != null ? jobject.get("ipAddrType").toString().replace("\"", "") : "";
-            String macAddress = jobject.get("macAddress") != null ? jobject.get("macAddress").toString().replace("\"", "") : "";
-            String bytesSent = jobject.get("bytesSent") != null ? jobject.get("bytesSent").toString().replace("\"", "") : "";
-            String bytesRecv = jobject.get("bytesRecv") != null ? jobject.get("bytesRecv").toString().replace("\"", "") : "";
-            String errSent = jobject.get("errSent") != null ? jobject.get("errSent").toString().replace("\"", "") : "";
-            String errRecv = jobject.get("errRecv") != null ? jobject.get("errRecv").toString().replace("\"", "") : "";
-            String pctSent = jobject.get("pctSent") != null ? jobject.get("pctSent").toString().replace("\"", "") : "";
-            String pctRecv = jobject.get("pctRecv") != null ? jobject.get("pctRecv").toString().replace("\"", "") : "";
-            String mcSent = jobject.get("mcSent") != null ? jobject.get("mcSent").toString().replace("\"", "") : "";
-            String mcRecv = jobject.get("mcRecv") != null ? jobject.get("mcRecv").toString().replace("\"", "") : "";
-            String bcSent = jobject.get("bcSent") != null ? jobject.get("bcSent").toString().replace("\"", "") : "";
-            String bcRecv = jobject.get("bcRecv") != null ? jobject.get("bcRecv").toString().replace("\"", "") : "";
-            
-            i.setAdminStatus(adminStatus);
-            i.setIpAddress(ipAddress);
-            i.setBcRecv(bcRecv);
-            i.setBcSent(bcSent);
-            i.setBytesRecv(bytesRecv);
-            i.setBytesSent(bytesSent);
-            i.setErrRecv(errRecv);
-            i.setErrSent(errSent);
-            i.setIfName(ifName);
-            i.setIfType(ifType);
-            i.setIpAddrType(ipAddrType);
-            i.setMacAddress(macAddress);
-            i.setMcRecv(mcRecv);
-            i.setMcSent(mcSent);
-            i.setOperStatus(operStatus);
-            i.setPctRecv(pctRecv);
-            i.setPctSent(pctSent);
-            
-            list.add(i);
+            if (operStatus.contentEquals("Up") && !(ipAddress.isEmpty())) {
+                String ifType;
+                if (jobject.get("ifType") != null) {
+                    ifType = jobject.get("ifType").toString().replace("\"", "");
+                } else if (jobject.get("iftype") != null) {
+                    ifType = jobject.get("iftype").toString().replace("\"", "");
+                } else {
+                    ifType = "";
+                }
+                String adminStatus = jobject.get("adminStatus") != null ? jobject.get("adminStatus").toString().replace("\"", "") : "";
+                String ifName = jobject.get("ifName") != null ? jobject.get("ifName").toString().replace("\"", "") : "";
+                
+                String ipAddrType = jobject.get("ipAddrType") != null ? jobject.get("ipAddrType").toString().replace("\"", "") : "";
+                String macAddress = jobject.get("macAddress") != null ? jobject.get("macAddress").toString().replace("\"", "") : "";
+                String bytesSent = jobject.get("bytesSent") != null ? jobject.get("bytesSent").toString().replace("\"", "") : "";
+                String bytesRecv = jobject.get("bytesRecv") != null ? jobject.get("bytesRecv").toString().replace("\"", "") : "";
+                String errSent = jobject.get("errSent") != null ? jobject.get("errSent").toString().replace("\"", "") : "";
+                String errRecv = jobject.get("errRecv") != null ? jobject.get("errRecv").toString().replace("\"", "") : "";
+                String pctSent = jobject.get("pctSent") != null ? jobject.get("pctSent").toString().replace("\"", "") : "";
+                String pctRecv = jobject.get("pctRecv") != null ? jobject.get("pctRecv").toString().replace("\"", "") : "";
+                String mcSent = jobject.get("mcSent") != null ? jobject.get("mcSent").toString().replace("\"", "") : "";
+                String mcRecv = jobject.get("mcRecv") != null ? jobject.get("mcRecv").toString().replace("\"", "") : "";
+                String bcSent = jobject.get("bcSent") != null ? jobject.get("bcSent").toString().replace("\"", "") : "";
+                String bcRecv = jobject.get("bcRecv") != null ? jobject.get("bcRecv").toString().replace("\"", "") : "";
+
+                i.setAdminStatus(adminStatus);
+                i.setIpAddress(ipAddress);
+                i.setBcRecv(bcRecv);
+                i.setBcSent(bcSent);
+                i.setBytesRecv(bytesRecv);
+                i.setBytesSent(bytesSent);
+                i.setErrRecv(errRecv);
+                i.setErrSent(errSent);
+                i.setIfName(ifName);
+                i.setIfType(ifType);
+                i.setIpAddrType(ipAddrType);
+                i.setMacAddress(macAddress);
+                i.setMcRecv(mcRecv);
+                i.setMcSent(mcSent);
+                i.setOperStatus(operStatus);
+                i.setPctRecv(pctRecv);
+                i.setPctSent(pctSent);
+
+                list.add(i);
+            }
+
         }
 
         return list;
