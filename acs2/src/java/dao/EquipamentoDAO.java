@@ -223,12 +223,9 @@ public class EquipamentoDAO {
     }
 
     public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception {
-
-        List<LanDevice> lst = new ArrayList<>();
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 10000, "");
-
         return JsonUtil.getLanHosts(a);
     }
 

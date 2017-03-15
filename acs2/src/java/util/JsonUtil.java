@@ -54,8 +54,11 @@ public class JsonUtil {
 
     public static List<PortMappingInfo> getPortMappingInfo(StringResponseDTO a) {
 
+        //System.out.println(a.getValue());
         List<PortMappingInfo> lst = new ArrayList<>();
         JsonArray j = new JsonParser().parse(a.getValue()).getAsJsonArray();
+
+        System.out.println("Array: " + j.toString());
 
         for (int k = 0; k < j.size(); k++) {
             PortMappingInfo i = new PortMappingInfo();
@@ -255,25 +258,29 @@ public class JsonUtil {
 
         List<LanDevice> lst = new ArrayList<>();
 
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
+        String tratativa = a.getValue().replace("{", "[{").replace("}", "}]").replaceAll("\"HostNumberOfEntries\":\"[0-9]{1,10}\",", "").replaceAll("Host.[0-9]{1,10}.", "").replace("\",\"IPAddress\"", "\"},{\"IPAddress\"");
 
-        Integer qtn = new Integer(jobject.get("HostNumberOfEntries").toString().replace("\"", ""));
+//        System.out.println(tratativa);
+        JsonElement jelement = new JsonParser().parse(tratativa);
 
-        for (int i = 1; i < qtn; i++) {
+//        System.out.println("Element: " + jelement.toString());
+        JsonArray j = jelement.getAsJsonArray();
 
+//        System.out.println("JsonArray: " + j.toString());
+        for (int k = 0; k < j.size(); k++) {
             LanDevice l = new LanDevice();
 
-            l.setIpAddress(jobject.get("Host." + i + ".IPAddress").toString().replace("\"", ""));
-            l.setAddressSource(jobject.get("Host." + i + ".AddressSource").toString().replace("\"", ""));
-            l.setLeaseTimeRemaining(jobject.get("Host." + i + ".LeaseTimeRemaining").toString().replace("\"", ""));
-            l.setMacAddress(jobject.get("Host." + i + ".MACAddress").toString().replace("\"", ""));
-            l.setHostName(jobject.get("Host." + i + ".HostName").toString().replace("\"", ""));
-            l.setInterfaceType(jobject.get("Host." + i + ".InterfaceType").toString().replace("\"", ""));
-            l.setAtivo(Boolean.valueOf(jobject.get("Host." + i + ".Active").toString().replace("\"", "")));
-
+            JsonObject jobject = j.get(k).getAsJsonObject();
+            l.setIpAddress(jobject.get("IPAddress").toString().replace("\"", ""));
+            l.setAddressSource(jobject.get("AddressSource").toString().replace("\"", ""));
+            l.setLeaseTimeRemaining(jobject.get("LeaseTimeRemaining").toString().replace("\"", ""));
+            l.setMacAddress(jobject.get("MACAddress").toString().replace("\"", ""));
+            l.setHostName(jobject.get("HostName").toString().replace("\"", ""));
+            l.setInterfaceType(jobject.get("InterfaceType").toString().replace("\"", ""));
+            l.setAtivo(Boolean.valueOf(jobject.get("Active").toString().replace("\"", "")));
             lst.add(l);
         }
+
         return lst;
     }
 
