@@ -13,6 +13,14 @@ var PortMapping = function(p) {
         this.enable = p.enable;
         this.protocol = p.protocol;
         this.remoteHost = p.remoteHost;
+    } else {
+        this.externalPort = "";
+        this.internalClient = "";
+        this.internalPort = "";
+        this.portMapName = "";
+        this.enable = "";
+        this.protocol = "";
+        this.remoteHost = "";
     }
 };
 

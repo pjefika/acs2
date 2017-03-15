@@ -75,7 +75,7 @@ public class JsonUtil {
             String internalClient = jobject.get("internalClient").toString().replace("\"", "");
             String internalPort = jobject.get("internalPort").toString().replace("\"", "");
             String portMapName = jobject.get("portMapName").toString().replace("\"", "");
-            String enable = jobject.get("enable").toString().replace("\"", "");
+            Boolean enable = jobject.get("enable").getAsBoolean();
             String protocol = jobject.get("protocol").toString().replace("\"", "");
             String remoteHost = jobject.get("remoteHost").toString().replace("\"", "");
 

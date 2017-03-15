@@ -62,6 +62,7 @@ Vue.component("portMapping", {
                 <div class='modal-footer'>\n\
                     <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
                 </div>\n\
+                <span v-text='ports'></span>\n\
             </div>"
 });
 Vue.component("PortTable", {
@@ -85,7 +86,7 @@ Vue.component("PortTable", {
                             <th>IP Interno</th>\n\
                             <th>Protocolo</th>\n\
                             <th>Ativo</th>\n\
-                            <th>Remover</th>\n\
+                            <th>Ações</th>\n\
                         </tr>\n\
                     </thead>\n\
                     <tbody>\n\
@@ -95,27 +96,59 @@ Vue.component("PortTable", {
             </div>"
 });
 Vue.component("PortRow", {
-    props: ['port'],
+    props: ['port', 'edit'],
     methods: {
         remPortMapping: function(h) {
             var self = this;
             var ports = self.$parent.$parent.ports;
             ports.splice(ports.indexOf(h), 1);
+        },
+        editPort: function() {
+            var self = this;
+            self.edit = !self.edit;
         }
     },
     template: "<tr>\n\
-                    <td>{{port.externalPort}}</td>\n\
-                    <td>{{port.internalPort}}</td>\n\
-                    <td>{{port.internalClient}}</td>\n\
+                    <td>\n\
+                        <div v-if='edit'>\n\
+                            <input v-model='port.externalPort' class='form-control input-sm' type='text' placeholder='Porta Externa'>\n\
+                        </div>\n\
+                        <div v-else>\n\
+                            {{port.externalPort}}\n\
+                        </div>\n\
+                    </td>\n\
+                    <td>\n\
+                        <div v-if='edit'>\n\
+                            <input v-model='port.internalPort' class='form-control input-sm' type='text' placeholder='Porta Interna'>\n\
+                        </div>\n\
+                        <div v-else>\n\
+                            {{port.internalPort}}\n\
+                        </div>\n\
+                    </td>\n\
+                    <td>\n\
+                        <div v-if='edit'>\n\
+                            <input v-model='port.internalClient' class='form-control input-sm' type='text' placeholder='IP Interno'>\n\
+                        </div>\n\
+                        <div v-else>\n\
+                            {{port.internalClient}}\n\
+                        </div>\n\
+                    </td>\n\
                     <td>{{port.protocol}}</td>\n\
                     <td>\n\
                         <div v-if='port.enable == 1'>\n\
-                            <input type='checkbox' checked>\n\
+                            <input v-model='port.enable' type='checkbox' checked>\n\
                         </div>\n\
                         <div v-else>\n\
-                            <input type='checkbox'>\n\
+                            <input v-model='port.enable' type='checkbox'>\n\
                         </div>\n\
                     </td>\n\
-                    <td><button type='button' @click='remPortMapping(port)' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\n\
+                    <td class='text-center'>\n\
+                        <button type='button' @click='remPortMapping(port)' class='btn btn-danger btn-sm'>\n\
+                            <span class='glyphicon glyphicon-trash' aria-hidden='true'></span>\n\
+                        </button>\n\
+                        <button type='button' @click='editPort()' class='btn btn-warning btn-sm'>\n\
+                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>\n\
+                        </button>\n\
+                    </td>\n\
                 </tr>"
 });
