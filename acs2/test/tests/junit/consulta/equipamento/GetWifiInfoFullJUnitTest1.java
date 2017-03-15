@@ -3,24 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import model.device.wifi.WifiInfoFull;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class CheckOnlineJUnitTestDev {
+public class GetWifiInfoFullJUnitTest1 {
 
-    public CheckOnlineJUnitTestDev() {
+    public GetWifiInfoFullJUnitTest1() {
     }
 
     @BeforeClass
@@ -39,30 +41,24 @@ public class CheckOnlineJUnitTestDev {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
-    public void checkOnline() {
-
+    public void getDeviceInfo() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-//            eqp = d.findDeviceByGUID(new Long(142012));
-//            eqp = d.findDeviceByGUID(new Long(23006));
-            eqp = d.findDeviceByGUID(new Long(89013));
-//            eqp = d.findDeviceByGUID(new Long(23006));
-//            eqp = d.findDeviceByGUID(new Long(23006));
 
-          Boolean r = d.checkOnline(eqp);
+            eqp = d.findDeviceByGUID(new Long(102015));
 
-            assertTrue(r);
+            WifiInfoFull info = d.getWifiInfoFull(eqp);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            SoutUtil.print(info);
+
+            assertTrue(true);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
             assertTrue(false);
         }
-
     }
 }

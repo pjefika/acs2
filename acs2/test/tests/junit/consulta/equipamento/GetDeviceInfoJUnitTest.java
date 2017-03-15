@@ -3,26 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import model.device.wifi.WifiInfoFull;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class SetWifiInfoFullJUnitTest {
+public class GetDeviceInfoJUnitTest {
 
-    public SetWifiInfoFullJUnitTest() {
+    public GetDeviceInfoJUnitTest() {
     }
 
     @BeforeClass
@@ -42,28 +41,18 @@ public class SetWifiInfoFullJUnitTest {
     }
 
     @Test
-    public void setDeviceInfo() {
+    public void getDeviceInfo() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(104016));
+            eqp = d.findDeviceByGUID(new Long(142014));
 
-            WifiInfoFull info = d.getWifiInfoFull(eqp);
+            SoutUtil.print(eqp);
+            // SoutUtil.print(d.getDeviceInfo(eqp));
+            assertTrue(true);
 
-            info.setSsid("GVT-68D1");
-            info.setAuthMode("None");
-            info.setEncType("None");
-            info.setBcEnabled(Boolean.FALSE);
-            info.setChannel("1");
-            info.setStandard("b");
-            
-            info.setKey("1303000712");
-            assertTrue(d.setWifiInfoFull(eqp, info));
-
-            SoutUtil.print(d.getWifiInfoFull(eqp));
-            
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

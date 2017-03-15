@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.device.log.DeviceLog;
+import model.device.ddns.DdnsInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,9 +22,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetDeviceLogJUnitTest {
+public class XdslDiagnosticJUnitTest {
 
-    public GetDeviceLogJUnitTest() {
+    public XdslDiagnosticJUnitTest() {
     }
 
     @BeforeClass
@@ -48,27 +47,20 @@ public class GetDeviceLogJUnitTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void getDeviceLog() {
+    public void xDSLDiagnostic() {
 
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(139020);
+            Long l = new Long(142014);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
 
-            //d.capture(l);
-            // d.release(l);
-            List<DeviceLog> log = d.getDeviceLog(eqp);
-
-            SoutUtil.printl(log);
-
-            assertTrue(log.size() > 1);
+            d.xDSLDiagnostic(eqp);
 
         } catch (Exception ex) {
-            Logger.getLogger(GetDeviceLogJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(XdslDiagnosticJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
             assertTrue(false);
-
         }
 
     }

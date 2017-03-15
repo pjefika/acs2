@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.device.ddns.DdnsInfo;
 import model.device.log.DeviceLog;
-import model.device.pppoe.PPPoECredentialsInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -26,9 +23,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetPPPoECredentialsJUnitTest {
+public class GetDeviceLogJUnitTest {
 
-    public GetPPPoECredentialsJUnitTest() {
+    public GetDeviceLogJUnitTest() {
     }
 
     @BeforeClass
@@ -51,21 +48,28 @@ public class GetPPPoECredentialsJUnitTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void getPPPoECredentials() throws NBIException_Exception {
+    public void getDeviceLog() {
 
-        EquipamentoDAO d = new EquipamentoDAO();
+        try {
+            EquipamentoDAO d = new EquipamentoDAO();
 
-        Long l = new Long(102015);
-        NbiDeviceData eqp;
-        eqp = d.findDeviceByGUID(l);
+            Long l = new Long(139020);
+            NbiDeviceData eqp;
+            eqp = d.findDeviceByGUID(l);
 
-        //d.capture(l);
-        // d.release(l);
-        PPPoECredentialsInfo info = d.getPPPoECredentials(eqp);
+            //d.capture(l);
+            // d.release(l);
+            List<DeviceLog> log = d.getDeviceLog(eqp);
 
-        SoutUtil.print(info);
+            SoutUtil.printl(log);
 
-        assertTrue(true);
+            assertTrue(log.size() > 1);
+
+        } catch (Exception ex) {
+            Logger.getLogger(GetDeviceLogJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            assertTrue(false);
+
+        }
 
     }
 }

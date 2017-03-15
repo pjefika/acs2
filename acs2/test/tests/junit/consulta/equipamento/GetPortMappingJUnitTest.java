@@ -3,25 +3,39 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+
+import model.device.portmapping.PortMappingInfo;
+import org.junit.After;
+import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.util.List;
+import model.device.log.DeviceLog;
+import model.device.portmapping.PortMappingInfo;
+import model.device.wifi.WifiInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 import util.SoutUtil;
 
 /**
  *
- * @author G0042204
+ * @author G0034481
  */
-public class GetDeviceInfoJUnitTest {
+public class GetPortMappingJUnitTest {
 
-    public GetDeviceInfoJUnitTest() {
+    public GetPortMappingJUnitTest() {
     }
 
     @BeforeClass
@@ -47,10 +61,13 @@ public class GetDeviceInfoJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(142014));
+            eqp = d.findDeviceByGUID(new Long(104016));
 
-            SoutUtil.print(eqp);
-            // SoutUtil.print(d.getDeviceInfo(eqp));
+
+            PortMappingInfo info = d.getPortMapping(eqp);
+
+            SoutUtil.print(info);
+
             assertTrue(true);
 
         } catch (Exception ex) {

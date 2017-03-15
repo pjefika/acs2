@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import model.device.DmzInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,9 +20,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetFirmwareVersionJUnitTestDev {
+public class GetDmzInfoJUnitTest {
 
-    public GetFirmwareVersionJUnitTestDev() {
+    public GetDmzInfoJUnitTest() {
     }
 
     @BeforeClass
@@ -41,25 +42,23 @@ public class GetFirmwareVersionJUnitTestDev {
     }
 
     @Test
-    public void getFirmwareVersion() {
-
+    public void getDmzInfo() {
         try {
-
-            Long guid = new Long(142014);
             EquipamentoDAO d = new EquipamentoDAO();
 
-            //d.capture(guid);
-            //d.release(guid);
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(guid);
-            SoutUtil.print(eqp);
 
-            SoutUtil.print(d.getFirmwareVersion(eqp));
+            eqp = d.findDeviceByGUID(new Long(142014));
+
+            DmzInfo info = d.getDmzInfo(eqp);
+
+            SoutUtil.print(info);
+
+            assertTrue(true);
 
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
         }
-
     }
 }

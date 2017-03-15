@@ -3,26 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import java.util.List;
+import model.device.log.DeviceLog;
 import model.device.wifi.WifiInfo;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class GetWifiInfoJUnitTest {
+public class GetInterfaceStatisticsJUnitTest {
 
-    public GetWifiInfoJUnitTest() {
+    public GetInterfaceStatisticsJUnitTest() {
     }
 
     @BeforeClass
@@ -42,17 +44,15 @@ public class GetWifiInfoJUnitTest {
     }
 
     @Test
-    public void getDeviceInfo() {
+    public void getInterfaceStatistics() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(89013));
+            eqp = d.findDeviceByGUID(new Long(142014));
 
-            WifiInfo info = d.getWifiInfo(eqp);
-
-            SoutUtil.print(info);
+            d.getInterfaceStatistics(eqp);
 
             assertTrue(true);
 

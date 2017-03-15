@@ -3,29 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
-import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.List;
-import model.device.lanhost.LanDevice;
-import model.device.log.DeviceLog;
-import model.device.wifi.WifiInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class GetLanHostJUnitTest {
+public class GetAvailableFirmwareImagesJUnitTest {
 
-    public GetLanHostJUnitTest() {
+    public GetAvailableFirmwareImagesJUnitTest() {
     }
 
     @BeforeClass
@@ -45,21 +39,13 @@ public class GetLanHostJUnitTest {
     }
 
     @Test
-    public void getDeviceInfo() {
+    public void getAvailableFirmwareImages() {
         try {
+
+            Long guid = new Long(142014);
             EquipamentoDAO d = new EquipamentoDAO();
 
-            NbiDeviceData eqp;
-
-            eqp = d.findDeviceByGUID(new Long(142014));
-
-            List<LanDevice> oi = d.getLanHosts(eqp);
-
-            for (LanDevice lanDevice : oi) {
-                lanDevice.sout();
-            }
-
-            assertTrue(true);
+            d.getAvailableFirmwareImages(d.findDeviceByGUID(guid));
 
         } catch (Exception ex) {
             ex.printStackTrace();

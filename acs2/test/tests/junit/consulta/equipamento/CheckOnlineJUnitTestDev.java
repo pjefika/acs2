@@ -3,26 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import model.device.DmzInfo;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class GetDmzInfoJUnitTest {
+public class CheckOnlineJUnitTestDev {
 
-    public GetDmzInfoJUnitTest() {
+    public CheckOnlineJUnitTestDev() {
     }
 
     @BeforeClass
@@ -41,24 +39,30 @@ public class GetDmzInfoJUnitTest {
     public void tearDown() {
     }
 
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
     @Test
-    public void getDmzInfo() {
+    public void checkOnline() {
+
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
+//            eqp = d.findDeviceByGUID(new Long(142012));
+//            eqp = d.findDeviceByGUID(new Long(23006));
+            eqp = d.findDeviceByGUID(new Long(89013));
+//            eqp = d.findDeviceByGUID(new Long(23006));
+//            eqp = d.findDeviceByGUID(new Long(23006));
 
-            eqp = d.findDeviceByGUID(new Long(142014));
+          Boolean r = d.checkOnline(eqp);
 
-            DmzInfo info = d.getDmzInfo(eqp);
+            assertTrue(r);
 
-            SoutUtil.print(info);
-
-            assertTrue(true);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             assertTrue(false);
         }
+
     }
 }

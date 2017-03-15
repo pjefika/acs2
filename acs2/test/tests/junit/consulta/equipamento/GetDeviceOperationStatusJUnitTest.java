@@ -3,26 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
-import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import dao.EquipamentoDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
+import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class WanDiagnosticJUnitTest {
+public class GetDeviceOperationStatusJUnitTest {
 
-    public WanDiagnosticJUnitTest() {
+    public GetDeviceOperationStatusJUnitTest() {
     }
 
     @BeforeClass
@@ -41,24 +40,20 @@ public class WanDiagnosticJUnitTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
-    public void wanDiagnostic() {
-
+    public void getDeviceOperationStatus() {
         try {
+
+            Long guid = new Long(94015);
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(142014);
-            NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(l);
+            NbiDeviceActionResult t = d.getDeviceOperationStatus(d.findDeviceByGUID(guid), new Long(158355));
+            SoutUtil.print(t);
 
-            d.getWanInfo(eqp);
             assertTrue(true);
 
         } catch (Exception ex) {
-            Logger.getLogger(WanDiagnosticJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
             assertTrue(false);
         }
 

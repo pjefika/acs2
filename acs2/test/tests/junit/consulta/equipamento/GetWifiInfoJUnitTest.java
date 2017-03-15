@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import model.device.wifi.WifiInfoFull;
+import model.device.wifi.WifiInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -20,9 +20,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class GetWifiInfoFullJUnitTest1 {
+public class GetWifiInfoJUnitTest {
 
-    public GetWifiInfoFullJUnitTest1() {
+    public GetWifiInfoJUnitTest() {
     }
 
     @BeforeClass
@@ -48,9 +48,9 @@ public class GetWifiInfoFullJUnitTest1 {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(102015));
+            eqp = d.findDeviceByGUID(new Long(89013));
 
-            WifiInfoFull info = d.getWifiInfoFull(eqp);
+            WifiInfo info = d.getWifiInfo(eqp);
 
             SoutUtil.print(info);
 
