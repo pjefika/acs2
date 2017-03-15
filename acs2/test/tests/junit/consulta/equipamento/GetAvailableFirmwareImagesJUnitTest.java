@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tests.junit.init.EquipamentoTestValues;
 
 /**
  *
@@ -42,10 +43,9 @@ public class GetAvailableFirmwareImagesJUnitTest {
     public void getAvailableFirmwareImages() {
         try {
 
-            Long guid = new Long(142014);
             EquipamentoDAO d = new EquipamentoDAO();
 
-            d.getAvailableFirmwareImages(d.findDeviceByGUID(guid));
+            d.getAvailableFirmwareImages(d.findDeviceByGUID(EquipamentoTestValues.GUID));
 
         } catch (Exception ex) {
             ex.printStackTrace();

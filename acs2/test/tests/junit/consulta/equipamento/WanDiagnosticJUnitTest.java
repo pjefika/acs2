@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import tests.junit.init.EquipamentoTestValues;
 
 /**
  *
@@ -50,9 +51,8 @@ public class WanDiagnosticJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(142014);
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(l);
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
             d.getWanInfo(eqp);
             assertTrue(true);

@@ -42,20 +42,20 @@ public class GetDeviceOperationStatusJUnitTest {
 
     @Test
     public void getDeviceOperationStatus() {
-        try {
-
-            Long guid = new Long(94015);
-            EquipamentoDAO d = new EquipamentoDAO();
-
-            NbiDeviceActionResult t = d.getDeviceOperationStatus(d.findDeviceByGUID(guid), new Long(158355));
-            SoutUtil.print(t);
-
-            assertTrue(true);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            assertTrue(false);
-        }
+//        try {
+//
+//            Long guid = new Long(94015);
+//            EquipamentoDAO d = new EquipamentoDAO();
+//
+//            NbiDeviceActionResult t = d.getDeviceOperationStatus(d.findDeviceByGUID(guid), new Long(158355));
+//            SoutUtil.print(t);
+//
+//            assertTrue(true);
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            assertTrue(false);
+//        }
 
     }
 }

@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import tests.junit.init.EquipamentoTestValues;
 
 /**
  *
@@ -51,11 +52,11 @@ public class CheckOnlineJUnitTestDev {
             NbiDeviceData eqp;
 //            eqp = d.findDeviceByGUID(new Long(142012));
 //            eqp = d.findDeviceByGUID(new Long(23006));
-            eqp = d.findDeviceByGUID(new Long(89013));
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 //            eqp = d.findDeviceByGUID(new Long(23006));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 
-          Boolean r = d.checkOnline(eqp);
+            Boolean r = d.checkOnline(eqp);
 
             assertTrue(r);
 

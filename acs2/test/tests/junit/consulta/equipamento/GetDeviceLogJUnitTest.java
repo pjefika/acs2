@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -53,7 +54,7 @@ public class GetDeviceLogJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(139020);
+            Long l = new Long(EquipamentoTestValues.GUID);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
 

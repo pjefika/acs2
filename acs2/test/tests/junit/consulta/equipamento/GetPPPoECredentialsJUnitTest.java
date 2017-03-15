@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -54,8 +55,7 @@ public class GetPPPoECredentialsJUnitTest {
     public void getPPPoECredentials() throws NBIException_Exception {
 
         EquipamentoDAO d = new EquipamentoDAO();
-
-        Long l = new Long(102015);
+        Long l = EquipamentoTestValues.GUID;
         NbiDeviceData eqp;
         eqp = d.findDeviceByGUID(l);
 

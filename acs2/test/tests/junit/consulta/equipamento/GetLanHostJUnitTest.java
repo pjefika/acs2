@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -51,7 +52,7 @@ public class GetLanHostJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(142014));
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
             List<LanDevice> oi = d.getLanHosts(eqp);
 

@@ -26,6 +26,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tests.junit.init.EquipamentoTestValues;
 
 import util.SoutUtil;
 
@@ -61,8 +62,7 @@ public class GetPortMappingJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(104016));
-
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
             PortMappingInfo info = d.getPortMapping(eqp);
 

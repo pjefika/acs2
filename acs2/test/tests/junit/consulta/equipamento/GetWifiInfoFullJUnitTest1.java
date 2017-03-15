@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -48,7 +49,7 @@ public class GetWifiInfoFullJUnitTest1 {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(102015));
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
             WifiInfoFull info = d.getWifiInfoFull(eqp);
 

@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -45,13 +46,12 @@ public class GetFirmwareVersionJUnitTestDev {
 
         try {
 
-            Long guid = new Long(142014);
             EquipamentoDAO d = new EquipamentoDAO();
 
             //d.capture(guid);
             //d.release(guid);
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(guid);
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
             SoutUtil.print(eqp);
 
             SoutUtil.print(d.getFirmwareVersion(eqp));
