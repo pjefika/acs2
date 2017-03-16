@@ -3,28 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.device.ddns.DdnsInfo;
+import model.device.wifi.WifiInfo;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class XdslDiagnosticJUnitTest {
+public class GetWifiInfoJUnitTest {
 
-    public XdslDiagnosticJUnitTest() {
+    public GetWifiInfoJUnitTest() {
     }
 
     @BeforeClass
@@ -43,25 +42,24 @@ public class XdslDiagnosticJUnitTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
-    public void xDSLDiagnostic() {
-
+    public void getWifiInfo() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(142014);
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(l);
 
-            d.xDSLDiagnostic(eqp);
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
+
+            WifiInfo info = d.getWifiInfo(eqp);
+
+            SoutUtil.print(info);
+
+            assertTrue(true);
 
         } catch (Exception ex) {
-            Logger.getLogger(XdslDiagnosticJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
             assertTrue(false);
         }
-
     }
 }

@@ -15,7 +15,10 @@ var vm = new Vue({
         modal: {
             comp: 'loading',
             titulo: 'Carregando...'
-        }
+        },
+        currentView: 'searchAction'
+    },
+    created: function() {
     },
     watch: {
         modal: function(m, oldVal) {

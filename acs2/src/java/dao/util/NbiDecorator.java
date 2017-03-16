@@ -9,6 +9,7 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
 import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiInfoSet;
 import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationCallBackInfo;
@@ -60,7 +61,11 @@ public class NbiDecorator {
     }
 
     public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
-        return new WifiInfoSet(i.getOperStatus(), i.getSsid(), i.getChannel(), i.getRadioEnabled());
+        return new WifiInfoSet(i.getOperStatus(), i.getSsid(), i.getChannel());
+    }
+    
+    public static WifiInfoSet getWifiInfoSetFull(WifiInfoFull i) {
+        return new WifiInfoSet(i);
     }
 
     public static NbiDeviceID adapter(NbiDeviceData d) {

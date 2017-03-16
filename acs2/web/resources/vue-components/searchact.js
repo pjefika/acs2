@@ -5,17 +5,19 @@
  */
 /* global Vue */
 var url = "/acs/busca/listar/";
+
 var data = {
     inputToSearch: null,
     listaEqp: [],
     picked: null,
-    renderTable: false
+    renderTable: false,
+    currentView: 'searchAction'
 };
 
-Vue.component("search-table", {
+Vue.component("searchTable", {
     props: ['inputToSearch', 'listaEqp', 'picked', 'renderTable'],
-    template: "<div v-if='this.renderTable'>\n\
-                    <table v-if='this.listaEqp' id='leTable' class='table table-bordered small' >\n\
+    template: "<div v-show='this.renderTable'>\n\
+                    <table v-show='this.listaEqp' id='leTable' cellspacing='0' class='table table-striped table-bordered small' >\n\
                         <thead>\n\
                             <tr>\n\
                                 <th>Subscriber</th>\n\
@@ -43,11 +45,15 @@ Vue.component("search-table", {
                 ",
     methods: {
     },
+    mounted: function() {
+    },
+
     data: function() {
         return data;
     }
 });
-Vue.component("search-action", {
+
+Vue.component("searchAction", {
     template: "<div class='row'>\n\
                     <div class='col-lg-4'>\n\
                         <div class='row'>\n\
@@ -143,25 +149,53 @@ Vue.component("search-action", {
                 return;
             }
 
-            $("#loadingModal").modal({backdrop: "static"});
-            $("#loadingModal").modal("show");
-
-            //Consulta
-            $.get(url + picked + "/" + self.inputToSearch, function(data) {
-                self.listaEqp = data.list;
-            }).done(function() {
-                $("#loadingModal").modal("hide");
-                self.renderTable = true;
-                self.inputToSearch = null;
-                $('#leTable').DataTable().destroy();
-                $(document).ready(function() {
-                    $('#leTable').DataTable({
-                        "language": {
-                            "url": "resources/data-table/pt-br.json"
-                        }
+            $.ajax({
+                type: "GET",
+                url: url + picked + "/" + self.inputToSearch,
+                beforeSend: function() {
+                    self.$root.currentView = "loading";
+                },
+                success: function(data) {
+                    self.$root.currentView = "searchAction";
+                    Vue.nextTick(function() {
+                        self.listaEqp = data.list;
                     });
-                })
+                },
+                error: function(e) {
+                    self.mensagem = 'Falha ao buscar informações';
+                    self.erro = 'true';
+                    console.log(e);
+                },
+                complete: function() {
+                    self.renderTable = true;
+                    self.inputToSearch = null;
+
+                    $(document).ready(function() {
+                        $('#leTable').DataTable().destroy();
+                        $('#leTable').DataTable({
+                            "language": {
+                                "url": "resources/data-table/pt-br.json"
+                            }
+                        });
+                    });
+                }
             });
+//            //Consulta
+//            $.get(url + picked + "/" + self.inputToSearch, function (data) {
+//                self.listaEqp = data.list;
+//            }).done(function () {
+//                $("#loadingModal").modal("hide");
+//                self.renderTable = true;
+//                self.inputToSearch = null;
+//                $('#leTable').DataTable().destroy();
+//                $(document).ready(function () {
+//                    $('#leTable').DataTable({
+//                        "language": {
+//                            "url": "resources/data-table/pt-br.json"
+//                        }
+//                    });
+//                })
+//            });
         }
     }, created: function() {
 

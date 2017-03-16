@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global Vue */
+/* global Vue, WifiInfoFull, Equipamento */
 var url = "/acs/equipamento/";
 
 
@@ -26,9 +26,9 @@ Vue.component("getWifi", {
             }
         },
         info: {
-            type: WifiInfo,
+            type: Object,
             default: function() {
-                return new WifiInfo();
+                return new WifiInfoFull();
             }
         },
         alertPanel: {
@@ -40,7 +40,7 @@ Vue.component("getWifi", {
             var self = this;
             $.ajax({
                 type: "POST",
-                url: url + "getWifiInfo/",
+                url: url + "getWifiInfoFull/",
                 data: JSON.stringify(self.equipamento.flush()),
                 dataType: "json",
                 beforeSend: function(xhr) {
@@ -48,9 +48,10 @@ Vue.component("getWifi", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    self.info = new WifiInfo(data.wifiInfo);
+                    self.info = new WifiInfoFull(data.wifiInfoFull);
                 },
                 error: function(e) {
+                    console.log(e)
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                 },
@@ -61,7 +62,6 @@ Vue.component("getWifi", {
         },
         setWifi: function() {
             var self = this;
-
             /**
              * Utilizar este padrão para enviar duas variaveis json para a controller
              * @type type
@@ -72,7 +72,7 @@ Vue.component("getWifi", {
 
             $.ajax({
                 type: "POST",
-                url: url + "setWifiInfo/",
+                url: url + "setWifiInfoFull/",
                 data: JSON.stringify(_data),
                 dataType: "json",
                 beforeSend: function(xhr) {
@@ -80,7 +80,7 @@ Vue.component("getWifi", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    self.info = new WifiInfo(data.wifiInfo);
+                    self.info = new WifiInfoFull(data.wifiInfoFull);
                     self.mensagem = 'Sucesso na execução';
                     self.erro = '';
                 },
@@ -95,35 +95,23 @@ Vue.component("getWifi", {
         }
     },
     template: "<div>\n\
-                <div class='modal-body'>\n\
-                    <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
-                    <div class='form-group'>\n\
+                <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
+                <div class='modal-body row'>\n\
+                    <div class='form-group col-md-6'>\n\
+                        <label for='ssid'>Estado da Rede Wifi</label>\n\
+                        <input class='form-control' disabled v-model='info.operStatus'>\n\
+                    </div>\n\
+                    <div class='form-group col-md-6'>\n\
                         <label for='ssid'>SSID (Nome da Rede WiFi)</label>\n\
                         <input class='form-control' v-model='info.ssid'>\n\
                     </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Senha</label>\n\
-                        <input class='form-control' v-model='info.ssidPassword'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Encriptação</label>\n\
-                        <input class='form-control' v-model='info.encryptation'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Status</label>\n\
-                        <input class='form-control' v-model='info.operStatus'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
+                    <div class='form-group col-md-6'>\n\
                         <label for='ssid'>Canal</label>\n\
-                        <input class='form-control' v-model='info.channel'>\n\
+                        <input class='form-control' type='number' min='1' max='13' v-model='info.channel'>\n\
                     </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Broadcast</label>\n\
-                        <input class='form-control' v-model='info.broadcastEnabled'>\n\
-                    </div>\n\
-                    <div class='form-group'>\n\
-                        <label for='ssid'>Radio</label>\n\
-                        <input class='form-control' v-model='info.radioEnabled'>\n\
+                    <div class='form-group col-md-6'>\n\
+                        <label for='senha'>Senha</label>\n\
+                        <input class='form-control' v-model='info.key'>\n\
                     </div>\n\
                 </div>\n\
                 <div class='modal-footer'>\n\
@@ -132,4 +120,3 @@ Vue.component("getWifi", {
                 </div>\n\
             </div>"
 });
-

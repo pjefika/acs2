@@ -23,7 +23,7 @@ Vue.component("acsModal", {
         },
         loading: {
             type: Boolean,
-            default: function(){
+            default: function() {
                 return false;
             }
         }
@@ -45,4 +45,3 @@ Vue.component("acsModal", {
                 </div>\n\
             </div>",
 });
-

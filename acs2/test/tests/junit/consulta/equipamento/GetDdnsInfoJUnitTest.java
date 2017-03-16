@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.consulta;
+package tests.junit.consulta.equipamento;
 
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.device.ddns.DdnsInfo;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class CheckOnlineJUnitTestDev {
+public class GetDdnsInfoJUnitTest {
 
-    public CheckOnlineJUnitTestDev() {
+    public GetDdnsInfoJUnitTest() {
     }
 
     @BeforeClass
@@ -47,24 +47,26 @@ public class CheckOnlineJUnitTestDev {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void checkOnline() {
+    public void getDeviceLog() {
 
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
+//            Long l = new Long(EquipamentoTestValues.GUID);
+Long l = new Long(89013);
             NbiDeviceData eqp;
-//            eqp = d.findDeviceByGUID(new Long(142012));
-//            eqp = d.findDeviceByGUID(new Long(23006));
-            eqp = d.findDeviceByGUID(new Long(102015));
-//            eqp = d.findDeviceByGUID(new Long(23006));
-//            eqp = d.findDeviceByGUID(new Long(23006));
+            eqp = d.findDeviceByGUID(l);
 
-          Boolean r = d.checkOnline(eqp);
+            //d.capture(l);
+            // d.release(l);
+            DdnsInfo ddns = d.getDdns(eqp);
 
-            assertTrue(r);
+            SoutUtil.print(ddns);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            assertTrue(true);
+
+        } catch (Exception ex) {
+            Logger.getLogger(GetDdnsInfoJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
             assertTrue(false);
         }
 
