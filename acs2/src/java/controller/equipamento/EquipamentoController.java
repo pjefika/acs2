@@ -163,7 +163,8 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/updateFirmwareVersion/")
     public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) {
-        try {
+        try {            
+            this.gerarLog(nbiDeviceData, "Update Firmware", "");            
             this.includeSerializer(dao.firmwareUpdate(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando updateFirmwareVersion");
@@ -174,7 +175,8 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/reboot/")
     public void reboot(NbiDeviceData nbiDeviceData) {
-        try {
+        try {            
+            this.gerarLog(nbiDeviceData, "Reboot", "");            
             this.includeSerializer(dao.reboot(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando reboot");
@@ -186,6 +188,7 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/factoryReset/")
     public void factoryReset(NbiDeviceData nbiDeviceData) {
         try {
+            this.gerarLog(nbiDeviceData, "Factory Reset", ""); 
             dao.factoryReset(nbiDeviceData);
         } catch (Exception e) {
             this.includeSerializer("Erro no comando factoryReset");
@@ -240,7 +243,10 @@ public class EquipamentoController extends AbstractController {
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setPPPoe/")
     public void setPPPoECredentials(NbiDeviceData nbiDeviceData, PPPoECredentialsInfo pPPoECredentialsInfo) {
-        try {
+        try {            
+            Gson gson = new Gson();
+            String obj = gson.toJson(pPPoECredentialsInfo);
+            this.gerarLog(nbiDeviceData, "SetPPPoECredentials", obj);            
             this.includeSerializer(dao.setPPPoECredentials(nbiDeviceData, pPPoECredentialsInfo));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando setPPPoECredentials");

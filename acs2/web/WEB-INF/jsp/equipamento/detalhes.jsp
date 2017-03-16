@@ -34,7 +34,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="list-group">
-                                <li v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']" @click="checkOnline()">
+                                <li v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']">
                                     <label>Status: </label>
                                     <span v-if="eqp.checkOn">Ativo</span>
                                     <span v-else>Inativo</span>
