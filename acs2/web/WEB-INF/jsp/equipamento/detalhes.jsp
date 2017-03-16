@@ -26,7 +26,7 @@
 
 
 <div class="container">
-    <script type="text/html" id="detalhequip">
+    <script type="text/html" id="detalhequip">        
         <div>
             <acs-modal v-bind:data='${equipamento}' v-bind:body="modal.comp" v-bind:titulo="modal.titulo"></acs-modal>
             <div class="page-header">
@@ -41,6 +41,7 @@
                                     <label>Status: </label>
                                     <span v-if="eqp.checkOn">Ativo</span>
                                     <span v-else>Inativo</span>
+                                    <span v-text="eqp.checkOn">Inativo</span>
                                 </li>
                                 <li class="list-group-item">
                                     <label>Serial:</label>
