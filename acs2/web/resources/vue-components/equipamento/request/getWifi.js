@@ -120,4 +120,3 @@ Vue.component("getWifi", {
                 </div>\n\
             </div>"
 });
-

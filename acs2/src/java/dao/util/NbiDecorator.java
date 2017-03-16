@@ -59,6 +59,26 @@ public class NbiDecorator {
 
         return opt;
     }
+    
+    public static NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault3() {
+        NbiSingleDeviceOperationOptions opt = new NbiSingleDeviceOperationOptions();
+
+        NbiSingleDeviceOperationCallBackInfo cb = new NbiSingleDeviceOperationCallBackInfo();
+        cb.setRetry(false);
+
+        opt.setDisableCaptureConstraint(true);
+        opt.setExecutionTimeoutSeconds(1200);
+        opt.setExpirationTimeoutSeconds(60);
+        opt.setFailOnConnectionRequestFailure(true);
+        opt.setNBISingleDeviceOperationCallBackInfo(cb);
+        opt.setOpaqueTransactionId("teste5555");
+        opt.setPolicyClass("policytest");
+        opt.setPriority(100);
+        opt.setReplaceDeviceCachedDataRecord(false);
+        opt.setUpdateCachedDataRecord(false);
+
+        return opt;
+    }
 
     public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
         return new WifiInfoSet(i.getOperStatus(), i.getSsid(), i.getChannel());

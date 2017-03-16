@@ -34,17 +34,20 @@ import javax.xml.ws.Service;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
+import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
 import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.serviceclass.ServiceClass;
 import model.device.traceroute.TraceRouteRequest;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiInfoSet;
+import model.device.xdsldiagnostics.XdslDiagnostics;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import util.JsonUtil;
@@ -224,6 +227,13 @@ public class EquipamentoDAO {
         return JsonUtil.getWanInfo(a);
     }
 
+    public ServiceClass getServiceClass(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9505, opt, 10000, "");
+        return JsonUtil.getServiceClass(a);
+    }
+
     public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
@@ -342,14 +352,15 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 10000, "");
+        
         return JsonUtil.ddnsInfo(a);
     }
 
-    public void xDSLDiagnostic(NbiDeviceData eqp) throws Exception {
+    public XdslDiagnostics getXdslDiagnostic(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9514, opt, 10000, "");
-        System.out.println(a.getValue());
+        return JsonUtil.getXdslDiagnostics(a);
     }
 
     public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws Exception {
@@ -359,11 +370,11 @@ public class EquipamentoDAO {
         return JsonUtil.deviceLog(a);
     }
 
-    public void getInterfaceStatistics(NbiDeviceData eqp) throws Exception {
+    public List<InterfaceStatistics> getInterfaceStatistics(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 30000, "");
-        System.out.println(a.getValue());
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 15000, "");
+        return JsonUtil.getInterfaceStatistics(a);
     }
 
     public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) {
@@ -385,7 +396,7 @@ public class EquipamentoDAO {
             String jsonPppoe = JsonUtil.serialize(p, p.getClass());
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonPppoe);
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 10000, "");
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 15000, "");
             //System.out.println(a.getValue());
             return JsonUtil.pingResponse(a);
         } catch (Exception e) {

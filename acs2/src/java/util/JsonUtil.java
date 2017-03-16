@@ -16,14 +16,17 @@ import java.util.List;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
+import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.serviceclass.ServiceClass;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
+import model.device.xdsldiagnostics.XdslDiagnostics;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 
 /**
@@ -136,7 +139,7 @@ public class JsonUtil {
         String channel = jobject.get("channel").toString().replace("\"", "");
         Boolean bcEnabled = jobject.get("bcEnabled").getAsBoolean();
         String maxBitRate = jobject.get("maxBitRate").toString().replace("\"", "");
-        Integer signal = jobject.get("signal").getAsInt();
+        String signal = jobject.get("signal").toString().replace("\"", "");
         String ssid = jobject.get("ssid").toString().replace("\"", "");
         String authMode = jobject.get("authMode").toString().replace("\"", "");
         String encType = jobject.get("encType").toString().replace("\"", "");
@@ -210,6 +213,20 @@ public class JsonUtil {
         i.setEthernetPacketsSent(EthernetPacketsSent);
 
         return i;
+    }
+    
+    public static ServiceClass getServiceClass(StringResponseDTO a) {
+
+        ServiceClass sc = new ServiceClass();
+
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonObject jobject = jelement.getAsJsonObject();
+        System.out.println(jobject.toString());
+        String serviceOfClass = jobject.get("AccessClass") != null ? jobject.get("AccessClass").toString().replace("\"", "") : jobject.get("classOfService").toString().replace("\"", "");
+        
+        sc.setClassOfService(serviceOfClass);
+        
+        return sc;
     }
 
     public static DdnsInfo ddnsInfo(StringResponseDTO a) {
@@ -320,6 +337,124 @@ public class JsonUtil {
         String password = jobject.get("Password").toString().replace("\"", "");
 
         return new PPPoECredentialsInfo(username, password);
+    }
+
+    public static List<InterfaceStatistics> getInterfaceStatistics(StringResponseDTO a) {
+
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonArray jarray = jelement.getAsJsonArray();
+
+        List<InterfaceStatistics> list = new ArrayList<>();
+        for (JsonElement jsonElement : jarray) {
+            JsonObject jobject = jsonElement.getAsJsonObject();
+
+            InterfaceStatistics i = new InterfaceStatistics();
+
+            String operStatus = jobject.get("operStatus") != null ? jobject.get("operStatus").toString().replace("\"", "") : "";
+            String ipAddress = jobject.get("ipAddress") != null ? jobject.get("ipAddress").toString().replace("\"", "") : "";
+            if (operStatus.contentEquals("Up") && !(ipAddress.isEmpty())) {
+                String ifType;
+                if (jobject.get("ifType") != null) {
+                    ifType = jobject.get("ifType").toString().replace("\"", "");
+                } else if (jobject.get("iftype") != null) {
+                    ifType = jobject.get("iftype").toString().replace("\"", "");
+                } else {
+                    ifType = "";
+                }
+                String adminStatus = jobject.get("adminStatus") != null ? jobject.get("adminStatus").toString().replace("\"", "") : "";
+                String ifName = jobject.get("ifName") != null ? jobject.get("ifName").toString().replace("\"", "") : "";
+                
+                String ipAddrType = jobject.get("ipAddrType") != null ? jobject.get("ipAddrType").toString().replace("\"", "") : "";
+                String macAddress = jobject.get("macAddress") != null ? jobject.get("macAddress").toString().replace("\"", "") : "";
+                String bytesSent = jobject.get("bytesSent") != null ? jobject.get("bytesSent").toString().replace("\"", "") : "";
+                String bytesRecv = jobject.get("bytesRecv") != null ? jobject.get("bytesRecv").toString().replace("\"", "") : "";
+                String errSent = jobject.get("errSent") != null ? jobject.get("errSent").toString().replace("\"", "") : "";
+                String errRecv = jobject.get("errRecv") != null ? jobject.get("errRecv").toString().replace("\"", "") : "";
+                String pctSent = jobject.get("pctSent") != null ? jobject.get("pctSent").toString().replace("\"", "") : "";
+                String pctRecv = jobject.get("pctRecv") != null ? jobject.get("pctRecv").toString().replace("\"", "") : "";
+                String mcSent = jobject.get("mcSent") != null ? jobject.get("mcSent").toString().replace("\"", "") : "";
+                String mcRecv = jobject.get("mcRecv") != null ? jobject.get("mcRecv").toString().replace("\"", "") : "";
+                String bcSent = jobject.get("bcSent") != null ? jobject.get("bcSent").toString().replace("\"", "") : "";
+                String bcRecv = jobject.get("bcRecv") != null ? jobject.get("bcRecv").toString().replace("\"", "") : "";
+
+                i.setAdminStatus(adminStatus);
+                i.setIpAddress(ipAddress);
+                i.setBcRecv(bcRecv);
+                i.setBcSent(bcSent);
+                i.setBytesRecv(bytesRecv);
+                i.setBytesSent(bytesSent);
+                i.setErrRecv(errRecv);
+                i.setErrSent(errSent);
+                i.setIfName(ifName);
+                i.setIfType(ifType);
+                i.setIpAddrType(ipAddrType);
+                i.setMacAddress(macAddress);
+                i.setMcRecv(mcRecv);
+                i.setMcSent(mcSent);
+                i.setOperStatus(operStatus);
+                i.setPctRecv(pctRecv);
+                i.setPctSent(pctSent);
+
+                list.add(i);
+            }
+
+        }
+
+        return list;
+    }
+    
+    
+    public static XdslDiagnostics getXdslDiagnostics(StringResponseDTO a) {
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonObject jobject = jelement.getAsJsonObject();
+//        System.out.println(jobject.toString());
+        XdslDiagnostics x = new XdslDiagnostics();
+        
+        String ModulationType = jobject.get("ModulationType").toString().replace("\"", "");
+        String ShowtimeStart = jobject.get("ShowtimeStart").toString().replace("\"", "");
+        String UpstreamMaxRate = jobject.get("UpstreamMaxRate").toString().replace("\"", "");
+        String UpstreamCurrRate = jobject.get("UpstreamCurrRate").toString().replace("\"", "");
+        String UpstreamPower = jobject.get("UpstreamPower").toString().replace("\"", "");
+        String UpstreamNoiseMargin = jobject.get("UpstreamNoiseMargin").toString().replace("\"", "");
+        String UpstreamAttenuation = jobject.get("UpstreamAttenuation").toString().replace("\"", "");
+        String DownstreamMaxRate = jobject.get("DownstreamMaxRate").toString().replace("\"", "");
+        String DownstreamCurrRate = jobject.get("DownstreamCurrRate").toString().replace("\"", "");
+        String DownstreamPower = jobject.get("DownstreamPower").toString().replace("\"", "");
+        String DownstreamNoiseMargin = jobject.get("DownstreamNoiseMargin").toString().replace("\"", "");
+        String DownstreamAttenuation = jobject.get("DownstreamAttenuation").toString().replace("\"", "");
+        String LinkRetrain = jobject.get("LinkRetrain").toString().replace("\"", "");
+        String LossOfFraming = jobject.get("LossOfFraming").toString().replace("\"", "");
+        String SeverelyErroredSecs = jobject.get("SeverelyErroredSecs").toString().replace("\"", "");
+        String ATUCFECErrors = jobject.get("ATUCFECErrors").toString().replace("\"", "");
+        String ATUCHECErrors = jobject.get("ATUCHECErrors").toString().replace("\"", "");
+        String ATUCCRCErrors = jobject.get("ATUCCRCErrors").toString().replace("\"", "");
+        String FECErrors = jobject.get("FECErrors").toString().replace("\"", "");
+        String HECErrors = jobject.get("HECErrors").toString().replace("\"", "");
+        String CRCErrors = jobject.get("CRCErrors").toString().replace("\"", "");
+       
+        x.setATUCCRCErrors(ATUCCRCErrors);
+        x.setATUCFECErrors(ATUCFECErrors);
+        x.setATUCHECErrors(ATUCHECErrors);
+        x.setCRCErrors(CRCErrors);
+        x.setDownstreamAttenuation(DownstreamAttenuation);
+        x.setDownstreamCurrRate(DownstreamCurrRate);
+        x.setDownstreamMaxRate(DownstreamMaxRate);
+        x.setDownstreamPower(DownstreamPower);
+        x.setDownstreamNoiseMargin(DownstreamNoiseMargin);
+        x.setFECErrors(FECErrors);
+        x.setHECErrors(HECErrors);
+        x.setLinkRetrain(LinkRetrain);
+        x.setLossOfFraming(LossOfFraming);
+        x.setModulationType(ModulationType);
+        x.setSeverelyErroredSecs(SeverelyErroredSecs);
+        x.setShowtimeStart(ShowtimeStart);
+        x.setUpstreamAttenuation(UpstreamAttenuation);
+        x.setUpstreamCurrRate(UpstreamCurrRate);
+        x.setUpstreamMaxRate(UpstreamMaxRate);
+        x.setUpstreamNoiseMargin(UpstreamNoiseMargin);
+        x.setUpstreamPower(UpstreamPower);
+        
+        return x;
     }
 
 }

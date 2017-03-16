@@ -7,8 +7,7 @@ package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import model.device.serviceclass.ServiceClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -17,13 +16,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import tests.junit.init.EquipamentoTestValues;
 
-/**
- *
- * @author G0042204
- */
-public class XdslDiagnosticJUnitTest {
 
-    public XdslDiagnosticJUnitTest() {
+public class GetServiceClassJUnitTest {
+
+    public GetServiceClassJUnitTest() {
     }
 
     @BeforeClass
@@ -42,24 +38,24 @@ public class XdslDiagnosticJUnitTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
-    public void xDSLDiagnostic() {
-
+    public void getServiceClass() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
-            d.getXdslDiagnostic(eqp);
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
+//            eqp = d.findDeviceByGUID(new Long(74021));
+            ServiceClass sc = d.getServiceClass(eqp);
+
+            System.out.println(sc.getClassOfService());
+
+            assertTrue(true);
 
         } catch (Exception ex) {
-            Logger.getLogger(XdslDiagnosticJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
             assertTrue(false);
         }
-
     }
 }

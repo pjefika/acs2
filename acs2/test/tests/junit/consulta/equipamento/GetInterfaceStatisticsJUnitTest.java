@@ -8,16 +8,14 @@ package tests.junit.consulta.equipamento;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import java.util.List;
-import model.device.log.DeviceLog;
-import model.device.wifi.WifiInfo;
+import model.device.interfacestatistics.InterfaceStatistics;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import tests.junit.init.EquipamentoTestValues;
-import util.SoutUtil;
 
 /**
  *
@@ -51,10 +49,13 @@ public class GetInterfaceStatisticsJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID); 
 
-            d.getInterfaceStatistics(eqp);
+            List<InterfaceStatistics> i = d.getInterfaceStatistics(eqp);
 
+            for (InterfaceStatistics interfaceStatistics : i) {
+                System.out.println(interfaceStatistics.getIfType() + " - " + interfaceStatistics.getIpAddress());
+            }
             assertTrue(true);
 
         } catch (Exception ex) {
