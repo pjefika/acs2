@@ -9,15 +9,13 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.device.ddns.DdnsInfo;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import tests.junit.init.EquipamentoTestValues;
-import util.SoutUtil;
 
 /**
  *
@@ -56,7 +54,7 @@ public class XdslDiagnosticJUnitTest {
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
-            d.xDSLDiagnostic(eqp);
+            d.xdslDiagnostic(eqp);
 
         } catch (Exception ex) {
             Logger.getLogger(XdslDiagnosticJUnitTest.class.getName()).log(Level.SEVERE, null, ex);

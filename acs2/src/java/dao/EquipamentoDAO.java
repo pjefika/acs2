@@ -45,6 +45,7 @@ import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiInfoSet;
+import model.device.xdsldiagnostics.XdslDiagnostics;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import util.JsonUtil;
@@ -353,12 +354,11 @@ public class EquipamentoDAO {
         return JsonUtil.ddnsInfo(a);
     }
 
-    public void xDSLDiagnostic(NbiDeviceData eqp) throws Exception {
+    public XdslDiagnostics xdslDiagnostic(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9514, opt, 10000, "");
-
-        System.out.println(a.getValue());
+        return JsonUtil.getXdslDiagnostics(a);
     }
 
     public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws Exception {
