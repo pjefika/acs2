@@ -386,7 +386,7 @@ public class EquipamentoDAO {
             String jsonPppoe = JsonUtil.serialize(p, p.getClass());
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonPppoe);
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 10000, "");
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 15000, "");
             //System.out.println(a.getValue());
             return JsonUtil.pingResponse(a);
         } catch (Exception e) {

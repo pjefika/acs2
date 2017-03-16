@@ -39,7 +39,7 @@ Vue.component("detail", {
         setInterval(function () {
             console.log("Check Online");
             self.checkOnline();
-        }, 10000);
+        }, 45000);
     },
     methods: {
         checkOnline: _.debounce(function () {
