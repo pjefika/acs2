@@ -26,10 +26,16 @@ Vue.component("acsModal", {
             default: function() {
                 return false;
             }
+        },
+        big: {
+            type: Boolean,
+            default: function() {
+                return true;
+            }
         }
     },
     template: "<div class='modal fade' id='actionModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>\n\
-                <div class='modal-dialog' role='document'>\n\
+                <div class='modal-dialog' :class='{\"modal-lg\": big}' role='document'>\n\
                     <div class='modal-content'>\n\
                         <div class='modal-header'>\n\
                             <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>\n\

@@ -54,7 +54,7 @@ public class GetDeviceLogJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(EquipamentoTestValues.GUID);
+            Long l = EquipamentoTestValues.GUID;
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
 

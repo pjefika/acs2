@@ -11,7 +11,9 @@ package model.device.portmapping;
  */
 public class PortMappingInfo {
 
-    private String externalPort, internalClient, internalPort, portMapName, enable, protocol, remoteHost;
+    private String externalPort, internalClient, internalPort, portMapName, protocol, remoteHost;
+
+    private Boolean enable;
 
     public PortMappingInfo() {
     }
@@ -48,14 +50,6 @@ public class PortMappingInfo {
         this.portMapName = portMapName;
     }
 
-    public String getEnable() {
-        return enable;
-    }
-
-    public void setEnable(String enable) {
-        this.enable = enable;
-    }
-
     public String getProtocol() {
         return protocol;
     }
@@ -72,4 +66,11 @@ public class PortMappingInfo {
         this.remoteHost = remoteHost;
     }
 
+    public Boolean getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
+    }
 }

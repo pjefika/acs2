@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
+import java.util.List;
 import dao.LogDAO;
 import java.util.Calendar;
 import javax.faces.bean.RequestScoped;
@@ -303,12 +304,10 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setPortMapping/")
-    public void setPortMappingInfo(NbiDeviceData nbiDeviceData, PortMappingInfo portMappingInfo) {
+    public void setPortMappingInfo(NbiDeviceData nbiDeviceData, List<PortMappingInfo> ports) {
         try {
-
-            System.out.println(portMappingInfo.getEnable());
-
-            //this.includeSerializer(dao.setPortMapping(nbiDeviceData, portMappingInfo));
+            dao.setPortMapping(nbiDeviceData, ports);
+            this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando setPortMappingInfo");
         }

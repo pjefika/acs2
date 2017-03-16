@@ -94,7 +94,6 @@
                                 <acs-button acao="Consultar WAN" comp="get-wan" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar Interface Statistics" comp="get-interface-statistics" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar LAN Host" comp="get-lan-hosts" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="eqp.checkOn"></acs-button>
                             </div>
                         </div>

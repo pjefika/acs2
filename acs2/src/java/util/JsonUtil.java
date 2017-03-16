@@ -76,7 +76,7 @@ public class JsonUtil {
             String internalClient = jobject.get("internalClient").toString().replace("\"", "");
             String internalPort = jobject.get("internalPort").toString().replace("\"", "");
             String portMapName = jobject.get("portMapName").toString().replace("\"", "");
-            String enable = jobject.get("enable").toString().replace("\"", "");
+            Boolean enable = jobject.get("enable").getAsBoolean();
             String protocol = jobject.get("protocol").toString().replace("\"", "");
             String remoteHost = jobject.get("remoteHost").toString().replace("\"", "");
 
@@ -128,13 +128,12 @@ public class JsonUtil {
     }
 
     public static WifiInfoFull getWifiInfoFull(StringResponseDTO a) {
-
+        System.out.println("FullJson: " + a.getValue());
         WifiInfoFull i = new WifiInfoFull();
 
         JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
 
-        // System.out.println("FullJson: " + jobject.toString());
         String admStatus = jobject.get("admStatus").toString().replace("\"", "");
         String operStatus = jobject.get("operStatus").toString().replace("\"", "");
         String channel = jobject.get("channel").toString().replace("\"", "");
@@ -272,25 +271,34 @@ public class JsonUtil {
 
         List<LanDevice> lst = new ArrayList<>();
 
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
+        try {
 
-        Integer qtn = new Integer(jobject.get("HostNumberOfEntries").toString().replace("\"", ""));
+            String tratativa = a.getValue().replace("{", "[{").replace("}", "}]").replaceAll("\"HostNumberOfEntries\":\"[0-9]{1,10}\",", "").replaceAll("Host.[0-9]{1,10}.", "").replace("\",\"IPAddress\"", "\"},{\"IPAddress\"");
 
-        for (int i = 1; i < qtn; i++) {
+//        System.out.println(tratativa);
+            JsonElement jelement = new JsonParser().parse(tratativa);
 
-            LanDevice l = new LanDevice();
+//        System.out.println("Element: " + jelement.toString());
+            JsonArray j = jelement.getAsJsonArray();
 
-            l.setIpAddress(jobject.get("Host." + i + ".IPAddress").toString().replace("\"", ""));
-            l.setAddressSource(jobject.get("Host." + i + ".AddressSource").toString().replace("\"", ""));
-            l.setLeaseTimeRemaining(jobject.get("Host." + i + ".LeaseTimeRemaining").toString().replace("\"", ""));
-            l.setMacAddress(jobject.get("Host." + i + ".MACAddress").toString().replace("\"", ""));
-            l.setHostName(jobject.get("Host." + i + ".HostName").toString().replace("\"", ""));
-            l.setInterfaceType(jobject.get("Host." + i + ".InterfaceType").toString().replace("\"", ""));
-            l.setAtivo(Boolean.valueOf(jobject.get("Host." + i + ".Active").toString().replace("\"", "")));
+//        System.out.println("JsonArray: " + j.toString());
+            for (int k = 0; k < j.size(); k++) {
+                LanDevice l = new LanDevice();
 
-            lst.add(l);
+                JsonObject jobject = j.get(k).getAsJsonObject();
+                l.setIpAddress(jobject.get("IPAddress").toString().replace("\"", ""));
+                l.setAddressSource(jobject.get("AddressSource").toString().replace("\"", ""));
+                l.setLeaseTimeRemaining(jobject.get("LeaseTimeRemaining").toString().replace("\"", ""));
+                l.setMacAddress(jobject.get("MACAddress").toString().replace("\"", ""));
+                l.setHostName(jobject.get("HostName").toString().replace("\"", ""));
+                l.setInterfaceType(jobject.get("InterfaceType").toString().replace("\"", ""));
+                l.setAtivo(Boolean.valueOf(jobject.get("Active").toString().replace("\"", "")));
+                lst.add(l);
+            }
+        } catch (NullPointerException e) {
+
         }
+
         return lst;
     }
 

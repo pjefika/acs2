@@ -13,5 +13,24 @@ var PortMapping = function(p) {
         this.enable = p.enable;
         this.protocol = p.protocol;
         this.remoteHost = p.remoteHost;
+    } else {
+        this.externalPort = "";
+        this.internalClient = "";
+        this.internalPort = "";
+        this.portMapName = "";
+        this.enable = "";
+        this.protocol = "";
+        this.remoteHost = "";
     }
+};
+
+
+PortMapping.prototype.equals = function(p) {
+    return (this.externalPort === p.externalPort &&
+            this.internalClient === p.internalClient &&
+            this.internalPort === p.internalPort &&
+            this.portMapName === p.portMapName &&
+            this.enable === p.enable &&
+            this.protocol === p.protocol &&
+            this.remoteHost === p.remoteHost);
 };
