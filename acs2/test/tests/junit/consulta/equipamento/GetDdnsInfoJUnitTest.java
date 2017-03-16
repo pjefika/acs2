@@ -12,11 +12,10 @@ import java.util.logging.Logger;
 import model.device.ddns.DdnsInfo;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -53,7 +52,8 @@ public class GetDdnsInfoJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = new Long(EquipamentoTestValues.GUID);
+//            Long l = new Long(EquipamentoTestValues.GUID);
+Long l = new Long(89013);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
 

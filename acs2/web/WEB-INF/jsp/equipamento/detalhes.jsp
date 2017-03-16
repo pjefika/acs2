@@ -7,10 +7,14 @@
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfoFull.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wanInfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/interfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/portMappingInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/pingInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/pPPoECredentialsInfo.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/util/funcIndisponivel.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getInterfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWan.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/factoryReset.js"></script>
@@ -23,7 +27,7 @@
 
 
 <div class="container">
-    <script type="text/html" id="detalhequip">
+    <script type="text/html" id="detalhequip">        
         <div>
             <acs-modal v-bind:data='${equipamento}' v-bind:body="modal.comp" v-bind:titulo="modal.titulo"></acs-modal>
             <div class="page-header">
@@ -38,6 +42,7 @@
                                     <label>Status: </label>
                                     <span v-if="eqp.checkOn">Ativo</span>
                                     <span v-else>Inativo</span>
+                                    <span v-text="eqp.checkOn">Inativo</span>
                                 </li>
                                 <li class="list-group-item">
                                     <label>Serial:</label>
@@ -86,11 +91,10 @@
                             <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Consultas</label>
                                 <acs-button acao="Consultar WAN" comp="get-wan" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar Interface" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar Interface Statistics" comp="get-interface-statistics" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar LAN Host" comp="get-lan-hosts" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar xDSL" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar DNS" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar xDSL" comp="func-indisponivel" v-bind:ativo="eqp.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -104,8 +108,8 @@
                                 <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Gerenciar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="eqp.checkOn"></acs-button>                                
-                                <button type="button" class="list-group-item">Alterar DNS</button>
+                                <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="eqp.checkOn"></acs-button>
                             </div>
                         </div>
                     </div>

@@ -78,7 +78,6 @@ public class EquipamentoController extends AbstractController {
         } catch (NBIException_Exception ex) {
             result.include("exception", "Falha ao consultar Serviços Motive.");
         }
-
     }
 
     @Path("/equipamento/detalhe/json/{guid}")
@@ -136,6 +135,18 @@ public class EquipamentoController extends AbstractController {
             e.printStackTrace();
         }
     }
+    
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getInterfaceStatistics/")
+    public void getInterfaceStatistics(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getInterfaceStatistics(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer("Erro no comando getInterfaceStatistics");
+            e.printStackTrace();
+        }
+    }
 
     @Post
     @Consumes("application/json")
@@ -144,7 +155,7 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer("Erro no comando getPortMapping");
+            this.includeSerializer("Erro ao buscar getPortMapping");
         }
     }
 
@@ -155,7 +166,7 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getLanHosts(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer("Erro no comando getLanHosts");
+            this.includeSerializer("Erro ao buscar getLanHosts");
         }
     }
 
