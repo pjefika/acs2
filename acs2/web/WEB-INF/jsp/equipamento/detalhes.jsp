@@ -17,6 +17,7 @@
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getInterfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWan.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/factoryReset.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getLanHosts.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/pPPoECredentials.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/portMapping.js"></script>
@@ -37,7 +38,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="list-group">
-                                <li v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']" @click="checkOnline()">
+                                <li v-bind:class="['list-group-item', eqp.checkOn ? 'alert-success' : 'alert-danger']">
                                     <label>Status: </label>
                                     <span v-if="eqp.checkOn">Ativo</span>
                                     <span v-else>Inativo</span>
@@ -100,6 +101,7 @@
                             <div class="list-group" v-if="eqp.isModem()">
                                 <label class="list-group-item">Ações</label>
                                 <acs-button acao="Reiniciar" comp="reboot" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Reset de Fábrica" comp="reset-factory" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <!--                                <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalFactory" data-backdrop="static">Reset de Fábrica</button>
                                                                 <button type="button" class="list-group-item">Efetuar Traceroute</button>
                                                                 <button type="button" class="list-group-item">Gerenciar DMZ</button>-->

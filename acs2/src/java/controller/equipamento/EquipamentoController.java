@@ -5,6 +5,7 @@
  */
 package controller.equipamento;
 
+import auth.controller.SessionUsuarioEfika;
 import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
@@ -17,6 +18,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
+import dao.LogDAO;
+import java.util.Calendar;
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import model.device.firmware.FirmwareInfo;
 import model.device.ping.PingRequest;
@@ -24,16 +28,25 @@ import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
+import model.entity.Log;
+import model.entity.Parametro;
 
 /**
  *
  * @author G0042204
  */
 @Controller
+@RequestScoped
 public class EquipamentoController extends AbstractController {
 
     @Inject
     private EquipamentoDAO dao;
+
+    @Inject
+    private LogDAO logDAO;
+
+    @Inject
+    private SessionUsuarioEfika sessionUsuarioEfika;
 
     public EquipamentoController() {
     }
@@ -59,7 +72,7 @@ public class EquipamentoController extends AbstractController {
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
             jobj.add("checkOn", new Gson().toJsonTree(checkOnline));
-
+            this.gerarLog(ndd, "Detalhes equipamento", "");
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
@@ -110,11 +123,11 @@ public class EquipamentoController extends AbstractController {
             e.printStackTrace();
         }
     }
-    
+
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWanInfo/")
-    public void getWanInfo (NbiDeviceData nbiDeviceData) {
+    public void getWanInfo(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getWanInfo(nbiDeviceData));
         } catch (Exception e) {
@@ -162,6 +175,7 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/updateFirmwareVersion/")
     public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) {
         try {
+            this.gerarLog(nbiDeviceData, "Update Firmware", "");
             this.includeSerializer(dao.firmwareUpdate(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando updateFirmwareVersion");
@@ -173,6 +187,7 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/reboot/")
     public void reboot(NbiDeviceData nbiDeviceData) {
         try {
+            this.gerarLog(nbiDeviceData, "Reboot", "");
             this.includeSerializer(dao.reboot(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando reboot");
@@ -184,6 +199,7 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/factoryReset/")
     public void factoryReset(NbiDeviceData nbiDeviceData) {
         try {
+            this.gerarLog(nbiDeviceData, "Factory Reset", "");
             dao.factoryReset(nbiDeviceData);
         } catch (Exception e) {
             this.includeSerializer("Erro no comando factoryReset");
@@ -205,6 +221,10 @@ public class EquipamentoController extends AbstractController {
     @Consumes(value = "application/json", options = WithRoot.class)
     public void setWifiFull(NbiDeviceData nbiDeviceData, WifiInfoFull info) {
         try {
+            Gson gson = new Gson();
+            String obj = gson.toJson(info);
+            this.gerarLog(nbiDeviceData, "SetWifi", obj);
+
             dao.setWifiInfoFull(nbiDeviceData, info);
             this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
         } catch (Exception e) {
@@ -235,6 +255,9 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/setPPPoe/")
     public void setPPPoECredentials(NbiDeviceData nbiDeviceData, PPPoECredentialsInfo pPPoECredentialsInfo) {
         try {
+            Gson gson = new Gson();
+            String obj = gson.toJson(pPPoECredentialsInfo);
+            this.gerarLog(nbiDeviceData, "SetPPPoECredentials", obj);
             this.includeSerializer(dao.setPPPoECredentials(nbiDeviceData, pPPoECredentialsInfo));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando setPPPoECredentials");
@@ -276,6 +299,25 @@ public class EquipamentoController extends AbstractController {
             //this.includeSerializer(dao.setPortMapping(nbiDeviceData, portMappingInfo));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando setPortMappingInfo");
+        }
+    }
+
+    public void gerarLog(NbiDeviceData nbiDeviceData, String acao, String valores) {
+        System.out.println("Entrou Log");
+        Gson gson = new Gson();
+        String nbb = gson.toJson(nbiDeviceData);
+        Log log = new Log();
+        log.setEquipamento(nbb);
+        log.setAcao(acao);
+        log.setCalendar(Calendar.getInstance());
+        log.setLogin(this.sessionUsuarioEfika.getUsuario().getLogin());
+        this.logDAO.cadastrar(log);
+        if (!valores.isEmpty()) {
+            System.out.println("Entrou parametros");
+            Parametro parametro = new Parametro();
+            parametro.setLog(log);
+            parametro.setValor(valores);
+            this.logDAO.cadastrar(parametro);
         }
     }
 
