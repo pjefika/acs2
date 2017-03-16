@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.json.Json;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import model.device.DmzInfo;
@@ -226,6 +227,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 10000, "");
+        System.out.println(a.getValue());
         return JsonUtil.getLanHosts(a);
     }
 
@@ -239,7 +241,8 @@ public class EquipamentoDAO {
     public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 60000, "");
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 100000, "");
+        System.out.println(a.getValue());
         return JsonUtil.getWifiInfoFull(a);
     }
 
@@ -248,6 +251,7 @@ public class EquipamentoDAO {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
+            System.out.println(a.getValue());
             return JsonUtil.getPortMappingInfo(a);
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
@@ -344,7 +348,6 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9514, opt, 10000, "");
-
         System.out.println(a.getValue());
     }
 
