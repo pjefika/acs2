@@ -54,7 +54,7 @@ public class XdslDiagnosticJUnitTest {
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
-            d.xdslDiagnostic(eqp);
+            d.getXdslDiagnostic(eqp);
 
         } catch (Exception ex) {
             Logger.getLogger(XdslDiagnosticJUnitTest.class.getName()).log(Level.SEVERE, null, ex);

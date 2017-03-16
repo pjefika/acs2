@@ -399,7 +399,7 @@ public class JsonUtil {
     public static XdslDiagnostics getXdslDiagnostics(StringResponseDTO a) {
         JsonElement jelement = new JsonParser().parse(a.getValue());
         JsonObject jobject = jelement.getAsJsonObject();
-        
+//        System.out.println(jobject.toString());
         XdslDiagnostics x = new XdslDiagnostics();
         
         String ModulationType = jobject.get("ModulationType").toString().replace("\"", "");

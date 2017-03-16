@@ -5,6 +5,7 @@
 
 
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/xdslDiagnostics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wifiInfoFull.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/wanInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/interfaceStatistics.js"></script>
@@ -13,6 +14,7 @@
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/pPPoECredentialsInfo.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWifi.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getXdslDiagnostics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/util/funcIndisponivel.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getInterfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWan.js"></script>
@@ -93,7 +95,7 @@
                                 <acs-button acao="Consultar Interface Statistics" comp="get-interface-statistics" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar LAN Host" comp="get-lan-hosts" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar xDSL" comp="func-indisponivel" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="eqp.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">

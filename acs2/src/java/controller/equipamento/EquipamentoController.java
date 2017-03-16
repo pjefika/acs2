@@ -135,6 +135,18 @@ public class EquipamentoController extends AbstractController {
             e.printStackTrace();
         }
     }
+
+    @Post
+    @Consumes("application/json")
+    @Path("/equipamento/getXdslDiagnostics/")
+    public void getXdslDiagnostics(NbiDeviceData nbiDeviceData) {
+        try {
+            this.includeSerializer(dao.getXdslDiagnostic(nbiDeviceData));
+        } catch (Exception e) {
+            this.includeSerializer("Erro no comando getXdslDiagnostic");
+            e.printStackTrace();
+        }
+    }
     
     @Post
     @Consumes("application/json")

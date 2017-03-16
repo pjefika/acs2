@@ -354,7 +354,7 @@ public class EquipamentoDAO {
         return JsonUtil.ddnsInfo(a);
     }
 
-    public XdslDiagnostics xdslDiagnostic(NbiDeviceData eqp) throws Exception {
+    public XdslDiagnostics getXdslDiagnostic(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9514, opt, 10000, "");
