@@ -17,7 +17,7 @@ public class WifiInfoSet {
             index,
             frequency,
             authentication,
-            broadcastEnable,
+            bcEnable,
             autochannel,
             encryptation,
             standard,
@@ -34,15 +34,13 @@ public class WifiInfoSet {
 
     public WifiInfoSet(WifiInfoFull getInfo){
        this.authentication = getInfo.getAuthMode();
-       this.broadcastEnable = getInfo.getBcEnabled().toString();
+       this.bcEnable = getInfo.getBcEnabled().toString();
        this.channel = getInfo.getChannel();
        this.encryptation = getInfo.getEncType();
        this.password = getInfo.getKey();
        this.radioOperStatus = getInfo.getRadioStatus();
        this.ssid = getInfo.getSsid();
        this.standard = getInfo.getStandard();
-//       this.beaconType = "";
-       
     }
     
     public String getRadioOperStatus() {
@@ -77,12 +75,12 @@ public class WifiInfoSet {
         this.authentication = authentication;
     }
 
-    public String getBroadcastEnable() {
-        return broadcastEnable;
+    public String getBcEnable() {
+        return bcEnable;
     }
 
-    public void setBroadcastEnable(String broadcastEnable) {
-        this.broadcastEnable = broadcastEnable;
+    public void setBcEnable(String bcEnable) {
+        this.bcEnable = bcEnable;
     }
 
     public String getAutochannel() {

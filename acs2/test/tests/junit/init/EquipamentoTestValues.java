@@ -10,7 +10,9 @@ package tests.junit.init;
  * @author G0042204
  */
 public class EquipamentoTestValues {
-
-    public static Long GUID = new Long(102015);
+//74021 -> wan nao
+//89013 -> wan ok
+    
+    public static Long GUID = new Long(89013);
 
 }
