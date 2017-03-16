@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
+import java.util.List;
 import javax.inject.Inject;
 import model.device.firmware.FirmwareInfo;
 import model.device.ping.PingRequest;
@@ -111,11 +112,11 @@ public class EquipamentoController extends AbstractController {
             e.printStackTrace();
         }
     }
-    
+
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWanInfo/")
-    public void getWanInfo (NbiDeviceData nbiDeviceData) {
+    public void getWanInfo(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getWanInfo(nbiDeviceData));
         } catch (Exception e) {
@@ -257,12 +258,10 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setPortMapping/")
-    public void setPortMappingInfo(NbiDeviceData nbiDeviceData, PortMappingInfo portMappingInfo) {
+    public void setPortMappingInfo(NbiDeviceData nbiDeviceData, List<PortMappingInfo> ports) {
         try {
-
-            System.out.println(portMappingInfo.getEnable());
-
-            //this.includeSerializer(dao.setPortMapping(nbiDeviceData, portMappingInfo));
+            dao.setPortMapping(nbiDeviceData, ports);
+            this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando setPortMappingInfo");
         }

@@ -10,7 +10,14 @@ Vue.component("portMapping", {
         this.getPortMapping();
     },
     data: function() {
-        return {mensagem: '', erro: '', ports: []};
+        return {mensagem: '', erro: '', ports: [], edit: false};
+    },
+    watch: {
+        ports: function(h) {
+            var self = this
+            self.edit = true;
+//            alert(self.edit)
+        }
     },
     props: {
         eqpString: {
@@ -50,6 +57,36 @@ Vue.component("portMapping", {
                     self.$parent.loading = false;
                 }
             });
+        },
+        setPortMapping: function() {
+            var self = this;
+
+            var _data = {};
+            _data.nbiDeviceData = self.equipamento.flush();
+            _data.ports = self.ports;
+
+            $.ajax({
+                type: "POST",
+                url: url + "setPortMapping/",
+                data: JSON.stringify(_data),
+                dataType: "json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    self.$parent.loading = true
+                },
+                success: function(data) {
+                    self.mensagem = 'Sucesso na execução';
+                    self.ports = data.list;
+                },
+                error: function(e) {
+                    console.log(e)
+                    self.mensagem = 'Falha ao buscar informações';
+                    self.erro = 'true';
+                },
+                complete: function() {
+                    self.$parent.loading = false;
+                }
+            });
         }
     },
     template: "<div>\n\
@@ -64,7 +101,8 @@ Vue.component("portMapping", {
                 </div>\n\
                 <span v-text='ports'></span>\n\
             </div>"
-});
+}
+);
 Vue.component("PortTable", {
     props: ['mappings'],
     methods: {
@@ -106,6 +144,16 @@ Vue.component("PortRow", {
         editPort: function() {
             var self = this;
             self.edit = !self.edit;
+        },
+        doneEditPort: function() {
+            var self = this;
+
+            if (!self.port.externalPort || !self.port.internalPort || !self.port.internalClient) {
+                alert('Campos não preenchidos');
+                return;
+            }
+            self.edit = false;
+            self.$parent.$parent.setPortMapping();
         }
     },
     template: "<tr>\n\
@@ -133,22 +181,40 @@ Vue.component("PortRow", {
                             {{port.internalClient}}\n\
                         </div>\n\
                     </td>\n\
-                    <td>{{port.protocol}}</td>\n\
                     <td>\n\
-                        <div v-if='port.enable == 1'>\n\
-                            <input v-model='port.enable' type='checkbox' checked>\n\
+                        <div v-if='edit'>\n\
+                            <select v-model='port.protocol' class='form-control input-sm'>\n\
+                                <option>UDP</option>\n\
+                                <option>TCP</option>\n\
+                            </select>\n\
                         </div>\n\
                         <div v-else>\n\
-                            <input v-model='port.enable' type='checkbox'>\n\
+                            {{port.protocol}}\n\
                         </div>\n\
+                    </td>\n\
+                    <td class='text-center'>\n\
+                        <span v-if='port.enable'>\n\
+                            <input v-model='port.enable' type='checkbox' checked>\n\
+                        </span>\n\
+                        <span v-else>\n\
+                            <input v-model='port.enable' type='checkbox'>\n\
+                        </span>\n\
                     </td>\n\
                     <td class='text-center'>\n\
                         <button type='button' @click='remPortMapping(port)' class='btn btn-danger btn-sm'>\n\
                             <span class='glyphicon glyphicon-trash' aria-hidden='true'></span>\n\
                         </button>\n\
-                        <button type='button' @click='editPort()' class='btn btn-warning btn-sm'>\n\
-                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>\n\
-                        </button>\n\
+                        \n\
+                        <span v-if='edit'>\n\
+                            <button type='button' @click='doneEditPort()' class='btn btn-primary btn-sm'>\n\
+                                <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>\n\
+                            </button>\n\
+                        </span>\n\
+                        <span v-else>\n\
+                            <button type='button' @click='editPort()' class='btn btn-warning btn-sm'>\n\
+                                <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>\n\
+                            </button>\n\
+                        </span>\n\
                     </td>\n\
                 </tr>"
 });

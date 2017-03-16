@@ -14,6 +14,7 @@ import com.alcatel.hdm.service.nbi2.NbiFunction;
 import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
+import com.google.gson.Gson;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
@@ -421,18 +422,19 @@ public class EquipamentoDAO {
         }
     }
 
-    public StringResponseDTO setPortMapping(NbiDeviceData eqp, PortMappingInfo portMappingInfo) {
+    public void setPortMapping(NbiDeviceData eqp, List<PortMappingInfo> ports) {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
-            String jsonPppoe = JsonUtil.serialize(portMappingInfo, portMappingInfo.getClass());
             List<Object> json = NbiDecorator.getEmptyJson();
-            json.set(0, jsonPppoe);
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 10000, "");
-            return a;
+
+            Gson gson = new Gson();
+            String jsonPm = gson.toJson(ports);
+            json.set(0, jsonPm.toString().toString().replace("\"", "'"));
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 20000, "");
+            System.out.println(a.getValue());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
