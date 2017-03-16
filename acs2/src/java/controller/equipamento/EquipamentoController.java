@@ -299,7 +299,7 @@ public class EquipamentoController extends AbstractController {
         log.setCalendar(Calendar.getInstance());
         log.setLogin(this.sessionUsuarioEfika.getUsuario().getLogin());
         this.logDAO.cadastrar(log);
-        if (!valores.isEmpty()) {            
+        if (!valores.isEmpty()) {
             System.out.println("Entrou parametros");            
             Parametro parametro = new Parametro();
             parametro.setLog(log);
