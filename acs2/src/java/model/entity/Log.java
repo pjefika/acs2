@@ -10,6 +10,7 @@ import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -22,8 +23,9 @@ public class Log implements Serializable {
     
     @Id
     @GeneratedValue
-    private Long id;
-    private Long guid;
+    private Long id;    
+    @Lob
+    private String equipamento;    
     private Calendar calendar;
     private String login, acao;
 
@@ -35,14 +37,14 @@ public class Log implements Serializable {
         this.id = id;
     }
 
-    public Long getGuid() {
-        return guid;
+    public String getEquipamento() {
+        return equipamento;
     }
 
-    public void setGuid(Long guid) {
-        this.guid = guid;
-    }
-
+    public void setEquipamento(String equipamento) {
+        this.equipamento = equipamento;
+    }  
+    
     public Calendar getCalendar() {
         return calendar;
     }
