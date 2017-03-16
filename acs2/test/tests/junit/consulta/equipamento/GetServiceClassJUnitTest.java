@@ -7,7 +7,7 @@ package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import model.device.wifi.WifiInfoFull;
+import model.device.serviceclass.ServiceClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -15,15 +15,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import tests.junit.init.EquipamentoTestValues;
-import util.SoutUtil;
 
-/**
- *
- * @author G0042204
- */
-public class GetWifiInfoFullJUnitTest {
 
-    public GetWifiInfoFullJUnitTest() {
+public class GetServiceClassJUnitTest {
+
+    public GetServiceClassJUnitTest() {
     }
 
     @BeforeClass
@@ -43,7 +39,7 @@ public class GetWifiInfoFullJUnitTest {
     }
 
     @Test
-    public void getWifiInfoFull() {
+    public void getServiceClass() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
@@ -51,9 +47,9 @@ public class GetWifiInfoFullJUnitTest {
 
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 //            eqp = d.findDeviceByGUID(new Long(74021));
-            WifiInfoFull info = d.getWifiInfoFull(eqp);
+            ServiceClass sc = d.getServiceClass(eqp);
 
-            SoutUtil.print(info);
+            System.out.println(sc.getClassOfService());
 
             assertTrue(true);
 

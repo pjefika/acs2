@@ -39,6 +39,7 @@ import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.serviceclass.ServiceClass;
 import model.device.traceroute.TraceRouteRequest;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfo;
@@ -221,6 +222,13 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9515, opt, 10000, "");
         return JsonUtil.getWanInfo(a);
+    }
+
+    public ServiceClass getServiceClass(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9505, opt, 10000, "");
+        return JsonUtil.getServiceClass(a);
     }
 
     public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception {

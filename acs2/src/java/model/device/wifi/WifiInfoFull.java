@@ -51,7 +51,7 @@ public class WifiInfoFull  {
         this.channel = channel;
     }
 
-    private Integer signal;
+    private String signal;
     
     private Boolean bcEnabled,
                     macAddrControl,
@@ -151,11 +151,11 @@ public class WifiInfoFull  {
         this.maxBitRate = maxBitRate;
     }
 
-    public Integer getSignal() {
+    public String getSignal() {
         return signal;
     }
 
-    public void setSignal(Integer signal) {
+    public void setSignal(String signal) {
         this.signal = signal;
     }
 

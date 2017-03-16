@@ -22,6 +22,7 @@ import model.device.log.DeviceLog;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.serviceclass.ServiceClass;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
@@ -138,7 +139,7 @@ public class JsonUtil {
         String channel = jobject.get("channel").toString().replace("\"", "");
         Boolean bcEnabled = jobject.get("bcEnabled").getAsBoolean();
         String maxBitRate = jobject.get("maxBitRate").toString().replace("\"", "");
-        Integer signal = jobject.get("signal").getAsInt();
+        String signal = jobject.get("signal").toString().replace("\"", "");
         String ssid = jobject.get("ssid").toString().replace("\"", "");
         String authMode = jobject.get("authMode").toString().replace("\"", "");
         String encType = jobject.get("encType").toString().replace("\"", "");
@@ -212,6 +213,20 @@ public class JsonUtil {
         i.setEthernetPacketsSent(EthernetPacketsSent);
 
         return i;
+    }
+    
+    public static ServiceClass getServiceClass(StringResponseDTO a) {
+
+        ServiceClass sc = new ServiceClass();
+
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonObject jobject = jelement.getAsJsonObject();
+        System.out.println(jobject.toString());
+        String serviceOfClass = jobject.get("AccessClass") != null ? jobject.get("AccessClass").toString().replace("\"", "") : jobject.get("classOfService").toString().replace("\"", "");
+        
+        sc.setClassOfService(serviceOfClass);
+        
+        return sc;
     }
 
     public static DdnsInfo ddnsInfo(StringResponseDTO a) {
