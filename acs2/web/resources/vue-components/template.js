@@ -16,7 +16,8 @@ var vm = new Vue({
             comp: 'loading',
             titulo: 'Carregando...'
         },
-        currentView: 'searchAction'
+        currentView: 'searchAction',
+        mensagem: ''
     },
     created: function() {
     },

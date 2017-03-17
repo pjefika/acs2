@@ -18,9 +18,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
-import java.util.List;
 import dao.LogDAO;
+import exception.HdmException;
 import java.util.Calendar;
+import java.util.List;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import model.device.firmware.FirmwareInfo;
@@ -53,7 +54,7 @@ public class EquipamentoController extends AbstractController {
     }
 
     @Path("/equipamento/detalhe/{guid}")
-    public void detalhes(String guid) {
+    public void detalhes(String guid) throws HdmException{
 
         JsonObject jobj = new JsonObject();
 
@@ -77,7 +78,10 @@ public class EquipamentoController extends AbstractController {
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
-            result.include("exception", "Falha ao consultar Serviços Motive.");
+            System.out.println(ex.getFaultInfo().getFaultCode().replace(".", "_"));
+            result.include("exception",ex.getFaultInfo().getFaultCode().replace(".", "_"));
+            
+//            throw new HdmException(ex.getFaultInfo().getFaultCode());    
         }
     }
 

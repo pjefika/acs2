@@ -29,6 +29,7 @@
 
 
 <div class="container">
+
     <script type="text/html" id="detalhequip">        
         <div>
             <acs-modal v-bind:data='${equipamento}' v-bind:body="modal.comp" v-bind:titulo="modal.titulo"></acs-modal>
@@ -117,6 +118,14 @@
             </div>
         </div>
     </script>
-
-    <detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>
+    oi:${exception}!!!
+    <c:choose>
+        <c:when test="${exception != null}">
+            <alertpanel v-bind:mensagem="Oi"></alertpanel>
+        </c:when>
+        <c:otherwise>
+            <detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>            
+        </c:otherwise>
+    </c:choose>
+    
 </div>
