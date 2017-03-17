@@ -84,7 +84,7 @@ Vue.component("getInterfaceStatistics", {
                 </div>\n\
                 <div class='modal-footer'>\n\
                     <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                    <button type='button' class='btn btn-primary' @click='getInterfaceStatistics()'></button>\n\
+                    <button type='button' class='btn btn-primary' @click='getInterfaceStatistics()'>Consultar</button>\n\
                 </div>\n\
             </div>"
 })
