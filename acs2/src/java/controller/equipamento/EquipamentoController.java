@@ -73,7 +73,7 @@ public class EquipamentoController extends AbstractController {
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
             jobj.add("checkOn", new Gson().toJsonTree(checkOnline));
-            this.gerarLog(ndd, "Detalhes equipamento", "");
+            this.gerarLog(ndd, "Detalhes", "");
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
@@ -188,7 +188,7 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/updateFirmwareVersion/")
     public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) {
         try {
-            this.gerarLog(nbiDeviceData, "Update Firmware", "");
+            this.gerarLog(nbiDeviceData, "updateFirmwareVersion", "");
             this.includeSerializer(dao.firmwareUpdate(nbiDeviceData));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando updateFirmwareVersion");
@@ -236,8 +236,7 @@ public class EquipamentoController extends AbstractController {
         try {
             Gson gson = new Gson();
             String obj = gson.toJson(info);
-            this.gerarLog(nbiDeviceData, "SetWifi", obj);
-
+            this.gerarLog(nbiDeviceData, "setWifiFull", obj);
             dao.setWifiInfoFull(nbiDeviceData, info);
             this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
         } catch (Exception e) {
@@ -270,7 +269,7 @@ public class EquipamentoController extends AbstractController {
         try {
             Gson gson = new Gson();
             String obj = gson.toJson(pPPoECredentialsInfo);
-            this.gerarLog(nbiDeviceData, "SetPPPoECredentials", obj);
+            this.gerarLog(nbiDeviceData, "setPPPoECredentials", obj);
             this.includeSerializer(dao.setPPPoECredentials(nbiDeviceData, pPPoECredentialsInfo));
         } catch (Exception e) {
             this.includeSerializer("Erro no comando setPPPoECredentials");
@@ -306,6 +305,9 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/setPortMapping/")
     public void setPortMappingInfo(NbiDeviceData nbiDeviceData, List<PortMappingInfo> ports) {
         try {
+            Gson gson = new Gson();
+            String obj = gson.toJson(ports);
+            this.gerarLog(nbiDeviceData, "setPortMappingInfo", obj);            
             dao.setPortMapping(nbiDeviceData, ports);
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {
