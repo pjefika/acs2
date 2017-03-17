@@ -97,9 +97,9 @@ Vue.component("portMapping", {
                     </div>\n\
                 </div>\n\
                 <div class='modal-footer'>\n\
-                    <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
+                    <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
+                    <button type='button' class='btn btn-primary' @click='getPortMapping()'>Consultar</button>\n\
                 </div>\n\
-                <span v-text='ports'></span>\n\
             </div>"
 }
 );
