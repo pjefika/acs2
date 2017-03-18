@@ -189,12 +189,14 @@ public class JsonUtil {
 
     public static WanInfo getWanInfo(StringResponseDTO a) {
 
+        System.out.println(a.getValue());
+
         WanInfo i = new WanInfo();
 
         JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
 
-        String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
+        String EthernetBytesSent = jobject.get(".+-------").toString().replace("\"", "");
         String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
         String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
         String EthernetPacketsReceived = jobject.get("EthernetPacketsReceived").toString().replace("\"", "");
@@ -214,7 +216,7 @@ public class JsonUtil {
 
         return i;
     }
-    
+
     public static ServiceClass getServiceClass(StringResponseDTO a) {
 
         ServiceClass sc = new ServiceClass();
@@ -223,9 +225,9 @@ public class JsonUtil {
         JsonObject jobject = jelement.getAsJsonObject();
         System.out.println(jobject.toString());
         String serviceOfClass = jobject.get("AccessClass") != null ? jobject.get("AccessClass").toString().replace("\"", "") : jobject.get("classOfService").toString().replace("\"", "");
-        
+
         sc.setClassOfService(serviceOfClass);
-        
+
         return sc;
     }
 
@@ -363,7 +365,7 @@ public class JsonUtil {
                 }
                 String adminStatus = jobject.get("adminStatus") != null ? jobject.get("adminStatus").toString().replace("\"", "") : "";
                 String ifName = jobject.get("ifName") != null ? jobject.get("ifName").toString().replace("\"", "") : "";
-                
+
                 String ipAddrType = jobject.get("ipAddrType") != null ? jobject.get("ipAddrType").toString().replace("\"", "") : "";
                 String macAddress = jobject.get("macAddress") != null ? jobject.get("macAddress").toString().replace("\"", "") : "";
                 String bytesSent = jobject.get("bytesSent") != null ? jobject.get("bytesSent").toString().replace("\"", "") : "";
@@ -402,14 +404,13 @@ public class JsonUtil {
 
         return list;
     }
-    
-    
+
     public static XdslDiagnostics getXdslDiagnostics(StringResponseDTO a) {
         JsonElement jelement = new JsonParser().parse(a.getValue());
         JsonObject jobject = jelement.getAsJsonObject();
 //        System.out.println(jobject.toString());
         XdslDiagnostics x = new XdslDiagnostics();
-        
+
         String ModulationType = jobject.get("ModulationType").toString().replace("\"", "");
         String ShowtimeStart = jobject.get("ShowtimeStart").toString().replace("\"", "");
         String UpstreamMaxRate = jobject.get("UpstreamMaxRate").toString().replace("\"", "");
@@ -431,7 +432,7 @@ public class JsonUtil {
         String FECErrors = jobject.get("FECErrors").toString().replace("\"", "");
         String HECErrors = jobject.get("HECErrors").toString().replace("\"", "");
         String CRCErrors = jobject.get("CRCErrors").toString().replace("\"", "");
-       
+
         x.setATUCCRCErrors(ATUCCRCErrors);
         x.setATUCFECErrors(ATUCFECErrors);
         x.setATUCHECErrors(ATUCHECErrors);
@@ -453,7 +454,7 @@ public class JsonUtil {
         x.setUpstreamMaxRate(UpstreamMaxRate);
         x.setUpstreamNoiseMargin(UpstreamNoiseMargin);
         x.setUpstreamPower(UpstreamPower);
-        
+
         return x;
     }
 

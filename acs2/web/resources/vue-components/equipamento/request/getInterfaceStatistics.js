@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -15,8 +15,8 @@ Vue.component("getInterfaceStatistics", {
         },
         equipamento: {
             type: Equipamento,
-            default: function () {
-                return new Equipamento(this.eqpString);
+            default: function() {
+                return new Equipamento();
             }
         },
         infoList: {
@@ -27,48 +27,48 @@ Vue.component("getInterfaceStatistics", {
         },
         info: {
             type: InterfaceStatistics,
-            default: function () {
+            default: function() {
                 return new InterfaceStatistics();
             }
         }
     },
-    data: function () {
+    data: function() {
         return {mensagem: '', erro: ''}
     },
-    mounted: function () {
+    mounted: function() {
         this.getInterfaceStatistics();
     },
     methods: {
-        getInterfaceStatistics: function () {
+        getInterfaceStatistics: function() {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "getInterfaceStatistics/",
-                data: JSON.stringify(self.equipamento.flush()),
+                data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true
                 },
-                success: function (data) {
-                    if(data.list != null){
-                        if(data.list.length>0){
-                            self.infoList = data;    
-                        }else{
+                success: function(data) {
+                    if (data.list != null) {
+                        if (data.list.length > 0) {
+                            self.infoList = data;
+                        } else {
                             self.mensagem = 'Lista de Interfaces Vazia';
-                            self.erro = 'true';        
+                            self.erro = 'true';
                         }
-                    }else{
+                    } else {
                         self.mensagem = 'Falha ao buscar informações';
-                        self.erro = 'true';    
+                        self.erro = 'true';
                     }
                 },
-                error: function (e) {
+                error: function(e) {
                     console.log(e)
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                 },
-                complete: function () {
+                complete: function() {
                     self.$parent.loading = false
                 }
             });
@@ -98,7 +98,7 @@ Vue.component("infoStatistics", {
         }
     },
     methods: {
-        toggle: function () {
+        toggle: function() {
             var self = this;
             if (self.visivel) {
                 self.visivel = false;

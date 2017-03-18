@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -10,9 +10,10 @@ Vue.component("alertpanel", {
             default: ''
         },
         erro: {
-            type: String
+            type: String,
+            default: ''
         }
-    }, 
+    },
     template: "\
             <div>\n\
                 <div v-show='mensagem' :class='leClass' @click='fecha()'>\n\
@@ -20,7 +21,7 @@ Vue.component("alertpanel", {
                 </div>\n\
             </div>",
     computed: {
-        leClass: function () {
+        leClass: function() {
             if (!this.erro) {
                 return 'alert alert-success'
             }
@@ -28,8 +29,8 @@ Vue.component("alertpanel", {
         }
 
     },
-    mounted: function () {
-        alert('oi')
+    mounted: function() {
+//        alert('oi')
 //        var self = this;
 //        if (!self.mensagem) {
 //            if (self.mensagem == "device_could_not_be_found") {
@@ -38,14 +39,14 @@ Vue.component("alertpanel", {
 //                self.mensagem =  'Falha na comunicação com a plataforma Hdm'
 //            }
 //        }
-        
+
     },
     methods: {
-        fecha: function () {
+        fecha: function() {
             this.mensagem = ''
-            if(this.$parent.mensagem != null){
-                this.$parent.mensagem = ''
-            }
+//            if(this.$parent.mensagem != null){
+//                this.$parent.mensagem = ''
+//            }
 
         }
     }

@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -9,66 +9,62 @@
 var url = "/acs/equipamento/";
 
 Vue.component("pppoeCredentials", {
-    data: function () {
+    data: function() {
         return {
             mensagem: '',
             erro: ''
         };
     },
-    mounted: function () {
+    mounted: function() {
         var self = this;
         self.getPPPoECredentials();
     },
     props: {
-        eqpString: {
-            type: String,
-            required: true
-        },
         equipamento: {
             type: Equipamento,
-            default: function () {
-                return new Equipamento(this.eqpString);
+            default: function() {
+                return new Equipamento();
             }
         },
         pPPoEcred: {
             type: pPPoEC,
-            default: function () {
+            default: function() {
                 return new pPPoEC();
             }
         },
         alertPanel: {
-            type:Object
+            type: Object
         }
     },
     methods: {
-        getPPPoECredentials: function () {
+        getPPPoECredentials: function() {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "getPPPoe/",
-                data: JSON.stringify(this.equipamento.flush()),
+                data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true;
                 },
-                success: function (data) {
+                success: function(data) {
                     self.pPPoEcred = new pPPoEC(data.ppPoECredentialsInfo);
                 },
-                error: function (e) {
+                error: function(e) {
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                     console.log(e);
                 },
-                complete: function () {
+                complete: function() {
                     self.$parent.loading = false;
                 }
             });
         },
-        setPPPoECredentials: function () {
+        setPPPoECredentials: function() {
             var self = this;
             var _data = {};
-            _data.nbiDeviceData = self.equipamento;
+            _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
             _data.pPPoECredentialsInfo = self.pPPoEcred;
 
             $.ajax({
@@ -76,13 +72,13 @@ Vue.component("pppoeCredentials", {
                 url: url + "setPPPoe/",
                 data: JSON.stringify(_data),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-                success: function (data) {
+                success: function(data) {
                     console.log(data);
                 },
-                error: function (e) {
+                error: function(e) {
                     console.log(e);
                 }
             });

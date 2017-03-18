@@ -24,7 +24,7 @@ Vue.component("getPing", {
         equipamento: {
             type: Equipamento,
             default: function() {
-                return new Equipamento(this.eqpString);
+                return new Equipamento();
             }
         },
         request: {
@@ -40,7 +40,7 @@ Vue.component("getPing", {
         getPing: function() {
             var self = this;
             var _data = {};
-            _data.nbiDeviceData = self.equipamento.flush();
+            _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
             _data.request = self.request;
             $.ajax({
                 type: "POST",

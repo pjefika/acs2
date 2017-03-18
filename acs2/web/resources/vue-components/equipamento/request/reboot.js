@@ -17,7 +17,7 @@ Vue.component("reboot", {
         equipamento: {
             type: Equipamento,
             default: function() {
-                return new Equipamento(this.eqpString);
+                return new Equipamento();
             }
         }
     },
@@ -27,7 +27,7 @@ Vue.component("reboot", {
             $.ajax({
                 type: "POST",
                 url: url + "reboot/",
-                data: JSON.stringify(self.equipamento.flush()),
+                data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");

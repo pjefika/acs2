@@ -1,11 +1,11 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
 Vue.component("getWan", {
-    props:{
+    props: {
         eqpString: {
             type: String,
             required: true
@@ -13,20 +13,20 @@ Vue.component("getWan", {
         equipamento: {
             type: Equipamento,
             default: function() {
-                return new Equipamento(this.eqpString);
+                return new Equipamento();
             }
         },
         info: {
             type: WanInfo,
-            default: function(){
-                    return new WanInfo();
+            default: function() {
+                return new WanInfo();
             }
         }
     },
-    data: function(){
-      return {mensagem: '', erro: ''}  
+    data: function() {
+        return {mensagem: '', erro: ''}
     },
-    mounted: function(){
+    mounted: function() {
         this.getWan();
     },
     methods: {
@@ -35,7 +35,7 @@ Vue.component("getWan", {
             $.ajax({
                 type: "POST",
                 url: url + "getWanInfo/",
-                data: JSON.stringify(self.equipamento.flush()),
+                data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");

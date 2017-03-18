@@ -11,18 +11,14 @@ Vue.component("getWifi", {
     mounted: function() {
         this.getWifi();
     },
-    data: function(){
-      return {mensagem: '', erro: ''}  
+    data: function() {
+        return {mensagem: '', erro: ''}
     },
     props: {
-        eqpString: {
-            type: String,
-            required: true
-        },
         equipamento: {
             type: Equipamento,
             default: function() {
-                return new Equipamento(this.eqpString);
+                return new Equipamento();
             }
         },
         info: {
@@ -32,7 +28,7 @@ Vue.component("getWifi", {
             }
         },
         alertPanel: {
-            type:Object
+            type: Object
         }
     },
     methods: {
@@ -41,7 +37,7 @@ Vue.component("getWifi", {
             $.ajax({
                 type: "POST",
                 url: url + "getWifiInfoFull/",
-                data: JSON.stringify(self.equipamento.flush()),
+                data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
@@ -67,7 +63,7 @@ Vue.component("getWifi", {
              * @type type
              */
             var _data = {};
-            _data.nbiDeviceData = self.equipamento;
+            _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
             _data.info = self.info;
 
             $.ajax({

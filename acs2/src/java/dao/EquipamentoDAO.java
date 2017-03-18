@@ -352,7 +352,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 10000, "");
-        
+
         return JsonUtil.ddnsInfo(a);
     }
 

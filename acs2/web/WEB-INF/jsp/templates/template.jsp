@@ -21,6 +21,7 @@
         <script src="${pageContext.request.contextPath}/resources/lodash/lodash.js"></script>
         <script src="${pageContext.request.contextPath}/resources/moment/moment.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/bootstrap-notify.js"></script>
         <script src="${pageContext.request.contextPath}/resources/data-table/dataTables.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/data-table/dataTables.bootstrap.min.js"></script>
         <decorator:head/>

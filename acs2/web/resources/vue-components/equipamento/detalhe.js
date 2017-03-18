@@ -16,7 +16,7 @@ Vue.component("detail", {
         modal: {
             type: Object,
             required: true,
-            default: function () {
+            default: function() {
                 return {
                     comp: 'get-wifi',
                     titulo: 'Titulo Dev'
@@ -27,34 +27,34 @@ Vue.component("detail", {
             type: String,
             required: true
         },
-        eqp: {
+        equipamento: {
             type: Equipamento,
-            default: function () {
+            default: function() {
                 return new Equipamento(this.eqpString);
             }
         }
     },
-    mounted: function () {
+    mounted: function() {
         var self = this;
-        setInterval(function () {
+        self.checkOnline();
+        setInterval(function() {
             console.log("Check Online");
             self.checkOnline();
         }, 45000);
     },
     methods: {
-        checkOnline: _.debounce(function () {
-            var self = this;                        
+        checkOnline: _.debounce(function() {
+            var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "checkOnline/",
-                data: JSON.stringify(self.eqp.flush()),
+                data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-                success: function (data) {
-                    self.eqp = new Equipamento(self.eqpString);
-                    self.eqp.checkOn = data.boolean;
+                success: function(data) {
+                    self.equipamento.checkOn = data.boolean;
                 }
             });
         }, 1000)

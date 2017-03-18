@@ -17,9 +17,6 @@ Vue.component("acsButton", {
                 return "Ação";
             }
         },
-        exec: {
-            type: Function
-        },
         comp: {
             type: String,
             required: true
@@ -35,24 +32,25 @@ Vue.component("acsButton", {
     methods: {
         setComp: function() {
             var self = this;
-            if (self.ativo) {
 
+            self.$emit('notif', 'setComp -> acsButton');
+
+            if (self.ativo) {
                 vm.modal = {
                     titulo: 'Carregando...',
                     comp: 'loading'
                 };
 
                 Vue.nextTick(function() {
-                    self.ativo = false
+                    self.ativo = false;
                     vm.modal = {
                         titulo: self.acao,
                         comp: self.comp
                     };
 
                     $("#actionModal").modal("show");
-                    self.ativo = true
-
-                })
+                    self.ativo = true;
+                });
             }
         }
     }
