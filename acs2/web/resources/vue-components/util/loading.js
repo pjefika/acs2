@@ -4,6 +4,6 @@
  * and open the template in the editor.
  */
 Vue.component("loading", {
-    template: '<div style="text-align: center;"><img src="/acs/resources/imagens/loading.gif"></div>'
+    template: '<div  class="modal-body" style="text-align: center;"><img src="/acs/resources/imagens/loading.gif"></div>'
 });
 

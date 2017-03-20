@@ -101,10 +101,9 @@
     <div>
         <c:choose>
             <c:when test="${exception != null}">
-                <alertpanel mensagem="Oi"></alertpanel>
+                <alertpanel mensagem='${exception}'></alertpanel>
                 </c:when>
                 <c:otherwise>
-                <alertpanel v-bind:mensagem="'Oi'"></alertpanel>
                 <detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>
                 </c:otherwise>
             </c:choose>
