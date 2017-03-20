@@ -42,6 +42,7 @@
                     <c:if test="${sessionUsuarioEfika.logado}">
                         <ul class="nav navbar-nav">
                             <li><a href="${linkTo[SearchController].create()}">Busca</a></li>
+                            <li><a href="${linkTo[LogController].create()}">Logs</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">

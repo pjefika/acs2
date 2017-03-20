@@ -20,12 +20,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "acs2_log")
 public class Log implements Serializable {
-    
+
     @Id
     @GeneratedValue
-    private Long id;    
+    private Long id;
     @Lob
-    private String equipamento;    
+    private String equipamento;
+    @Lob
+    private String valor;
     private Calendar calendar;
     private String login, acao;
 
@@ -43,8 +45,8 @@ public class Log implements Serializable {
 
     public void setEquipamento(String equipamento) {
         this.equipamento = equipamento;
-    }  
-    
+    }
+
     public Calendar getCalendar() {
         return calendar;
     }
@@ -67,6 +69,14 @@ public class Log implements Serializable {
 
     public void setAcao(String acao) {
         this.acao = acao;
-    }  
-        
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
 }
