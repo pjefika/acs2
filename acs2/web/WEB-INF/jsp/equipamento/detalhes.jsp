@@ -99,7 +99,6 @@
     </script>
 
     <div>
-        oi:${exception}!!!
         <c:choose>
             <c:when test="${exception != null}">
                 <alertpanel mensagem="Oi"></alertpanel>
