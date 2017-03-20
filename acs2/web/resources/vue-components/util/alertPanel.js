@@ -16,37 +16,35 @@ Vue.component("alertpanel", {
     },
     template: "\
             <div>\n\
-                <div v-show='mensagem' :class='leClass' @click='fecha()'>\n\
-                    {{mensagem}}\n\
+                <div v-show='mensagem' :class='leClass' style='font-size:15px' @click='fecha()'>\n\
+                    {{leContent}}\n\
                 </div>\n\
             </div>",
     computed: {
         leClass: function() {
             if (!this.erro) {
-                return 'alert alert-success'
+                return 'alert alert-danger';
             }
-            return 'alert alert-danger'
+            return 'alert alert-success';
+        },
+        leContent: function(){
+            switch (this.mensagem){
+                case "device_could_not_be_found":
+                    return "Equipamento não encontrado";
+                    break;
+                default:
+                    return "Erro: "+this.mensagem;
+                    break
+            }
         }
-
-    },
-    mounted: function() {
-//        alert('oi')
-//        var self = this;
-//        if (!self.mensagem) {
-//            if (self.mensagem == "device_could_not_be_found") {
-//                self.mensagem = 'Equipamento inexistente'
-//            }else{
-//                self.mensagem =  'Falha na comunicação com a plataforma Hdm'
-//            }
-//        }
 
     },
     methods: {
         fecha: function() {
-            this.mensagem = ''
-//            if(this.$parent.mensagem != null){
-//                this.$parent.mensagem = ''
-//            }
+            this.mensagem = '';
+            if(this.$parent.mensagem != null){
+                this.$parent.mensagem = '';
+            }
 
         }
     }
