@@ -95,6 +95,7 @@
                                 <acs-button acao="Consultar Interface Statistics" comp="get-interface-statistics" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar LAN Host" comp="get-lan-hosts" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -102,11 +103,9 @@
                                 <label class="list-group-item">Ações</label>
                                 <acs-button acao="Reiniciar" comp="reboot" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Reset de Fábrica" comp="reset-factory" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <!--                                <button type="button" class="list-group-item" data-toggle="modal" data-target="#modalFactory" data-backdrop="static">Reset de Fábrica</button>
-                                                                <button type="button" class="list-group-item">Efetuar Traceroute</button>
-                                                                <button type="button" class="list-group-item">Gerenciar DMZ</button>-->
-                                <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Gerenciar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Efetuar Traceroute" comp="func-indisponivel" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Gerenciar DMZ" comp="func-indisponivel" v-bind:ativo="eqp.checkOn"></acs-button>                                
+                                <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="eqp.checkOn"></acs-button>                                
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="eqp.checkOn"></acs-button>
                                 <acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="eqp.checkOn"></acs-button>

@@ -97,9 +97,9 @@ Vue.component("portMapping", {
                     </div>\n\
                 </div>\n\
                 <div class='modal-footer'>\n\
-                    <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
+                    <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
+                    <button type='button' class='btn btn-primary' @click='getPortMapping()'>Consultar</button>\n\
                 </div>\n\
-                <span v-text='ports'></span>\n\
             </div>"
 }
 );
@@ -113,9 +113,9 @@ Vue.component("PortTable", {
     },
     template: "\
             <div>\n\
-                <p>\n\
+                <!-- <p>\n\
                     <button type='button' @click='addPortMapping()' class='btn btn-default btn-xs'>Adicionar</button>\n\
-                </p>\n\
+                </p> -->\n\
                 <table class='table table-bordered small'>\n\
                     <thead>\n\
                         <tr>\n\
@@ -124,7 +124,7 @@ Vue.component("PortTable", {
                             <th>IP Interno</th>\n\
                             <th>Protocolo</th>\n\
                             <th>Ativo</th>\n\
-                            <th>Ações</th>\n\
+                            <!-- <th>Ações</th> -->\n\
                         </tr>\n\
                     </thead>\n\
                     <tbody>\n\
@@ -194,13 +194,13 @@ Vue.component("PortRow", {
                     </td>\n\
                     <td class='text-center'>\n\
                         <span v-if='port.enable'>\n\
-                            <input v-model='port.enable' type='checkbox' checked>\n\
+                            <input v-model='port.enable' type='checkbox' checked disabled>\n\
                         </span>\n\
                         <span v-else>\n\
-                            <input v-model='port.enable' type='checkbox'>\n\
+                            <input v-model='port.enable' type='checkbox' disabled>\n\
                         </span>\n\
                     </td>\n\
-                    <td class='text-center'>\n\
+                    <!-- <td class='text-center'>\n\
                         <button type='button' @click='remPortMapping(port)' class='btn btn-danger btn-sm'>\n\
                             <span class='glyphicon glyphicon-trash' aria-hidden='true'></span>\n\
                         </button>\n\
@@ -215,6 +215,6 @@ Vue.component("PortRow", {
                                 <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>\n\
                             </button>\n\
                         </span>\n\
-                    </td>\n\
+                    </td> --> \n\
                 </tr>"
 });

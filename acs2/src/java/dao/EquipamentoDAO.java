@@ -238,7 +238,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 10000, "");
-        System.out.println(a.getValue());
+        //System.out.println(a.getValue());
         return JsonUtil.getLanHosts(a);
     }
 
@@ -253,7 +253,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 100000, "");
-        System.out.println(a.getValue());
+        //System.out.println(a.getValue());
         return JsonUtil.getWifiInfoFull(a);
     }
 
@@ -262,7 +262,7 @@ public class EquipamentoDAO {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
-            System.out.println(a.getValue());
+            //System.out.println(a.getValue());
             return JsonUtil.getPortMappingInfo(a);
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
@@ -281,7 +281,7 @@ public class EquipamentoDAO {
 
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9524, opt, 15000, "");
 
-            System.out.println(a.getValue());
+            //System.out.println(a.getValue());
 
             return null;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
@@ -310,7 +310,7 @@ public class EquipamentoDAO {
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonWifi);
 
-            System.out.println(jsonWifi);
+            //System.out.println(jsonWifi);
 
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 10000, "");
             return true;
@@ -335,7 +335,7 @@ public class EquipamentoDAO {
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonWifi);
 
-            System.out.println(jsonWifi);
+            //System.out.println(jsonWifi);
 
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
             return true;
@@ -396,7 +396,7 @@ public class EquipamentoDAO {
             String jsonPppoe = JsonUtil.serialize(p, p.getClass());
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonPppoe);
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 15000, "");
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 50000, "");
             //System.out.println(a.getValue());
             return JsonUtil.pingResponse(a);
         } catch (Exception e) {
@@ -428,8 +428,8 @@ public class EquipamentoDAO {
     public void getAvailableFirmwareImages(NbiDeviceData eqp) throws NBIException_Exception {
         this.initNbi();
         for (NbiFirmwareImageData o : nbi.getAvailableFirmwareImages(NbiDecorator.adapterAlter(eqp))) {
-            System.out.println(o.getName());
-            System.out.println(o.getDescription());
+            //System.out.println(o.getName());
+            //System.out.println(o.getDescription());
         }
     }
 
@@ -443,7 +443,7 @@ public class EquipamentoDAO {
             String jsonPm = gson.toJson(ports);
             json.set(0, jsonPm.toString().toString().replace("\"", "'"));
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 20000, "");
-            System.out.println(a.getValue());
+            //System.out.println(a.getValue());
         } catch (Exception e) {
             e.printStackTrace();
         }
