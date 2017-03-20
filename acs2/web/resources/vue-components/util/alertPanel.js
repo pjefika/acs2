@@ -23,9 +23,9 @@ Vue.component("alertpanel", {
     computed: {
         leClass: function() {
             if (!this.erro) {
-                return 'alert alert-danger';
+                return 'alert alert-success';
             }
-            return 'alert alert-success';
+            return 'alert alert-danger';
         },
         leContent: function(){
             switch (this.mensagem){

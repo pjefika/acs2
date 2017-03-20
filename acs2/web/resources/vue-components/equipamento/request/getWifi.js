@@ -48,8 +48,7 @@ Vue.component("getWifi", {
                 },
                 error: function(e) {
                     console.log(e)
-                    self.mensagem = 'Falha ao buscar informações';
-                    self.erro = 'true';
+                    vm.$emit("notif", "oi");
                 },
                 complete: function() {
                     self.$parent.loading = false
