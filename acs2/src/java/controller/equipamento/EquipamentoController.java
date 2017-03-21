@@ -218,11 +218,24 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getPortMapping/")
-    public void getPortMappingInfo(NbiDeviceData nbiDeviceData) {
+    public void getPortMappingInfo(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro ao buscar getPortMapping");
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter os dados de Port Mapping do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter os dados de Port Mapping do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou os dados de Port Mapping do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou os dados de Port Mapping do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter os dados de Port Mapping.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Port Mapping.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter os dados de Port Mapping.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Port Mapping.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter os dados de Port Mapping.");
+            throw new HdmException("Erro no provedor da plataforma ao obter os dados de Port Mapping.");
         }
     }
 

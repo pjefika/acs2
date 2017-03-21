@@ -220,7 +220,7 @@ public class EquipamentoDAO {
         return JsonUtil.getWifiInfo(a);
     }
 
-    public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException{
+    public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9515, opt, 10000, "");
@@ -273,17 +273,19 @@ public class EquipamentoDAO {
         return i;
     }
 
-    public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws Exception {
+    public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
+        List<PortMappingInfo> i;
         try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
-            //System.out.println(a.getValue());
-            return JsonUtil.getPortMappingInfo(a);
-        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
-            e.printStackTrace();
-            return null;
+            i = JsonUtil.getPortMappingInfo(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha getPortMappingInfo no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
         }
+        return i;
     }
 
     public PortMappingInfo traceroute(NbiDeviceData eqp, TraceRouteRequest trace) throws Exception {
@@ -298,7 +300,6 @@ public class EquipamentoDAO {
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9524, opt, 15000, "");
 
             //System.out.println(a.getValue());
-
             return null;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
@@ -327,7 +328,6 @@ public class EquipamentoDAO {
             json.set(0, jsonWifi);
 
             //System.out.println(jsonWifi);
-
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 10000, "");
             return true;
         } catch (OperationTimeoutException | ProviderException e) {
@@ -352,7 +352,6 @@ public class EquipamentoDAO {
             json.set(0, jsonWifi);
 
             //System.out.println(jsonWifi);
-
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
             return true;
         } catch (OperationTimeoutException | ProviderException e) {
