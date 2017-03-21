@@ -52,8 +52,13 @@ Vue.component("getPing", {
                     self.$parent.loading = true;
                 },
                 success: function(data) {
-                    self.infoPing = data.pingResponse;
-                    console.log(data);
+                    if(data.pingResponse != null){
+                        self.infoPing = data.pingResponse;    
+                    }else{
+                        vm.$emit("error", data.string);
+                        $("#actionModal").modal("hide");
+                    }
+                    
                 },
                 error: function(e) {
                     self.mensagem = 'Falha ao buscar informações';

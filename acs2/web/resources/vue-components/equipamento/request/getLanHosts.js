@@ -40,7 +40,13 @@ Vue.component("getLanHosts", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    self.hosts = data.list;
+                    if(data.list != null){
+                        self.hosts = data.list;    
+                    }else{
+                        vm.$emit("error", data.string);
+                        $("#modalAction").modal("hide");
+                    }
+                    
                 },
                 error: function(e) {
                     self.mensagem = 'Falha ao buscar informações';

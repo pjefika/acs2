@@ -250,26 +250,34 @@ public class JsonUtil {
         return sc;
     }
 
-    public static DdnsInfo ddnsInfo(StringResponseDTO a) {
+    public static DdnsInfo ddnsInfo(StringResponseDTO a) throws JsonUtilException {
 
         DdnsInfo d = new DdnsInfo();
 
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
+        try {
 
-        Boolean enable = new Boolean(jobject.get("Enable").toString().replace("\"", ""));
-        String hostname = jobject.get("Hostname").toString().replace("\"", "");
-        String password = jobject.get("Password").toString().replace("\"", "");
-        String provider = jobject.get("Provider").toString().replace("\"", "");
-        String providerUrl = jobject.get("ProviderURL").toString().replace("\"", "");
-        String user = jobject.get("User").toString().replace("\"", "");
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
 
-        d.setEnable(enable);
-        d.setHostname(hostname);
-        d.setPassword(password);
-        d.setProvider(provider);
-        d.setProviderUrl(providerUrl);
-        d.setUser(user);
+            Boolean enable = new Boolean(jobject.get("Enable").toString().replace("\"", ""));
+            String hostname = jobject.get("Hostname").toString().replace("\"", "");
+            String password = jobject.get("Password").toString().replace("\"", "");
+            String provider = jobject.get("Provider").toString().replace("\"", "");
+            String providerUrl = jobject.get("ProviderURL").toString().replace("\"", "");
+            String user = jobject.get("User").toString().replace("\"", "");
+
+            d.setEnable(enable);
+            d.setHostname(hostname);
+            d.setPassword(password);
+            d.setProvider(provider);
+            d.setProviderUrl(providerUrl);
+            d.setUser(user);
+
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
 
         return d;
     }
@@ -288,7 +296,7 @@ public class JsonUtil {
         return logs;
     }
 
-    public static List<LanDevice> getLanHosts(StringResponseDTO a) {
+    public static List<LanDevice> getLanHosts(StringResponseDTO a) throws JsonUtilException {
 
         List<LanDevice> lst = new ArrayList<>();
 
@@ -316,33 +324,39 @@ public class JsonUtil {
                 l.setAtivo(Boolean.valueOf(jobject.get("Active").toString().replace("\"", "")));
                 lst.add(l);
             }
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
         } catch (NullPointerException e) {
-
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
 
         return lst;
     }
 
-    public static PingResponse pingResponse(StringResponseDTO a) {
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
-
-        String status = jobject.get("status").toString().replace("\"", "");
-        String avgRespTime = jobject.get("avgRespTime").toString().replace("\"", "");
-        String qtdSuccess = jobject.get("qtdSuccess").toString().replace("\"", "");
-        String qtdFailures = jobject.get("qtdFailures").toString().replace("\"", "");
-        String hostAddress = jobject.get("hostAddress").toString().replace("\"", "");
-        String repetitions = jobject.get("repetitions").toString().replace("\"", "");
-
+    public static PingResponse pingResponse(StringResponseDTO a) throws JsonUtilException {
         PingResponse r = new PingResponse();
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
 
-        r.setStatus(status);
-        r.setAvgRespTime(avgRespTime);
-        r.setQtdSuccess(qtdSuccess);
-        r.setQtdFailures(qtdFailures);
-        r.setHostAddress(hostAddress);
-        r.setRepetitions(repetitions);
+            String status = jobject.get("status").toString().replace("\"", "");
+            String avgRespTime = jobject.get("avgRespTime").toString().replace("\"", "");
+            String qtdSuccess = jobject.get("qtdSuccess").toString().replace("\"", "");
+            String qtdFailures = jobject.get("qtdFailures").toString().replace("\"", "");
+            String hostAddress = jobject.get("hostAddress").toString().replace("\"", "");
+            String repetitions = jobject.get("repetitions").toString().replace("\"", "");
 
+            r.setStatus(status);
+            r.setAvgRespTime(avgRespTime);
+            r.setQtdSuccess(qtdSuccess);
+            r.setQtdFailures(qtdFailures);
+            r.setHostAddress(hostAddress);
+            r.setRepetitions(repetitions);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
         return r;
     }
 
@@ -351,13 +365,22 @@ public class JsonUtil {
         // .replace("[", "").replace("]", "").replace("\"", "\"\"");
     }
 
-    public static PPPoECredentialsInfo getPPPoECredentialsInfo(StringResponseDTO a) {
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
-        String username = jobject.get("Username").toString().replace("\"", "");
-        String password = jobject.get("Password").toString().replace("\"", "");
+    public static PPPoECredentialsInfo getPPPoECredentialsInfo(StringResponseDTO a) throws JsonUtilException {
 
-        return new PPPoECredentialsInfo(username, password);
+        PPPoECredentialsInfo i = new PPPoECredentialsInfo();
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
+            String username = jobject.get("Username").toString().replace("\"", "");
+            String password = jobject.get("Password").toString().replace("\"", "");
+            i = new PPPoECredentialsInfo(username, password);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
+
+        return i;
     }
 
     public static List<InterfaceStatistics> getInterfaceStatistics(StringResponseDTO a) throws JsonUtilException {
