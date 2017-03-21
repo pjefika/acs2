@@ -3,10 +3,6 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
            prefix="decorator"%>
 
-
-
-
-
 <div class="container">
 
     <script type="text/html" id="detalhequip">
@@ -71,24 +67,24 @@
                         <div class="col-md-6">
                             <div class="list-group" v-if="equipamento.isModem()">
                                 <label class="list-group-item">Consultas</label>
-                                <acs-button acao="Consultar WAN" comp="get-wan" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar Interface Statistics" comp="get-interface-statistics" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar LAN Host" comp="get-lan-hosts" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Consultar WAN" comp="get-wan" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Consultar Interface Statistics" comp="get-interface-statistics" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Consultar LAN Host" comp="get-lan-hosts" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="equipamento.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="list-group" v-if="equipamento.isModem()">
                                 <label class="list-group-item">Ações</label>
-                                <acs-button acao="Reiniciar" comp="reboot" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Reset de Fábrica" comp="reset-factory" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Efetuar Traceroute" comp="func-indisponivel" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Gerenciar DMZ" comp="func-indisponivel" v-bind:ativo="eqp.checkOn"></acs-button>                                
-                                <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="eqp.checkOn"></acs-button>                                
-                                <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="eqp.checkOn"></acs-button>
-                                <acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="eqp.checkOn"></acs-button>
+                                <acs-button acao="Reiniciar" comp="reboot" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Reset de Fábrica" comp="reset-factory" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Efetuar Traceroute" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Gerenciar DMZ" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>
                             </div>
                         </div>
                     </div>
@@ -101,10 +97,10 @@
         <c:choose>
             <c:when test="${exception != null}">
                 <alertpanel mensagem='${exception}' erro="s"></alertpanel>
-            </c:when>
-            <c:otherwise>
+                </c:when>
+                <c:otherwise>
                 <detail v-bind:modal="modal" v-bind:eqp-string='${equipamento}'></detail>
-            </c:otherwise>
+                </c:otherwise>
             </c:choose>
     </div>
 </div>

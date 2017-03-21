@@ -7,6 +7,9 @@ package util;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiDynamicVariable;
+import com.alcatel.hdm.service.nbi2.NbiServiceTag;
+import com.alcatel.hdm.service.nbi2.NbiUserTag;
 import java.util.List;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
@@ -29,14 +32,35 @@ public class SoutUtil {
         System.out.println("DeviceGUID: " + d.getDeviceGUID());
         System.out.println("OUI: " + d.getDeviceId().getOUI());
         System.out.println("SubscriberID: " + d.getSubscriberID());
-        System.out.println("getProductClass: " + d.getDeviceId().getProductClass());
-        System.out.println("getProtocol: " + d.getDeviceId().getProtocol());
+        System.out.println("ProductClass: " + d.getDeviceId().getProductClass());
+        /**
+         * "the class of device, which can be one of: 0: REGULAR_DEVICE_CLASS 1:
+         * VIRTUAL_DEVICE_CLASS 2: PROXIER_HOSTING_VIRTUAL_DEVICE_CLASS 3:
+         * PROXIER_HOSTING_EMBEDDED_DEVICE_CLASS 4:
+         * PROXIER_HOSTING_BOTH_DEVICE_CLASS"
+         */
+        System.out.println("ProductClass: " + d.getDeviceClass());
+        System.out.println("Protocol: " + d.getDeviceId().getProtocol());
         System.out.println("SerialNumber: " + d.getDeviceId().getSerialNumber());
         System.out.println("LastContactTime: " + d.getLastContactTime());
         System.out.println("getConnectionRequestURL: " + d.getConnectionRequestURL());
-        System.out.println("getConnectionRequestUsername: " + d.getConnectionRequestUsername());
-        System.out.println("getConnectionRequestPassword: " + d.getConnectionRequestPassword());
+        System.out.println("ConnectionRequestUsername: " + d.getConnectionRequestUsername());
+        System.out.println("tConnectionRequestPassword: " + d.getConnectionRequestPassword());
         System.out.println("Type: " + d.getType());
+        System.out.println("Model: " + d.getModel());
+
+        for (NbiUserTag tag : d.getUserTagArray()) {
+            System.out.println("UserTagArray: " + tag.getName() + "| Valor: " + tag.getValue());
+        }
+
+        for (NbiServiceTag tag : d.getServiceTagArray()) {
+            System.out.println("ServiceTagArray: " + tag.getName() + "| Valor: " + tag.getValue());
+        }
+
+        for (NbiDynamicVariable dyn : d.getDynamicVariables()) {
+            System.out.println("NbiDynamicVariable: " + dyn.getName() + "| Valor: " + dyn.getValue());
+        }
+
         System.out.println("");
     }
 

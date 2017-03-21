@@ -39,15 +39,3 @@ Equipamento.prototype.dataAutenticacao = function() {
         return null;
     }
 };
-
-/**
- * Método necessário para limpar campos adicionais antes de passar para a controller Vraptor
- * @returns {Equipamento.prototype}
- */
-Equipamento.prototype.flush = function() {
-    var _flush = new Equipamento(this);
-    delete _flush.firmwareOk;
-    delete _flush.checkOn;
-    delete _flush.lastActivationTime;
-    return _flush;
-};
