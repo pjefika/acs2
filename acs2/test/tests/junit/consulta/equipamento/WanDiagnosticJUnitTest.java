@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import tests.junit.init.EquipamentoTestValues;
+import util.SoutUtil;
 
 /**
  *
@@ -54,6 +55,7 @@ public class WanDiagnosticJUnitTest {
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
+            SoutUtil.print(eqp);
             d.getWanInfo(eqp);
             assertTrue(true);
 

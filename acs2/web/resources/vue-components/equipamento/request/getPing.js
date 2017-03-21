@@ -80,7 +80,7 @@ Vue.component("getPing", {
                         </div>\n\
                         <div class='modal-footer'>\n\
                             <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                            <button class='btn btn-primary' type='button' @click='getPing()'>Buscar</button>\n\
+                            <button class='btn btn-primary' type='button' @click='getPing()'>Ping</button>\n\
                         </div>\n\
                     </div>\n\
                </div>"
@@ -88,7 +88,7 @@ Vue.component("getPing", {
 
 Vue.component("tabelaPing", {
     props: ["infoPing"],
-    template: "<div v-show='this.infoPing'>\n\
+    template: "<div v-show='this.infoPing.hostAddress'>\n\
                 <hr/>\n\
                 <table class='table table-bordered small'>\n\
                     <thead>\n\

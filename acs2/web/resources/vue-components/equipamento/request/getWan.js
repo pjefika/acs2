@@ -59,7 +59,7 @@ Vue.component("getWan", {
             <div>\n\
                 <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                 <div class='modal-body'>\n\
-                    <table class='table table-bordered table-condensed'>\n\
+                    <table class='table table-bordered small'>\n\
                         <thead>\n\
                             <tr>\n\
                                 <th></th>\n\

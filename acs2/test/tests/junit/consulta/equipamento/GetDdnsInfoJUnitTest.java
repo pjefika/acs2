@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -52,10 +53,12 @@ public class GetDdnsInfoJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-//            Long l = new Long(EquipamentoTestValues.GUID);
-Long l = new Long(89013);
+            Long l = new Long(EquipamentoTestValues.GUID);
+//            Long l = new Long(74021);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
+
+            SoutUtil.print(eqp);
 
             //d.capture(l);
             // d.release(l);

@@ -134,7 +134,7 @@ public class JsonUtil {
         try {
             JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
             JsonObject jobject = jelement.getAsJsonObject();
-            
+
             String admStatus = jobject.get("admStatus").toString().replace("\"", "");
             String operStatus = jobject.get("operStatus").toString().replace("\"", "");
             String channel = jobject.get("channel").toString().replace("\"", "");
@@ -187,7 +187,7 @@ public class JsonUtil {
 
         } catch (IllegalStateException e) {
             throw new JsonUtilException("A resposta da plataforma não era um Json");
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
 
@@ -203,7 +203,7 @@ public class JsonUtil {
         JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
 
-        String EthernetBytesSent = jobject.get(".+-------").toString().replace("\"", "");
+        String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
         String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
         String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
         String EthernetPacketsReceived = jobject.get("EthernetPacketsReceived").toString().replace("\"", "");
