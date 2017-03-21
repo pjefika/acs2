@@ -5,8 +5,15 @@
  */
 package tests.junit.consulta.equipamento;
 
+import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
+import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
+import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
+import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderException;
 import dao.EquipamentoDAO;
+import exception.HdmException;
+import exception.JsonUtilException;
 import model.device.wifi.WifiInfoFull;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -43,23 +50,36 @@ public class GetWifiInfoFullJUnitTest {
     }
 
     @Test
-    public void getWifiInfoFull() {
+    public void getWifiInfoFull() throws HdmException {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
 
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-//            eqp = d.findDeviceByGUID(new Long(74021));
             WifiInfoFull info = d.getWifiInfoFull(eqp);
 
             SoutUtil.print(info);
 
             assertTrue(true);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            assertTrue(false);
+        } catch(DeviceOperationException e){
+            throw new HdmException("A plataforma falhou ao obter os dados de Wifi do equipamento.");
+        } catch(JsonUtilException e){
+            throw new HdmException("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
+        } catch(NBIException e){
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
+        } catch(NBIException_Exception e){
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Wifi do equipamento.");
+        } catch(OperationTimeoutException e){
+            throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Wifi.");
+        } catch(ProviderException e){
+            throw new HdmException("Erro no provedor da plataforma ao obter os dados de Wifi.");
         }
+        
+        
+//        catch (Exception ex) {
+//            assertTrue(false);
+//        } 
     }
 }

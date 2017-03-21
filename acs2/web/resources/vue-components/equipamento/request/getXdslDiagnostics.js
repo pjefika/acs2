@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -15,26 +15,26 @@ Vue.component("getXdslDiagnostics", {
         equipamento: {
             type: Equipamento,
             default: function() {
-                return new Equipamento(this.eqpString);
+                return new Equipamento();
             }
         },
         info: {
             type: XdslDiagnostics,
-            default: function(){
-                    return new XdslDiagnostics();
+            default: function() {
+                return new XdslDiagnostics();
             }
         }
     },
-    data: function(){
-      return {mensagem: '', erro: ''};  
+    data: function() {
+        return {mensagem: '', erro: ''};
     },
-    methods:{
-        getXdslDiagnostics: function(){
+    methods: {
+        getXdslDiagnostics: function() {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: "/acs/equipamento/getXdslDiagnostics/",
-                data: JSON.stringify(self.equipamento.flush()),
+                data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
@@ -54,7 +54,7 @@ Vue.component("getXdslDiagnostics", {
             });
         }
     },
-    mounted: function(){
+    mounted: function() {
         this.getXdslDiagnostics();
     },
     template: "\

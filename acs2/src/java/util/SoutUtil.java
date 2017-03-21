@@ -12,6 +12,7 @@ import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.firmware.FirmwareInfo;
 import model.device.log.DeviceLog;
+import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
@@ -107,6 +108,12 @@ public class SoutUtil {
 
     public static void print(ExecuteFunctionResponse e) {
         System.out.println(e.getReturn());
+    }
+
+    public static void print(PingResponse p) {
+        System.out.println("Status" + p.getStatus());
+        System.out.println("QtdSuccess" + p.getQtdSuccess());
+        System.out.println("QtdFailures" + p.getQtdFailures());
     }
 
 }

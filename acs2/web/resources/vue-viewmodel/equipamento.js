@@ -7,7 +7,7 @@
 /* global moment */
 
 // CLASSES
-var Equipamento = function (p) {
+var Equipamento = function(p) {
     if (p) {
         this.activated = p.eqp.activated;
         this.deviceGUID = p.eqp.deviceGUID;
@@ -24,14 +24,14 @@ var Equipamento = function (p) {
         this.type = p.eqp.type;
         this.lastActivationTime = p.eqp.lastActivationTime;
     }
-    
+
 };
 
-Equipamento.prototype.isModem = function () {
+Equipamento.prototype.isModem = function() {
     return this.type === 0;
 };
 
-Equipamento.prototype.dataAutenticacao = function () {
+Equipamento.prototype.dataAutenticacao = function() {
 
     if (this.lastActivationTime) {
         return moment(new Date(this.lastActivationTime.year, this.lastActivationTime.month, this.lastActivationTime.day, this.lastActivationTime.hour, this.lastActivationTime.minute, this.lastActivationTime.second)).format('DD/MM/YYYY HH:mm:ss');
@@ -44,8 +44,8 @@ Equipamento.prototype.dataAutenticacao = function () {
  * Método necessário para limpar campos adicionais antes de passar para a controller Vraptor
  * @returns {Equipamento.prototype}
  */
-Equipamento.prototype.flush = function () {
-    var _flush = this;
+Equipamento.prototype.flush = function() {
+    var _flush = new Equipamento(this);
     delete _flush.firmwareOk;
     delete _flush.checkOn;
     delete _flush.lastActivationTime;

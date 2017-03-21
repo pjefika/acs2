@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global ping, Vue, Ping */
+/* global ping, Vue, Ping, Equipamento */
 
 var url = "/acs/equipamento/";
 
@@ -24,7 +24,7 @@ Vue.component("getPing", {
         equipamento: {
             type: Equipamento,
             default: function() {
-                return new Equipamento(this.eqpString);
+                return new Equipamento();
             }
         },
         request: {
@@ -40,7 +40,7 @@ Vue.component("getPing", {
         getPing: function() {
             var self = this;
             var _data = {};
-            _data.nbiDeviceData = self.equipamento.flush();
+            _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
             _data.request = self.request;
             $.ajax({
                 type: "POST",
@@ -76,8 +76,7 @@ Vue.component("getPing", {
                                 <label for='username'>Endereço</label>\n\
                                 <input class='form-control' v-model='request'>\n\
                             </div>\n\
-                            <hr/>\n\
-                            <tabela-ping v-bind:info-ping='infoPing'></tabela-ping>\n\
+                            <tabela-ping v-bind:info-ping='this.infoPing'></tabela-ping>\n\
                         </div>\n\
                         <div class='modal-footer'>\n\
                             <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
@@ -88,38 +87,39 @@ Vue.component("getPing", {
 });
 
 Vue.component("tabelaPing", {
-    props: [
-        "infoPing"
-    ],
-    template: "<table class='table table-bordered small' v-if='infoPing.hostAddress'>\n\
+    props: ["infoPing"],
+    template: "<div v-show='this.infoPing'>\n\
+                <hr/>\n\
+                <table class='table table-bordered small'>\n\
                     <thead>\n\
                         <tr>\n\
                             <th colspan='2' style='text-align: center;'>Resposta Ping</th>\n\
                         </tr>\n\
                         <tr>\n\
                             <th>Endereço</th>\n\
-                            <td>{{infoPing.hostAddress}}</td>\n\
+                            <td>{{this.infoPing.hostAddress}}</td>\n\
                         </tr>\n\
                         <tr>\n\
                             <th>Repetições</th>\n\
-                            <td>{{infoPing.repetitions}}</td>\n\
+                            <td>{{this.infoPing.repetitions}}</td>\n\
                         </tr>\n\
                         <tr>\n\
                             <th>Quantidade Falha</th>\n\
-                            <td>{{infoPing.qtdFailures}}</td>\n\
+                            <td>{{this.infoPing.qtdFailures}}</td>\n\
                         </tr>\n\
                         <tr>\n\
                             <th>Quantidade Sucesso</th>\n\
-                            <td>{{infoPing.qtdSuccess}}</td>\n\
+                            <td>{{this.infoPing.qtdSuccess}}</td>\n\
                         </tr>\n\
                         <tr>\n\
                             <th>Tempo de resposta</th>\n\
-                            <td>{{infoPing.avgRespTime}}</td>\n\
+                            <td>{{this.infoPing.avgRespTime}}</td>\n\
                         </tr>\n\
                         <tr>\n\
                             <th>Status</th>\n\
-                            <td>{{infoPing.status}}</td>\n\
+                            <td>{{this.infoPing.status}}</td>\n\
                         </tr>\n\
                     </thead>\n\
-                </table>"
+                </table>\n\
+            </div>"
 });

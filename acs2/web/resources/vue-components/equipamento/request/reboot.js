@@ -17,7 +17,7 @@ Vue.component("reboot", {
         equipamento: {
             type: Equipamento,
             default: function() {
-                return new Equipamento(this.eqpString);
+                return new Equipamento();
             }
         }
     },
@@ -27,18 +27,18 @@ Vue.component("reboot", {
             $.ajax({
                 type: "POST",
                 url: url + "reboot/",
-                data: JSON.stringify(self.equipamento.flush()),
+                data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true
                 },
-                success: function(data) {
-                    // self.info = new WifiInfo(data.wifiInfo);
+                success: function() {
+                    self.$parent.$parent.checkOnline();
+                    vm.$emit('info', 'Equipamento em reinicialização')
                 },
                 error: function(e) {
-                    self.mensagem = 'Falha ao buscar informações';
-                    self.erro = 'true';
+                    vm.$emit('error', 'Falha ao realizar ação')
                 },
                 complete: function() {
                     self.$parent.loading = false
@@ -53,7 +53,7 @@ Vue.component("reboot", {
                     </div>\n\
                     <div class='modal-footer'>\n\
                         <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                        <button type='button' class='btn btn-primary' @click='reboot()'>Reiniciar</button>\n\
+                        <button type='button' class='btn btn-primary' data-dismiss='modal' @click='reboot()'>Reiniciar</button>\n\
                     </div>\n\
                 </div>"
 });

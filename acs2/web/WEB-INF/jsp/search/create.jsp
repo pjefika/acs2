@@ -8,10 +8,7 @@
         <h1>Buscar Equipamentos</h1>
     </div>
     <div class="row">
-        <keep-alive>
-            <component v-bind:is="currentView"></component>
-        </keep-alive>
-
+        <search-acs></search-acs>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/resources/vue-components/searchact.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/searchact.js"></script>

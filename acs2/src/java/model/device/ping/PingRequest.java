@@ -15,6 +15,7 @@ public class PingRequest {
 
     public PingRequest() {
         this.$interface = "Device.IP.Interface.1";
+//        this.$interface = "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1";
         this.qtdRequisitions = "4";
     }
 

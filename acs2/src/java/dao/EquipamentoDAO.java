@@ -22,13 +22,13 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderExc
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDeviceOperationsService;
 import com.sun.xml.wss.XWSSConstants;
 import dao.util.NbiDecorator;
+import exception.JsonUtilException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.json.Json;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import model.device.DmzInfo;
@@ -249,12 +249,20 @@ public class EquipamentoDAO {
         return JsonUtil.dmzInfo(a);
     }
 
-    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws Exception {
+    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 100000, "");
-        //System.out.println(a.getValue());
-        return JsonUtil.getWifiInfoFull(a);
+
+        WifiInfoFull i;
+        try {
+            i = JsonUtil.getWifiInfoFull(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha getWifiInfoFull no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
+        }
+        return i;
     }
 
     public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws Exception {
@@ -352,7 +360,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 10000, "");
-        
+
         return JsonUtil.ddnsInfo(a);
     }
 
@@ -396,7 +404,7 @@ public class EquipamentoDAO {
             String jsonPppoe = JsonUtil.serialize(p, p.getClass());
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonPppoe);
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 50000, "");
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 150000, "");
             //System.out.println(a.getValue());
             return JsonUtil.pingResponse(a);
         } catch (Exception e) {

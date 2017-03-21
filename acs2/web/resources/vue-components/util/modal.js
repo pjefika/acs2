@@ -45,7 +45,7 @@ Vue.component("acsModal", {
                             <component is='loading'></component>\n\
                         </div>\n\
                         <div v-show='!loading'>\n\
-                            <component v-bind:eqp-string='data' v-bind:is='body'></component>\n\
+                            <component v-bind:equipamento='data' v-bind:is='body'></component>\n\
                         </div>\n\
                     </div>\n\
                 </div>\n\

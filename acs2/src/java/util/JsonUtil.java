@@ -10,6 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import exception.JsonUtilException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,74 +128,82 @@ public class JsonUtil {
         return i;
     }
 
-    public static WifiInfoFull getWifiInfoFull(StringResponseDTO a) {
-        System.out.println("FullJson: " + a.getValue());
+    public static WifiInfoFull getWifiInfoFull(StringResponseDTO a) throws JsonUtilException {
+
         WifiInfoFull i = new WifiInfoFull();
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+            JsonObject jobject = jelement.getAsJsonObject();
+            
+            String admStatus = jobject.get("admStatus").toString().replace("\"", "");
+            String operStatus = jobject.get("operStatus").toString().replace("\"", "");
+            String channel = jobject.get("channel").toString().replace("\"", "");
+            Boolean bcEnabled = jobject.get("bcEnabled").getAsBoolean();
+            String maxBitRate = jobject.get("maxBitRate").toString().replace("\"", "");
+            String signal = jobject.get("signal").toString().replace("\"", "");
+            String ssid = jobject.get("ssid").toString().replace("\"", "");
+            String authMode = jobject.get("authMode").toString().replace("\"", "");
+            String encType = jobject.get("encType").toString().replace("\"", "");
+            String key = jobject.get("key").toString().replace("\"", "");
+            String wepKeyIndex = jobject.get("wepKeyIndex").toString().replace("\"", "");
+            Boolean macAddrControl = jobject.get("macAddrControl").getAsBoolean();
+            String macAddress = jobject.get("macAddress").toString().replace("\"", "");
+            String radioStatus = jobject.get("radioStatus").toString().replace("\"", "");
+            String standard = jobject.get("standard").toString().replace("\"", "");
+            String bytesSent = jobject.get("bytesSent").toString().replace("\"", "");
+            String bytesRecv = jobject.get("bytesRecv").toString().replace("\"", "");
+            String pctSent = jobject.get("pctSent").toString().replace("\"", "");
+            String pctRecv = jobject.get("pctRecv").toString().replace("\"", "");
+            String errSent = jobject.get("errSent").toString().replace("\"", "");
+            String errRecv = jobject.get("errRecv").toString().replace("\"", "");
+            Boolean wpsEnabled = jobject.get("wpsEnabled").getAsBoolean();
+            String wpsDeviceName = jobject.get("wpsDeviceName").toString().replace("\"", "");
+            String wpsDevicePassword = jobject.get("wpsDevicePassword").toString().replace("\"", "");
 
-        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
-        JsonObject jobject = jelement.getAsJsonObject();
+            i.setSsid(ssid);
+            i.setAdmStatus(admStatus);
+            i.setAuthMode(authMode);
+            i.setBcEnabled(bcEnabled);
+            i.setBytesRecv(bytesRecv);
+            i.setBytesSent(bytesSent);
+            i.setChannel(channel);
+            i.setEncType(encType);
+            i.setErrRecv(errRecv);
+            i.setErrSent(errSent);
+            i.setKey(key);
+            i.setMacAddrControl(macAddrControl);
+            i.setMacAddress(macAddress);
+            i.setMaxBitRate(maxBitRate);
+            i.setOperStatus(operStatus);
+            i.setPctSent(pctSent);
+            i.setPctRecv(pctRecv);
+            i.setRadioStatus(radioStatus);
+            i.setSignal(signal);
+            i.setStandard(standard);
+            i.setWepKeyIndex(wepKeyIndex);
+            i.setWpsDeviceName(wpsDeviceName);
+            i.setWpsDevicePassword(wpsDevicePassword);
+            i.setWpsEnabled(wpsEnabled);
 
-        String admStatus = jobject.get("admStatus").toString().replace("\"", "");
-        String operStatus = jobject.get("operStatus").toString().replace("\"", "");
-        String channel = jobject.get("channel").toString().replace("\"", "");
-        Boolean bcEnabled = jobject.get("bcEnabled").getAsBoolean();
-        String maxBitRate = jobject.get("maxBitRate").toString().replace("\"", "");
-        String signal = jobject.get("signal").toString().replace("\"", "");
-        String ssid = jobject.get("ssid").toString().replace("\"", "");
-        String authMode = jobject.get("authMode").toString().replace("\"", "");
-        String encType = jobject.get("encType").toString().replace("\"", "");
-        String key = jobject.get("key").toString().replace("\"", "");
-        String wepKeyIndex = jobject.get("wepKeyIndex").toString().replace("\"", "");
-        Boolean macAddrControl = jobject.get("macAddrControl").getAsBoolean();
-        String macAddress = jobject.get("macAddress").toString().replace("\"", "");
-        String radioStatus = jobject.get("radioStatus").toString().replace("\"", "");
-        String standard = jobject.get("standard").toString().replace("\"", "");
-        String bytesSent = jobject.get("bytesSent").toString().replace("\"", "");
-        String bytesRecv = jobject.get("bytesRecv").toString().replace("\"", "");
-        String pctSent = jobject.get("pctSent").toString().replace("\"", "");
-        String pctRecv = jobject.get("pctRecv").toString().replace("\"", "");
-        String errSent = jobject.get("errSent").toString().replace("\"", "");
-        String errRecv = jobject.get("errRecv").toString().replace("\"", "");
-        Boolean wpsEnabled = jobject.get("wpsEnabled").getAsBoolean();
-        String wpsDeviceName = jobject.get("wpsDeviceName").toString().replace("\"", "");
-        String wpsDevicePassword = jobject.get("wpsDevicePassword").toString().replace("\"", "");
-
-        i.setSsid(ssid);
-        i.setAdmStatus(admStatus);
-        i.setAuthMode(authMode);
-        i.setBcEnabled(bcEnabled);
-        i.setBytesRecv(bytesRecv);
-        i.setBytesSent(bytesSent);
-        i.setChannel(channel);
-        i.setEncType(encType);
-        i.setErrRecv(errRecv);
-        i.setErrSent(errSent);
-        i.setKey(key);
-        i.setMacAddrControl(macAddrControl);
-        i.setMacAddress(macAddress);
-        i.setMaxBitRate(maxBitRate);
-        i.setOperStatus(operStatus);
-        i.setPctSent(pctSent);
-        i.setPctRecv(pctRecv);
-        i.setRadioStatus(radioStatus);
-        i.setSignal(signal);
-        i.setStandard(standard);
-        i.setWepKeyIndex(wepKeyIndex);
-        i.setWpsDeviceName(wpsDeviceName);
-        i.setWpsDevicePassword(wpsDevicePassword);
-        i.setWpsEnabled(wpsEnabled);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e){
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
 
         return i;
     }
 
     public static WanInfo getWanInfo(StringResponseDTO a) {
 
+        System.out.println(a.getValue());
+
         WanInfo i = new WanInfo();
 
         JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
         JsonObject jobject = jelement.getAsJsonObject();
 
-        String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
+        String EthernetBytesSent = jobject.get(".+-------").toString().replace("\"", "");
         String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
         String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
         String EthernetPacketsReceived = jobject.get("EthernetPacketsReceived").toString().replace("\"", "");
@@ -214,7 +223,7 @@ public class JsonUtil {
 
         return i;
     }
-    
+
     public static ServiceClass getServiceClass(StringResponseDTO a) {
 
         ServiceClass sc = new ServiceClass();
@@ -223,9 +232,9 @@ public class JsonUtil {
         JsonObject jobject = jelement.getAsJsonObject();
         System.out.println(jobject.toString());
         String serviceOfClass = jobject.get("AccessClass") != null ? jobject.get("AccessClass").toString().replace("\"", "") : jobject.get("classOfService").toString().replace("\"", "");
-        
+
         sc.setClassOfService(serviceOfClass);
-        
+
         return sc;
     }
 
@@ -363,7 +372,7 @@ public class JsonUtil {
                 }
                 String adminStatus = jobject.get("adminStatus") != null ? jobject.get("adminStatus").toString().replace("\"", "") : "";
                 String ifName = jobject.get("ifName") != null ? jobject.get("ifName").toString().replace("\"", "") : "";
-                
+
                 String ipAddrType = jobject.get("ipAddrType") != null ? jobject.get("ipAddrType").toString().replace("\"", "") : "";
                 String macAddress = jobject.get("macAddress") != null ? jobject.get("macAddress").toString().replace("\"", "") : "";
                 String bytesSent = jobject.get("bytesSent") != null ? jobject.get("bytesSent").toString().replace("\"", "") : "";
@@ -402,14 +411,13 @@ public class JsonUtil {
 
         return list;
     }
-    
-    
+
     public static XdslDiagnostics getXdslDiagnostics(StringResponseDTO a) {
         JsonElement jelement = new JsonParser().parse(a.getValue());
         JsonObject jobject = jelement.getAsJsonObject();
 //        System.out.println(jobject.toString());
         XdslDiagnostics x = new XdslDiagnostics();
-        
+
         String ModulationType = jobject.get("ModulationType").toString().replace("\"", "");
         String ShowtimeStart = jobject.get("ShowtimeStart").toString().replace("\"", "");
         String UpstreamMaxRate = jobject.get("UpstreamMaxRate").toString().replace("\"", "");
@@ -431,7 +439,7 @@ public class JsonUtil {
         String FECErrors = jobject.get("FECErrors").toString().replace("\"", "");
         String HECErrors = jobject.get("HECErrors").toString().replace("\"", "");
         String CRCErrors = jobject.get("CRCErrors").toString().replace("\"", "");
-       
+
         x.setATUCCRCErrors(ATUCCRCErrors);
         x.setATUCFECErrors(ATUCFECErrors);
         x.setATUCHECErrors(ATUCHECErrors);
@@ -453,7 +461,7 @@ public class JsonUtil {
         x.setUpstreamMaxRate(UpstreamMaxRate);
         x.setUpstreamNoiseMargin(UpstreamNoiseMargin);
         x.setUpstreamPower(UpstreamPower);
-        
+
         return x;
     }
 

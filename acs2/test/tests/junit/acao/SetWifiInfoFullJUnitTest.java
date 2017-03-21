@@ -53,18 +53,18 @@ public class SetWifiInfoFullJUnitTest {
 
             WifiInfoFull info = d.getWifiInfoFull(eqp);
             SoutUtil.print(info);
-            info.setSsid("GVT-DA71");
+            info.setSsid("efika-dev");
             info.setAuthMode("None");
             info.setEncType("None");
             info.setBcEnabled(Boolean.TRUE);
             info.setChannel("5");
             info.setStandard("b");
             info.setKey("1303000712");
-            
+
             assertTrue(d.setWifiInfoFull(eqp, info));
 
             SoutUtil.print(d.getWifiInfoFull(eqp));
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

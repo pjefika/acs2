@@ -10,10 +10,10 @@ import dao.EquipamentoDAO;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import util.SoutUtil;
 
 /**
@@ -48,7 +48,7 @@ public class FindDevicesBySerialJUnitTest {
     public void listarEquipamentosPorSerial() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("477M128W1410054037");
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("QA4S1EB598946");
             SoutUtil.print(eqp);
             assertTrue(true);
         } catch (Exception ex) {

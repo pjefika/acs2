@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -49,14 +50,16 @@ public class PingDiagnosticJUnitTest {
 
             NbiDeviceData eqp;
 
-            eqp = d.findDeviceByGUID(new Long(142014));
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
             PingRequest p = new PingRequest();
 
             p.setDestAddress("www.google.com.br");
-            p.setQtdRequisitions("3");
+            p.setQtdRequisitions("4");
 
-            d.pingDiagnostic(eqp, p);
+            SoutUtil.print(d.pingDiagnostic(eqp, p));
+
+            assertTrue(true);
 
         } catch (Exception ex) {
             ex.printStackTrace();

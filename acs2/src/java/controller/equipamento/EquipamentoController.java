@@ -16,11 +16,17 @@ import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
+import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
+import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
+import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderException;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
-import java.util.List;
 import dao.LogDAO;
+import exception.HdmException;
+import exception.JsonUtilException;
 import java.util.Calendar;
+import java.util.List;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import model.device.firmware.FirmwareInfo;
@@ -53,7 +59,7 @@ public class EquipamentoController extends AbstractController {
     }
 
     @Path("/equipamento/detalhe/{guid}")
-    public void detalhes(String guid) {
+    public void detalhes(String guid) throws HdmException{
 
         JsonObject jobj = new JsonObject();
 
@@ -77,7 +83,7 @@ public class EquipamentoController extends AbstractController {
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
-            result.include("exception", "Falha ao consultar Serviços Motive.");
+            result.include("exception",ex.getFaultInfo().getFaultCode().replace(".", "_"));
         }
     }
 
@@ -108,32 +114,39 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer("Erro no comando getWifiInfo");
             e.printStackTrace();
+//            Throw new HdmException();
         }
     }
 
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWifiInfoFull/")
-    public void getWifiInfoFull(NbiDeviceData nbiDeviceData) {
+    public void getWifiInfoFull(NbiDeviceData nbiDeviceData) throws HdmException, Exception {
         try {
             this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando getWifiInfoFull");
-            e.printStackTrace();
+        } catch(DeviceOperationException e){
+            throw new HdmException("A plataforma falhou ao obter os dados de Wifi do equipamento.");
+        } catch(JsonUtilException e){
+            throw new Exception("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
+        } catch(NBIException e){
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
+        } catch(OperationTimeoutException e){
+            throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Wifi.");
+        } catch(ProviderException e){
+            throw new HdmException("Erro no provedor da plataforma ao obter os dados de Wifi.");
         }
     }
 
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWanInfo/")
-    public void getWanInfo(NbiDeviceData nbiDeviceData) {
+    public void getWanInfo(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getWanInfo(nbiDeviceData));
         } catch (Exception e) {
-            this.includeSerializer("Erro no comando getWanInfo");
-            e.printStackTrace();
+           
+            
         }
     }
 

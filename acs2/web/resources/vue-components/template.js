@@ -13,19 +13,51 @@ var vm = new Vue({
     el: "#instancia",
     data: {
         modal: {
-            comp: 'loading',
+            comp: '',
             titulo: 'Carregando...'
         },
-        currentView: 'searchAction'
+        currentView: 'searchAction',
+        notif: {
+            mensagem: 'Default',
+            tipo: 'danger'
+        }
     },
     created: function() {
     },
     watch: {
-        modal: function(m, oldVal) {
-//            if (m.comp === "get-wifi") {
-//                var _comp = vm.$children[0].$children[0].$children[0];
-//                _comp.getWifi();
-//            }
+        notif: function(val) {
+            $.notify({
+                // options
+                message: val.mensagem
+            }, {
+                // settings
+                type: val.tipo,
+                z_index: 9999,
+                newest_on_top: true
+            });
         }
     }
 });
+
+
+
+vm.$on('error', function(msg) {
+    this.notif = {
+        mensagem: msg,
+        tipo: 'danger'
+    };
+})
+
+vm.$on('info', function(msg) {
+    this.notif = {
+        mensagem: msg,
+        tipo: 'info'
+    };
+})
+
+vm.$on('success', function(msg) {
+    this.notif = {
+        mensagem: msg,
+        tipo: 'success'
+    };
+})

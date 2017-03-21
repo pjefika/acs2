@@ -20,7 +20,7 @@ Vue.component("getLanHosts", {
         equipamento: {
             type: Equipamento,
             default: function() {
-                return new Equipamento(this.eqpString);
+                return new Equipamento();
             }
         },
         alertPanel: {
@@ -33,7 +33,7 @@ Vue.component("getLanHosts", {
             $.ajax({
                 type: "POST",
                 url: url + "getLanHosts/",
-                data: JSON.stringify(self.equipamento.flush()),
+                data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
