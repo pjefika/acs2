@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global Vue */
+/* global Vue, vm, Equipamento */
 var url = "/acs/equipamento/";
 Vue.component("resetFactory", {
     data: function() {
-        return {mensagem: '', erro: '', texto: 'Deseja resetar de fábrica o modem?'}
+        return {mensagem: '', erro: '', texto: 'Deseja resetar de fábrica o modem?'};
     },
     props: {
         eqpString: {
@@ -31,19 +31,17 @@ Vue.component("resetFactory", {
                 dataType: "json",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    self.$parent.loading = true
+                    self.$parent.loading = true;
                 },
-                success: function(data) {
-                    self.mensagem = 'Reset de fábrica realizado com sucesso'
-                    self.erro = '';
-                    // self.info = new WifiInfo(data.wifiInfo);
+                success: function() {
+                    self.$parent.$parent.checkOnline();
+                    vm.$emit('success', 'Reset de fábrica realizado com sucesso');
                 },
-                error: function(e) {
-                    self.mensagem = 'Falha ao buscar informações';
-                    self.erro = 'true';
+                error: function() {
+                    vm.$emit('error', 'Falha ao realizar Reset de fábrica');
                 },
                 complete: function() {
-                    self.$parent.loading = false
+                    self.$parent.loading = false;
                 }
             });
         }
@@ -55,7 +53,7 @@ Vue.component("resetFactory", {
                     </div>\n\
                     <div class='modal-footer'>\n\
                         <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                        <button type='button' class='btn btn-primary' @click='factoryReset()'>Resetar</button>\n\
+                        <button type='button' class='btn btn-primary' data-dismiss='modal' @click='factoryReset()'>Resetar</button>\n\
                     </div>\n\
                 </div>"
 });

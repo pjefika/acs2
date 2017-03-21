@@ -54,7 +54,7 @@ public class PingDiagnosticJUnitTest {
 
             PingRequest p = new PingRequest();
 
-            p.setDestAddress("www.google.com");
+            p.setDestAddress("www.google.com.br");
             p.setQtdRequisitions("4");
 
             SoutUtil.print(d.pingDiagnostic(eqp, p));

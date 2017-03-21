@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global ping, Vue, Ping */
+/* global ping, Vue, Ping, Equipamento */
 
 var url = "/acs/equipamento/";
 
@@ -80,7 +80,7 @@ Vue.component("getPing", {
                         </div>\n\
                         <div class='modal-footer'>\n\
                             <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
-                            <button class='btn btn-primary' type='button' @click='getPing()'>Buscar</button>\n\
+                            <button class='btn btn-primary' type='button' @click='getPing()'>Ping</button>\n\
                         </div>\n\
                     </div>\n\
                </div>"
@@ -88,7 +88,9 @@ Vue.component("getPing", {
 
 Vue.component("tabelaPing", {
     props: ["infoPing"],
-    template: "<hr/><table class='table table-bordered small' v-if='this.infoPing.hostAddress'>\n\
+    template: "<div v-show='this.infoPing'>\n\
+                <hr/>\n\
+                <table class='table table-bordered small'>\n\
                     <thead>\n\
                         <tr>\n\
                             <th colspan='2' style='text-align: center;'>Resposta Ping</th>\n\
@@ -118,5 +120,6 @@ Vue.component("tabelaPing", {
                             <td>{{this.infoPing.status}}</td>\n\
                         </tr>\n\
                     </thead>\n\
-                </table>"
+                </table>\n\
+            </div>"
 });

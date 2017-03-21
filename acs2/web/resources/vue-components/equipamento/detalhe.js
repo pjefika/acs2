@@ -36,11 +36,13 @@ Vue.component("detail", {
     },
     mounted: function() {
         var self = this;
-        self.checkOnline();
-        setInterval(function() {
-            console.log("Check Online");
-            self.checkOnline();
-        }, 30000);
+        /**
+         * Gerando exceção quando chamado durante uma executeFuncion
+         */
+//        setInterval(function() {
+//            console.log("Check Online");
+//            self.checkOnline();
+//        }, 30000);
     },
     methods: {
         checkOnline: _.debounce(function() {
