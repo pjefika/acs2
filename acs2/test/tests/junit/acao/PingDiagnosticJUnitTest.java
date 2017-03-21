@@ -54,10 +54,12 @@ public class PingDiagnosticJUnitTest {
 
             PingRequest p = new PingRequest();
 
-            p.setDestAddress("www.google.com.br");
+            p.setDestAddress("www.google.com");
             p.setQtdRequisitions("4");
 
-            d.pingDiagnostic(eqp, p);
+            SoutUtil.print(d.pingDiagnostic(eqp, p));
+
+            assertTrue(true);
 
         } catch (Exception ex) {
             ex.printStackTrace();

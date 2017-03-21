@@ -249,7 +249,7 @@ public class EquipamentoDAO {
         return JsonUtil.dmzInfo(a);
     }
 
-    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException{
+    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 100000, "");
@@ -257,11 +257,11 @@ public class EquipamentoDAO {
         try {
             i = JsonUtil.getWifiInfoFull(a);
         } catch (JsonUtilException e) {
-            System.out.println("Falha getWifiInfoFull no deviceGUID "+eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: "+a.getValue());
+            System.out.println("Falha getWifiInfoFull no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
             throw new JsonUtilException(e.getMessage());
         }
-        
+
         return i;
     }
 
@@ -404,7 +404,7 @@ public class EquipamentoDAO {
             String jsonPppoe = JsonUtil.serialize(p, p.getClass());
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonPppoe);
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 15000, "");
+            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 100000, "");
             //System.out.println(a.getValue());
             return JsonUtil.pingResponse(a);
         } catch (Exception e) {
