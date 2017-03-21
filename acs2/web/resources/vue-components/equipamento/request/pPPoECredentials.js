@@ -98,7 +98,8 @@ Vue.component("pppoeCredentials", {
                             </div>\n\
                         </div>\n\
                         <div class='modal-footer'>\n\
-                            <button type='button' class='btn btn-warning' @click='setPPPoECredentials'>Modificar</button>\n\
+                            <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
+                            <button type='button' class='btn btn-primary' @click='setPPPoECredentials'>Modificar</button>\n\
                         </div>\n\
                     </div>\n\
                </div>"

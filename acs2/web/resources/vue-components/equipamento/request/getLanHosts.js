@@ -60,7 +60,8 @@ Vue.component("getLanHosts", {
                     </div>\n\
                 </div>\n\
                 <div class='modal-footer'>\n\
-                    <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
+                    <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
+                    <button type='button' class='btn btn-primary' @click='getLanHosts()'>Consultar</button>\n\
                 </div>\n\
             </div>"
 });

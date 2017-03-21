@@ -329,7 +329,6 @@ public class EquipamentoController extends AbstractController {
     }
 
     public void gerarLog(NbiDeviceData nbiDeviceData, String acao, String valores) {
-        System.out.println("Entrou Log");
         Gson gson = new Gson();
         String nbb = gson.toJson(nbiDeviceData);
         Log log = new Log();
@@ -339,7 +338,6 @@ public class EquipamentoController extends AbstractController {
         log.setLogin(this.sessionUsuarioEfika.getUsuario().getLogin());
         this.logDAO.cadastrar(log);
         if (!valores.isEmpty()) {
-            System.out.println("Entrou parametros");
             Parametro parametro = new Parametro();
             parametro.setLog(log);
             parametro.setValor(valores);

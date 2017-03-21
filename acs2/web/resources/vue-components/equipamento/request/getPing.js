@@ -79,8 +79,8 @@ Vue.component("getPing", {
                             <tabela-ping v-bind:info-ping='this.infoPing'></tabela-ping>\n\
                         </div>\n\
                         <div class='modal-footer'>\n\
-                            <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>\n\
-                            <button class='btn btn-primary' type='button' @click='getPing()'>Ping</button>\n\
+                            <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
+                            <button class='btn btn-primary' type='button' @click='getPing()'>Buscar</button>\n\
                         </div>\n\
                     </div>\n\
                </div>"
