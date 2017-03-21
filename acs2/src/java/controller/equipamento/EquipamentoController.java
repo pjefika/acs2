@@ -194,12 +194,24 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getInterfaceStatistics/")
-    public void getInterfaceStatistics(NbiDeviceData nbiDeviceData) {
+    public void getInterfaceStatistics(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getInterfaceStatistics(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando getInterfaceStatistics");
-            e.printStackTrace();
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter os dados de Interface Statistics do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter os dados de Interface Statistics do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou os dados de Interface Statistics do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou os dados de Interface Statistics do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter os dados de Interface Statistics.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Interface Statistics.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter os dados de Interface Statistics.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Interface Statistics.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter os dados de Interface Statistics.");
+            throw new HdmException("Erro no provedor da plataforma ao obter os dados de Interface Statistics.");
         }
     }
 

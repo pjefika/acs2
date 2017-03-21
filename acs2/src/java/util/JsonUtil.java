@@ -352,12 +352,16 @@ public class JsonUtil {
         return new PPPoECredentialsInfo(username, password);
     }
 
-    public static List<InterfaceStatistics> getInterfaceStatistics(StringResponseDTO a) {
+    public static List<InterfaceStatistics> getInterfaceStatistics(StringResponseDTO a) throws JsonUtilException {
 
+        List<InterfaceStatistics> list = new ArrayList<>();
+        
+        try {
+            
+        
         JsonElement jelement = new JsonParser().parse(a.getValue());
         JsonArray jarray = jelement.getAsJsonArray();
 
-        List<InterfaceStatistics> list = new ArrayList<>();
         for (JsonElement jsonElement : jarray) {
             JsonObject jobject = jsonElement.getAsJsonObject();
 
@@ -412,7 +416,12 @@ public class JsonUtil {
             }
 
         }
-
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
+        
         return list;
     }
 
