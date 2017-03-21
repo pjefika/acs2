@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -38,20 +38,20 @@ Vue.component("buscaLog", {
                     </div>\n\
                     <tabela-log v-if='logs'></tabela-log>\n\
                 </div>",
-    data: function () {
+    data: function() {
         return data;
     },
     methods: {
-        buscar: function () {
+        buscar: function() {
             var self = this;
             if (self.input) {
                 if (self.pick === 'matricula') {
-                    $.get(url + "usr/" + self.input, function (data) {
+                    $.get(url + "usr/" + self.input, function(data) {
                         self.logs = data.list;
                         //console.log(data);
                     });
                 } else {
-                    $.get(url + "parametro/" + self.input, function (data) {
+                    $.get(url + "parametro/" + self.input, function(data) {
                         self.logs = data.list;
                         //console.log(data);
                     });
@@ -65,7 +65,8 @@ Vue.component("buscaLog", {
 
 Vue.component("tabelaLog", {
     template: "<div>\n\
-                    <table class='table table-bordered'>\n\
+                    <hr>\n\
+                    <table class='table table-bordered small'>\n\
                         <thead>\n\
                             <tr>\n\
                                 <th>Login</th>\n\
@@ -87,28 +88,37 @@ Vue.component("tabelaLog", {
                     </table>\n\
                 </div>",
     methods: {
-        dateFormat: function (h) {
+        dateFormat: function(h) {
             return  moment(h).format('DD/MM/YYYY HH:mm:ss');
         },
-        informacao: function (info) {
+        informacao: function(info) {
             var self = this;
-            Vue.nextTick(function () {
+            Vue.nextTick(function() {
                 console.log("entro info");
                 self.reset();
                 self.splitInfos(info);
                 self.validaValor(info);
+
+
                 vm.modal = {
-                    titulo: 'Informações',
-                    comp: 'info-log'
+                    titulo: 'Carregando...',
+                    comp: 'loading'
                 };
-                $("#actionModal").modal("show");
+
+                Vue.nextTick(function() {
+                    vm.modal = {
+                        titulo: 'Informações',
+                        comp: 'info-log'
+                    };
+                    $("#actionModal").modal("show");
+                })
             });
         },
-        reset: function () {
+        reset: function() {
             var self = this;
             self.comp = '';
         },
-        splitInfos: function (info) {
+        splitInfos: function(info) {
             var self = this;
             if (info.equipamento) {
                 self.equipamento = JSON.parse(info.equipamento);
@@ -117,7 +127,7 @@ Vue.component("tabelaLog", {
                 self.valor = JSON.parse(info.valor);
             }
         },
-        validaValor: function (info) {
+        validaValor: function(info) {
             var self = this;
             if (info.acao === 'setWifiFull') {
                 self.comp = 'info-wifi';
@@ -128,7 +138,7 @@ Vue.component("tabelaLog", {
             }
         }
     },
-    data: function () {
+    data: function() {
         return data;
     }
 });
@@ -153,7 +163,7 @@ Vue.component("infoLog", {
                         <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
                     </div>\n\
                 </div>",
-    data: function () {
+    data: function() {
         return data;
     }
 });
@@ -189,7 +199,7 @@ Vue.component("infoLogEqp", {
                         <div class='col-md-4'>{{equipamento.subscriberID}}</div>\n\
                     </div>\n\
                 </div>",
-    data: function () {
+    data: function() {
         return data;
     }
 });
@@ -213,7 +223,7 @@ Vue.component("infoWifi", {
                         <div class='col-md-4'>{{valor.key}}</div>\n\
                     </div>\n\
                 </div>",
-    data: function () {
+    data: function() {
         return data;
     }
 });
@@ -229,7 +239,7 @@ Vue.component("infoPppoe", {
                         <div class='col-md-4'>{{valor.password}}</div>\n\
                     </div>\n\
                 </div>",
-    data: function () {
+    data: function() {
         return data;
     }
 });
@@ -257,7 +267,7 @@ Vue.component("infoPortMapping", {
                         <div class='col-md-4'>{{valor.enable}}</div>\n\
                     </div>\n\
                 </div>",
-    data: function () {
+    data: function() {
         return data;
     }
 });
