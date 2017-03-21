@@ -66,7 +66,7 @@ Vue.component("buscaLog", {
 Vue.component("tabelaLog", {
     template: "<div>\n\
                     <hr>\n\
-                    <table class='table table-bordered small'>\n\
+                    <table class='table table-bordered'>\n\
                         <thead>\n\
                             <tr>\n\
                                 <th>Login</th>\n\
@@ -94,7 +94,6 @@ Vue.component("tabelaLog", {
         informacao: function(info) {
             var self = this;
             Vue.nextTick(function() {
-                console.log("entro info");
                 self.reset();
                 self.splitInfos(info);
                 self.validaValor(info);
@@ -146,18 +145,9 @@ Vue.component("tabelaLog", {
 Vue.component("infoLog", {
     template: "<div>\n\
                     <div class='modal-body'>\n\
-                        <div class='panel panel-default'>\n\
-                            <div class='panel-heading'>Equipamento</div>\n\
-                            <div class='panel-body'>\n\
-                                <info-log-eqp></info-log-eqp>\n\
-                            </div>\n\
-                        </div>\n\
-                        <div class='panel panel-default'>\n\
-                            <div class='panel-heading'>Valor</div>\n\
-                            <div class='panel-body'>\n\
-                                <comp v-bind:is='comp'></comp>\n\
-                            </div>\n\
-                        </div>\n\
+                        <info-log-eqp></info-log-eqp>\n\
+                        <hr/>\n\
+                        <comp v-bind:is='comp'></comp>\n\
                     </div>\n\
                     <div class='modal-footer'>\n\
                         <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
@@ -170,34 +160,41 @@ Vue.component("infoLog", {
 
 Vue.component("infoLogEqp", {
     template: "<div>\n\
-                    <!-- <div class='row'>\n\
-                        <div class='col-md-2'><label>deviceGUID:</label></div>\n\
-                        <div class='col-md-4'>{{equipamento.deviceGUID}}</div>\n\
-                    </div> -->\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>serialNumber:</label></div>\n\
-                        <div class='col-md-4'>{{equipamento.serialNumber}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>ipAddress:</label></div>\n\
-                        <div class='col-md-4'>{{equipamento.ipAddress}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>macAddress:</label></div>\n\
-                        <div class='col-md-4'>{{equipamento.macAddress}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>manufacturer:</label></div>\n\
-                        <div class='col-md-4'>{{equipamento.manufacturer}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>modelName:</label></div>\n\
-                        <div class='col-md-4'>{{equipamento.modelName}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>subscriberID:</label></div>\n\
-                        <div class='col-md-4'>{{equipamento.subscriberID}}</div>\n\
-                    </div>\n\
+                    <table class='table table-bordered small'>\n\
+                        <tbody>\n\
+                            <tr>\n\
+                                <td colspan='2' style='text-align: center;'><label>Equipamento</label></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>deviceGUID</label></td>\n\
+                                <td>{{equipamento.deviceGUID}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>serialNumber</label></td>\n\
+                                <td>{{equipamento.serialNumber}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>ipAddress</label></td>\n\
+                                <td>{{equipamento.ipAddress}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>macAddress</label></td>\n\
+                                <td>{{equipamento.macAddress}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>manufacturer</label></td>\n\
+                                <td>{{equipamento.manufacturer}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>modelName</label></td>\n\
+                                <td>{{equipamento.modelName}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>subscriberID</label></td>\n\
+                                <td>{{equipamento.subscriberID}}</td>\n\
+                            </tr>\n\
+                        </tbody>\n\
+                    </table>\n\
                 </div>",
     data: function() {
         return data;
@@ -206,22 +203,29 @@ Vue.component("infoLogEqp", {
 
 Vue.component("infoWifi", {
     template: "<div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-3'><label>Estado da Rede Wifi:</label></div>\n\
-                        <div class='col-md-4'>{{valor.operStatus}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-3'><label>SSID (Nome da Rede WiFi):</label></div>\n\
-                        <div class='col-md-4'>{{valor.ssid}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-3'><label>Canal:</label></div>\n\
-                        <div class='col-md-4'>{{valor.channel}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-3'><label>Senha:</label></div>\n\
-                        <div class='col-md-4'>{{valor.key}}</div>\n\
-                    </div>\n\
+                    <table class='table table-bordered small'>\n\
+                        <tbody>\n\
+                            <tr>\n\
+                                <td colspan='2' style='text-align: center;'><label>Informação Wifi</label></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>Estado da Rede Wifi:</label></td>\n\
+                                <td>{{valor.operStatus}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>SSID (Nome da Rede WiFi):</label></td>\n\
+                                <td>{{valor.ssid}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>Canal:</label></td>\n\
+                                <td>{{valor.channel}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>Senha:</label></td>\n\
+                                <td>{{valor.key}}</td>\n\
+                            </tr>\n\
+                        </tbody>\n\
+                    </table>\n\
                 </div>",
     data: function() {
         return data;
@@ -230,14 +234,21 @@ Vue.component("infoWifi", {
 
 Vue.component("infoPppoe", {
     template: "<div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>Username:</label></div>\n\
-                        <div class='col-md-4'>{{valor.username}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>Password:</label></div>\n\
-                        <div class='col-md-4'>{{valor.password}}</div>\n\
-                    </div>\n\
+                    <table class='table table-bordered'>\n\
+                        <tbody>\n\
+                            <tr>\n\
+                                <td colspan='2' style='text-align: center;'><label>Informações PPPoE</label></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>Username:</label></td>\n\
+                                <td>{{valor.username}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>Password:</label></td>\n\
+                                <td>{{valor.password}}</td>\n\
+                            </tr>\n\
+                        </tbody>\n\
+                    </table>\n\
                 </div>",
     data: function() {
         return data;
@@ -246,26 +257,33 @@ Vue.component("infoPppoe", {
 
 Vue.component("infoPortMapping", {
     template: "<div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>Porta Externa:</label></div>\n\
-                        <div class='col-md-4'>{{valor.externalPort}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>Porta Interna:</label></div>\n\
-                        <div class='col-md-4'>{{valor.internalPort}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>IP Interno:</label></div>\n\
-                        <div class='col-md-4'>{{valor.internalClient}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>Protocolo:</label></div>\n\
-                        <div class='col-md-4'>{{valor.protocol}}</div>\n\
-                    </div>\n\
-                    <div class='row'>\n\
-                        <div class='col-md-2'><label>Ativo:</label></div>\n\
-                        <div class='col-md-4'>{{valor.enable}}</div>\n\
-                    </div>\n\
+                    <table class='table table-bordered'>\n\
+                        <tbody>\n\
+                            <tr>\n\
+                                <td colspan='2' style='text-align: center;'><label>Informações PPPoE</label></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>Porta Externa:</label></td>\n\
+                                <td>{{valor.externalPort}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>Porta Interna:</label></td>\n\
+                                <td>{{valor.internalPort}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>IP Interno:</label></td>\n\
+                                <td>{{valor.internalClient}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>Protocolo:</label></td>\n\
+                                <td>{{valor.protocol}}</td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td><label>Ativo:</label></td>\n\
+                                <td>{{valor.enable}}</td>\n\
+                            </tr>\n\
+                        </tbody>\n\
+                    </table>\n\
                 </div>",
     data: function() {
         return data;
