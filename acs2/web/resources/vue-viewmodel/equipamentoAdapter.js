@@ -8,9 +8,7 @@
 
 // CLASSES
 var EquipamentoAdapted = function(p) {
-    console.log(p)
     if (p) {
-
         this.activated = p.activated;
         this.deviceGUID = p.deviceGUID;
         this.deviceId = p.deviceId;

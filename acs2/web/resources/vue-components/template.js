@@ -31,7 +31,9 @@ var vm = new Vue({
                 message: val.mensagem
             }, {
                 // settings
-                type: val.tipo
+                type: val.tipo,
+                z_index: 9999,
+                newest_on_top: true
             });
         }
     }
@@ -39,9 +41,23 @@ var vm = new Vue({
 
 
 
-vm.$on('notif', function(msg) {
+vm.$on('error', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'danger'
+    };
+})
+
+vm.$on('info', function(msg) {
+    this.notif = {
+        mensagem: msg,
+        tipo: 'info'
+    };
+})
+
+vm.$on('success', function(msg) {
+    this.notif = {
+        mensagem: msg,
+        tipo: 'success'
     };
 })

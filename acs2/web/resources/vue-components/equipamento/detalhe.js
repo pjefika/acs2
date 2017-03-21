@@ -40,7 +40,7 @@ Vue.component("detail", {
         setInterval(function() {
             console.log("Check Online");
             self.checkOnline();
-        }, 45000);
+        }, 30000);
     },
     methods: {
         checkOnline: _.debounce(function() {
