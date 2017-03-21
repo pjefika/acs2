@@ -126,14 +126,19 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
         } catch(DeviceOperationException e){
+            this.includeSerializer("A plataforma falhou ao obter os dados de Wifi do equipamento.");
             throw new HdmException("A plataforma falhou ao obter os dados de Wifi do equipamento.");
         } catch(JsonUtilException e){
+            this.includeSerializer("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
             throw new Exception("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
         } catch(NBIException e){
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
         } catch(OperationTimeoutException e){
+            this.includeSerializer("A plataforma demorou muito para responder ao obter os dados de Wifi.");
             throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Wifi.");
         } catch(ProviderException e){
+            this.includeSerializer("Erro no provedor da plataforma ao obter os dados de Wifi.");
             throw new HdmException("Erro no provedor da plataforma ao obter os dados de Wifi.");
         }
     }

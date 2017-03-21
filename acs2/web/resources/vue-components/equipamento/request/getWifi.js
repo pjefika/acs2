@@ -44,10 +44,17 @@ Vue.component("getWifi", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    self.info = new WifiInfoFull(data.wifiInfoFull);
+                    if(data.wifiInfoFull != null){
+                        self.info = new WifiInfoFull(data.wifiInfoFull);
+                    }else{
+                        vm.$emit("error", data.string);
+                    }
+                    
+                    
                 },
                 error: function(e) {
-                    vm.$emit("error", "Falha ao obter informações.");
+                    console.log(e);
+                    
                 },
                 complete: function() {
                     self.$parent.loading = false
@@ -78,6 +85,7 @@ Vue.component("getWifi", {
                     vm.$emit("success", "Alterações realizadas.");
                 },
                 error: function(e) {
+                    console.log(e);
                     vm.$emit("error", "Falha ao realizar alterações.");
                 },
                 complete: function() {

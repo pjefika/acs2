@@ -33,7 +33,8 @@ var vm = new Vue({
                 // settings
                 type: val.tipo,
                 z_index: 9999,
-                newest_on_top: true
+                newest_on_top: true,
+                delay: 300000
             });
         }
     }
