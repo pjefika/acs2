@@ -41,7 +41,13 @@ Vue.component("getXdslDiagnostics", {
                     self.$parent.loading = true;
                 },
                 success: function(data) {
-                    self.info = new XdslDiagnostics(data.xdslDiagnostics);
+                    if(data.xdslDiagnostics != null){
+                        self.info = new XdslDiagnostics(data.xdslDiagnostics);    
+                    }else{
+                        vm.$emit("error", data.string);
+                        $("#actionModal").modal("hide");
+                    }
+                    
                 },
                 error: function(e) {
                     console.log(e);

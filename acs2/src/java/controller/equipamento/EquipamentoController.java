@@ -59,7 +59,7 @@ public class EquipamentoController extends AbstractController {
     }
 
     @Path("/equipamento/detalhe/{guid}")
-    public void detalhes(String guid) throws HdmException{
+    public void detalhes(String guid) throws HdmException {
 
         JsonObject jobj = new JsonObject();
 
@@ -83,7 +83,7 @@ public class EquipamentoController extends AbstractController {
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
-            result.include("exception",ex.getFaultInfo().getFaultCode().replace(".", "_"));
+            result.include("exception", ex.getFaultInfo().getFaultCode().replace(".", "_"));
         }
     }
 
@@ -125,19 +125,19 @@ public class EquipamentoController extends AbstractController {
     public void getWifiInfoFull(NbiDeviceData nbiDeviceData) throws HdmException, Exception {
         try {
             this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
-        } catch(DeviceOperationException e){
+        } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao obter os dados de Wifi do equipamento.");
             throw new HdmException("A plataforma falhou ao obter os dados de Wifi do equipamento.");
-        } catch(JsonUtilException e){
+        } catch (JsonUtilException e) {
             this.includeSerializer("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
             throw new HdmException("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
-        } catch(NBIException e){
+        } catch (NBIException e) {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
-        } catch(OperationTimeoutException e){
+        } catch (OperationTimeoutException e) {
             this.includeSerializer("A plataforma demorou muito para responder ao obter os dados de Wifi.");
             throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Wifi.");
-        } catch(ProviderException e){
+        } catch (ProviderException e) {
             this.includeSerializer("Erro no provedor da plataforma ao obter os dados de Wifi.");
             throw new HdmException("Erro no provedor da plataforma ao obter os dados de Wifi.");
         }
@@ -149,19 +149,19 @@ public class EquipamentoController extends AbstractController {
     public void getWanInfo(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getWanInfo(nbiDeviceData));
-        } catch(DeviceOperationException e){
+        } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao obter as medições Wan do equipamento.");
             throw new HdmException("A plataforma falhou ao obter as medições Wan do equipamento.");
-        } catch(JsonUtilException e){
+        } catch (JsonUtilException e) {
             this.includeSerializer("A plataforma não retornou as medições Wan do equipamento devidamente.");
             throw new HdmException("A plataforma não retornou as medições Wan do equipamento devidamente.");
-        } catch(NBIException e){
+        } catch (NBIException e) {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as medições Wan.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao obter as medições Wan.");
-        } catch(OperationTimeoutException e){
+        } catch (OperationTimeoutException e) {
             this.includeSerializer("A plataforma demorou muito para responder ao obter as medições Wan.");
             throw new HdmException("A plataforma demorou muito para responder ao obter as medições Wan.");
-        } catch(ProviderException e){
+        } catch (ProviderException e) {
             this.includeSerializer("Erro no provedor da plataforma ao obter as medições Wan.");
             throw new HdmException("Erro no provedor da plataforma ao obter as medições Wan.");
         }
@@ -170,15 +170,27 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getXdslDiagnostics/")
-    public void getXdslDiagnostics(NbiDeviceData nbiDeviceData) {
+    public void getXdslDiagnostics(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getXdslDiagnostic(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando getXdslDiagnostic");
-            e.printStackTrace();
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as medições xDSL do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as medições xDSL do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou as medições xDSL do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou as medições xDSL do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as medições xDSL.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as medições xDSL.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as medições xDSL.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as medições xDSL.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as medições xDSL.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as medições xDSL.");
         }
     }
-    
+
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getInterfaceStatistics/")
@@ -337,7 +349,7 @@ public class EquipamentoController extends AbstractController {
         try {
             Gson gson = new Gson();
             String obj = gson.toJson(ports);
-            this.gerarLog(nbiDeviceData, "setPortMappingInfo", obj);            
+            this.gerarLog(nbiDeviceData, "setPortMappingInfo", obj);
             dao.setPortMapping(nbiDeviceData, ports);
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {

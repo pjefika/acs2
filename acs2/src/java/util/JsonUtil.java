@@ -197,9 +197,9 @@ public class JsonUtil {
     public static WanInfo getWanInfo(StringResponseDTO a) throws JsonUtilException {
 
         WanInfo i = new WanInfo();
-        
+
         try {
-             JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+            JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
             JsonObject jobject = jelement.getAsJsonObject();
 
             String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
@@ -224,7 +224,6 @@ public class JsonUtil {
         } catch (NullPointerException e) {
             throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
-       
 
         return i;
     }
@@ -417,55 +416,61 @@ public class JsonUtil {
         return list;
     }
 
-    public static XdslDiagnostics getXdslDiagnostics(StringResponseDTO a) {
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
-//        System.out.println(jobject.toString());
+    public static XdslDiagnostics getXdslDiagnostics(StringResponseDTO a) throws JsonUtilException {
         XdslDiagnostics x = new XdslDiagnostics();
 
-        String ModulationType = jobject.get("ModulationType").toString().replace("\"", "");
-        String ShowtimeStart = jobject.get("ShowtimeStart").toString().replace("\"", "");
-        String UpstreamMaxRate = jobject.get("UpstreamMaxRate").toString().replace("\"", "");
-        String UpstreamCurrRate = jobject.get("UpstreamCurrRate").toString().replace("\"", "");
-        String UpstreamPower = jobject.get("UpstreamPower").toString().replace("\"", "");
-        String UpstreamNoiseMargin = jobject.get("UpstreamNoiseMargin").toString().replace("\"", "");
-        String UpstreamAttenuation = jobject.get("UpstreamAttenuation").toString().replace("\"", "");
-        String DownstreamMaxRate = jobject.get("DownstreamMaxRate").toString().replace("\"", "");
-        String DownstreamCurrRate = jobject.get("DownstreamCurrRate").toString().replace("\"", "");
-        String DownstreamPower = jobject.get("DownstreamPower").toString().replace("\"", "");
-        String DownstreamNoiseMargin = jobject.get("DownstreamNoiseMargin").toString().replace("\"", "");
-        String DownstreamAttenuation = jobject.get("DownstreamAttenuation").toString().replace("\"", "");
-        String LinkRetrain = jobject.get("LinkRetrain").toString().replace("\"", "");
-        String LossOfFraming = jobject.get("LossOfFraming").toString().replace("\"", "");
-        String SeverelyErroredSecs = jobject.get("SeverelyErroredSecs").toString().replace("\"", "");
-        String ATUCFECErrors = jobject.get("ATUCFECErrors").toString().replace("\"", "");
-        String ATUCHECErrors = jobject.get("ATUCHECErrors").toString().replace("\"", "");
-        String ATUCCRCErrors = jobject.get("ATUCCRCErrors").toString().replace("\"", "");
-        String FECErrors = jobject.get("FECErrors").toString().replace("\"", "");
-        String HECErrors = jobject.get("HECErrors").toString().replace("\"", "");
-        String CRCErrors = jobject.get("CRCErrors").toString().replace("\"", "");
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
 
-        x.setATUCCRCErrors(ATUCCRCErrors);
-        x.setATUCFECErrors(ATUCFECErrors);
-        x.setATUCHECErrors(ATUCHECErrors);
-        x.setCRCErrors(CRCErrors);
-        x.setDownstreamAttenuation(DownstreamAttenuation);
-        x.setDownstreamCurrRate(DownstreamCurrRate);
-        x.setDownstreamMaxRate(DownstreamMaxRate);
-        x.setDownstreamPower(DownstreamPower);
-        x.setDownstreamNoiseMargin(DownstreamNoiseMargin);
-        x.setFECErrors(FECErrors);
-        x.setHECErrors(HECErrors);
-        x.setLinkRetrain(LinkRetrain);
-        x.setLossOfFraming(LossOfFraming);
-        x.setModulationType(ModulationType);
-        x.setSeverelyErroredSecs(SeverelyErroredSecs);
-        x.setShowtimeStart(ShowtimeStart);
-        x.setUpstreamAttenuation(UpstreamAttenuation);
-        x.setUpstreamCurrRate(UpstreamCurrRate);
-        x.setUpstreamMaxRate(UpstreamMaxRate);
-        x.setUpstreamNoiseMargin(UpstreamNoiseMargin);
-        x.setUpstreamPower(UpstreamPower);
+            String ModulationType = jobject.get("ModulationType").toString().replace("\"", "");
+            String ShowtimeStart = jobject.get("ShowtimeStart").toString().replace("\"", "");
+            String UpstreamMaxRate = jobject.get("UpstreamMaxRate").toString().replace("\"", "");
+            String UpstreamCurrRate = jobject.get("UpstreamCurrRate").toString().replace("\"", "");
+            String UpstreamPower = jobject.get("UpstreamPower").toString().replace("\"", "");
+            String UpstreamNoiseMargin = jobject.get("UpstreamNoiseMargin").toString().replace("\"", "");
+            String UpstreamAttenuation = jobject.get("UpstreamAttenuation").toString().replace("\"", "");
+            String DownstreamMaxRate = jobject.get("DownstreamMaxRate").toString().replace("\"", "");
+            String DownstreamCurrRate = jobject.get("DownstreamCurrRate").toString().replace("\"", "");
+            String DownstreamPower = jobject.get("DownstreamPower").toString().replace("\"", "");
+            String DownstreamNoiseMargin = jobject.get("DownstreamNoiseMargin").toString().replace("\"", "");
+            String DownstreamAttenuation = jobject.get("DownstreamAttenuation").toString().replace("\"", "");
+            String LinkRetrain = jobject.get("LinkRetrain").toString().replace("\"", "");
+            String LossOfFraming = jobject.get("LossOfFraming").toString().replace("\"", "");
+            String SeverelyErroredSecs = jobject.get("SeverelyErroredSecs").toString().replace("\"", "");
+            String ATUCFECErrors = jobject.get("ATUCFECErrors").toString().replace("\"", "");
+            String ATUCHECErrors = jobject.get("ATUCHECErrors").toString().replace("\"", "");
+            String ATUCCRCErrors = jobject.get("ATUCCRCErrors").toString().replace("\"", "");
+            String FECErrors = jobject.get("FECErrors").toString().replace("\"", "");
+            String HECErrors = jobject.get("HECErrors").toString().replace("\"", "");
+            String CRCErrors = jobject.get("CRCErrors").toString().replace("\"", "");
+
+            x.setATUCCRCErrors(ATUCCRCErrors);
+            x.setATUCFECErrors(ATUCFECErrors);
+            x.setATUCHECErrors(ATUCHECErrors);
+            x.setCRCErrors(CRCErrors);
+            x.setDownstreamAttenuation(DownstreamAttenuation);
+            x.setDownstreamCurrRate(DownstreamCurrRate);
+            x.setDownstreamMaxRate(DownstreamMaxRate);
+            x.setDownstreamPower(DownstreamPower);
+            x.setDownstreamNoiseMargin(DownstreamNoiseMargin);
+            x.setFECErrors(FECErrors);
+            x.setHECErrors(HECErrors);
+            x.setLinkRetrain(LinkRetrain);
+            x.setLossOfFraming(LossOfFraming);
+            x.setModulationType(ModulationType);
+            x.setSeverelyErroredSecs(SeverelyErroredSecs);
+            x.setShowtimeStart(ShowtimeStart);
+            x.setUpstreamAttenuation(UpstreamAttenuation);
+            x.setUpstreamCurrRate(UpstreamCurrRate);
+            x.setUpstreamMaxRate(UpstreamMaxRate);
+            x.setUpstreamNoiseMargin(UpstreamNoiseMargin);
+            x.setUpstreamPower(UpstreamPower);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
 
         return x;
     }
