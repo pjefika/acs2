@@ -3,12 +3,11 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
            prefix="decorator"%>
 
-<div class="container">
+<div class="container">      
+    <acs-modal v-bind:body="modal.comp" v-bind:titulo="modal.titulo"></acs-modal>
     <div class="page-header">
         <h1>Log</h1>
     </div>
-    
-    <busca-log></busca-log>
-    
+    <busca-log></busca-log> 
 </div>
 <script src="${pageContext.request.contextPath}/resources/vue-components/logs/log.js"></script>
