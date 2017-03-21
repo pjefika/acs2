@@ -220,11 +220,19 @@ public class EquipamentoDAO {
         return JsonUtil.getWifiInfo(a);
     }
 
-    public WanInfo getWanInfo(NbiDeviceData eqp) throws Exception {
+    public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException{
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9515, opt, 10000, "");
-        return JsonUtil.getWanInfo(a);
+        WanInfo i;
+        try {
+            i = JsonUtil.getWanInfo(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha getWanInfo no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
+        }
+        return i;
     }
 
     public ServiceClass getServiceClass(NbiDeviceData eqp) throws Exception {

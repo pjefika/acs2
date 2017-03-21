@@ -194,32 +194,37 @@ public class JsonUtil {
         return i;
     }
 
-    public static WanInfo getWanInfo(StringResponseDTO a) {
-
-        System.out.println(a.getValue());
+    public static WanInfo getWanInfo(StringResponseDTO a) throws JsonUtilException {
 
         WanInfo i = new WanInfo();
+        
+        try {
+             JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+            JsonObject jobject = jelement.getAsJsonObject();
 
-        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
-        JsonObject jobject = jelement.getAsJsonObject();
+            String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
+            String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
+            String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
+            String EthernetPacketsReceived = jobject.get("EthernetPacketsReceived").toString().replace("\"", "");
+            String EthernetErrorsSent = jobject.get("EthernetErrorsSent").toString().replace("\"", "");
+            String EthernetErrorsReceived = jobject.get("EthernetErrorsReceived").toString().replace("\"", "");
+            String EthernetDiscardPacketsSent = jobject.get("EthernetDiscardPacketsSent").toString().replace("\"", "");
+            String EthernetDiscardPacketsReceived = jobject.get("EthernetDiscardPacketsReceived").toString().replace("\"", "");
 
-        String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
-        String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
-        String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
-        String EthernetPacketsReceived = jobject.get("EthernetPacketsReceived").toString().replace("\"", "");
-        String EthernetErrorsSent = jobject.get("EthernetErrorsSent").toString().replace("\"", "");
-        String EthernetErrorsReceived = jobject.get("EthernetErrorsReceived").toString().replace("\"", "");
-        String EthernetDiscardPacketsSent = jobject.get("EthernetDiscardPacketsSent").toString().replace("\"", "");
-        String EthernetDiscardPacketsReceived = jobject.get("EthernetDiscardPacketsReceived").toString().replace("\"", "");
-
-        i.setEthernetBytesReceived(EthernetBytesReceived);
-        i.setEthernetBytesSent(EthernetBytesSent);
-        i.setEthernetDiscardPacketsReceived(EthernetDiscardPacketsReceived);
-        i.setEthernetDiscardPacketsSent(EthernetDiscardPacketsSent);
-        i.setEthernetErrorsReceived(EthernetErrorsReceived);
-        i.setEthernetErrorsSent(EthernetErrorsSent);
-        i.setEthernetPacketsReceived(EthernetPacketsReceived);
-        i.setEthernetPacketsSent(EthernetPacketsSent);
+            i.setEthernetBytesReceived(EthernetBytesReceived);
+            i.setEthernetBytesSent(EthernetBytesSent);
+            i.setEthernetDiscardPacketsReceived(EthernetDiscardPacketsReceived);
+            i.setEthernetDiscardPacketsSent(EthernetDiscardPacketsSent);
+            i.setEthernetErrorsReceived(EthernetErrorsReceived);
+            i.setEthernetErrorsSent(EthernetErrorsSent);
+            i.setEthernetPacketsReceived(EthernetPacketsReceived);
+            i.setEthernetPacketsSent(EthernetPacketsSent);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
+       
 
         return i;
     }
