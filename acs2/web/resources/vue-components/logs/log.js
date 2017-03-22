@@ -44,7 +44,7 @@ Vue.component("buscaLog", {
     methods: {
         buscar: function () {
             var self = this;
-            self.logs = null; 
+            self.logs = null;
             var endurl;
             if (self.pick === 'matricula') {
                 endurl = "usr/";
@@ -122,9 +122,11 @@ Vue.component("tabelaLog", {
         reset: function () {
             var self = this;
             self.comp = '';
+            self.equipamento = null;
+            self.valor = null;
         },
         splitInfos: function (info) {
-            var self = this;
+            var self = this;                        
             if (info.equipamento) {
                 self.equipamento = JSON.parse(info.equipamento);
             }
@@ -133,13 +135,16 @@ Vue.component("tabelaLog", {
             }
         },
         validaValor: function (info) {
+
             var self = this;
-            if (info.acao === 'setWifiFull') {
-                self.comp = 'info-wifi';
-            } else if (info.acao === 'setPPPoECredentials') {
-                self.comp = 'info-pppoe';
-            } else if (info.acao === 'setPortMappingInfo') {
-                self.comp = 'info-port-mapping';
+            if (self.valor) {
+                if (info.acao === 'setWifiFull') {
+                    self.comp = 'info-wifi';
+                } else if (info.acao === 'setPPPoECredentials') {
+                    self.comp = 'info-pppoe';
+                } else {
+                    self.comp = 'generic-info';
+                }
             }
         }
     },
@@ -261,35 +266,11 @@ Vue.component("infoPppoe", {
     }
 });
 
-Vue.component("infoPortMapping", {
+Vue.component("genericInfo", {
     template: "<div>\n\
-                    <table class='table table-bordered'>\n\
-                        <tbody>\n\
-                            <tr>\n\
-                                <td colspan='2' style='text-align: center;'><label>Informações PPPoE</label></td>\n\
-                            </tr>\n\
-                            <tr>\n\
-                                <td><label>Porta Externa:</label></td>\n\
-                                <td>{{valor.externalPort}}</td>\n\
-                            </tr>\n\
-                            <tr>\n\
-                                <td><label>Porta Interna:</label></td>\n\
-                                <td>{{valor.internalPort}}</td>\n\
-                            </tr>\n\
-                            <tr>\n\
-                                <td><label>IP Interno:</label></td>\n\
-                                <td>{{valor.internalClient}}</td>\n\
-                            </tr>\n\
-                            <tr>\n\
-                                <td><label>Protocolo:</label></td>\n\
-                                <td>{{valor.protocol}}</td>\n\
-                            </tr>\n\
-                            <tr>\n\
-                                <td><label>Ativo:</label></td>\n\
-                                <td>{{valor.enable}}</td>\n\
-                            </tr>\n\
-                        </tbody>\n\
-                    </table>\n\
+                    <label>Informações JSON: </label>\n\
+                    <br/>\n\
+                    {{valor}}\n\
                 </div>",
     data: function () {
         return data;
