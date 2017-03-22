@@ -86,7 +86,6 @@ Vue.component("getWifi", {
                         vm.$emit("success", "Alterações realizadas com sucesso.");
                     }else{
                         vm.$emit("error", data.string);
-                        $("#actionModal").modal("hide");
                     }
                 },
                 error: function(e) {

@@ -151,7 +151,7 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/getWifiInfoFull/")
     @Logado
-    public void getWifiInfoFull(NbiDeviceData nbiDeviceData) throws HdmException, Exception {
+    public void getWifiInfoFull(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             WifiInfoFull wifiInfoFull = dao.getWifiInfoFull(nbiDeviceData);
             Gson gson = new Gson();
@@ -376,16 +376,20 @@ public class EquipamentoController extends AbstractController {
     @Post("/equipamento/setWifiInfoFull/")
     @Consumes(value = "application/json", options = WithRoot.class)
     @Logado
-    public void setWifiFull(NbiDeviceData nbiDeviceData, WifiInfoFull info) {
+    public void setWifiFull(NbiDeviceData nbiDeviceData, WifiInfoFull info) throws HdmException {
         try {
             Gson gson = new Gson();
             String obj = gson.toJson(info);
             this.gerarLog(nbiDeviceData, "setWifiFull", obj);
             dao.setWifiInfoFull(nbiDeviceData, info);
-            this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            getWifiInfoFull(nbiDeviceData);
+        }  catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao definir as configurações de Wifi do equipamento.");
+            throw new HdmException("A plataforma falhou ao definir as configurações de Wifi do equipamento.");
+        }  catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao definir as configurações de Wifi.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao definir as configurações de Wifi.");
+        } 
     }
 
     @Post

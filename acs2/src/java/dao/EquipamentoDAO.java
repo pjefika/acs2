@@ -347,7 +347,7 @@ public class EquipamentoDAO {
         }
     }
 
-    public Boolean setWifiInfoFull(NbiDeviceData eqp, WifiInfoFull wifi) throws Exception {
+    public Boolean setWifiInfoFull(NbiDeviceData eqp, WifiInfoFull wifi) throws DeviceOperationException, NBIException {
 
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
@@ -365,10 +365,7 @@ public class EquipamentoDAO {
         } catch (OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
             return true;
-        } catch (DeviceOperationException | NBIException e) {
-            e.printStackTrace();
-            return false;
-        }
+        } 
     }
 
     public DdnsInfo getDdns(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
