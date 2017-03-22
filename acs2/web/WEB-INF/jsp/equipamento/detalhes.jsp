@@ -80,11 +80,11 @@
                                 <acs-button acao="Reiniciar" comp="reboot" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Reset de Fábrica" comp="reset-factory" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Efetuar Traceroute" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>
-                                <acs-button acao="Gerenciar DMZ" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <!--<acs-button acao="Gerenciar DMZ" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                                 <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="equipamento.checkOn"></acs-button>
-                                <acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <!--<acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                             </div>
                         </div>
                     </div>
