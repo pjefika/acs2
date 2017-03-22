@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global InterfaceStatistics, Equipamento */
+/* global InterfaceStatistics, Equipamento, vm */
 
 
 Vue.component("getInterfaceStatistics", {
@@ -59,8 +59,8 @@ Vue.component("getInterfaceStatistics", {
                             self.erro = 'true';
                         }
                     } else {
-                        self.mensagem = 'Falha ao buscar informações';
-                        self.erro = 'true';
+                        vm.$emit("error", data.string);
+                        $("#actionModal").modal("hide");
                     }
                 },
                 error: function(e) {

@@ -43,7 +43,11 @@ Vue.component("portMapping", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    self.ports = data.list;
+                    if(data.list!=null){
+                        self.ports = data.list;    
+                    }else{
+                        vm.$emit("error", data.string);
+                    }
                 },
                 error: function(e) {
                     self.mensagem = 'Falha ao buscar informações';

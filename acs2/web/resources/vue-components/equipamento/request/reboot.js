@@ -6,7 +6,7 @@
 /* global Vue */
 var url = "/acs/equipamento/";
 Vue.component("reboot", {
-    data: function() {
+    data: function () {
         return {mensagem: '', erro: '', texto: 'Deseja reiniciar o modem?'}
     },
     props: {
@@ -16,31 +16,35 @@ Vue.component("reboot", {
         },
         equipamento: {
             type: Equipamento,
-            default: function() {
+            default: function () {
                 return new Equipamento();
             }
         }
     },
     methods: {
-        reboot: function() {
+        reboot: function () {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "reboot/",
                 data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true
                 },
-                success: function() {
+                success: function (data) {
+                    if (data.boolean != null) {
+                        vm.$emit('info', 'Equipamento em reinicialização')
+                    } else {
+                        vm.$emit("error", data.string);
+                    }
                     self.$parent.$parent.checkOnline();
-                    vm.$emit('info', 'Equipamento em reinicialização')
                 },
-                error: function(e) {
+                error: function (e) {
                     vm.$emit('error', 'Falha ao realizar ação')
                 },
-                complete: function() {
+                complete: function () {
                     self.$parent.loading = false
                 }
             });

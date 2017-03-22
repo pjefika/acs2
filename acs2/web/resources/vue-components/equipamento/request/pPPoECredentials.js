@@ -9,26 +9,26 @@
 var url = "/acs/equipamento/";
 
 Vue.component("pppoeCredentials", {
-    data: function() {
+    data: function () {
         return {
             mensagem: '',
             erro: ''
         };
     },
-    mounted: function() {
+    mounted: function () {
         var self = this;
         self.getPPPoECredentials();
     },
     props: {
         equipamento: {
             type: Equipamento,
-            default: function() {
+            default: function () {
                 return new Equipamento();
             }
         },
         pPPoEcred: {
             type: pPPoEC,
-            default: function() {
+            default: function () {
                 return new pPPoEC();
             }
         },
@@ -37,31 +37,36 @@ Vue.component("pppoeCredentials", {
         }
     },
     methods: {
-        getPPPoECredentials: function() {
+        getPPPoECredentials: function () {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "getPPPoe/",
                 data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true;
                 },
-                success: function(data) {
-                    self.pPPoEcred = new pPPoEC(data.ppPoECredentialsInfo);
+                success: function (data) {
+                    if (data.ppPoECredentialsInfo != null) {
+                        self.pPPoEcred = new pPPoEC(data.ppPoECredentialsInfo);
+                    } else {
+                        vm.$emit("error", data.string);
+                    }
+
                 },
-                error: function(e) {
+                error: function (e) {
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                     console.log(e);
                 },
-                complete: function() {
+                complete: function () {
                     self.$parent.loading = false;
                 }
             });
         },
-        setPPPoECredentials: function() {
+        setPPPoECredentials: function () {
             var self = this;
             var _data = {};
             _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
@@ -72,13 +77,17 @@ Vue.component("pppoeCredentials", {
                 url: url + "setPPPoe/",
                 data: JSON.stringify(_data),
                 dataType: "json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-                success: function(data) {
-                    console.log(data);
+                success: function (data) {
+                    if (data.ppPoECredentialsInfo != null) {
+                        self.pPPoEcred = new pPPoEC(data.ppPoECredentialsInfo);
+                    } else {
+                        vm.$emit("error", data.string);
+                    }
                 },
-                error: function(e) {
+                error: function (e) {
                     console.log(e);
                 }
             });

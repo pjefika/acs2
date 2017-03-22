@@ -36,11 +36,20 @@ import motive.hdm.synchdeviceops.StringResponseDTO;
  */
 public class JsonUtil {
 
-    public static FirmwareInfo firmwareInfo(StringResponseDTO a) {
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
-        String firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
-        String preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
+    public static FirmwareInfo firmwareInfo(StringResponseDTO a) throws JsonUtilException {
+        String firmwareVersion = "";
+        String preferredVersion = "";
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
+            firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
+            preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
+
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
         return new FirmwareInfo(firmwareVersion, preferredVersion);
     }
 
@@ -56,40 +65,48 @@ public class JsonUtil {
         return new Gson().toJsonTree(o, a).toString().replace("\"", "'");
     }
 
-    public static List<PortMappingInfo> getPortMappingInfo(StringResponseDTO a) {
+    public static List<PortMappingInfo> getPortMappingInfo(StringResponseDTO a) throws JsonUtilException {
 
         List<PortMappingInfo> lst = new ArrayList<>();
-        JsonArray j = new JsonParser().parse(a.getValue()).getAsJsonArray();
 
-        for (int k = 0; k < j.size(); k++) {
-            PortMappingInfo i = new PortMappingInfo();
+        try {
 
-            JsonObject jobject = j.get(k).getAsJsonObject();
+            JsonArray j = new JsonParser().parse(a.getValue()).getAsJsonArray();
 
-            String externalPort;
+            for (int k = 0; k < j.size(); k++) {
+                PortMappingInfo i = new PortMappingInfo();
 
-            try {
-                externalPort = jobject.get("externalPort").toString().replace("\"", "");
-            } catch (Exception e) {
-                externalPort = "";
+                JsonObject jobject = j.get(k).getAsJsonObject();
+
+                String externalPort;
+
+                try {
+                    externalPort = jobject.get("externalPort").toString().replace("\"", "");
+                } catch (Exception e) {
+                    externalPort = "";
+                }
+
+                String internalClient = jobject.get("internalClient").toString().replace("\"", "");
+                String internalPort = jobject.get("internalPort").toString().replace("\"", "");
+                String portMapName = jobject.get("portMapName").toString().replace("\"", "");
+                Boolean enable = jobject.get("enable").getAsBoolean();
+                String protocol = jobject.get("protocol").toString().replace("\"", "");
+                String remoteHost = jobject.get("remoteHost").toString().replace("\"", "");
+
+                i.setExternalPort(externalPort);
+                i.setInternalClient(internalClient);
+                i.setInternalPort(internalPort);
+                i.setPortMapName(portMapName);
+                i.setEnable(enable);
+                i.setProtocol(protocol);
+                i.setRemoteHost(remoteHost);
+
+                lst.add(i);
             }
-
-            String internalClient = jobject.get("internalClient").toString().replace("\"", "");
-            String internalPort = jobject.get("internalPort").toString().replace("\"", "");
-            String portMapName = jobject.get("portMapName").toString().replace("\"", "");
-            Boolean enable = jobject.get("enable").getAsBoolean();
-            String protocol = jobject.get("protocol").toString().replace("\"", "");
-            String remoteHost = jobject.get("remoteHost").toString().replace("\"", "");
-
-            i.setExternalPort(externalPort);
-            i.setInternalClient(internalClient);
-            i.setInternalPort(internalPort);
-            i.setPortMapName(portMapName);
-            i.setEnable(enable);
-            i.setProtocol(protocol);
-            i.setRemoteHost(remoteHost);
-
-            lst.add(i);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
 
         return lst;
@@ -194,32 +211,36 @@ public class JsonUtil {
         return i;
     }
 
-    public static WanInfo getWanInfo(StringResponseDTO a) {
-
-        System.out.println(a.getValue());
+    public static WanInfo getWanInfo(StringResponseDTO a) throws JsonUtilException {
 
         WanInfo i = new WanInfo();
 
-        JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
-        JsonObject jobject = jelement.getAsJsonObject();
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
+            JsonObject jobject = jelement.getAsJsonObject();
 
-        String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
-        String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
-        String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
-        String EthernetPacketsReceived = jobject.get("EthernetPacketsReceived").toString().replace("\"", "");
-        String EthernetErrorsSent = jobject.get("EthernetErrorsSent").toString().replace("\"", "");
-        String EthernetErrorsReceived = jobject.get("EthernetErrorsReceived").toString().replace("\"", "");
-        String EthernetDiscardPacketsSent = jobject.get("EthernetDiscardPacketsSent").toString().replace("\"", "");
-        String EthernetDiscardPacketsReceived = jobject.get("EthernetDiscardPacketsReceived").toString().replace("\"", "");
+            String EthernetBytesSent = jobject.get("EthernetBytesSent").toString().replace("\"", "");
+            String EthernetBytesReceived = jobject.get("EthernetBytesReceived").toString().replace("\"", "");
+            String EthernetPacketsSent = jobject.get("EthernetPacketsSent").toString().replace("\"", "");
+            String EthernetPacketsReceived = jobject.get("EthernetPacketsReceived").toString().replace("\"", "");
+            String EthernetErrorsSent = jobject.get("EthernetErrorsSent").toString().replace("\"", "");
+            String EthernetErrorsReceived = jobject.get("EthernetErrorsReceived").toString().replace("\"", "");
+            String EthernetDiscardPacketsSent = jobject.get("EthernetDiscardPacketsSent").toString().replace("\"", "");
+            String EthernetDiscardPacketsReceived = jobject.get("EthernetDiscardPacketsReceived").toString().replace("\"", "");
 
-        i.setEthernetBytesReceived(EthernetBytesReceived);
-        i.setEthernetBytesSent(EthernetBytesSent);
-        i.setEthernetDiscardPacketsReceived(EthernetDiscardPacketsReceived);
-        i.setEthernetDiscardPacketsSent(EthernetDiscardPacketsSent);
-        i.setEthernetErrorsReceived(EthernetErrorsReceived);
-        i.setEthernetErrorsSent(EthernetErrorsSent);
-        i.setEthernetPacketsReceived(EthernetPacketsReceived);
-        i.setEthernetPacketsSent(EthernetPacketsSent);
+            i.setEthernetBytesReceived(EthernetBytesReceived);
+            i.setEthernetBytesSent(EthernetBytesSent);
+            i.setEthernetDiscardPacketsReceived(EthernetDiscardPacketsReceived);
+            i.setEthernetDiscardPacketsSent(EthernetDiscardPacketsSent);
+            i.setEthernetErrorsReceived(EthernetErrorsReceived);
+            i.setEthernetErrorsSent(EthernetErrorsSent);
+            i.setEthernetPacketsReceived(EthernetPacketsReceived);
+            i.setEthernetPacketsSent(EthernetPacketsSent);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
 
         return i;
     }
@@ -238,26 +259,34 @@ public class JsonUtil {
         return sc;
     }
 
-    public static DdnsInfo ddnsInfo(StringResponseDTO a) {
+    public static DdnsInfo ddnsInfo(StringResponseDTO a) throws JsonUtilException {
 
         DdnsInfo d = new DdnsInfo();
 
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
+        try {
 
-        Boolean enable = new Boolean(jobject.get("Enable").toString().replace("\"", ""));
-        String hostname = jobject.get("Hostname").toString().replace("\"", "");
-        String password = jobject.get("Password").toString().replace("\"", "");
-        String provider = jobject.get("Provider").toString().replace("\"", "");
-        String providerUrl = jobject.get("ProviderURL").toString().replace("\"", "");
-        String user = jobject.get("User").toString().replace("\"", "");
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
 
-        d.setEnable(enable);
-        d.setHostname(hostname);
-        d.setPassword(password);
-        d.setProvider(provider);
-        d.setProviderUrl(providerUrl);
-        d.setUser(user);
+            Boolean enable = new Boolean(jobject.get("Enable").toString().replace("\"", ""));
+            String hostname = jobject.get("Hostname").toString().replace("\"", "");
+            String password = jobject.get("Password").toString().replace("\"", "");
+            String provider = jobject.get("Provider").toString().replace("\"", "");
+            String providerUrl = jobject.get("ProviderURL").toString().replace("\"", "");
+            String user = jobject.get("User").toString().replace("\"", "");
+
+            d.setEnable(enable);
+            d.setHostname(hostname);
+            d.setPassword(password);
+            d.setProvider(provider);
+            d.setProviderUrl(providerUrl);
+            d.setUser(user);
+
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
 
         return d;
     }
@@ -276,7 +305,7 @@ public class JsonUtil {
         return logs;
     }
 
-    public static List<LanDevice> getLanHosts(StringResponseDTO a) {
+    public static List<LanDevice> getLanHosts(StringResponseDTO a) throws JsonUtilException {
 
         List<LanDevice> lst = new ArrayList<>();
 
@@ -304,33 +333,39 @@ public class JsonUtil {
                 l.setAtivo(Boolean.valueOf(jobject.get("Active").toString().replace("\"", "")));
                 lst.add(l);
             }
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
         } catch (NullPointerException e) {
-
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
 
         return lst;
     }
 
-    public static PingResponse pingResponse(StringResponseDTO a) {
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
-
-        String status = jobject.get("status").toString().replace("\"", "");
-        String avgRespTime = jobject.get("avgRespTime").toString().replace("\"", "");
-        String qtdSuccess = jobject.get("qtdSuccess").toString().replace("\"", "");
-        String qtdFailures = jobject.get("qtdFailures").toString().replace("\"", "");
-        String hostAddress = jobject.get("hostAddress").toString().replace("\"", "");
-        String repetitions = jobject.get("repetitions").toString().replace("\"", "");
-
+    public static PingResponse pingResponse(StringResponseDTO a) throws JsonUtilException {
         PingResponse r = new PingResponse();
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
 
-        r.setStatus(status);
-        r.setAvgRespTime(avgRespTime);
-        r.setQtdSuccess(qtdSuccess);
-        r.setQtdFailures(qtdFailures);
-        r.setHostAddress(hostAddress);
-        r.setRepetitions(repetitions);
+            String status = jobject.get("status").toString().replace("\"", "");
+            String avgRespTime = jobject.get("avgRespTime").toString().replace("\"", "");
+            String qtdSuccess = jobject.get("qtdSuccess").toString().replace("\"", "");
+            String qtdFailures = jobject.get("qtdFailures").toString().replace("\"", "");
+            String hostAddress = jobject.get("hostAddress").toString().replace("\"", "");
+            String repetitions = jobject.get("repetitions").toString().replace("\"", "");
 
+            r.setStatus(status);
+            r.setAvgRespTime(avgRespTime);
+            r.setQtdSuccess(qtdSuccess);
+            r.setQtdFailures(qtdFailures);
+            r.setHostAddress(hostAddress);
+            r.setRepetitions(repetitions);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
         return r;
     }
 
@@ -339,128 +374,151 @@ public class JsonUtil {
         // .replace("[", "").replace("]", "").replace("\"", "\"\"");
     }
 
-    public static PPPoECredentialsInfo getPPPoECredentialsInfo(StringResponseDTO a) {
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
-        String username = jobject.get("Username").toString().replace("\"", "");
-        String password = jobject.get("Password").toString().replace("\"", "");
+    public static PPPoECredentialsInfo getPPPoECredentialsInfo(StringResponseDTO a) throws JsonUtilException {
 
-        return new PPPoECredentialsInfo(username, password);
+        PPPoECredentialsInfo i = new PPPoECredentialsInfo();
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
+            String username = jobject.get("Username").toString().replace("\"", "");
+            String password = jobject.get("Password").toString().replace("\"", "");
+            i = new PPPoECredentialsInfo(username, password);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
+
+        return i;
     }
 
-    public static List<InterfaceStatistics> getInterfaceStatistics(StringResponseDTO a) {
-
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonArray jarray = jelement.getAsJsonArray();
+    public static List<InterfaceStatistics> getInterfaceStatistics(StringResponseDTO a) throws JsonUtilException {
 
         List<InterfaceStatistics> list = new ArrayList<>();
-        for (JsonElement jsonElement : jarray) {
-            JsonObject jobject = jsonElement.getAsJsonObject();
 
-            InterfaceStatistics i = new InterfaceStatistics();
+        try {
 
-            String operStatus = jobject.get("operStatus") != null ? jobject.get("operStatus").toString().replace("\"", "") : "";
-            String ipAddress = jobject.get("ipAddress") != null ? jobject.get("ipAddress").toString().replace("\"", "") : "";
-            if (operStatus.contentEquals("Up") && !(ipAddress.isEmpty())) {
-                String ifType;
-                if (jobject.get("ifType") != null) {
-                    ifType = jobject.get("ifType").toString().replace("\"", "");
-                } else if (jobject.get("iftype") != null) {
-                    ifType = jobject.get("iftype").toString().replace("\"", "");
-                } else {
-                    ifType = "";
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonArray jarray = jelement.getAsJsonArray();
+
+            for (JsonElement jsonElement : jarray) {
+                JsonObject jobject = jsonElement.getAsJsonObject();
+
+                InterfaceStatistics i = new InterfaceStatistics();
+
+                String operStatus = jobject.get("operStatus") != null ? jobject.get("operStatus").toString().replace("\"", "") : "";
+                String ipAddress = jobject.get("ipAddress") != null ? jobject.get("ipAddress").toString().replace("\"", "") : "";
+                if (operStatus.contentEquals("Up") && !(ipAddress.isEmpty())) {
+                    String ifType;
+                    if (jobject.get("ifType") != null) {
+                        ifType = jobject.get("ifType").toString().replace("\"", "");
+                    } else if (jobject.get("iftype") != null) {
+                        ifType = jobject.get("iftype").toString().replace("\"", "");
+                    } else {
+                        ifType = "";
+                    }
+                    String adminStatus = jobject.get("adminStatus") != null ? jobject.get("adminStatus").toString().replace("\"", "") : "";
+                    String ifName = jobject.get("ifName") != null ? jobject.get("ifName").toString().replace("\"", "") : "";
+
+                    String ipAddrType = jobject.get("ipAddrType") != null ? jobject.get("ipAddrType").toString().replace("\"", "") : "";
+                    String macAddress = jobject.get("macAddress") != null ? jobject.get("macAddress").toString().replace("\"", "") : "";
+                    String bytesSent = jobject.get("bytesSent") != null ? jobject.get("bytesSent").toString().replace("\"", "") : "";
+                    String bytesRecv = jobject.get("bytesRecv") != null ? jobject.get("bytesRecv").toString().replace("\"", "") : "";
+                    String errSent = jobject.get("errSent") != null ? jobject.get("errSent").toString().replace("\"", "") : "";
+                    String errRecv = jobject.get("errRecv") != null ? jobject.get("errRecv").toString().replace("\"", "") : "";
+                    String pctSent = jobject.get("pctSent") != null ? jobject.get("pctSent").toString().replace("\"", "") : "";
+                    String pctRecv = jobject.get("pctRecv") != null ? jobject.get("pctRecv").toString().replace("\"", "") : "";
+                    String mcSent = jobject.get("mcSent") != null ? jobject.get("mcSent").toString().replace("\"", "") : "";
+                    String mcRecv = jobject.get("mcRecv") != null ? jobject.get("mcRecv").toString().replace("\"", "") : "";
+                    String bcSent = jobject.get("bcSent") != null ? jobject.get("bcSent").toString().replace("\"", "") : "";
+                    String bcRecv = jobject.get("bcRecv") != null ? jobject.get("bcRecv").toString().replace("\"", "") : "";
+
+                    i.setAdminStatus(adminStatus);
+                    i.setIpAddress(ipAddress);
+                    i.setBcRecv(bcRecv);
+                    i.setBcSent(bcSent);
+                    i.setBytesRecv(bytesRecv);
+                    i.setBytesSent(bytesSent);
+                    i.setErrRecv(errRecv);
+                    i.setErrSent(errSent);
+                    i.setIfName(ifName);
+                    i.setIfType(ifType);
+                    i.setIpAddrType(ipAddrType);
+                    i.setMacAddress(macAddress);
+                    i.setMcRecv(mcRecv);
+                    i.setMcSent(mcSent);
+                    i.setOperStatus(operStatus);
+                    i.setPctRecv(pctRecv);
+                    i.setPctSent(pctSent);
+
+                    list.add(i);
                 }
-                String adminStatus = jobject.get("adminStatus") != null ? jobject.get("adminStatus").toString().replace("\"", "") : "";
-                String ifName = jobject.get("ifName") != null ? jobject.get("ifName").toString().replace("\"", "") : "";
 
-                String ipAddrType = jobject.get("ipAddrType") != null ? jobject.get("ipAddrType").toString().replace("\"", "") : "";
-                String macAddress = jobject.get("macAddress") != null ? jobject.get("macAddress").toString().replace("\"", "") : "";
-                String bytesSent = jobject.get("bytesSent") != null ? jobject.get("bytesSent").toString().replace("\"", "") : "";
-                String bytesRecv = jobject.get("bytesRecv") != null ? jobject.get("bytesRecv").toString().replace("\"", "") : "";
-                String errSent = jobject.get("errSent") != null ? jobject.get("errSent").toString().replace("\"", "") : "";
-                String errRecv = jobject.get("errRecv") != null ? jobject.get("errRecv").toString().replace("\"", "") : "";
-                String pctSent = jobject.get("pctSent") != null ? jobject.get("pctSent").toString().replace("\"", "") : "";
-                String pctRecv = jobject.get("pctRecv") != null ? jobject.get("pctRecv").toString().replace("\"", "") : "";
-                String mcSent = jobject.get("mcSent") != null ? jobject.get("mcSent").toString().replace("\"", "") : "";
-                String mcRecv = jobject.get("mcRecv") != null ? jobject.get("mcRecv").toString().replace("\"", "") : "";
-                String bcSent = jobject.get("bcSent") != null ? jobject.get("bcSent").toString().replace("\"", "") : "";
-                String bcRecv = jobject.get("bcRecv") != null ? jobject.get("bcRecv").toString().replace("\"", "") : "";
-
-                i.setAdminStatus(adminStatus);
-                i.setIpAddress(ipAddress);
-                i.setBcRecv(bcRecv);
-                i.setBcSent(bcSent);
-                i.setBytesRecv(bytesRecv);
-                i.setBytesSent(bytesSent);
-                i.setErrRecv(errRecv);
-                i.setErrSent(errSent);
-                i.setIfName(ifName);
-                i.setIfType(ifType);
-                i.setIpAddrType(ipAddrType);
-                i.setMacAddress(macAddress);
-                i.setMcRecv(mcRecv);
-                i.setMcSent(mcSent);
-                i.setOperStatus(operStatus);
-                i.setPctRecv(pctRecv);
-                i.setPctSent(pctSent);
-
-                list.add(i);
             }
-
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
 
         return list;
     }
 
-    public static XdslDiagnostics getXdslDiagnostics(StringResponseDTO a) {
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
-//        System.out.println(jobject.toString());
+    public static XdslDiagnostics getXdslDiagnostics(StringResponseDTO a) throws JsonUtilException {
         XdslDiagnostics x = new XdslDiagnostics();
 
-        String ModulationType = jobject.get("ModulationType").toString().replace("\"", "");
-        String ShowtimeStart = jobject.get("ShowtimeStart").toString().replace("\"", "");
-        String UpstreamMaxRate = jobject.get("UpstreamMaxRate").toString().replace("\"", "");
-        String UpstreamCurrRate = jobject.get("UpstreamCurrRate").toString().replace("\"", "");
-        String UpstreamPower = jobject.get("UpstreamPower").toString().replace("\"", "");
-        String UpstreamNoiseMargin = jobject.get("UpstreamNoiseMargin").toString().replace("\"", "");
-        String UpstreamAttenuation = jobject.get("UpstreamAttenuation").toString().replace("\"", "");
-        String DownstreamMaxRate = jobject.get("DownstreamMaxRate").toString().replace("\"", "");
-        String DownstreamCurrRate = jobject.get("DownstreamCurrRate").toString().replace("\"", "");
-        String DownstreamPower = jobject.get("DownstreamPower").toString().replace("\"", "");
-        String DownstreamNoiseMargin = jobject.get("DownstreamNoiseMargin").toString().replace("\"", "");
-        String DownstreamAttenuation = jobject.get("DownstreamAttenuation").toString().replace("\"", "");
-        String LinkRetrain = jobject.get("LinkRetrain").toString().replace("\"", "");
-        String LossOfFraming = jobject.get("LossOfFraming").toString().replace("\"", "");
-        String SeverelyErroredSecs = jobject.get("SeverelyErroredSecs").toString().replace("\"", "");
-        String ATUCFECErrors = jobject.get("ATUCFECErrors").toString().replace("\"", "");
-        String ATUCHECErrors = jobject.get("ATUCHECErrors").toString().replace("\"", "");
-        String ATUCCRCErrors = jobject.get("ATUCCRCErrors").toString().replace("\"", "");
-        String FECErrors = jobject.get("FECErrors").toString().replace("\"", "");
-        String HECErrors = jobject.get("HECErrors").toString().replace("\"", "");
-        String CRCErrors = jobject.get("CRCErrors").toString().replace("\"", "");
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
 
-        x.setATUCCRCErrors(ATUCCRCErrors);
-        x.setATUCFECErrors(ATUCFECErrors);
-        x.setATUCHECErrors(ATUCHECErrors);
-        x.setCRCErrors(CRCErrors);
-        x.setDownstreamAttenuation(DownstreamAttenuation);
-        x.setDownstreamCurrRate(DownstreamCurrRate);
-        x.setDownstreamMaxRate(DownstreamMaxRate);
-        x.setDownstreamPower(DownstreamPower);
-        x.setDownstreamNoiseMargin(DownstreamNoiseMargin);
-        x.setFECErrors(FECErrors);
-        x.setHECErrors(HECErrors);
-        x.setLinkRetrain(LinkRetrain);
-        x.setLossOfFraming(LossOfFraming);
-        x.setModulationType(ModulationType);
-        x.setSeverelyErroredSecs(SeverelyErroredSecs);
-        x.setShowtimeStart(ShowtimeStart);
-        x.setUpstreamAttenuation(UpstreamAttenuation);
-        x.setUpstreamCurrRate(UpstreamCurrRate);
-        x.setUpstreamMaxRate(UpstreamMaxRate);
-        x.setUpstreamNoiseMargin(UpstreamNoiseMargin);
-        x.setUpstreamPower(UpstreamPower);
+            String ModulationType = jobject.get("ModulationType").toString().replace("\"", "");
+            String ShowtimeStart = jobject.get("ShowtimeStart").toString().replace("\"", "");
+            String UpstreamMaxRate = jobject.get("UpstreamMaxRate").toString().replace("\"", "");
+            String UpstreamCurrRate = jobject.get("UpstreamCurrRate").toString().replace("\"", "");
+            String UpstreamPower = jobject.get("UpstreamPower").toString().replace("\"", "");
+            String UpstreamNoiseMargin = jobject.get("UpstreamNoiseMargin").toString().replace("\"", "");
+            String UpstreamAttenuation = jobject.get("UpstreamAttenuation").toString().replace("\"", "");
+            String DownstreamMaxRate = jobject.get("DownstreamMaxRate").toString().replace("\"", "");
+            String DownstreamCurrRate = jobject.get("DownstreamCurrRate").toString().replace("\"", "");
+            String DownstreamPower = jobject.get("DownstreamPower").toString().replace("\"", "");
+            String DownstreamNoiseMargin = jobject.get("DownstreamNoiseMargin").toString().replace("\"", "");
+            String DownstreamAttenuation = jobject.get("DownstreamAttenuation").toString().replace("\"", "");
+            String LinkRetrain = jobject.get("LinkRetrain").toString().replace("\"", "");
+            String LossOfFraming = jobject.get("LossOfFraming").toString().replace("\"", "");
+            String SeverelyErroredSecs = jobject.get("SeverelyErroredSecs").toString().replace("\"", "");
+            String ATUCFECErrors = jobject.get("ATUCFECErrors").toString().replace("\"", "");
+            String ATUCHECErrors = jobject.get("ATUCHECErrors").toString().replace("\"", "");
+            String ATUCCRCErrors = jobject.get("ATUCCRCErrors").toString().replace("\"", "");
+            String FECErrors = jobject.get("FECErrors").toString().replace("\"", "");
+            String HECErrors = jobject.get("HECErrors").toString().replace("\"", "");
+            String CRCErrors = jobject.get("CRCErrors").toString().replace("\"", "");
+
+            x.setATUCCRCErrors(ATUCCRCErrors);
+            x.setATUCFECErrors(ATUCFECErrors);
+            x.setATUCHECErrors(ATUCHECErrors);
+            x.setCRCErrors(CRCErrors);
+            x.setDownstreamAttenuation(DownstreamAttenuation);
+            x.setDownstreamCurrRate(DownstreamCurrRate);
+            x.setDownstreamMaxRate(DownstreamMaxRate);
+            x.setDownstreamPower(DownstreamPower);
+            x.setDownstreamNoiseMargin(DownstreamNoiseMargin);
+            x.setFECErrors(FECErrors);
+            x.setHECErrors(HECErrors);
+            x.setLinkRetrain(LinkRetrain);
+            x.setLossOfFraming(LossOfFraming);
+            x.setModulationType(ModulationType);
+            x.setSeverelyErroredSecs(SeverelyErroredSecs);
+            x.setShowtimeStart(ShowtimeStart);
+            x.setUpstreamAttenuation(UpstreamAttenuation);
+            x.setUpstreamCurrRate(UpstreamCurrRate);
+            x.setUpstreamMaxRate(UpstreamMaxRate);
+            x.setUpstreamNoiseMargin(UpstreamNoiseMargin);
+            x.setUpstreamPower(UpstreamPower);
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
 
         return x;
     }

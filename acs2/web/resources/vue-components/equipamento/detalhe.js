@@ -56,7 +56,12 @@ Vue.component("detail", {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
                 success: function(data) {
-                    self.equipamento.checkOn = data.boolean;
+                    if(data.boolean != null){
+                        self.equipamento.checkOn = data.boolean;    
+                    }else{
+                        self.equipamento.checkOn = false;    
+                        vm.$emit("error", data.string);
+                    }
                 }
             });
         }, 1000)

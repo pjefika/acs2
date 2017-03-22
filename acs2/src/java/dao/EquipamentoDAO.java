@@ -78,27 +78,22 @@ public class EquipamentoDAO {
         return nbi.findDeviceByGUID(guid);
     }
 
-    public Boolean reboot(NbiDeviceData eqp) {
+    public Boolean reboot(NbiDeviceData eqp) throws DeviceOperationException, NBIException, ProviderException {
         try {
             this.initSynchDeviceOperations();
             synch.reboot(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 500, "");
             return true;
-        } catch (DeviceOperationException | NBIException | ProviderException e) {
-            return false;
         } catch (OperationTimeoutException ex) {
             return true;
         }
     }
 
-    public Boolean factoryReset(NbiDeviceData eqp) {
-        try {
-            this.initSynchDeviceOperations();
-            synch.factoryReset(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
-            return true;
-        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
-            e.printStackTrace();
-            return false;
-        }
+    public Boolean factoryReset(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
+
+        this.initSynchDeviceOperations();
+        synch.factoryReset(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
+        return true;
+
     }
 
     public void capture(Long guid) throws NBIException_Exception {
@@ -114,16 +109,15 @@ public class EquipamentoDAO {
     /**
      * *
      * Pendencia na tratativa de Exceção
+     *
+     * @param eqp
      */
-    public Boolean checkOnline(NbiDeviceData eqp) {
-        try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-            synch.checkOnline(NbiDecorator.adapter(eqp), opt, 10000, "");
-            return true;
-        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
-            return false;
-        }
+    public Boolean checkOnline(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        synch.checkOnline(NbiDecorator.adapter(eqp), opt, 10000, "");
+        return true;
+
     }
 
     public Long firmwareUpdate(NbiDeviceData eqp) throws NBIException_Exception {
@@ -202,15 +196,21 @@ public class EquipamentoDAO {
 //        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9527, opt, 10000, "");
 //        return JsonUtil.firmwareInfo(a);
 //    }
-    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) {
+    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
+        FirmwareInfo i;
         try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
-            return JsonUtil.firmwareInfo(a);
-        } catch (Exception e) {
-            return null;
+            i = JsonUtil.firmwareInfo(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha firmwareInfo no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
         }
+        return i;
+
     }
 
     public WifiInfo getWifiInfo(NbiDeviceData eqp) throws Exception {
@@ -220,11 +220,19 @@ public class EquipamentoDAO {
         return JsonUtil.getWifiInfo(a);
     }
 
-    public WanInfo getWanInfo(NbiDeviceData eqp) throws Exception {
+    public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9515, opt, 10000, "");
-        return JsonUtil.getWanInfo(a);
+        WanInfo i;
+        try {
+            i = JsonUtil.getWanInfo(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha getWanInfo no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
+        }
+        return i;
     }
 
     public ServiceClass getServiceClass(NbiDeviceData eqp) throws Exception {
@@ -234,12 +242,20 @@ public class EquipamentoDAO {
         return JsonUtil.getServiceClass(a);
     }
 
-    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception {
+    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 10000, "");
-        //System.out.println(a.getValue());
-        return JsonUtil.getLanHosts(a);
+
+        List<LanDevice> i;
+        try {
+            i = JsonUtil.getLanHosts(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha getWifiInfoFull no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
+        }
+        return i;
     }
 
     public DmzInfo getDmzInfo(NbiDeviceData eqp) throws Exception {
@@ -265,17 +281,19 @@ public class EquipamentoDAO {
         return i;
     }
 
-    public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws Exception {
+    public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
+        List<PortMappingInfo> i;
         try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
-            //System.out.println(a.getValue());
-            return JsonUtil.getPortMappingInfo(a);
-        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
-            e.printStackTrace();
-            return null;
+            i = JsonUtil.getPortMappingInfo(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha getPortMappingInfo no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
         }
+        return i;
     }
 
     public PortMappingInfo traceroute(NbiDeviceData eqp, TraceRouteRequest trace) throws Exception {
@@ -290,7 +308,6 @@ public class EquipamentoDAO {
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9524, opt, 15000, "");
 
             //System.out.println(a.getValue());
-
             return null;
         } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
@@ -319,7 +336,6 @@ public class EquipamentoDAO {
             json.set(0, jsonWifi);
 
             //System.out.println(jsonWifi);
-
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 10000, "");
             return true;
         } catch (OperationTimeoutException | ProviderException e) {
@@ -344,7 +360,6 @@ public class EquipamentoDAO {
             json.set(0, jsonWifi);
 
             //System.out.println(jsonWifi);
-
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
             return true;
         } catch (OperationTimeoutException | ProviderException e) {
@@ -356,19 +371,34 @@ public class EquipamentoDAO {
         }
     }
 
-    public DdnsInfo getDdns(NbiDeviceData eqp) throws Exception {
+    public DdnsInfo getDdns(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 10000, "");
-
-        return JsonUtil.ddnsInfo(a);
+        DdnsInfo i;
+        try {
+            i = JsonUtil.ddnsInfo(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha ddnsInfo no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
+        }
+        return i;
     }
 
-    public XdslDiagnostics getXdslDiagnostic(NbiDeviceData eqp) throws Exception {
+    public XdslDiagnostics getXdslDiagnostic(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9514, opt, 10000, "");
-        return JsonUtil.getXdslDiagnostics(a);
+        XdslDiagnostics i;
+        try {
+            i = JsonUtil.getXdslDiagnostics(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha getXdslDiagnostics no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
+        }
+        return i;
     }
 
     public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws Exception {
@@ -378,54 +408,70 @@ public class EquipamentoDAO {
         return JsonUtil.deviceLog(a);
     }
 
-    public List<InterfaceStatistics> getInterfaceStatistics(NbiDeviceData eqp) throws Exception {
+    public List<InterfaceStatistics> getInterfaceStatistics(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 15000, "");
-        return JsonUtil.getInterfaceStatistics(a);
+        List<InterfaceStatistics> i;
+        try {
+            i = JsonUtil.getInterfaceStatistics(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha getInterfaceStatistics no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
+        }
+        return i;
     }
 
-    public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) {
+    public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9523, opt, 10000, "");
+        PPPoECredentialsInfo i;
         try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9523, opt, 10000, "");
-            return JsonUtil.getPPPoECredentialsInfo(a);
-        } catch (DeviceOperationException | NBIException | OperationTimeoutException | ProviderException e) {
-            e.printStackTrace();
-            return null;
+            i = JsonUtil.getPPPoECredentialsInfo(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha getPPPoECredentialsInfo no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
         }
+        return i;
+
     }
 
-    public PingResponse pingDiagnostic(NbiDeviceData eqp, PingRequest p) throws Exception {
+    public PingResponse pingDiagnostic(NbiDeviceData eqp, PingRequest p) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        String jsonPppoe = JsonUtil.serialize(p, p.getClass());
+        List<Object> json = NbiDecorator.getEmptyJson();
+        json.set(0, jsonPppoe);
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 150000, "");
+
+        PingResponse i;
+
         try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-            String jsonPppoe = JsonUtil.serialize(p, p.getClass());
-            List<Object> json = NbiDecorator.getEmptyJson();
-            json.set(0, jsonPppoe);
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 150000, "");
-            //System.out.println(a.getValue());
-            return JsonUtil.pingResponse(a);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            i = JsonUtil.pingResponse(a);
+        } catch (JsonUtilException e) {
+            System.out.println("Falha pingResponse no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            throw new JsonUtilException(e.getMessage());
         }
+
+        return i;
     }
 
-    public StringResponseDTO setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfo pPPoECredentialsInfo) {
-        try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-            String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
-            List<Object> json = NbiDecorator.getEmptyJson();
-            json.set(0, jsonPppoe);
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 10000, "");
-            return a;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public StringResponseDTO setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfo pPPoECredentialsInfo) throws DeviceOperationException, OperationTimeoutException, NBIException, ProviderException {
+
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
+        List<Object> json = NbiDecorator.getEmptyJson();
+        json.set(0, jsonPppoe);
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 10000, "");
+        return a;
+
     }
 
     public NbiOperationStatus getDeviceOperationStatus(Long operationId) throws NBIException_Exception {
@@ -441,20 +487,18 @@ public class EquipamentoDAO {
         }
     }
 
-    public void setPortMapping(NbiDeviceData eqp, List<PortMappingInfo> ports) {
-        try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-            List<Object> json = NbiDecorator.getEmptyJson();
+    public void setPortMapping(NbiDeviceData eqp, List<PortMappingInfo> ports) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
 
-            Gson gson = new Gson();
-            String jsonPm = gson.toJson(ports);
-            json.set(0, jsonPm.toString().toString().replace("\"", "'"));
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 20000, "");
-            //System.out.println(a.getValue());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        List<Object> json = NbiDecorator.getEmptyJson();
+
+        Gson gson = new Gson();
+        String jsonPm = gson.toJson(ports);
+        json.set(0, jsonPm.toString().toString().replace("\"", "'"));
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 20000, "");
+        //System.out.println(a.getValue());
+
     }
 
     public void initNbi() {

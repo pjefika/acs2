@@ -34,7 +34,6 @@ import model.device.firmware.FirmwareInfo;
 import model.device.ping.PingRequest;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
-import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import model.entity.Log;
 
@@ -71,11 +70,15 @@ public class EquipamentoController extends AbstractController {
             Boolean checkOnline = dao.checkOnline(ndd);
 
             if (checkOnline) {
-                FirmwareInfo oi = dao.getFirmwareVersion(ndd);
-                if (oi != null) {
+                FirmwareInfo oi;
+                try {
+                    oi = dao.getFirmwareVersion(ndd);
                     Boolean getFirmIsOk = oi.isOk();
                     jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
+                } catch (JsonUtilException ex) {
+                    
                 }
+                
             }
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
@@ -84,7 +87,15 @@ public class EquipamentoController extends AbstractController {
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
-            result.include("exception", ex.getFaultInfo().getFaultCode().replace(".", "_"));
+            result.include("exception", "Equipamento não encontrado.");
+        } catch (DeviceOperationException e) {
+            result.include("exception", "A plataforma falhou ao obter os detalhes do equipamento.");
+        } catch (NBIException e) {
+            result.include("exception", "A plataforma apresentou um erro generalizado ao obter os detalhes.");
+        } catch (OperationTimeoutException e) {
+            result.include("exception", "A plataforma demorou muito para responder ao obter os detalhes.");
+        } catch (ProviderException e) {
+            result.include("exception", "Erro no provedor da plataforma ao obter os detalhes.");
         }
     }
 
@@ -102,26 +113,39 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/getFirmwareVersion/")
     @Logado
-    public void getFirmwareVersion(NbiDeviceData nbiDeviceData) {
+    public void getFirmwareVersion(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getFirmwareVersion(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando getFirmwareVersion");
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter a versão de Firmware do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter a versão de Firmwarei do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou a versão de Firmware do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou a versão de Firmware do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter a versão de Firmware.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter a versão de Firmware.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter a versão de Firmware.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter a versão de Firmware.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter a versão de Firmware.");
+            throw new HdmException("Erro no provedor da plataforma ao obter a versão de Firmware.");
         }
     }
-
-    @Post
-    @Consumes("application/json")
-    @Path("/equipamento/getWifiInfo/")
-    @Logado
-    public void getWifiInfo(NbiDeviceData nbiDeviceData) {
-        try {
-            this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
-        } catch (Exception e) {
-            e.printStackTrace();
-//            Throw new HdmException();
-        }
-    }
+ 
+//
+//    @Post
+//    @Consumes("application/json")
+//    @Path("/equipamento/getWifiInfo/")
+//    public void getWifiInfo(NbiDeviceData nbiDeviceData) {
+//        try {
+//            this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+////            Throw new HdmException();
+//        }
+//    }
 
     @Post
     @Consumes("application/json")
@@ -139,7 +163,7 @@ public class EquipamentoController extends AbstractController {
             throw new HdmException("A plataforma falhou ao obter os dados de Wifi do equipamento.");
         } catch (JsonUtilException e) {
             this.includeSerializer("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
-            throw new Exception("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
         } catch (NBIException e) {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
@@ -159,8 +183,21 @@ public class EquipamentoController extends AbstractController {
     public void getWanInfo(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getWanInfo(nbiDeviceData));
-        } catch (Exception e) {
-
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as medições Wan do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as medições Wan do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou as medições Wan do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou as medições Wan do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as medições Wan.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as medições Wan.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as medições Wan.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as medições Wan.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as medições Wan.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as medições Wan.");
         }
     }
 
@@ -168,12 +205,25 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/getXdslDiagnostics/")
     @Logado
-    public void getXdslDiagnostics(NbiDeviceData nbiDeviceData) {
+
+    public void getXdslDiagnostics(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getXdslDiagnostic(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando getXdslDiagnostic");
-            e.printStackTrace();
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as medições xDSL do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as medições xDSL do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou as medições xDSL do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou as medições xDSL do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as medições xDSL.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as medições xDSL.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as medições xDSL.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as medições xDSL.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as medições xDSL.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as medições xDSL.");
         }
     }
 
@@ -181,12 +231,24 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/getInterfaceStatistics/")
     @Logado
-    public void getInterfaceStatistics(NbiDeviceData nbiDeviceData) {
+    public void getInterfaceStatistics(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getInterfaceStatistics(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando getInterfaceStatistics");
-            e.printStackTrace();
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter os dados de Interface Statistics do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter os dados de Interface Statistics do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou os dados de Interface Statistics do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou os dados de Interface Statistics do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter os dados de Interface Statistics.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Interface Statistics.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter os dados de Interface Statistics.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Interface Statistics.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter os dados de Interface Statistics.");
+            throw new HdmException("Erro no provedor da plataforma ao obter os dados de Interface Statistics.");
         }
     }
 
@@ -194,11 +256,25 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/getPortMapping/")
     @Logado
-    public void getPortMappingInfo(NbiDeviceData nbiDeviceData) {
+
+    public void getPortMappingInfo(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro ao buscar getPortMapping");
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter os dados de Port Mapping do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter os dados de Port Mapping do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou os dados de Port Mapping do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou os dados de Port Mapping do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter os dados de Port Mapping.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Port Mapping.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter os dados de Port Mapping.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Port Mapping.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter os dados de Port Mapping.");
+            throw new HdmException("Erro no provedor da plataforma ao obter os dados de Port Mapping.");
         }
     }
 
@@ -206,11 +282,24 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/getLanHosts/")
     @Logado
-    public void getLanHosts(NbiDeviceData nbiDeviceData) {
+    public void getLanHosts(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getLanHosts(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro ao buscar getLanHosts");
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter os dados de Lan Host do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter os dados de Lan Host do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou os dados de Lan Host do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou os dados de Lan Host do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter os dados de Lan Host.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Lan Host.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter os dados de Lan Host.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Lan Host.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter os dados de Lan Host.");
+            throw new HdmException("Erro no provedor da plataforma ao obter os dados de Lan Host.");
         }
     }
 
@@ -218,12 +307,13 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/updateFirmwareVersion/")
     @Logado
-    public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) {
+  public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.gerarLog(nbiDeviceData, "updateFirmwareVersion", "");
             this.includeSerializer(dao.firmwareUpdate(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando updateFirmwareVersion");
+        } catch (NBIException_Exception e) {
+            this.includeSerializer("A plataforma apresentou erro ao atualizar o Firmware.");
+            throw new HdmException("A plataforma apresentou erro ao atualizar o Firmware.");
         }
     }
 
@@ -231,12 +321,20 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/reboot/")
     @Logado
-    public void reboot(NbiDeviceData nbiDeviceData) {
+    public void reboot(NbiDeviceData nbiDeviceData) throws HdmException {
+
         try {
             this.gerarLog(nbiDeviceData, "Reboot", "");
             this.includeSerializer(dao.reboot(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando reboot");
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao reiniciar o equipamento.");
+            throw new HdmException("A plataforma falhou ao reiniciar o equipamento.");
+        }  catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao reiniciar.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao reiniciar.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao reiniciar.");
+            throw new HdmException("Erro no provedor da plataforma ao reiniciar.");
         }
     }
 
@@ -244,26 +342,36 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/factoryReset/")
     @Logado
-    public void factoryReset(NbiDeviceData nbiDeviceData) {
+    public void factoryReset(NbiDeviceData nbiDeviceData) throws HdmException {
+
         try {
             this.gerarLog(nbiDeviceData, "Factory Reset", "");
-            dao.factoryReset(nbiDeviceData);
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando factoryReset");
+            this.includeSerializer(dao.factoryReset(nbiDeviceData));
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao aplicar reset de fábrica no equipamento.");
+            throw new HdmException("A plataforma falhou ao aplicar reset de fábrica no equipamento.");
+        }  catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao aplicar reset de fábrica.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao aplicar reset de fábrica.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao aplicar reset de fábrica.");
+            throw new HdmException("Erro no provedor da plataforma ao aplicar reset de fábrica.");
+        } catch (OperationTimeoutException e){
+            this.includeSerializer("A plataforma demorou muito para responder ao aplicar reset de fábrica.");
+            throw new HdmException("A plataforma demorou muito para responder ao aplicar reset de fábrica.");
         }
     }
 
-    @Post("/equipamento/setWifiInfo/")
-    @Consumes(value = "application/json", options = WithRoot.class)
-    @Logado
-    public void setWifi(NbiDeviceData nbiDeviceData, WifiInfo info) {
-        try {
-            dao.setWifiInfo(nbiDeviceData, info);
-            this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @Post("/equipamento/setWifiInfo/")
+//    @Consumes(value = "application/json", options = WithRoot.class)
+//    public void setWifi(NbiDeviceData nbiDeviceData, WifiInfo info) {
+//        try {
+//            dao.setWifiInfo(nbiDeviceData, info);
+//            this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Post("/equipamento/setWifiInfoFull/")
     @Consumes(value = "application/json", options = WithRoot.class)
@@ -284,33 +392,73 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/checkOnline/")
     @Logado
-    public void checkOnline(NbiDeviceData nbiDeviceData) {
-        this.includeSerializer(dao.checkOnline(nbiDeviceData));
+    public void checkOnline(NbiDeviceData nbiDeviceData) throws HdmException {
+        try {
+            this.includeSerializer(dao.checkOnline(nbiDeviceData));
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("O equipamento está Offline.");
+            throw new HdmException("O equipamento está Offline.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter o estado do equipamento (online/offline).");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter o estado do equipamento (online/offline).");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter o estado do equipamento (online/offline).");
+            throw new HdmException("A plataforma demorou muito para responder ao obter o estado do equipamento (online/offline).");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter o estado do equipamento (online/offline).");
+            throw new HdmException("Erro no provedor da plataforma ao obter o estado do equipamento (online/offline).");
+        }
     }
 
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getPPPoe/")
     @Logado
-    public void getPPPoECredentials(NbiDeviceData nbiDeviceData) {
+    public void getPPPoECredentials(NbiDeviceData nbiDeviceData) throws HdmException {
+
         try {
             this.includeSerializer(dao.getPPPoECredentials(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando getPPPoECredentials");
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as credenciais de Autenticação do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as credenciais de Autenticação do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou as credenciais de Autenticação do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou as credenciais de Autenticação do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as credenciais de Autenticação.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as credenciais de Autenticação.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as credenciais de Autenticação.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as credenciais de Autenticação.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as credenciais de Autenticação.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as credenciais de Autenticação.");
         }
     }
 
     @Post
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setPPPoe/")
-    public void setPPPoECredentials(NbiDeviceData nbiDeviceData, PPPoECredentialsInfo pPPoECredentialsInfo) {
+    @Logado
+    public void setPPPoECredentials(NbiDeviceData nbiDeviceData, PPPoECredentialsInfo pPPoECredentialsInfo) throws HdmException {
         try {
             Gson gson = new Gson();
             String obj = gson.toJson(pPPoECredentialsInfo);
             this.gerarLog(nbiDeviceData, "setPPPoECredentials", obj);
-            this.includeSerializer(dao.setPPPoECredentials(nbiDeviceData, pPPoECredentialsInfo));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando setPPPoECredentials");
+            dao.setPPPoECredentials(nbiDeviceData, pPPoECredentialsInfo);
+            getPPPoECredentials(nbiDeviceData);
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao definir as credenciais de Autenticação do equipamento.");
+            throw new HdmException("A plataforma falhou ao definir as credenciais de Autenticação do equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao definir as credenciais de Autenticação.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao definir as credenciais de Autenticação.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao definir as credenciais de Autenticação.");
+            throw new HdmException("A plataforma demorou muito para responder ao definir as credenciais de Autenticação.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao definir as credenciais de Autenticação.");
+            throw new HdmException("Erro no provedor da plataforma ao definir as credenciais de Autenticação.");
         }
     }
 
@@ -318,11 +466,25 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/getDdns/")
     @Logado
-    public void getDdns(NbiDeviceData nbiDeviceData) {
+    public void getDdns(NbiDeviceData nbiDeviceData) throws HdmException {
+
         try {
             this.includeSerializer(dao.getDdns(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando getDdns");
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as informações de DNS do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as informações de DNS do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou as informações de DNSo do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou as informações de DNS do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de DNS.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de DNS.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de DNS.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de DNS.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de DNS.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de DNS.");
         }
     }
 
@@ -330,13 +492,27 @@ public class EquipamentoController extends AbstractController {
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/pingDiagnostic/")
     @Logado
-    public void pingDiagnostic(NbiDeviceData nbiDeviceData, String request) {
+    public void pingDiagnostic(NbiDeviceData nbiDeviceData, String request) throws HdmException {
+
         try {
             PingRequest ping = new PingRequest();
             ping.setDestAddress(request);
             this.includeSerializer(dao.pingDiagnostic(nbiDeviceData, ping));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando pingDiagnostic");
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao efetuar ping para " + request + " do equipamento.");
+            throw new HdmException("A plataforma falhou ao efetuar ping para " + request + " do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou as informações de ping para " + request + " do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou as informações de ping para " + request + " do equipamento devidamente.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de ping para " + request + ".");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de ping para " + request + ".");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de ping para " + request + ".");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de ping para " + request + ".");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de ping para " + request + ".");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de ping para " + request + ".");
         }
     }
 
@@ -344,15 +520,27 @@ public class EquipamentoController extends AbstractController {
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setPortMapping/")
     @Logado
-    public void setPortMappingInfo(NbiDeviceData nbiDeviceData, List<PortMappingInfo> ports) {
+    public void setPortMappingInfo(NbiDeviceData nbiDeviceData, List<PortMappingInfo> ports) throws HdmException {
+
         try {
             Gson gson = new Gson();
             String obj = gson.toJson(ports);
             this.gerarLog(nbiDeviceData, "setPortMappingInfo", obj);
             dao.setPortMapping(nbiDeviceData, ports);
-            this.includeSerializer(dao.getPortMapping(nbiDeviceData));
-        } catch (Exception e) {
-            this.includeSerializer("Erro no comando setPortMappingInfo");
+//            this.includeSerializer(dao.getPortMapping(nbiDeviceData));
+            getPortMappingInfo(nbiDeviceData);
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao definir os dados de Port Mapping do equipamento.");
+            throw new HdmException("A plataforma falhou ao definir os dados de Port Mapping do equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao definir os dados de Port Mapping.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao definir os dados de Port Mapping.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao definir os dados de Port Mapping.");
+            throw new HdmException("A plataforma demorou muito para responder ao definir os dados de Port Mapping.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao definir os dados de Port Mapping.");
+            throw new HdmException("Erro no provedor da plataforma ao definir os dados de Port Mapping.");
         }
     }
 
