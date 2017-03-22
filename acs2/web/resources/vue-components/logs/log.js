@@ -44,6 +44,7 @@ Vue.component("buscaLog", {
     methods: {
         buscar: function () {
             var self = this;
+            self.logs = null; 
             var endurl;
             if (self.pick === 'matricula') {
                 endurl = "usr/";
