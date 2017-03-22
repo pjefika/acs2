@@ -36,11 +36,20 @@ import motive.hdm.synchdeviceops.StringResponseDTO;
  */
 public class JsonUtil {
 
-    public static FirmwareInfo firmwareInfo(StringResponseDTO a) {
-        JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();
-        String firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
-        String preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
+    public static FirmwareInfo firmwareInfo(StringResponseDTO a) throws JsonUtilException {
+        String firmwareVersion = "";
+        String preferredVersion = "";
+        try {
+            JsonElement jelement = new JsonParser().parse(a.getValue());
+            JsonObject jobject = jelement.getAsJsonObject();
+            firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
+            preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
+
+        } catch (IllegalStateException e) {
+            throw new JsonUtilException("A resposta da plataforma não era um Json");
+        } catch (NullPointerException e) {
+            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+        }
         return new FirmwareInfo(firmwareVersion, preferredVersion);
     }
 

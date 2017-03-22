@@ -13,7 +13,8 @@ public class EquipamentoTestValues {
 //74021 -> wan nao
 //89013 -> wan ok
     //102015
+    //102017
 
-    public static Long GUID = new Long(102017);
+    public static Long GUID = new Long(102015);
 
 }

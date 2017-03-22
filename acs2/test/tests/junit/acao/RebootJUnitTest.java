@@ -16,7 +16,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.SoutUtil;
 
 /**
  *
@@ -54,7 +53,7 @@ public class RebootJUnitTest {
 
             NbiDeviceData eqp;
             // eqp = d.findDeviceByGUID(new Long(142014));
-            eqp = d.findDeviceByGUID(new Long(139020));
+            eqp = d.findDeviceByGUID(new Long(74021));
 
             assertTrue(d.reboot(eqp));
 

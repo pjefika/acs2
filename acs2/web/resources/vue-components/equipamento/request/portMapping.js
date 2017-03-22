@@ -47,7 +47,6 @@ Vue.component("portMapping", {
                         self.ports = data.list;    
                     }else{
                         vm.$emit("error", data.string);
-                        $("#actionModal").modal("hide");
                     }
                 },
                 error: function(e) {

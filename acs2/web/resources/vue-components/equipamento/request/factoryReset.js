@@ -33,9 +33,13 @@ Vue.component("resetFactory", {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true;
                 },
-                success: function() {
+                success: function(data) {
+                    if(data.boolean != null){
+                        vm.$emit('success', 'Reset de fábrica realizado com sucesso');    
+                    }else{
+                        vm.$emit('error', data.string);    
+                    }
                     self.$parent.$parent.checkOnline();
-                    vm.$emit('success', 'Reset de fábrica realizado com sucesso');
                 },
                 error: function() {
                     vm.$emit('error', 'Falha ao realizar Reset de fábrica');

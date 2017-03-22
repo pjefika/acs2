@@ -17,7 +17,7 @@ Vue.component("alertpanel", {
     template: "\
             <div>\n\
                 <div v-show='mensagem' :class='leClass' style='font-size:15px' @click='fecha()'>\n\
-                    {{leContent}}\n\
+                    {{mensagem}}\n\
                 </div>\n\
             </div>",
     computed: {
@@ -26,16 +26,6 @@ Vue.component("alertpanel", {
                 return 'alert alert-success';
             }
             return 'alert alert-danger';
-        },
-        leContent: function(){
-            switch (this.mensagem){
-                case "device_could_not_be_found":
-                    return "Equipamento não encontrado";
-                    break;
-                default:
-                    return "Erro: "+this.mensagem;
-                    break
-            }
         }
 
     },

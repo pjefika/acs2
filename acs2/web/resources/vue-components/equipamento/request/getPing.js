@@ -56,7 +56,6 @@ Vue.component("getPing", {
                         self.infoPing = data.pingResponse;    
                     }else{
                         vm.$emit("error", data.string);
-                        $("#actionModal").modal("hide");
                     }
                     
                 },
