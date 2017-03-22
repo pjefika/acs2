@@ -5,6 +5,7 @@
  */
 package controller.search;
 
+import auth.annotation.Logado;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.view.Results;
@@ -29,10 +30,12 @@ public class SearchController extends AbstractController {
     }
 
     @Path("/busca")
+    @Logado
     public void create() {
     }
 
     @Path("/action")
+    @Logado
     public void action() {
     }
 
@@ -42,21 +45,25 @@ public class SearchController extends AbstractController {
      * @param serial
      */
     @Path("/busca/listar/serial/{serial}")
+    @Logado
     public void listarPorSerial(String serial) {
         this.includeSerializer(dao.listarEquipamentosPorSerial(serial));
     }
 
     @Path("/busca/listar/subscriber/{subscriber}")
+    @Logado
     public void listarPorSubscriber(String subscriber) {
         this.includeSerializer(dao.listarEquipamentosPorSubscriber(subscriber));
     }
 
     @Path("/busca/listar/mac/{mac}")
+    @Logado
     public void listarPorMac(String mac) {
         this.includeSerializer(dao.listarEquipamentosPorMac(mac.toUpperCase()));
     }
 
     @Path("/busca/listar/guid/{guid}")
+    @Logado
     public void listarPorGuid(Long guid) {
         try {
             this.includeSerializer(dao.findDeviceByGUID(guid));
