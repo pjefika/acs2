@@ -36,7 +36,6 @@ import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import model.entity.Log;
-import model.entity.Parametro;
 
 /**
  *
@@ -51,7 +50,7 @@ public class EquipamentoController extends AbstractController {
 
     @Inject
     private LogDAO logDAO;
-
+    
     @Inject
     private SessionUsuarioEfika sessionUsuarioEfika;
 
@@ -341,13 +340,8 @@ public class EquipamentoController extends AbstractController {
         log.setAcao(acao);
         log.setCalendar(Calendar.getInstance());
         log.setLogin(this.sessionUsuarioEfika.getUsuario().getLogin());
-        this.logDAO.cadastrar(log);
-        if (!valores.isEmpty()) {
-            Parametro parametro = new Parametro();
-            parametro.setLog(log);
-            parametro.setValor(valores);
-            this.logDAO.cadastrar(parametro);
-        }
+        log.setValor(valores);
+        this.logDAO.cadastrar(log);        
     }
 
     @Override
