@@ -129,7 +129,11 @@ public class EquipamentoController extends AbstractController {
     @Logado
     public void getWifiInfoFull(NbiDeviceData nbiDeviceData) throws HdmException, Exception {
         try {
-            this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
+            WifiInfoFull wifiInfoFull = dao.getWifiInfoFull(nbiDeviceData);
+            Gson gson = new Gson();
+            String obj = gson.toJson(wifiInfoFull);            
+            this.gerarLog(nbiDeviceData, "getWifi", obj);
+            this.includeSerializer(wifiInfoFull);
         } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao obter os dados de Wifi do equipamento.");
             throw new HdmException("A plataforma falhou ao obter os dados de Wifi do equipamento.");

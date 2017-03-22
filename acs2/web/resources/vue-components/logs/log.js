@@ -138,7 +138,7 @@ Vue.component("tabelaLog", {
 
             var self = this;
             if (self.valor) {
-                if (info.acao === 'setWifiFull') {
+                if (info.acao === 'setWifiFull' || info.acao === 'getWifi') {
                     self.comp = 'info-wifi';
                 } else if (info.acao === 'setPPPoECredentials') {
                     self.comp = 'info-pppoe';
