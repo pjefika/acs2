@@ -52,7 +52,7 @@ Vue.component("buscaLog", {
                 endurl = "parametro/";
             }
             if (self.input) {
-                $.get(url + endurl + self.input, function (data) {
+                $.get(url + endurl + self.input.toUpperCase(), function (data) {
                     self.logs = data.list;
                     //console.log(data);
                 }).done(function () {
