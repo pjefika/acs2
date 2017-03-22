@@ -5,6 +5,7 @@
  */
 package controller.equipamento;
 
+import auth.annotation.Logado;
 import auth.controller.SessionUsuarioEfika;
 import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
@@ -50,7 +51,7 @@ public class EquipamentoController extends AbstractController {
 
     @Inject
     private LogDAO logDAO;
-    
+
     @Inject
     private SessionUsuarioEfika sessionUsuarioEfika;
 
@@ -58,7 +59,8 @@ public class EquipamentoController extends AbstractController {
     }
 
     @Path("/equipamento/detalhe/{guid}")
-    public void detalhes(String guid) throws HdmException{
+    @Logado
+    public void detalhes(String guid) throws HdmException {
 
         JsonObject jobj = new JsonObject();
 
@@ -82,11 +84,12 @@ public class EquipamentoController extends AbstractController {
             result.include("equipamento", new Gson().toJson(jobj));
 
         } catch (NBIException_Exception ex) {
-            result.include("exception",ex.getFaultInfo().getFaultCode().replace(".", "_"));
+            result.include("exception", ex.getFaultInfo().getFaultCode().replace(".", "_"));
         }
     }
 
     @Path("/equipamento/detalhe/json/{guid}")
+    @Logado
     public void detalhesJson(String guid) {
         try {
             this.includeSerializer(dao.findDeviceByGUID(new Long(guid)));
@@ -98,6 +101,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getFirmwareVersion/")
+    @Logado
     public void getFirmwareVersion(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getFirmwareVersion(nbiDeviceData));
@@ -109,6 +113,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWifiInfo/")
+    @Logado
     public void getWifiInfo(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getWifiInfo(nbiDeviceData));
@@ -121,22 +126,23 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWifiInfoFull/")
+    @Logado
     public void getWifiInfoFull(NbiDeviceData nbiDeviceData) throws HdmException, Exception {
         try {
             this.includeSerializer(dao.getWifiInfoFull(nbiDeviceData));
-        } catch(DeviceOperationException e){
+        } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao obter os dados de Wifi do equipamento.");
             throw new HdmException("A plataforma falhou ao obter os dados de Wifi do equipamento.");
-        } catch(JsonUtilException e){
+        } catch (JsonUtilException e) {
             this.includeSerializer("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
             throw new Exception("A plataforma não retornou os dados de Wifi do equipamento devidamente.");
-        } catch(NBIException e){
+        } catch (NBIException e) {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao obter os dados de Wifi.");
-        } catch(OperationTimeoutException e){
+        } catch (OperationTimeoutException e) {
             this.includeSerializer("A plataforma demorou muito para responder ao obter os dados de Wifi.");
             throw new HdmException("A plataforma demorou muito para responder ao obter os dados de Wifi.");
-        } catch(ProviderException e){
+        } catch (ProviderException e) {
             this.includeSerializer("Erro no provedor da plataforma ao obter os dados de Wifi.");
             throw new HdmException("Erro no provedor da plataforma ao obter os dados de Wifi.");
         }
@@ -145,18 +151,19 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWanInfo/")
+    @Logado
     public void getWanInfo(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getWanInfo(nbiDeviceData));
         } catch (Exception e) {
-           
-            
+
         }
     }
 
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getXdslDiagnostics/")
+    @Logado
     public void getXdslDiagnostics(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getXdslDiagnostic(nbiDeviceData));
@@ -165,10 +172,11 @@ public class EquipamentoController extends AbstractController {
             e.printStackTrace();
         }
     }
-    
+
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getInterfaceStatistics/")
+    @Logado
     public void getInterfaceStatistics(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getInterfaceStatistics(nbiDeviceData));
@@ -181,6 +189,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getPortMapping/")
+    @Logado
     public void getPortMappingInfo(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
@@ -192,6 +201,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getLanHosts/")
+    @Logado
     public void getLanHosts(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getLanHosts(nbiDeviceData));
@@ -203,6 +213,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/updateFirmwareVersion/")
+    @Logado
     public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) {
         try {
             this.gerarLog(nbiDeviceData, "updateFirmwareVersion", "");
@@ -215,6 +226,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/reboot/")
+    @Logado
     public void reboot(NbiDeviceData nbiDeviceData) {
         try {
             this.gerarLog(nbiDeviceData, "Reboot", "");
@@ -227,6 +239,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/factoryReset/")
+    @Logado
     public void factoryReset(NbiDeviceData nbiDeviceData) {
         try {
             this.gerarLog(nbiDeviceData, "Factory Reset", "");
@@ -238,6 +251,7 @@ public class EquipamentoController extends AbstractController {
 
     @Post("/equipamento/setWifiInfo/")
     @Consumes(value = "application/json", options = WithRoot.class)
+    @Logado
     public void setWifi(NbiDeviceData nbiDeviceData, WifiInfo info) {
         try {
             dao.setWifiInfo(nbiDeviceData, info);
@@ -249,6 +263,7 @@ public class EquipamentoController extends AbstractController {
 
     @Post("/equipamento/setWifiInfoFull/")
     @Consumes(value = "application/json", options = WithRoot.class)
+    @Logado
     public void setWifiFull(NbiDeviceData nbiDeviceData, WifiInfoFull info) {
         try {
             Gson gson = new Gson();
@@ -264,6 +279,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/checkOnline/")
+    @Logado
     public void checkOnline(NbiDeviceData nbiDeviceData) {
         this.includeSerializer(dao.checkOnline(nbiDeviceData));
     }
@@ -271,6 +287,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getPPPoe/")
+    @Logado
     public void getPPPoECredentials(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getPPPoECredentials(nbiDeviceData));
@@ -296,6 +313,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getDdns/")
+    @Logado
     public void getDdns(NbiDeviceData nbiDeviceData) {
         try {
             this.includeSerializer(dao.getDdns(nbiDeviceData));
@@ -307,6 +325,7 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/pingDiagnostic/")
+    @Logado
     public void pingDiagnostic(NbiDeviceData nbiDeviceData, String request) {
         try {
             PingRequest ping = new PingRequest();
@@ -320,11 +339,12 @@ public class EquipamentoController extends AbstractController {
     @Post
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setPortMapping/")
+    @Logado
     public void setPortMappingInfo(NbiDeviceData nbiDeviceData, List<PortMappingInfo> ports) {
         try {
             Gson gson = new Gson();
             String obj = gson.toJson(ports);
-            this.gerarLog(nbiDeviceData, "setPortMappingInfo", obj);            
+            this.gerarLog(nbiDeviceData, "setPortMappingInfo", obj);
             dao.setPortMapping(nbiDeviceData, ports);
             this.includeSerializer(dao.getPortMapping(nbiDeviceData));
         } catch (Exception e) {
@@ -341,7 +361,7 @@ public class EquipamentoController extends AbstractController {
         log.setCalendar(Calendar.getInstance());
         log.setLogin(this.sessionUsuarioEfika.getUsuario().getLogin());
         log.setValor(valores);
-        this.logDAO.cadastrar(log);        
+        this.logDAO.cadastrar(log);
     }
 
     @Override

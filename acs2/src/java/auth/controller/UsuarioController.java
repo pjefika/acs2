@@ -9,9 +9,11 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.http.route.Router;
+import br.com.caelum.vraptor.proxy.Proxifier;
 import br.com.caelum.vraptor.view.Results;
-import controller.HomeController;
 import controller.search.SearchController;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestScoped
@@ -40,19 +42,15 @@ public class UsuarioController {
             ws = new EfikaUsersProxy();
 
             if (ws.autenticarUsuario(u.getLogin(), u.getSenha())) {
-
                 u = ws.consultarUsuario(u.getLogin());
                 session.setUsuario(u);
                 result.redirectTo(SearchController.class).create();
-
             } else {
-
                 result.include("mensagemFalha", "Credênciais incorretas.");
                 result.forwardTo(this).logar();
             }
 
         } catch (Exception e) {
-
             result.include("mensagemFalha", e.getMessage());
             result.forwardTo(this).logar();
         }
