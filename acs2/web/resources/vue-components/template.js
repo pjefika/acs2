@@ -58,18 +58,41 @@ vm.$on('error', function(msg) {
         mensagem: msg,
         tipo: 'danger'
     };
-})
+});
 
 vm.$on('info', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'info'
     };
-})
+});
 
 vm.$on('success', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'success'
     };
-})
+});
+
+
+
+var bar = new ProgressBar.Line('#bar', {
+    strokeWidth: 4,
+    easing: 'easeInOut',
+    duration: 1400,
+    color: '#FFEA82',
+    trailColor: '#eee',
+    trailWidth: 1,
+    svgStyle: {width: '100%', height: '100%'}
+    ,
+    from: {
+        color: '#FFEA82'
+    }
+    ,
+    to: {
+        color: '#ED6A5A'
+    },
+    duration: 1000
+}
+);
+bar.animate(0);

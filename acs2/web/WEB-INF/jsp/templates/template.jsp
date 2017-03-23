@@ -21,6 +21,7 @@
         <script src="${pageContext.request.contextPath}/resources/node_modules/vue/dist/vue.js"></script>
         <script src="${pageContext.request.contextPath}/resources/lodash/lodash.js"></script>
         <script src="${pageContext.request.contextPath}/resources/moment/moment.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/progressbar/progressbar.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7-dist/bootstrap-notify.js"></script>
         <script src="${pageContext.request.contextPath}/resources/data-table/dataTables.min.js"></script>
@@ -33,7 +34,7 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -86,6 +87,7 @@
             </div>
         </nav>
         <div id="instancia" v-cloak>
+            <div id="bar"></div>
             <decorator:body/>
         </div>
 

@@ -47,6 +47,17 @@ Vue.component("detail", {
     methods: {
         checkOnline: _.debounce(function() {
             var self = this;
+
+            i = 0
+            lele = setInterval(function() {
+                i++
+                if (i == 10) {
+                    clearInterval(this)
+                } else {
+                    bar.animate(i / 10);
+                }
+            }, 500)
+
             $.ajax({
                 type: "POST",
                 url: url + "checkOnline/",
@@ -56,14 +67,20 @@ Vue.component("detail", {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
                 success: function(data) {
-                    if(data.boolean != null){
-                        self.equipamento.checkOn = data.boolean;    
-                    }else{
-                        self.equipamento.checkOn = false;    
+                    if (data.boolean != null) {
+                        self.equipamento.checkOn = data.boolean;
+                        vm.$emit("success", "Status do equipamento atualizado.");
+                    } else {
+                        self.equipamento.checkOn = false;
                         vm.$emit("error", data.string);
                     }
+                },
+                complete: function() {
+                    bar.animate(1);
+                    clearInterval(lele)
+                    bar.animate(0);
                 }
             });
-        }, 1000)
+        }, 800)
     }
 });

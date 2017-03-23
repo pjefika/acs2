@@ -20,6 +20,9 @@
                                     <label>Status: </label>
                                     <span v-if="equipamento.checkOn">Ativo</span>
                                     <span v-else>Inativo</span>
+                                    <button type="button" class="btn btn-default btn-sm pull-right" @click="checkOnline()">
+                                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                    </button>
                                 </li>
                                 <li class="list-group-item">
                                     <label>Serial:</label>
