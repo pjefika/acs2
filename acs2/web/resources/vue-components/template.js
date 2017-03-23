@@ -23,10 +23,10 @@ var vm = new Vue({
             tipo: 'danger'
         }
     },
-    created: function () {
+    created: function() {
     },
     watch: {
-        notif: function (val) {
+        notif: function(val) {
             $.notify({
                 // options
                 message: val.mensagem
@@ -35,8 +35,9 @@ var vm = new Vue({
                 type: val.tipo,
                 z_index: 9999,
                 newest_on_top: true,
-                delay: 300000,
-                timer: 0,
+                delay: 8000,
+                timer: 1000,
+                spacing: 10,
                 animate: {
                     enter: 'animated zoomInUp',
                     exit: 'animated zoomOutDown',
@@ -52,21 +53,21 @@ var vm = new Vue({
 
 
 
-vm.$on('error', function (msg) {
+vm.$on('error', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'danger'
     };
 })
 
-vm.$on('info', function (msg) {
+vm.$on('info', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'info'
     };
 })
 
-vm.$on('success', function (msg) {
+vm.$on('success', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'success'

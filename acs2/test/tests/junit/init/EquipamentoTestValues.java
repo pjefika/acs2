@@ -6,15 +6,13 @@
 package tests.junit.init;
 
 /**
+ * 74021 -> wan nao 89013 -> wan ok 102015 102017 102017 146024 74021 (firmware
+ * ok)
  *
  * @author G0042204
  */
 public class EquipamentoTestValues {
-//74021 -> wan nao
-//89013 -> wan ok
-    //102015
-    //102017
 
-    public static Long GUID = new Long(89013);
+    public static Long GUID = new Long(146024);
 
 }

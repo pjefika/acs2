@@ -312,8 +312,6 @@ public class JsonUtil {
         try {
 
             String tratativa = a.getValue().replace("{", "[{").replace("}", "}]").replaceAll("\"HostNumberOfEntries\":\"[0-9]{1,10}\",", "").replaceAll("Host.[0-9]{1,10}.", "").replace("\",\"IPAddress\"", "\"},{\"IPAddress\"");
-
-//        System.out.println(tratativa);
             JsonElement jelement = new JsonParser().parse(tratativa);
 
 //        System.out.println("Element: " + jelement.toString());
@@ -334,8 +332,14 @@ public class JsonUtil {
                 lst.add(l);
             }
         } catch (IllegalStateException e) {
+            if (a.getValue().contains("HostNumberOfEntries")) {
+                return lst;
+            }
             throw new JsonUtilException("A resposta da plataforma não era um Json");
         } catch (NullPointerException e) {
+            if (a.getValue().contains("HostNumberOfEntries")) {
+                return lst;
+            }
             throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
 
