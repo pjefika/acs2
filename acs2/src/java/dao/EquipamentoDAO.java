@@ -65,6 +65,7 @@ public class EquipamentoDAO {
     public EquipamentoDAO() {
         System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
         System.setProperty("http.proxyPort", "8080");
+        System.setProperty("http.nonProxyHosts", "10.200.35.67");
     }
 
     /**
@@ -365,7 +366,7 @@ public class EquipamentoDAO {
         } catch (OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
             return true;
-        } 
+        }
     }
 
     public DdnsInfo getDdns(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {

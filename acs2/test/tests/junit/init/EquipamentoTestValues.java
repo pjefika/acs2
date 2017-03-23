@@ -15,6 +15,6 @@ public class EquipamentoTestValues {
     //102015
     //102017
 
-    public static Long GUID = new Long(102015);
+    public static Long GUID = new Long(89013);
 
 }
