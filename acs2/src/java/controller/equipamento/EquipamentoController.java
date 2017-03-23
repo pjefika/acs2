@@ -67,7 +67,13 @@ public class EquipamentoController extends AbstractController {
         try {
             ndd = dao.findDeviceByGUID(new Long(guid));
 
-            Boolean checkOnline = dao.checkOnline(ndd);
+            Boolean checkOnline;
+
+            try {
+                checkOnline = dao.checkOnline(ndd);
+            } catch (DeviceOperationException e) {
+                checkOnline = false;
+            }
 
             if (checkOnline) {
                 FirmwareInfo oi;
@@ -76,9 +82,9 @@ public class EquipamentoController extends AbstractController {
                     Boolean getFirmIsOk = oi.isOk();
                     jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
                 } catch (JsonUtilException ex) {
-                    
+
                 }
-                
+
             }
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
@@ -133,7 +139,7 @@ public class EquipamentoController extends AbstractController {
             throw new HdmException("Erro no provedor da plataforma ao obter a versão de Firmware.");
         }
     }
- 
+
 //
 //    @Post
 //    @Consumes("application/json")
@@ -146,7 +152,6 @@ public class EquipamentoController extends AbstractController {
 ////            Throw new HdmException();
 //        }
 //    }
-
     @Post
     @Consumes("application/json")
     @Path("/equipamento/getWifiInfoFull/")
@@ -155,7 +160,7 @@ public class EquipamentoController extends AbstractController {
         try {
             WifiInfoFull wifiInfoFull = dao.getWifiInfoFull(nbiDeviceData);
             Gson gson = new Gson();
-            String obj = gson.toJson(wifiInfoFull);            
+            String obj = gson.toJson(wifiInfoFull);
             this.gerarLog(nbiDeviceData, "getWifi", obj);
             this.includeSerializer(wifiInfoFull);
         } catch (DeviceOperationException e) {
@@ -307,7 +312,7 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/updateFirmwareVersion/")
     @Logado
-  public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) throws HdmException {
+    public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.gerarLog(nbiDeviceData, "updateFirmwareVersion", "");
             this.includeSerializer(dao.firmwareUpdate(nbiDeviceData));
@@ -329,7 +334,7 @@ public class EquipamentoController extends AbstractController {
         } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao reiniciar o equipamento.");
             throw new HdmException("A plataforma falhou ao reiniciar o equipamento.");
-        }  catch (NBIException e) {
+        } catch (NBIException e) {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao reiniciar.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao reiniciar.");
         } catch (ProviderException e) {
@@ -350,13 +355,13 @@ public class EquipamentoController extends AbstractController {
         } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao aplicar reset de fábrica no equipamento.");
             throw new HdmException("A plataforma falhou ao aplicar reset de fábrica no equipamento.");
-        }  catch (NBIException e) {
+        } catch (NBIException e) {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao aplicar reset de fábrica.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao aplicar reset de fábrica.");
         } catch (ProviderException e) {
             this.includeSerializer("Erro no provedor da plataforma ao aplicar reset de fábrica.");
             throw new HdmException("Erro no provedor da plataforma ao aplicar reset de fábrica.");
-        } catch (OperationTimeoutException e){
+        } catch (OperationTimeoutException e) {
             this.includeSerializer("A plataforma demorou muito para responder ao aplicar reset de fábrica.");
             throw new HdmException("A plataforma demorou muito para responder ao aplicar reset de fábrica.");
         }
@@ -372,7 +377,6 @@ public class EquipamentoController extends AbstractController {
 //            e.printStackTrace();
 //        }
 //    }
-
     @Post("/equipamento/setWifiInfoFull/")
     @Consumes(value = "application/json", options = WithRoot.class)
     @Logado
@@ -383,13 +387,13 @@ public class EquipamentoController extends AbstractController {
             this.gerarLog(nbiDeviceData, "setWifiFull", obj);
             dao.setWifiInfoFull(nbiDeviceData, info);
             getWifiInfoFull(nbiDeviceData);
-        }  catch (DeviceOperationException e) {
+        } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao definir as configurações de Wifi do equipamento.");
             throw new HdmException("A plataforma falhou ao definir as configurações de Wifi do equipamento.");
-        }  catch (NBIException e) {
+        } catch (NBIException e) {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao definir as configurações de Wifi.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao definir as configurações de Wifi.");
-        } 
+        }
     }
 
     @Post
