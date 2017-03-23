@@ -151,7 +151,7 @@ Vue.component("searchAction", {
             var self = this;
             self.inputToSearch = this.lecrazy;
             var picked = this.leOpt;
-
+            vm.$emit('loading', 100);
             if (!self.inputToSearch) {
                 return;
             }
@@ -166,6 +166,7 @@ Vue.component("searchAction", {
                     Vue.nextTick(function() {
                         self.$parent.listaEqp = data.list;
                     });
+                    vm.$emit('loaded');
                 },
                 error: function(e) {
                     self.mensagem = 'Falha ao buscar informações';
