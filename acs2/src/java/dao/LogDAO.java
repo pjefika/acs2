@@ -33,7 +33,7 @@ public class LogDAO extends AbstractDAO{
     public List<Log> listarPorParametro(String valor) {        
         try {            
             String abc = "FROM Log l WHERE l.equipamento LIKE '%"+valor+"%' ";
-            System.out.println(abc);            
+            //System.out.println(abc);            
             Query query = this.entityManager.createQuery(abc);
             return query.getResultList();
         } catch (Exception e) {
