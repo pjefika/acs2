@@ -23,10 +23,10 @@ var vm = new Vue({
             tipo: 'danger'
         }
     },
-    created: function() {
+    created: function () {
     },
     watch: {
-        notif: function(val) {
+        notif: function (val) {
             $.notify({
                 // options
                 message: val.mensagem
@@ -53,25 +53,33 @@ var vm = new Vue({
 
 
 
-vm.$on('error', function(msg) {
+vm.$on('error', function (msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'danger'
     };
 });
 
-vm.$on('info', function(msg) {
+vm.$on('info', function (msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'info'
     };
 });
 
-vm.$on('success', function(msg) {
+vm.$on('success', function (msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'success'
     };
+});
+
+vm.$on('loading', function (int) {
+    loadingBar(int);
+});
+
+vm.$on('loaded', function () {
+    loadedBar();
 });
 
 
@@ -92,7 +100,25 @@ var bar = new ProgressBar.Line('#bar', {
     to: {
         color: '#ED6A5A'
     },
-    duration: 1000
+    duration: 100
 }
 );
 bar.animate(0);
+
+function loadingBar(val) {
+    i = 0
+    leInterval = setInterval(function () {
+        i++
+        if (i < 10) {
+            bar.animate(i / 10);
+        }
+    }, val)
+}
+
+function loadedBar() {
+    Vue.nextTick(function () {
+        clearInterval(leInterval);
+        bar.animate(1);
+    })
+
+}

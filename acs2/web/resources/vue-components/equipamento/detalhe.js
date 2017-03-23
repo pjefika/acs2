@@ -47,17 +47,8 @@ Vue.component("detail", {
     methods: {
         checkOnline: _.debounce(function() {
             var self = this;
-
-            i = 0
-            lele = setInterval(function() {
-                i++
-                if (i == 10) {
-                    clearInterval(this)
-                } else {
-                    bar.animate(i / 10);
-                }
-            }, 500)
-
+            vm.$emit('loading', 100);
+            
             $.ajax({
                 type: "POST",
                 url: url + "checkOnline/",
@@ -74,11 +65,7 @@ Vue.component("detail", {
                         self.equipamento.checkOn = false;
                         vm.$emit("error", data.string);
                     }
-                },
-                complete: function() {
-                    bar.animate(1);
-                    clearInterval(lele)
-                    bar.animate(0);
+                    vm.$emit('loaded');
                 }
             });
         }, 800)
