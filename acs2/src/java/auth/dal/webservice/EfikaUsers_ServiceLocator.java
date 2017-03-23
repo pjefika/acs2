@@ -4,22 +4,29 @@
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
-
 package auth.dal.webservice;
 
 @SuppressWarnings("serial")
 public class EfikaUsers_ServiceLocator extends org.apache.axis.client.Service implements auth.dal.webservice.EfikaUsers_Service {
 
     public EfikaUsers_ServiceLocator() {
+        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
+        System.setProperty("http.proxyPort", "8080");
+        System.setProperty("http.nonProxyHosts", "10.200.35.67");
     }
-
 
     public EfikaUsers_ServiceLocator(org.apache.axis.EngineConfiguration config) {
         super(config);
+        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
+        System.setProperty("http.proxyPort", "8080");
+        System.setProperty("http.nonProxyHosts", "10.200.35.67");
     }
 
     public EfikaUsers_ServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
         super(wsdlLoc, sName);
+        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
+        System.setProperty("http.proxyPort", "8080");
+        System.setProperty("http.nonProxyHosts", "10.200.35.67");
     }
 
     // Use to get a proxy class for _8
@@ -41,11 +48,10 @@ public class EfikaUsers_ServiceLocator extends org.apache.axis.client.Service im
     }
 
     public auth.dal.webservice.EfikaUsers_PortType get_8() throws javax.xml.rpc.ServiceException {
-       java.net.URL endpoint;
+        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(_8_address);
-        }
-        catch (java.net.MalformedURLException e) {
+        } catch (java.net.MalformedURLException e) {
             throw new javax.xml.rpc.ServiceException(e);
         }
         return get_8(endpoint);
@@ -56,8 +62,7 @@ public class EfikaUsers_ServiceLocator extends org.apache.axis.client.Service im
             auth.dal.webservice.EfikaUsersSoapBindingStub _stub = new auth.dal.webservice.EfikaUsersSoapBindingStub(portAddress, this);
             _stub.setPortName(get_8WSDDServiceName());
             return _stub;
-        }
-        catch (org.apache.axis.AxisFault e) {
+        } catch (org.apache.axis.AxisFault e) {
             return null;
         }
     }
@@ -67,9 +72,8 @@ public class EfikaUsers_ServiceLocator extends org.apache.axis.client.Service im
     }
 
     /**
-     * For the given interface, get the stub implementation.
-     * If this service has no port for the given interface,
-     * then ServiceException is thrown.
+     * For the given interface, get the stub implementation. If this service has
+     * no port for the given interface, then ServiceException is thrown.
      */
     public java.rmi.Remote getPort(@SuppressWarnings("rawtypes") Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
@@ -78,28 +82,25 @@ public class EfikaUsers_ServiceLocator extends org.apache.axis.client.Service im
                 _stub.setPortName(get_8WSDDServiceName());
                 return _stub;
             }
-        }
-        catch (java.lang.Throwable t) {
+        } catch (java.lang.Throwable t) {
             throw new javax.xml.rpc.ServiceException(t);
         }
         throw new javax.xml.rpc.ServiceException("There is no stub implementation for the interface:  " + (serviceEndpointInterface == null ? "null" : serviceEndpointInterface.getName()));
     }
 
     /**
-     * For the given interface, get the stub implementation.
-     * If this service has no port for the given interface,
-     * then ServiceException is thrown.
+     * For the given interface, get the stub implementation. If this service has
+     * no port for the given interface, then ServiceException is thrown.
      */
     @SuppressWarnings("rawtypes")
-	public java.rmi.Remote getPort(javax.xml.namespace.QName portName, Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
+    public java.rmi.Remote getPort(javax.xml.namespace.QName portName, Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         if (portName == null) {
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
         if ("80".equals(inputPortName)) {
             return get_8();
-        }
-        else  {
+        } else {
             java.rmi.Remote _stub = getPort(serviceEndpointInterface);
             ((org.apache.axis.client.Stub) _stub).setPortName(portName);
             return _stub;
@@ -111,10 +112,10 @@ public class EfikaUsers_ServiceLocator extends org.apache.axis.client.Service im
     }
 
     @SuppressWarnings("rawtypes")
-	private java.util.HashSet ports = null;
+    private java.util.HashSet ports = null;
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	public java.util.Iterator getPorts() {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
             ports.add(new javax.xml.namespace.QName("http://webservices/", "80"));
@@ -123,22 +124,20 @@ public class EfikaUsers_ServiceLocator extends org.apache.axis.client.Service im
     }
 
     /**
-    * Set the endpoint address for the specified port name.
-    */
+     * Set the endpoint address for the specified port name.
+     */
     public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
-        
-if ("_8".equals(portName)) {
+
+        if ("_8".equals(portName)) {
             set_8EndpointAddress(address);
-        }
-        else 
-{ // Unknown Port Name
+        } else { // Unknown Port Name
             throw new javax.xml.rpc.ServiceException(" Cannot set Endpoint Address for Unknown Port" + portName);
         }
     }
 
     /**
-    * Set the endpoint address for the specified port name.
-    */
+     * Set the endpoint address for the specified port name.
+     */
     public void setEndpointAddress(javax.xml.namespace.QName portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
         setEndpointAddress(portName.getLocalPart(), address);
     }
