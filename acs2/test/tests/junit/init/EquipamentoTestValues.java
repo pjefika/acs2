@@ -13,6 +13,6 @@ package tests.junit.init;
  */
 public class EquipamentoTestValues {
 
-    public static Long GUID = new Long(146024);
+    public static Long GUID = new Long(74021);
 
 }

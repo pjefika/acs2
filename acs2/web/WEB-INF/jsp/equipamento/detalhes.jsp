@@ -40,9 +40,14 @@
 
                                 <li class="list-group-item">
                                     <label>Firmware: </label>
-                                    <span v-if="equipamento.firmwareOk">Atualizado</span>
-                                    <span v-else>Desatualizado</span>
-                                    <button class="btn btn-danger" type="button">Atualizar</button>
+
+                                    <div v-if="equipamento.firmwareOk">
+                                        <span>Atualizado</span>
+                                    </div>
+                                    <div v-else>
+                                        <span v-else>Desatualizado</span>
+                                        <button class="btn btn-danger" type="button" @click="firmwareUpdate()">Atualizar</button>
+                                    </div>
                                 </li>
                                 <li class="list-group-item">
                                     <label>Nome do Modelo:</label>

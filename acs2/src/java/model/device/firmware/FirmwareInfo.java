@@ -20,7 +20,16 @@ public class FirmwareInfo {
         this.preferredVersion = preferredVersion;
     }
 
+    /**
+     * Validação de Firmware Equipamentos sem Firmware Cadastrados devem ser
+     * considerados atualizados;
+     *
+     * @return
+     */
     public Boolean isOk() {
+        if (this.preferredVersion.isEmpty()) {
+            return true;
+        }
         return firmwareVersion.equalsIgnoreCase(preferredVersion);
     }
 

@@ -48,7 +48,7 @@ Vue.component("detail", {
         checkOnline: _.debounce(function() {
             var self = this;
             vm.$emit('loading', 100);
-            
+
             $.ajax({
                 type: "POST",
                 url: url + "checkOnline/",
@@ -68,6 +68,10 @@ Vue.component("detail", {
                     vm.$emit('loaded');
                 }
             });
-        }, 800)
+        }, 800),
+        firmwareUpdate: function() {
+            // Implementar
+
+        }
     }
 });
