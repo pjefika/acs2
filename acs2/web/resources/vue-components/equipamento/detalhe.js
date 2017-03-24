@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global Vue, Equipamento, eqpString, CheckOnline, vm */
+/* global Vue, Equipamento, eqpString, CheckOnline, vm, _ */
 
 var url = "/acs/equipamento/";
 
@@ -45,10 +45,13 @@ Vue.component("detail", {
 //        }, 30000);
     },
     methods: {
-        checkOnline: _.debounce(function() {
+        checkOnline: function() {
             var self = this;
-            vm.$emit('loading', 100);
-            
+            vm.$emit('loadingBarLong')
+            self.checkOnlineRequest();
+        },
+        checkOnlineRequest: _.debounce(function() {
+            var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "checkOnline/",
@@ -70,7 +73,7 @@ Vue.component("detail", {
                     
                 }
             });
-        }, 500),
+        }, 2000),
         firmwareUpdate: function() {
             // Implementar
 

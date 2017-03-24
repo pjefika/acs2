@@ -13,6 +13,7 @@ import com.alcatel.hdm.service.nbi2.NbiFirmwareImageData;
 import com.alcatel.hdm.service.nbi2.NbiFunction;
 import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
+import com.alcatel.hdm.service.nbi2.NbiSupportedRPCMethod;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import com.google.gson.Gson;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
@@ -142,6 +143,18 @@ public class EquipamentoDAO {
             return new ArrayList<>();
         }
 
+    }
+
+    public void getSup() {
+        try {
+            this.initNbi();
+            for (NbiSupportedRPCMethod a : nbi.getSupportedRPCMethods()) {
+                System.out.println("Nome: " + a.getName() + "|   Function:" + a.getFunctionCode());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<NbiDeviceData> listarEquipamentosPorMac(String mac) {
