@@ -108,15 +108,13 @@ var bar = new ProgressBar.Line('#bar', {
 );
 
 function loadingBar(val) {
+    bar.animate(0)
     bar.animate(0.96);
 }
 
 function loadingBarLong(val) {
-    if (val) {
-        bar.animate(0.98, {duration: val});
-    } else {
-        bar.animate(0.98, {duration: 12000});
-    }
+    bar.animate(0, {duration: 1});
+    bar.animate(0.98, {duration: val ? val : 12000});
 }
 function loadedBar() {
     Vue.nextTick(function() {
