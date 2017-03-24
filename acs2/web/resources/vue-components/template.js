@@ -23,10 +23,10 @@ var vm = new Vue({
             tipo: 'danger'
         }
     },
-    created: function () {
+    created: function() {
     },
     watch: {
-        notif: function (val) {
+        notif: function(val) {
             $.notify({
                 // options
                 message: val.mensagem
@@ -53,32 +53,36 @@ var vm = new Vue({
 
 
 
-vm.$on('error', function (msg) {
+vm.$on('error', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'danger'
     };
 });
 
-vm.$on('info', function (msg) {
+vm.$on('info', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'info'
     };
 });
 
-vm.$on('success', function (msg) {
+vm.$on('success', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'success'
     };
 });
 
-vm.$on('loading', function (int) {
+vm.$on('loading', function(int) {
     loadingBar(int);
 });
 
-vm.$on('loaded', function () {
+vm.$on('loadingBarLong', function(int) {
+    loadingBarLong(int);
+});
+
+vm.$on('loaded', function() {
     loadedBar();
 });
 
@@ -87,7 +91,7 @@ vm.$on('loaded', function () {
 var bar = new ProgressBar.Line('#bar', {
     strokeWidth: 4,
     easing: 'easeInOut',
-    duration: 1400,
+    duration: 5000,
     color: '#FFEA82',
     trailColor: '#eee',
     trailWidth: 1,
@@ -99,26 +103,23 @@ var bar = new ProgressBar.Line('#bar', {
     ,
     to: {
         color: '#ED6A5A'
-    },
-    duration: 100
+    }
 }
 );
-bar.animate(0);
 
 function loadingBar(val) {
-    i = 0
-    leInterval = setInterval(function () {
-        i++
-        if (i < 10) {
-            bar.animate(i / 10);
-        }
-    }, val)
+    bar.animate(0.96);
 }
 
+function loadingBarLong(val) {
+    if (val) {
+        bar.animate(0.98, {duration: val});
+    } else {
+        bar.animate(0.98, {duration: 12000});
+    }
+}
 function loadedBar() {
-    Vue.nextTick(function () {
-        clearInterval(leInterval);
-        bar.animate(1);
+    Vue.nextTick(function() {
+        bar.animate(1, {duration: 500});
     })
-
 }
