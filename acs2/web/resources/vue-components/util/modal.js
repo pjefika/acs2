@@ -9,7 +9,7 @@ Vue.component("acsModal", {
     props: {
         body: {
             type: String,
-            default: function() {
+            default: function () {
                 return 'loading';
             }
         },
@@ -23,13 +23,13 @@ Vue.component("acsModal", {
         },
         loading: {
             type: Boolean,
-            default: function() {
+            default: function () {
                 return false;
             }
         },
         big: {
             type: Boolean,
-            default: function() {
+            default: function () {
                 return true;
             }
         }
@@ -51,3 +51,4 @@ Vue.component("acsModal", {
                 </div>\n\
             </div>",
 });
+
