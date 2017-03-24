@@ -69,6 +69,8 @@ Vue.component("detail", {
                         vm.$emit("error", data.string);
                     }
                     vm.$emit('loaded');
+                    
+                    
                 }
             });
         }, 2000),

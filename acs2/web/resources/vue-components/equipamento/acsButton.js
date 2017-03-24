@@ -48,7 +48,9 @@ Vue.component("acsButton", {
                         comp: self.comp
                     };
 
-                    $("#actionModal").modal("show");
+                    $("#actionModal").modal({
+                        backdrop: 'static'
+                    });
                     self.ativo = true;
                 });
             }
