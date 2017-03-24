@@ -12,6 +12,7 @@ import br.com.caelum.vraptor.view.Results;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
+import exception.HdmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -43,23 +44,42 @@ public class SearchController extends AbstractController {
     /**
      *
      * @param serial
+     * @throws exception.HdmException
      */
     @Path("/busca/listar/serial/{serial}")
     @Logado
-    public void listarPorSerial(String serial) {
-        this.includeSerializer(dao.listarEquipamentosPorSerial(serial));
+    public void listarPorSerial(String serial) throws HdmException {
+        try {
+            this.includeSerializer(dao.listarEquipamentosPorSerial(serial));
+        } catch (NBIException_Exception ex) {
+            this.includeSerializer("A plataforma não respondeu à pesquisa por Serial.");
+            throw new HdmException("A plataforma não respondeu à pesquisa por Serial.");
+        }
     }
 
     @Path("/busca/listar/subscriber/{subscriber}")
     @Logado
-    public void listarPorSubscriber(String subscriber) {
-        this.includeSerializer(dao.listarEquipamentosPorSubscriber(subscriber));
+    public void listarPorSubscriber(String subscriber) throws HdmException {
+        try {
+            this.includeSerializer(dao.listarEquipamentosPorSubscriber(subscriber));
+        } catch (NBIException_Exception ex) {
+            if(!ex.getFaultInfo().getFaultCode().contentEquals("devices.for.subscriberid.could.not.be.found")){
+                this.includeSerializer("A plataforma não respondeu à pesquisa por Subscriber.");
+                throw new HdmException("A plataforma não respondeu à pesquisa por Subscriber.");    
+            }
+        }
     }
 
     @Path("/busca/listar/mac/{mac}")
     @Logado
-    public void listarPorMac(String mac) {
-        this.includeSerializer(dao.listarEquipamentosPorMac(mac.toUpperCase()));
+    public void listarPorMac(String mac) throws HdmException {
+        try {
+            this.includeSerializer(dao.listarEquipamentosPorMac(mac.toUpperCase()));
+        } catch (NBIException_Exception ex) {
+            ex.printStackTrace();
+            this.includeSerializer("A plataforma não respondeu à pesquisa por MAC.");
+            throw new HdmException("A plataforma não respondeu à pesquisa por MAC.");
+        }
     }
 
     @Path("/busca/listar/guid/{guid}")

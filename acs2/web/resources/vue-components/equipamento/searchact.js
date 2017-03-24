@@ -151,11 +151,10 @@ Vue.component("searchAction", {
             var self = this;
             self.inputToSearch = this.lecrazy;
             var picked = this.leOpt;
-            vm.$emit('loading', 100);
             if (!self.inputToSearch) {
                 return;
             }
-
+            vm.$emit('loadingBarLong');
             $.ajax({
                 type: "GET",
                 url: url + picked + "/" + self.inputToSearch,
@@ -164,20 +163,25 @@ Vue.component("searchAction", {
                 },
                 success: function(data) {
                     Vue.nextTick(function() {
-                        self.$parent.listaEqp = data.list;
+                        console.log(data)
+                        if(data.list != null && data.list.length>=1){
+                            self.$parent.listaEqp = data.list;    
+                        }else{
+                            if(data.string){
+                                vm.$emit("error", data.string);    
+                            }
+                        }
                     });
                     vm.$emit('loaded');
                 },
                 error: function(e) {
-                    self.mensagem = 'Falha ao buscar informações';
-                    self.erro = 'true';
                     console.log(e);
                 },
                 complete: function() {
                     self.$parent.loading = false;
                     self.$parent.inputToSearch = null;
 
-                    $(document).ready(function() {
+                    Vue.nextTick(function() {
                         $('#leTable').DataTable().destroy();
                         $('#leTable').DataTable({
                             "language": {

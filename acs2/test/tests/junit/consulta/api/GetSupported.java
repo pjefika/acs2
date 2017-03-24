@@ -5,8 +5,6 @@
  */
 package tests.junit.consulta.api;
 
-import tests.junit.consulta.busca.*;
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import org.junit.After;
@@ -15,8 +13,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import tests.junit.init.EquipamentoTestValues;
-import util.SoutUtil;
 
 /**
  *

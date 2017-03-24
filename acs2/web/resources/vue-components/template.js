@@ -23,10 +23,10 @@ var vm = new Vue({
             tipo: 'danger'
         }
     },
-    created: function() {
+    created: function () {
     },
     watch: {
-        notif: function(val) {
+        notif: function (val) {
             $.notify({
                 // options
                 message: val.mensagem
@@ -53,36 +53,36 @@ var vm = new Vue({
 
 
 
-vm.$on('error', function(msg) {
+vm.$on('error', function (msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'danger'
     };
 });
 
-vm.$on('info', function(msg) {
+vm.$on('info', function (msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'info'
     };
 });
 
-vm.$on('success', function(msg) {
+vm.$on('success', function (msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'success'
     };
 });
 
-vm.$on('loading', function(int) {
+vm.$on('loading', function (int) {
     loadingBar(int);
 });
 
-vm.$on('loadingBarLong', function(int) {
+vm.$on('loadingBarLong', function (int) {
     loadingBarLong(int);
 });
 
-vm.$on('loaded', function() {
+vm.$on('loaded', function () {
     loadedBar();
 });
 
@@ -113,11 +113,14 @@ function loadingBar(val) {
 }
 
 function loadingBarLong(val) {
-    bar.animate(0, {duration: 1});
     bar.animate(0.98, {duration: val ? val : 12000});
 }
+
 function loadedBar() {
-    Vue.nextTick(function() {
+    Vue.nextTick(function () {
         bar.animate(1, {duration: 500});
+        setTimeout(function(){
+            bar.animate(0, {duration: 1})
+        }, 1000)
     })
 }

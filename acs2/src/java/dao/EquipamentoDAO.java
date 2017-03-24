@@ -26,7 +26,6 @@ import dao.util.NbiDecorator;
 import exception.JsonUtilException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -134,15 +133,9 @@ public class EquipamentoDAO {
         return nbi.getDeviceOperationStatus(eqp.getDeviceId(), operationId);
     }
 
-    public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) {
-        try {
-            this.initNbi();
-            return nbi.findDevicesBySubscriberId(subscriber);
-        } catch (Exception e) {
-            //e.printStackTrace();
-            return new ArrayList<>();
-        }
-
+    public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {
+        this.initNbi();
+        return nbi.findDevicesBySubscriberId(subscriber);
     }
 
     public void getSup() {
@@ -157,44 +150,37 @@ public class EquipamentoDAO {
         }
     }
 
-    public List<NbiDeviceData> listarEquipamentosPorMac(String mac) {
-        try {
-            NbiTemplate n = new NbiTemplate();
-            n.setName("Find Devices By MacAddress");
+    public List<NbiDeviceData> listarEquipamentosPorMac(String mac) throws NBIException_Exception {
+        NbiTemplate n = new NbiTemplate();
+        n.setName("Find Devices By MacAddress");
 
-            NbiParameter param = new NbiParameter();
+        NbiParameter param = new NbiParameter();
 
-            param.setName("macAddress");
-            param.setValue(mac);
+        param.setName("macAddress");
+        param.setValue(mac);
 
-            n.getParameters().add(param);
+        n.getParameters().add(param);
 
-            this.initNbi();
-            return nbi.findDevicesByTemplate(n, 1, -1);
-        } catch (Exception e) {
-            return new ArrayList<>();
-        }
+        this.initNbi();
+        return nbi.findDevicesByTemplate(n, 1, -1);
 
     }
 
-    public List<NbiDeviceData> listarEquipamentosPorSerial(String serial) {
+    public List<NbiDeviceData> listarEquipamentosPorSerial(String serial) throws NBIException_Exception {
 
-        try {
-            NbiTemplate n = new NbiTemplate();
-            n.setName("ct.find.devices.serialNumber");
+        NbiTemplate n = new NbiTemplate();
+        n.setName("ct.find.devices.serialNumber");
 
-            NbiParameter param = new NbiParameter();
+        NbiParameter param = new NbiParameter();
 
-            param.setName("serialNumber");
-            param.setValue(serial);
+        param.setName("serialNumber");
+        param.setValue(serial);
 
-            n.getParameters().add(param);
+        n.getParameters().add(param);
 
-            this.initNbi();
-            return nbi.findDevicesByTemplate(n, 1, -1);
-        } catch (Exception e) {
-            return new ArrayList<>();
-        }
+        this.initNbi();
+        return nbi.findDevicesByTemplate(n, 1, -1);
+
     }
 
     /**
