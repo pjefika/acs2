@@ -39,7 +39,7 @@ public class SoutUtil {
          * PROXIER_HOSTING_EMBEDDED_DEVICE_CLASS 4:
          * PROXIER_HOSTING_BOTH_DEVICE_CLASS"
          */
-        System.out.println("ProductClass: " + d.getDeviceClass());
+        System.out.println("DeviceClass: " + d.getDeviceClass());
         System.out.println("Protocol: " + d.getDeviceId().getProtocol());
         System.out.println("SerialNumber: " + d.getDeviceId().getSerialNumber());
         System.out.println("LastContactTime: " + d.getLastContactTime());
