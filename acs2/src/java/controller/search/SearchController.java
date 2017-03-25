@@ -63,10 +63,8 @@ public class SearchController extends AbstractController {
         try {
             this.includeSerializer(dao.listarEquipamentosPorSubscriber(subscriber));
         } catch (NBIException_Exception ex) {
-            if(!ex.getFaultInfo().getFaultCode().contentEquals("devices.for.subscriberid.could.not.be.found")){
-                this.includeSerializer("A plataforma não respondeu à pesquisa por Subscriber.");
-                throw new HdmException("A plataforma não respondeu à pesquisa por Subscriber.");    
-            }
+            this.includeSerializer("A plataforma não respondeu à pesquisa por Subscriber.");
+            throw new HdmException("A plataforma não respondeu à pesquisa por Subscriber.");
         }
     }
 
