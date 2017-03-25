@@ -16,7 +16,7 @@ Vue.component("alertpanel", {
     },
     template: "\
             <div>\n\
-                <div v-show='mensagem' :class='leClass' style='font-size:15px' @click='fecha()'>\n\
+                <div v-show='mensagem' :class='leClass' style='font-size:15px;margin-top:10px'>\n\
                     {{mensagem}}\n\
                 </div>\n\
             </div>",
@@ -28,14 +28,5 @@ Vue.component("alertpanel", {
             return 'alert alert-danger';
         }
 
-    },
-    methods: {
-        fecha: function() {
-            this.mensagem = '';
-            if(this.$parent.mensagem != null){
-                this.$parent.mensagem = '';
-            }
-
-        }
     }
 });

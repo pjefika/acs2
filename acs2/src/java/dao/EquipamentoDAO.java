@@ -26,6 +26,7 @@ import dao.util.NbiDecorator;
 import exception.JsonUtilException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -134,8 +135,16 @@ public class EquipamentoDAO {
     }
 
     public List<NbiDeviceData> listarEquipamentosPorSubscriber(String subscriber) throws NBIException_Exception {
-        this.initNbi();
-        return nbi.findDevicesBySubscriberId(subscriber);
+        try {
+            this.initNbi();
+            return nbi.findDevicesBySubscriberId(subscriber);
+        } catch (NBIException_Exception ex) {
+            if(ex.getFaultInfo().getFaultCode().contentEquals("devices.for.subscriberid.could.not.be.found")){
+                return new ArrayList<NbiDeviceData>();
+            }
+            throw ex;
+        }
+
     }
 
     public void getSup() {

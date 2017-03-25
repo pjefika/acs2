@@ -52,6 +52,7 @@ public class SearchController extends AbstractController {
         try {
             this.includeSerializer(dao.listarEquipamentosPorSerial(serial));
         } catch (NBIException_Exception ex) {
+            ex.printStackTrace();
             this.includeSerializer("A plataforma não respondeu à pesquisa por Serial.");
             throw new HdmException("A plataforma não respondeu à pesquisa por Serial.");
         }

@@ -13,29 +13,54 @@ Vue.component("searchAcs", {
                             <search-action></search-action>\n\
                             </div>\n\
                         <div class='col-lg-8'>\n\
-                            <search-table :render-table='this.renderTable' :lista-eqp='listaEqp'></search-table>\n\
+                            <search-table :render-table='this.renderTable' :lista-eqp='this.listaEqp'></search-table>\n\
                         </div>\n\
                     </div>\n\
                     <div v-show='this.loading'>\n\
                         <component is='loading'></component>\n\
                     </div>\n\
                </div>",
-    data: function() {
+    data: function () {
         return {
             inputToSearch: null,
             listaEqp: [],
             picked: null,
-            renderTable: true,
+            renderTable: false,
             currentView: 'searchAcs',
             loading: false
         };
+    },
+    watch: {
+        listaEqp: function (v) {
+            $('#leTable').DataTable().destroy();
+            this.renderTable = true
+            Vue.nextTick(function () {
+                if (v.length > 0) {
+                    $('#leTable').DataTable({
+                        "language": {
+                            "url": "resources/data-table/pt-br.json"
+                        }
+                    });
+                }
+
+            });
+        }
     }
 });
 
 Vue.component("searchTable", {
-    props: ['inputToSearch', 'listaEqp', 'picked', 'renderTable'],
-    template: "<div v-show='this.renderTable'>\n\
-                    <table v-show='this.listaEqp' id='leTable' cellspacing='0' class='table table-striped table-bordered small' >\n\
+    props: {
+        inputToSearch: {},
+        listaEqp: {},
+        picked: {},
+        renderTable: {
+            type: Boolean,
+            default: false
+        }
+    },
+    template: "<div>\
+                <div v-show='this.renderTable'>\n\
+                    <table v-show='this.listaEqp.length>0' id='leTable' cellspacing='0' class='table table-striped table-bordered small' >\n\
                         <thead>\n\
                             <tr>\n\
                                 <th>Subscriber</th>\n\
@@ -47,10 +72,10 @@ Vue.component("searchTable", {
                             </tr>\n\
                         </thead>\n\
                         <tbody>\n\
-                            <tr is='searchTableRow' v-bind:equipamento='equipamento' v-for='equipamento in this.listaEqp'></tr>\n\
+                            <component is='searchTableRow' v-for='equipamento in this.listaEqp' v-bind:equipamento='equipamento'></component>\n\
                         </tbody>\n\
                     </table>\n\
-                    <div v-else class='alert alert-warning'>A pesquisa não obteve resultados</div>\n\
+                    <component is='alertpanel' mensagem='Equipamento não encontrado.' erro='s' v-show='this.listaEqp.length<1'></component>\n\
                 </div>\n\
             </div>"
 });
@@ -131,7 +156,7 @@ Vue.component("searchAction", {
         }
     },
     computed: {
-        lecrazy: function() {
+        lecrazy: function () {
             if (this.subscriber.length > this.serial.length && this.subscriber.length > this.mac.length) {
                 this.leOpt = "subscriber";
                 return this.subscriber;
@@ -147,7 +172,7 @@ Vue.component("searchAction", {
         }
     },
     methods: {
-        busca: function() {
+        busca: function () {
             var self = this;
             self.inputToSearch = this.lecrazy;
             var picked = this.leOpt;
@@ -158,41 +183,32 @@ Vue.component("searchAction", {
             $.ajax({
                 type: "GET",
                 url: url + picked + "/" + self.inputToSearch,
-                beforeSend: function() {
+                beforeSend: function () {
                     self.$parent.loading = true;
                 },
-                success: function(data) {
-                    Vue.nextTick(function() {
-                        console.log(data)
-                        if(data.list != null && data.list.length>=1){
-                            self.$parent.listaEqp = data.list;    
-                        }else{
-                            if(data.string){
-                                vm.$emit("error", data.string);    
-                            }
+                success: function (data) {
+                    console.log(data)
+                    if (data.list != null) {
+                        self.$parent.listaEqp = data.list;
+                    } else {
+                        if (data.string) {
+                            vm.$emit("error", data.string);
+                            self.$parent.listaEqp = null
                         }
-                    });
+                    }
                     vm.$emit('loaded');
                 },
-                error: function(e) {
+                error: function (e) {
                     console.log(e);
                 },
-                complete: function() {
+                complete: function () {
                     self.$parent.loading = false;
                     self.$parent.inputToSearch = null;
-
-                    Vue.nextTick(function() {
-                        $('#leTable').DataTable().destroy();
-                        $('#leTable').DataTable({
-                            "language": {
-                                "url": "resources/data-table/pt-br.json"
-                            }
-                        });
-                    });
                 }
             });
+            console.log(self.$parent.listaEqp)
         },
-        limpar: function() {
+        limpar: function () {
             var self = this;
             self.subscriber = "";
             self.serial = "";
