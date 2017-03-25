@@ -23,10 +23,10 @@ var vm = new Vue({
             tipo: 'danger'
         }
     },
-    created: function () {
+    created: function() {
     },
     watch: {
-        notif: function (val) {
+        notif: function(val) {
             $.notify({
                 // options
                 message: val.mensagem
@@ -53,36 +53,36 @@ var vm = new Vue({
 
 
 
-vm.$on('error', function (msg) {
+vm.$on('error', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'danger'
     };
 });
 
-vm.$on('info', function (msg) {
+vm.$on('info', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'info'
     };
 });
 
-vm.$on('success', function (msg) {
+vm.$on('success', function(msg) {
     this.notif = {
         mensagem: msg,
         tipo: 'success'
     };
 });
 
-vm.$on('loading', function (int) {
+vm.$on('loading', function(int) {
     loadingBar(int);
 });
 
-vm.$on('loadingBarLong', function (int) {
+vm.$on('loadingBarLong', function(int) {
     loadingBarLong(int);
 });
 
-vm.$on('loaded', function () {
+vm.$on('loaded', function() {
     loadedBar();
 });
 
@@ -92,20 +92,11 @@ var bar = new ProgressBar.Line('#bar', {
     strokeWidth: 4,
     easing: 'easeInOut',
     duration: 5000,
-    color: '#FFEA82',
+    color: '#5bc0de',
     trailColor: '#eee',
     trailWidth: 1,
     svgStyle: {width: '100%', height: '100%'}
-    ,
-    from: {
-        color: '#FFEA82'
-    }
-    ,
-    to: {
-        color: '#ED6A5A'
-    }
-}
-);
+});
 
 function loadingBar(val) {
     bar.animate(0)
@@ -117,9 +108,9 @@ function loadingBarLong(val) {
 }
 
 function loadedBar() {
-    Vue.nextTick(function () {
+    Vue.nextTick(function() {
         bar.animate(1, {duration: 500});
-        setTimeout(function(){
+        setTimeout(function() {
             bar.animate(0, {duration: 1})
         }, 1000)
     })
