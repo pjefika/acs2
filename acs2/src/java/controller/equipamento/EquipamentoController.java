@@ -59,7 +59,7 @@ public class EquipamentoController extends AbstractController {
 
     @Path("/equipamento/detalhe/{guid}")
     @Logado
-    public void detalhes(String guid) throws HdmException {
+    public void detalhes(String guid) throws HdmException, InterruptedException {
 
         JsonObject jobj = new JsonObject();
 
@@ -78,6 +78,7 @@ public class EquipamentoController extends AbstractController {
             if (checkOnline) {
                 FirmwareInfo oi;
                 try {
+                    Thread.sleep(6000);
                     oi = dao.getFirmwareVersion(ndd);
                     Boolean getFirmIsOk = oi.isOk();
                     jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
@@ -95,6 +96,7 @@ public class EquipamentoController extends AbstractController {
         } catch (NBIException_Exception ex) {
             result.include("exception", "Equipamento não encontrado.");
         } catch (DeviceOperationException e) {
+            e.printStackTrace();
             result.include("exception", "A plataforma falhou ao obter os detalhes do equipamento.");
         } catch (NBIException e) {
             result.include("exception", "A plataforma apresentou um erro generalizado ao obter os detalhes.");
