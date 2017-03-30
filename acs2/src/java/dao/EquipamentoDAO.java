@@ -117,7 +117,7 @@ public class EquipamentoDAO {
     public Boolean checkOnline(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        synch.checkOnline(NbiDecorator.adapter(eqp), opt, 10000, "");
+        synch.checkOnline(NbiDecorator.adapter(eqp), opt, 15000, "");
         return true;
 
     }
@@ -139,7 +139,7 @@ public class EquipamentoDAO {
             this.initNbi();
             return nbi.findDevicesBySubscriberId(subscriber);
         } catch (NBIException_Exception ex) {
-            if(ex.getFaultInfo().getFaultCode().contentEquals("devices.for.subscriberid.could.not.be.found")){
+            if (ex.getFaultInfo().getFaultCode().contentEquals("devices.for.subscriberid.could.not.be.found")) {
                 return new ArrayList<NbiDeviceData>();
             }
             throw ex;
@@ -173,6 +173,28 @@ public class EquipamentoDAO {
         this.initNbi();
         return nbi.findDevicesByTemplate(n, 1, -1);
 
+    }
+
+    /**
+     * Realizada adaptação (metodo retorna objeto simples e não lista
+     *
+     * @author G0042204
+     * @param ip
+     * @return
+     * @throws NBIException_Exception
+     */
+    public List<NbiDeviceData> listarEquipamentosPorIp(String ip) throws NBIException_Exception {
+
+        List<NbiDeviceData> r = new ArrayList<>();
+
+        this.initNbi();
+        NbiDeviceData d = nbi.findDeviceByExternalIPAddress(ip);
+
+        if (d != null) {
+            r.add(d);
+        }
+
+        return r;
     }
 
     public List<NbiDeviceData> listarEquipamentosPorSerial(String serial) throws NBIException_Exception {

@@ -5,6 +5,7 @@
  */
 package tests.junit.consulta.busca;
 
+import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import java.util.List;
@@ -20,9 +21,9 @@ import util.SoutUtil;
  *
  * @author G0042204
  */
-public class FindDevicesBySerialJUnitTest {
+public class FindDeviceByIPJUnitTest {
 
-    public FindDevicesBySerialJUnitTest() {
+    public FindDeviceByIPJUnitTest() {
     }
 
     @BeforeClass
@@ -41,20 +42,18 @@ public class FindDevicesBySerialJUnitTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
-    public void listarEquipamentosPorSerial() {
+    public void listarEquipamentosPorIp() {
+
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("QX431EB606806");
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorIp("189.58.5.15");
             SoutUtil.print(eqp);
+
             assertTrue(true);
-        } catch (Exception ex) {
+        } catch (NBIException_Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
         }
-
     }
 }
