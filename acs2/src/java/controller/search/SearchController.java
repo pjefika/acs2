@@ -58,7 +58,7 @@ public class SearchController extends AbstractController {
         }
     }
 
-    @Path("/busca/listar/serial/{ip}")
+    @Path("/busca/listar/ip/{ip}")
     @Logado
     public void listarPorIp(String ip) throws HdmException {
         try {

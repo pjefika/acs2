@@ -20,7 +20,7 @@ Vue.component("searchAcs", {
                         <component is='loading'></component>\n\
                     </div>\n\
                </div>",
-    data: function () {
+    data: function() {
         return {
             inputToSearch: null,
             listaEqp: [],
@@ -31,10 +31,10 @@ Vue.component("searchAcs", {
         };
     },
     watch: {
-        listaEqp: function (v) {
+        listaEqp: function(v) {
             $('#leTable').DataTable().destroy();
             this.renderTable = true
-            Vue.nextTick(function () {
+            Vue.nextTick(function() {
                 if (v.length > 0) {
                     $('#leTable').DataTable({
                         "language": {
@@ -119,6 +119,13 @@ Vue.component("searchAction", {
                     </div><!-- /.col-lg-6 -->\n\
                 </div>\n\
                 <div class='row'>\n\
+                    <div class='col-lg-12'>\n\
+                        <div class='form-group'>\n\
+                            <label>IP</label>\n\
+                            <input type='text' class='form-control' v-on:keyup.enter='busca()' placeholder='Buscar por IP...' v-model='ip'>\n\
+                        </div><!-- /input-group -->\n\
+                    </div><!-- /.col-lg-6 -->\n\
+                </div>\n\<div class='row'>\n\
                     <div class='col-lg-12 form-group'>\n\
                         <button class='btn btn-primary' @click='busca()'>Buscar</button>\n\
                         <button class='btn btn-default' @click='limpar()'>Limpar</button>\n\
@@ -150,29 +157,48 @@ Vue.component("searchAction", {
             type: String,
             default: ''
         },
+        ip: {
+            type: String,
+            default: ''
+        },
         leOpt: {
             type: String,
             default: ''
         }
     },
     computed: {
-        lecrazy: function () {
-            if (this.subscriber.length > this.serial.length && this.subscriber.length > this.mac.length) {
+        lecrazy: function() {
+            if (this.subscriber.length > this.serial.length
+                    && this.subscriber.length > this.mac.length
+                    && this.subscriber.length > this.ip.length) {
                 this.leOpt = "subscriber";
                 return this.subscriber;
             }
-            if (this.serial.length > this.subscriber.length && this.serial.length > this.mac.length) {
+
+            if (this.serial.length > this.subscriber.length
+                    && this.serial.length > this.mac.length
+                    && this.serial.length > this.ip.length) {
                 this.leOpt = "serial";
                 return this.serial;
             }
-            if (this.mac.length > this.subscriber.length && this.mac.length > this.serial.length) {
+
+            if (this.mac.length > this.subscriber.length
+                    && this.mac.length > this.serial.length
+                    && this.mac.length > this.ip.length) {
                 this.leOpt = "mac";
                 return this.mac;
+            }
+
+            if (this.ip.length > this.subscriber.length
+                    && this.ip.length > this.serial.length
+                    && this.ip.length > this.mac.length) {
+                this.leOpt = "ip";
+                return this.ip;
             }
         }
     },
     methods: {
-        busca: function () {
+        busca: function() {
             var self = this;
             self.inputToSearch = this.lecrazy;
             var picked = this.leOpt;
@@ -183,10 +209,10 @@ Vue.component("searchAction", {
             $.ajax({
                 type: "GET",
                 url: url + picked + "/" + self.inputToSearch,
-                beforeSend: function () {
+                beforeSend: function() {
                     self.$parent.loading = true;
                 },
-                success: function (data) {
+                success: function(data) {
                     console.log(data)
                     if (data.list != null) {
                         self.$parent.listaEqp = data.list;
@@ -198,21 +224,22 @@ Vue.component("searchAction", {
                     }
                     vm.$emit('loaded');
                 },
-                error: function (e) {
+                error: function(e) {
                     console.log(e);
                 },
-                complete: function () {
+                complete: function() {
                     self.$parent.loading = false;
                     self.$parent.inputToSearch = null;
                 }
             });
             console.log(self.$parent.listaEqp)
         },
-        limpar: function () {
+        limpar: function() {
             var self = this;
             self.subscriber = "";
             self.serial = "";
             self.mac = "";
+            self.ip = "";
         }
     }
 });
