@@ -16,7 +16,7 @@ Vue.component("detail", {
         modal: {
             type: Object,
             required: true,
-            default: function() {
+            default: function () {
                 return {
                     comp: 'get-wifi',
                     titulo: 'Titulo Dev'
@@ -29,12 +29,12 @@ Vue.component("detail", {
         },
         equipamento: {
             type: Equipamento,
-            default: function() {
+            default: function () {
                 return new Equipamento(this.eqpString);
             }
         }
     },
-    mounted: function() {
+    mounted: function () {
         var self = this;
         /**
          * Gerando exceção quando chamado durante uma executeFuncion
@@ -45,22 +45,22 @@ Vue.component("detail", {
 //        }, 30000);
     },
     methods: {
-        checkOnline: function() {
+        checkOnline: function () {
             var self = this;
             vm.$emit('loadingBarLong')
             self.checkOnlineRequest();
         },
-        checkOnlineRequest: _.debounce(function() {
+        checkOnlineRequest: _.debounce(function () {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "checkOnline/",
                 data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data.boolean != null) {
                         self.equipamento.checkOn = data.boolean;
                         vm.$emit("success", "Status do equipamento atualizado.");
@@ -69,12 +69,12 @@ Vue.component("detail", {
                         vm.$emit("error", data.string);
                     }
                     vm.$emit('loaded');
-                    
-                    
+
+
                 }
             });
         }, 2000),
-        firmwareUpdate: function() {
+        firmwareUpdate: function () {
             // Implementar
 
         }

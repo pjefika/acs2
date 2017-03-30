@@ -37,14 +37,14 @@
                                     <label>Subscriber Id:</label>
                                     <span v-text="equipamento.subscriberID"></span>
                                 </li>
-
                                 <li class="list-group-item">
                                     <label>Firmware: </label>
+                                    <span v-text="equipamento.firmwareVersion"></span>
                                     <span v-if="equipamento.firmwareOk">
-                                        <span>Atualizado</span>
+                                        <span> - Atualizado</span>
                                     </span>
                                     <span v-else>
-                                        <span v-else>Desatualizado</span>
+                                        <span> - Desatualizado</span>
                                         <button class="btn btn-danger" type="button" @click="firmwareUpdate()">Atualizar</button>
                                     </span>
                                 </li>

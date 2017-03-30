@@ -21,6 +21,7 @@ var EquipamentoAdapted = function(p) {
         this.ipAddress = p.ipAddress;
         this.checkOn = p.checkOn;
         this.firmwareOk = p.firmWareOk;
+        this.firmwareVersion = p.firmWareVersion;
         this.type = p.type;
         this.lastActivationTime = p.lastActivationTime;
     }
@@ -28,4 +29,5 @@ var EquipamentoAdapted = function(p) {
     delete this.firmwareOk;
     delete this.checkOn;
     delete this.lastActivationTime;
+    delete this.firmwareVersion;
 };

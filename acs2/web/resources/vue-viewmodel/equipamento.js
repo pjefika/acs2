@@ -8,6 +8,7 @@
 
 // CLASSES
 var Equipamento = function(p) {
+    
     if (p) {
         this.activated = p.eqp.activated;
         this.deviceGUID = p.eqp.deviceGUID;
@@ -21,6 +22,7 @@ var Equipamento = function(p) {
         this.ipAddress = p.eqp.ipAddress;
         this.checkOn = p.checkOn;
         this.firmwareOk = p.firmWareOk;
+        this.firmwareVersion = p.firmwareVersion;
         this.type = p.eqp.type;
         this.lastActivationTime = p.eqp.lastActivationTime;
     }
