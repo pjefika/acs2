@@ -58,6 +58,18 @@ public class SearchController extends AbstractController {
         }
     }
 
+    @Path("/busca/listar/serial/{ip}")
+    @Logado
+    public void listarPorIp(String ip) throws HdmException {
+        try {
+            this.includeSerializer(dao.listarEquipamentosPorIp(ip));
+        } catch (NBIException_Exception ex) {
+            ex.printStackTrace();
+            this.includeSerializer("A plataforma não respondeu à pesquisa por IP.");
+            throw new HdmException("A plataforma não respondeu à pesquisa por IP.");
+        }
+    }
+
     @Path("/busca/listar/subscriber/{subscriber}")
     @Logado
     public void listarPorSubscriber(String subscriber) throws HdmException {
