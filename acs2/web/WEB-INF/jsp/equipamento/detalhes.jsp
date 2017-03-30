@@ -10,6 +10,7 @@
             <acs-modal v-bind:data="equipamento" v-bind:body="modal.comp" v-bind:titulo="modal.titulo"></acs-modal>
             <div class="page-header">
                 <h1>Detalhes do Equipamento: <span v-text="equipamento.deviceId.serialNumber"></span></h1>
+                <span>Firmware: <span v-text="equipamento.firmwareVersion"></span><span v-if="equipamento.firmwareOk"><span> - Atualizado</span></span><span v-else> - <button class="btn btn-danger btn-xs" type="button" @click="firmwareUpdate()">Atualizar</button></span></span>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -37,17 +38,16 @@
                                     <label>Subscriber Id:</label>
                                     <span v-text="equipamento.subscriberID"></span>
                                 </li>
-                                <li class="list-group-item">
+                                <!-- <li class="list-group-item">
                                     <label>Firmware: </label>
                                     <span v-text="equipamento.firmwareVersion"></span>
                                     <span v-if="equipamento.firmwareOk">
                                         <span> - Atualizado</span>
                                     </span>
                                     <span v-else>
-                                        <span> - Desatualizado</span>
                                         <button class="btn btn-danger" type="button" @click="firmwareUpdate()">Atualizar</button>
                                     </span>
-                                </li>
+                                </li> -->
                                 <li class="list-group-item">
                                     <label>Nome do Modelo:</label>
                                     <span v-text="equipamento.modelName"></span>
