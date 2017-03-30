@@ -10,7 +10,7 @@
             <acs-modal v-bind:data="equipamento" v-bind:body="modal.comp" v-bind:titulo="modal.titulo"></acs-modal>
             <div class="page-header">
                 <h1>Detalhes do Equipamento: <span v-text="equipamento.deviceId.serialNumber"></span></h1>
-                <span>Firmware: <span v-text="equipamento.firmwareVersion"></span><span v-if="equipamento.firmwareOk"><span> - Atualizado</span></span><span v-else> - <button class="btn btn-danger btn-xs" type="button" @click="firmwareUpdate()">Atualizar</button></span></span>
+                <span>Firmware: <span v-text="equipamento.firmwareVersion"></span><span v-if="equipamento.firmwareOk"><span> - Atualizado</span></span><span v-else> - <button v-if="equipamento.checkOn" class="btn btn-danger btn-xs" type="button" @click="firmwareUpdate()">Atualizar</button></span></span>
             </div>
             <div class="row">
                 <div class="col-md-4">
