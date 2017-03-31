@@ -82,10 +82,10 @@ public class EquipamentoController extends AbstractController {
                     oi = dao.getFirmwareVersion(ndd);
                     Boolean getFirmIsOk = oi.isOk();
                     jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
+                    jobj.add("firmwareVersion", new Gson().toJsonTree(oi.getFirmwareVersion()));
                 } catch (JsonUtilException ex) {
 
                 }
-
             }
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
