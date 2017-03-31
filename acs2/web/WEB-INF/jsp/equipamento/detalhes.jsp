@@ -63,8 +63,11 @@
                                 <li class="list-group-item">
                                     <label>Data Autenticação:</label>
                                     <span v-text="equipamento.dataAutenticacao()"></span>
+                                </li>                                
+                                <li class="list-group-item">
+                                    <label>Data Primeiro Contato</label>
+                                    <span v-text="equipamento.primeiroContato()"></span>
                                 </li>
-
                             </ul>
                         </div>
                     </div>

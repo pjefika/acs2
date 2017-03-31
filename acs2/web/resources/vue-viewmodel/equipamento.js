@@ -8,7 +8,7 @@
 
 // CLASSES
 var Equipamento = function(p) {
-    
+    console.log(p);
     if (p) {
         this.activated = p.eqp.activated;
         this.deviceGUID = p.eqp.deviceGUID;
@@ -25,6 +25,7 @@ var Equipamento = function(p) {
         this.firmwareVersion = p.firmwareVersion;
         this.type = p.eqp.type;
         this.lastActivationTime = p.eqp.lastActivationTime;
+        this.firstContactTime = p.eqp.firstContactTime;
     }
 
 };
@@ -37,6 +38,15 @@ Equipamento.prototype.dataAutenticacao = function() {
 
     if (this.lastActivationTime) {
         return moment(new Date(this.lastActivationTime.year, this.lastActivationTime.month, this.lastActivationTime.day, this.lastActivationTime.hour, this.lastActivationTime.minute, this.lastActivationTime.second)).format('DD/MM/YYYY HH:mm:ss');
+    } else {
+        return null;
+    }
+};
+
+Equipamento.prototype.primeiroContato = function() {
+
+    if (this.firstContactTime) {
+        return moment(new Date(this.firstContactTime.year, this.firstContactTime.month, this.firstContactTime.day, this.firstContactTime.hour, this.firstContactTime.minute, this.firstContactTime.second)).format('DD/MM/YYYY HH:mm:ss');
     } else {
         return null;
     }
