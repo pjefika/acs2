@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import tests.junit.init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -47,9 +48,9 @@ public class FindDeviceByIPJUnitTest {
 
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-            List<NbiDeviceData> eqp = d.listarEquipamentosPorIp("189.58.5.15");
-            SoutUtil.print(eqp);
 
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorIp(d.findDeviceByGUID(EquipamentoTestValues.GUID).getIPAddress());
+            SoutUtil.print(eqp);
             assertTrue(true);
         } catch (NBIException_Exception ex) {
             ex.printStackTrace();
