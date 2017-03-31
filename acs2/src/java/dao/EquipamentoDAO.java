@@ -293,6 +293,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9503, opt, 10000, "");
+        System.out.println(a.getValue());
         return JsonUtil.dmzInfo(a);
     }
 
@@ -509,9 +510,10 @@ public class EquipamentoDAO {
 
     public void getAvailableFirmwareImages(NbiDeviceData eqp) throws NBIException_Exception {
         this.initNbi();
-        for (NbiFirmwareImageData o : nbi.getAvailableFirmwareImages(NbiDecorator.adapterAlter(eqp))) {
-            //System.out.println(o.getName());
-            //System.out.println(o.getDescription());
+
+        for (NbiFirmwareImageData o : nbi.getAvailableFirmwareImagesByPrerequsite(eqp.getDeviceId())) {
+            System.out.println(o.getName());
+            System.out.println(o.getDescription());
         }
     }
 

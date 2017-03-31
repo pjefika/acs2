@@ -18,7 +18,7 @@ public class TraceRouteRequest {
         this.dataBlockSize = "38";
         this.maxHopCount = "5";
         this.ipInterface = "Device.IP.Interface.1";
-        this.timeout = "1000";
+        this.timeout = "100000";
         this.dscp = "0";
         this.host = host;
     }

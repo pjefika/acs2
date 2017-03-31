@@ -88,7 +88,7 @@ Vue.component("searchTableRow", {
                     <td>{{equipamento.ipAddress}}</td>\n\
                     <td>{{equipamento.macAddress}}</td>\n\
                     <td>{{equipamento.manufacturer}}</td>\n\
-                    <td><a v-if='equipamento.deviceGUID!=null' :href=\"'/acs/equipamento/detalhe/' + equipamento.deviceGUID\">Selecionar</a></td>\n\
+                    <td><a v-if='equipamento.deviceGUID!=null' :href=\"'/acs/equipamento/detalhe/' + equipamento.deviceGUID\" target='_blank'>Selecionar</a></td>\n\
                 </tr>"
 });
 
