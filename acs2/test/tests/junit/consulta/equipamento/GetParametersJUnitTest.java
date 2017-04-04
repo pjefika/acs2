@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tests.junit.acao;
+package tests.junit.consulta.equipamento;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
@@ -14,15 +14,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import tests.junit.init.EquipamentoTestValues;
-import util.SoutUtil;
 
 /**
  *
  * @author G0042204
  */
-public class FirmwareUpdateJUnitTest {
+public class GetParametersJUnitTest {
 
-    public FirmwareUpdateJUnitTest() {
+    public GetParametersJUnitTest() {
     }
 
     @BeforeClass
@@ -42,17 +41,21 @@ public class FirmwareUpdateJUnitTest {
     }
 
     @Test
-    public void pingDiagnostic() {
+    public void getParameters() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-            NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-            SoutUtil.print(eqp);
-            d.firmwareUpdate(eqp, d.getFirmwareVersion(eqp));
-            assertTrue(true);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            NbiDeviceData eqp;
+//            eqp = d.findDeviceByGUID(new Long(142012));
+//            eqp = d.findDeviceByGUID(new Long(23006));
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
+//            eqp = d.findDeviceByGUID(new Long(23006));
+//            eqp = d.findDeviceByGUID(new Long(23006));
+
+            d.getParameters(eqp);
+
+        } catch (Exception e) {
+            e.printStackTrace();
             assertTrue(false);
         }
     }

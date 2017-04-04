@@ -26,8 +26,11 @@ import dao.EquipamentoDAO;
 import dao.LogDAO;
 import exception.HdmException;
 import exception.JsonUtilException;
+import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import model.device.firmware.FirmwareInfo;
@@ -314,13 +317,15 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/updateFirmwareVersion/")
     @Logado
-    public void updateFirmwareVersion(NbiDeviceData nbiDeviceData) throws HdmException {
+    public void updateFirmwareVersion(NbiDeviceData nbiDeviceData, FirmwareInfo info) throws HdmException {
         try {
             this.gerarLog(nbiDeviceData, "updateFirmwareVersion", "");
-            this.includeSerializer(dao.firmwareUpdate(nbiDeviceData));
+            this.includeSerializer(dao.firmwareUpdate(nbiDeviceData, info));
         } catch (NBIException_Exception e) {
             this.includeSerializer("A plataforma apresentou erro ao atualizar o Firmware.");
             throw new HdmException("A plataforma apresentou erro ao atualizar o Firmware.");
+        } catch (RemoteException ex) {
+            Logger.getLogger(EquipamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

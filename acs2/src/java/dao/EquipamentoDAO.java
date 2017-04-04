@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
@@ -10,7 +5,6 @@ import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiFirmwareImageData;
-import com.alcatel.hdm.service.nbi2.NbiFunction;
 import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiSupportedRPCMethod;
@@ -21,16 +15,25 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIExceptio
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDeviceOperationsService;
+import com.motive.www.remotehdm.NBIService._1_0.NBIServiceLocator;
+import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortProxy;
+import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortStub;
 import com.sun.xml.wss.XWSSConstants;
 import dao.util.NbiDecorator;
+import dao.util.SoapUtil;
+import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
+import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
 import exception.JsonUtilException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
+import javax.xml.rpc.ServiceException;
+import javax.xml.soap.SOAPException;
 import javax.xml.ws.Service;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
@@ -49,8 +52,14 @@ import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiInfoSet;
 import model.device.xdsldiagnostics.XdslDiagnostics;
+import motive.hdm.synchdeviceops.GetParameterNamesDTO;
+import motive.hdm.synchdeviceops.GetParameterNamesResponseDTO;
+import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
+import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
+import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
+import org.apache.axis.AxisFault;
 import util.JsonUtil;
 
 /**
@@ -60,6 +69,8 @@ import util.JsonUtil;
 public class EquipamentoDAO {
 
     private NBIService nbi;
+
+    private NBIServicePortStub remote;
 
     private SynchDeviceOperationsService synch;
 
@@ -122,11 +133,36 @@ public class EquipamentoDAO {
 
     }
 
-    public Long firmwareUpdate(NbiDeviceData eqp) throws NBIException_Exception {
-        this.initNbi();
-        NbiFunction func = new NbiFunction();
-        func.setFunctionCode(1200);
-        return nbi.createSingleDeviceOperationByDeviceGUID(eqp.getDeviceGUID(), func, NbiDecorator.getDeviceOperationOptionsDefault2());
+    public void teste() {
+
+    }
+
+    public Long firmwareUpdate(NbiDeviceData eqp, FirmwareInfo info) throws NBIException_Exception, RemoteException {
+        this.initRemote();
+        System.out.println("PreferredVersion: " + info.getPreferredVersion());
+        return remote.createSingleFirmwareUpdateOperation(new NBIDeviceID(eqp.getDeviceId().getOUI(),
+                eqp.getDeviceId().getProductClass(),
+                eqp.getDeviceId().getProtocol(), eqp.getDeviceId().getSerialNumber()),
+                info.getPreferredVersion(), 1200);
+    }
+
+    public void getAvailableFirmwareImages(NbiDeviceData eqp) {
+        try {
+            this.initRemote();
+            for (NBIFirmwareImageData firm : remote.getAvailableFirmwareImages(cast(eqp))) {
+                System.out.println(firm.getName());
+                System.out.println(firm.getDescription());
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public NBIDeviceID cast(NbiDeviceData eqp) {
+        return new NBIDeviceID(eqp.getDeviceId().getOUI(),
+                eqp.getDeviceId().getProductClass(),
+                eqp.getDeviceId().getProtocol(), eqp.getDeviceId().getSerialNumber());
     }
 
     public NbiDeviceActionResult getDeviceOperationStatus(NbiDeviceData eqp, Long operationId) throws NBIException_Exception {
@@ -249,6 +285,34 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9511, opt, 10000, "");
         return JsonUtil.getWifiInfo(a);
+    }
+
+    public void getParameters(NbiDeviceData eqp) throws Exception {
+        this.initSynchDeviceOperations();
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        GetParameterNamesDTO g = new GetParameterNamesDTO();
+        g.setParameterPath("InternetGatewayDevice.");
+
+        GetParameterNamesResponseDTO r = synch.getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "");
+        for (ParameterInfoStructDTO p : r.getParameterList()) {
+            System.out.println(p.getName());
+        }
+
+    }
+
+    public void getParametersValues(NbiDeviceData eqp) throws Exception {
+        this.initSynchDeviceOperations();
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+
+        motive.hdm.synchdeviceops.GetParameterValuesDTO g = new motive.hdm.synchdeviceops.GetParameterValuesDTO();
+        g.getParameterNames().add(0, "InternetGatewayDevice.WANDevice.5.WANConnectionDevice.1.WANIPConnection.2.PortMapping.");
+        GetParameterValuesResponseDTO r = synch.getParameterValues(NbiDecorator.adapter(eqp), g, opt, 50000, "");
+        for (ParameterValueStructDTO p : r.getParameterList()) {
+            System.out.println("Nome: " + p.getName());
+            System.out.println("Type: " + p.getType());
+            System.out.println("Value: " + p.getValue());
+        }
+
     }
 
     public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
@@ -508,9 +572,8 @@ public class EquipamentoDAO {
         return nbi.getOperationStatus(operationId);
     }
 
-    public void getAvailableFirmwareImages(NbiDeviceData eqp) throws NBIException_Exception {
+    public void getAvailableFirmwareImages2(NbiDeviceData eqp) throws NBIException_Exception {
         this.initNbi();
-
         for (NbiFirmwareImageData o : nbi.getAvailableFirmwareImagesByPrerequsite(eqp.getDeviceId())) {
             System.out.println(o.getName());
             System.out.println(o.getDescription());
@@ -531,6 +594,25 @@ public class EquipamentoDAO {
 
     }
 
+    /**
+     * User: "nbi_user" Password: "nbibrasil"
+     *
+     * @throws SOAPException
+     * @throws ServiceException
+     * @throws AxisFault
+     */
+    public void initRemote() {
+        try {
+            if (remote == null) {
+                NBIServicePortStub stub = new NBIServicePortStub(new URL("http://200.168.104.216:7025/remotehdm/NBIService?wsdl"), new NBIServiceLocator());
+                remote = (NBIServicePortStub) SoapUtil.addWsSecurityHeader(stub, "nbi_user", "nbibrasil");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void initNbi() {
         if (nbi == null) {
             try {
@@ -539,9 +621,7 @@ public class EquipamentoDAO {
                 QName qname = new QName("http://nbi2.service.hdm.alcatel.com/",
                         "NBIService");
                 Service service = Service.create(url, qname);
-                nbi
-                        = service.getPort(NBIService.class
-                        );
+                nbi = service.getPort(NBIService.class);
                 ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
                 ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
 
@@ -560,11 +640,9 @@ public class EquipamentoDAO {
                 QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
                         "SynchDeviceOperationsNBIService");
                 Service service = Service.create(url, qname);
-                synch
-                        = service.getPort(SynchDeviceOperationsService.class
-                        );
-                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
-                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
+                synch = service.getPort(SynchDeviceOperationsService.class);
+                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "nbi_user");
+                ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibrasil");
 
             } catch (MalformedURLException ex) {
                 Logger.getLogger(EquipamentoDAO.class

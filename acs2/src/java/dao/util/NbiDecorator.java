@@ -6,6 +6,7 @@
 package dao.util;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import java.util.ArrayList;
 import java.util.List;
 import model.device.wifi.WifiInfo;
@@ -46,6 +47,7 @@ public class NbiDecorator {
 
         com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo cb = new com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo();
         cb.setRetry(false);
+
         opt.setDisableCaptureConstraint(true);
         opt.setExecutionTimeoutSeconds(1200);
         opt.setExpirationTimeoutSeconds(60);
@@ -56,10 +58,9 @@ public class NbiDecorator {
         opt.setPriority(100);
         opt.setReplaceDeviceCachedDataRecord(false);
         opt.setUpdateCachedDataRecord(true);
-
         return opt;
     }
-    
+
     public static NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault3() {
         NbiSingleDeviceOperationOptions opt = new NbiSingleDeviceOperationOptions();
 
