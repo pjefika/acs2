@@ -27,10 +27,16 @@ public class FirmwareInfo {
      * @return
      */
     public Boolean isOk() {
+        /**
+         * Sem firmware preferencials
+         */
         if (this.preferredVersion.isEmpty()) {
             return true;
         }
-        return firmwareVersion.equalsIgnoreCase(preferredVersion);
+        /**
+         * Tratativa Gambiarra devido a falha de arquitetura MOTIVE
+         */
+        return firmwareVersion.concat("-preferred").equalsIgnoreCase(preferredVersion);
     }
 
     public String getFirmwareVersion() {

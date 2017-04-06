@@ -16,7 +16,7 @@ Vue.component("detail", {
         modal: {
             type: Object,
             required: true,
-            default: function () {
+            default: function() {
                 return {
                     comp: 'get-wifi',
                     titulo: 'Titulo Dev'
@@ -29,12 +29,12 @@ Vue.component("detail", {
         },
         equipamento: {
             type: Equipamento,
-            default: function () {
+            default: function() {
                 return new Equipamento(this.eqpString);
             }
         }
     },
-    mounted: function () {
+    mounted: function() {
         var self = this;
         /**
          * Gerando exceção quando chamado durante uma executeFuncion
@@ -45,22 +45,22 @@ Vue.component("detail", {
 //        }, 30000);
     },
     methods: {
-        checkOnline: function () {
+        checkOnline: function() {
             var self = this;
             vm.$emit('loadingBarLong')
             self.checkOnlineRequest();
         },
-        checkOnlineRequest: _.debounce(function () {
+        checkOnlineRequest: _.debounce(function() {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "checkOnline/",
                 data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-                success: function (data) {
+                success: function(data) {
                     if (data.boolean != null) {
                         self.equipamento.checkOn = data.boolean;
                         vm.$emit("success", "Status do equipamento atualizado.");
@@ -74,9 +74,36 @@ Vue.component("detail", {
                 }
             });
         }, 2000),
-        firmwareUpdate: function () {
-            // Implementar
+        firmwareUpdate: function() {
+            var self = this;
+            /**
+             * Utilizar este padrão para enviar duas variaveis json para a controller
+             * @type type
+             */
+            var _data = {};
+            _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
+            _data.info = self.equipamento.firmwareVersion;
 
+            $.ajax({
+                type: "POST",
+                url: url + "updateFirmwareVersion/",
+                data: JSON.stringify(_data),
+                dataType: "json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    vm.$emit('loadingBarLong')
+                },
+                success: function(data) {
+                    vm.$emit("success", "Atualização de Firmware em execução.");
+                    vm.$emit('loaded');
+                },
+                error: function(e) {
+                    vm.$emit("error", "Falha ao realizar atualização.");
+                },
+                complete: function() {
+                    self.$parent.loading = false
+                }
+            });
         }
     }
 });

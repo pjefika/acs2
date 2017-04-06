@@ -143,7 +143,7 @@ public class EquipamentoDAO {
         return remote.createSingleFirmwareUpdateOperation(new NBIDeviceID(eqp.getDeviceId().getOUI(),
                 eqp.getDeviceId().getProductClass(),
                 eqp.getDeviceId().getProtocol(), eqp.getDeviceId().getSerialNumber()),
-                info.getPreferredVersion(), 1200);
+                info.getPreferredVersion(), 15000);
     }
 
     public void getAvailableFirmwareImages(NbiDeviceData eqp) {

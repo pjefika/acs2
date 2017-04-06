@@ -85,7 +85,7 @@ public class EquipamentoController extends AbstractController {
                     oi = dao.getFirmwareVersion(ndd);
                     Boolean getFirmIsOk = oi.isOk();
                     jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
-                    jobj.add("firmwareVersion", new Gson().toJsonTree(oi.getFirmwareVersion()));
+                    jobj.add("firmwareVersion", new Gson().toJsonTree(oi));
                 } catch (JsonUtilException ex) {
 
                 }
@@ -319,7 +319,7 @@ public class EquipamentoController extends AbstractController {
     @Logado
     public void updateFirmwareVersion(NbiDeviceData nbiDeviceData, FirmwareInfo info) throws HdmException {
         try {
-            this.gerarLog(nbiDeviceData, "updateFirmwareVersion", "");
+            this.gerarLog(nbiDeviceData, "updateFirmwareVersion", info.getPreferredVersion());
             this.includeSerializer(dao.firmwareUpdate(nbiDeviceData, info));
         } catch (NBIException_Exception e) {
             this.includeSerializer("A plataforma apresentou erro ao atualizar o Firmware.");
