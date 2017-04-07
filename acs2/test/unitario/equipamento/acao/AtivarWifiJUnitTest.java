@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package unitario.equipamento.consulta;
+package unitario.equipamento.acao;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
@@ -19,9 +19,9 @@ import org.junit.Test;
  *
  * @author G0042204
  */
-public class GetParametersValuesJUnitTest {
+public class AtivarWifiJUnitTest {
 
-    public GetParametersValuesJUnitTest() {
+    public AtivarWifiJUnitTest() {
     }
 
     @BeforeClass
@@ -41,7 +41,7 @@ public class GetParametersValuesJUnitTest {
     }
 
     @Test
-    public void getParameters() {
+    public void ativarWifi() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
@@ -52,7 +52,7 @@ public class GetParametersValuesJUnitTest {
 //            eqp = d.findDeviceByGUID(new Long(23006));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 
-            d.getParametersValues(eqp, "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable");
+            d.ativarWifi(eqp);
 
         } catch (Exception e) {
             e.printStackTrace();

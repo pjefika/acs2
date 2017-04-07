@@ -18,6 +18,7 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDevice
 import com.motive.www.remotehdm.NBIService._1_0.NBIServiceLocator;
 import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortStub;
 import com.sun.xml.wss.XWSSConstants;
+import dao.util.AtivarWifi;
 import dao.util.NbiDecorator;
 import dao.util.SoapUtil;
 import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
@@ -57,6 +58,7 @@ import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
+import motive.hdm.synchdeviceops.SetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import org.apache.axis.AxisFault;
 import util.JsonUtil;
@@ -276,12 +278,12 @@ public class EquipamentoDAO {
 
     }
 
-    public void getParametersValues(NbiDeviceData eqp) throws Exception {
+    public void getParametersValues(NbiDeviceData eqp, String path) throws Exception {
         this.initSynchDeviceOperations();
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
 
         motive.hdm.synchdeviceops.GetParameterValuesDTO g = new motive.hdm.synchdeviceops.GetParameterValuesDTO();
-        g.getParameterNames().add(0, "InternetGatewayDevice.WANDevice.5.WANConnectionDevice.1.WANIPConnection.2.PortMapping.");
+        g.getParameterNames().add(0, path);
         GetParameterValuesResponseDTO r = synch.getParameterValues(NbiDecorator.adapter(eqp), g, opt, 50000, "");
         for (ParameterValueStructDTO p : r.getParameterList()) {
             System.out.println("Nome: " + p.getName());
@@ -289,6 +291,19 @@ public class EquipamentoDAO {
             System.out.println("Value: " + p.getValue());
         }
 
+    }
+
+    public void ativarWifi(NbiDeviceData eqp) throws Exception {
+        this.setParametersValues(eqp, new AtivarWifi());
+    }
+
+    public void setParametersValues(NbiDeviceData eqp, ParameterValueStructDTO p) throws Exception {
+        this.initSynchDeviceOperations();
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        motive.hdm.synchdeviceops.SetParameterValuesDTO g = new motive.hdm.synchdeviceops.SetParameterValuesDTO();
+        g.getParameterValueStructs().add(p);
+        SetParameterValuesResponseDTO s = synch.setParameterValues(NbiDecorator.adapter(eqp), g, opt, 50000, "");
+        System.out.println("Retorno: " + s.getStatus());
     }
 
     public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {

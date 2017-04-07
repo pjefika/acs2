@@ -19,9 +19,9 @@ import org.junit.Test;
  *
  * @author G0042204
  */
-public class GetParametersValuesJUnitTest {
+public class GetParamWifiJUnitTest {
 
-    public GetParametersValuesJUnitTest() {
+    public GetParamWifiJUnitTest() {
     }
 
     @BeforeClass

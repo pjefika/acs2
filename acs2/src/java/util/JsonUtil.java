@@ -147,6 +147,7 @@ public class JsonUtil {
 
         WifiInfoFull i = new WifiInfoFull();
         try {
+            System.out.println(a.getValue());
             JsonElement jelement = new JsonParser().parse(a.getValue().replace("[", "").replace("]", ""));
             JsonObject jobject = jelement.getAsJsonObject();
 
