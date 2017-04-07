@@ -16,7 +16,6 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTi
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDeviceOperationsService;
 import com.motive.www.remotehdm.NBIService._1_0.NBIServiceLocator;
-import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortProxy;
 import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortStub;
 import com.sun.xml.wss.XWSSConstants;
 import dao.util.NbiDecorator;
@@ -250,34 +249,11 @@ public class EquipamentoDAO {
 
     }
 
-    /**
-     * Utilizar output do método Find By GUID
-     *
-     * @param eqp
-     * @return
-     * @throws java.lang.Exception
-     */
-//    public ExecuteFunctionResponse getDeviceInfo(NbiDeviceData eqp) throws Exception {
-//        this.initSynchDeviceOperations();
-//        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-//        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9527, opt, 10000, "");
-//        return JsonUtil.firmwareInfo(a);
-//    }
-    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
-
+    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 10000, "");
-        FirmwareInfo i;
-        try {
-            i = JsonUtil.firmwareInfo(a);
-        } catch (JsonUtilException e) {
-            System.out.println("Falha firmwareInfo no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
-            throw new JsonUtilException(e.getMessage());
-        }
-        return i;
-
+        return JsonUtil.firmwareInfo(a);
     }
 
     public WifiInfo getWifiInfo(NbiDeviceData eqp) throws Exception {

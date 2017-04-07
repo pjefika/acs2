@@ -37,7 +37,7 @@
                                     <label>Subscriber Id:</label>
                                     <span v-text="equipamento.subscriberID"></span>
                                 </li>
-                                <li class="list-group-item" v-if="equipamento.checkOn">
+                                <li class="list-group-item" v-if="equipamento.firmwareVersion">
                                     <span><label>Firmware:</label>
                                         <span v-text="equipamento.firmwareVersion.firmwareVersion" class="small"></span>
                                         <span v-if="equipamento.firmwareOk">
@@ -46,6 +46,11 @@
                                         <span v-else>
                                             - <button v-if="equipamento.checkOn" class="btn btn-danger btn-xs" type="button" @click="firmwareUpdate()">Atualizar</button>
                                         </span>
+                                    </span>
+                                </li>
+                                <li class="list-group-item" v-else>
+                                    <span><label>Firmware:</label>
+                                        <span class="small text-danger">Falha ao consultar.</span>
                                     </span>
                                 </li>
                                 <li class="list-group-item">

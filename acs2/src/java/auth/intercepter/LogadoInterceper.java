@@ -1,16 +1,15 @@
 package auth.intercepter;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-
+import auth.annotation.Logado;
+import auth.controller.SessionUsuarioEfika;
+import auth.controller.UsuarioController;
 import br.com.caelum.vraptor.AroundCall;
 import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.AcceptsWithAnnotations;
 import br.com.caelum.vraptor.interceptor.SimpleInterceptorStack;
-import auth.annotation.Logado;
-import auth.controller.SessionUsuarioEfika;
-import auth.controller.UsuarioController;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 
 @Intercepts
@@ -45,7 +44,7 @@ public class LogadoInterceper {
             } else {
                 result.forwardTo(UsuarioController.class).logar();                                
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             result.forwardTo(UsuarioController.class).logar();
         }
     }

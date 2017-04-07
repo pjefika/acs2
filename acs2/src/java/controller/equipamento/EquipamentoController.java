@@ -69,26 +69,25 @@ public class EquipamentoController extends AbstractController {
         NbiDeviceData ndd;
         try {
             ndd = dao.findDeviceByGUID(new Long(guid));
-
-            Boolean checkOnline;
+            Boolean checkOnline = false;
 
             try {
                 checkOnline = dao.checkOnline(ndd);
-            } catch (DeviceOperationException e) {
-                checkOnline = false;
-            }
 
-            if (checkOnline) {
-                FirmwareInfo oi;
-                try {
+                if (checkOnline) {
                     Thread.sleep(6000);
-                    oi = dao.getFirmwareVersion(ndd);
+                    FirmwareInfo oi = dao.getFirmwareVersion(ndd);
                     Boolean getFirmIsOk = oi.isOk();
                     jobj.add("firmWareOk", new Gson().toJsonTree(getFirmIsOk));
                     jobj.add("firmwareVersion", new Gson().toJsonTree(oi));
-                } catch (JsonUtilException ex) {
-
                 }
+
+            } catch (DeviceOperationException e) {
+                checkOnline = false;
+            } catch (ProviderException ex) {
+
+            } catch (JsonUtilException ex) {
+
             }
 
             jobj.add("eqp", new Gson().toJsonTree(ndd));
@@ -98,21 +97,17 @@ public class EquipamentoController extends AbstractController {
 
         } catch (NBIException_Exception ex) {
             result.include("exception", "Equipamento não encontrado.");
-        } catch (DeviceOperationException e) {
-            e.printStackTrace();
-            result.include("exception", "A plataforma falhou ao obter os detalhes do equipamento.");
         } catch (NBIException e) {
             result.include("exception", "A plataforma apresentou um erro generalizado ao obter os detalhes.");
         } catch (OperationTimeoutException e) {
             result.include("exception", "A plataforma demorou muito para responder ao obter os detalhes.");
-        } catch (ProviderException e) {
-            result.include("exception", "Erro no provedor da plataforma ao obter os detalhes.");
         }
     }
 
     @Path("/equipamento/detalhe/json/{guid}")
     @Logado
-    public void detalhesJson(String guid) {
+    public void detalhesJson(String guid
+    ) {
         try {
             this.includeSerializer(dao.findDeviceByGUID(new Long(guid)));
         } catch (NBIException_Exception ex) {

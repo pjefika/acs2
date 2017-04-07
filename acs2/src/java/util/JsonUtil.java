@@ -44,10 +44,8 @@ public class JsonUtil {
             JsonObject jobject = jelement.getAsJsonObject();
             firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
             preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
-
-        } catch (IllegalStateException e) {
-            throw new JsonUtilException("A resposta da plataforma não era um Json");
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
+            System.out.println(a.getValue());
             throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
         return new FirmwareInfo(firmwareVersion, preferredVersion);
