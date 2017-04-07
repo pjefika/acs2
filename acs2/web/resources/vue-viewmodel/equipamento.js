@@ -8,7 +8,6 @@
 
 // CLASSES
 var Equipamento = function(p) {
-    console.log(p);
     if (p) {
         this.activated = p.eqp.activated;
         this.deviceGUID = p.eqp.deviceGUID;
