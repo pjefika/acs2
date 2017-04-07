@@ -8,7 +8,6 @@ package unitario.equipamento.acao;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import model.device.ping.PingRequest;
-import model.device.wifi.WifiInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -54,7 +53,7 @@ public class PingDiagnosticJUnitTest {
 
             PingRequest p = new PingRequest();
 
-            p.setDestAddress("www.google.com.br");
+            p.setDestAddress("www.google.com");
             p.setQtdRequisitions("4");
 
             SoutUtil.print(d.pingDiagnostic(eqp, p));

@@ -350,7 +350,13 @@ public class JsonUtil {
             JsonElement jelement = new JsonParser().parse(a.getValue());
             JsonObject jobject = jelement.getAsJsonObject();
 
-            String status = jobject.get("status").toString().replace("\"", "");
+            String status;
+            try {
+                status = jobject.get("status").toString().replace("\"", "");
+            } catch (Exception e) {
+                status = jobject.get("diagnosticState").toString().replace("\"", "");
+            }
+
             String avgRespTime = jobject.get("avgRespTime").toString().replace("\"", "");
             String qtdSuccess = jobject.get("qtdSuccess").toString().replace("\"", "");
             String qtdFailures = jobject.get("qtdFailures").toString().replace("\"", "");
