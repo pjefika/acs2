@@ -41,7 +41,7 @@ public class GetParametersValuesJUnitTest {
     }
 
     @Test
-    public void getParameters() {
+    public void getParameterValue() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
@@ -52,7 +52,7 @@ public class GetParametersValuesJUnitTest {
 //            eqp = d.findDeviceByGUID(new Long(23006));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 
-            d.getParametersValues(eqp, "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable");
+            d.getParameterValue(eqp, "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.AuthenticationServiceMode");
 
         } catch (Exception e) {
             e.printStackTrace();

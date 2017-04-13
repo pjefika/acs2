@@ -43,6 +43,8 @@ public class SoutUtil {
         System.out.println("Protocol: " + d.getDeviceId().getProtocol());
         System.out.println("SerialNumber: " + d.getDeviceId().getSerialNumber());
         System.out.println("LastContactTime: " + d.getLastContactTime());
+        System.out.println("FirstContactTime: " + d.getFirstContactTime());
+        System.out.println("LastActivationTime: " + d.getLastActivationTime());
         System.out.println("getConnectionRequestURL: " + d.getConnectionRequestURL());
         System.out.println("ConnectionRequestUsername: " + d.getConnectionRequestUsername());
         System.out.println("tConnectionRequestPassword: " + d.getConnectionRequestPassword());

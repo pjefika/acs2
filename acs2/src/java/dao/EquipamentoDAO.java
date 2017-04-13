@@ -18,11 +18,13 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDevice
 import com.motive.www.remotehdm.NBIService._1_0.NBIServiceLocator;
 import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortStub;
 import com.sun.xml.wss.XWSSConstants;
-import dao.util.AtivarWifi;
 import dao.util.NbiDecorator;
 import dao.util.SoapUtil;
+import dao.util.acao.AtivarWifi;
+import dao.util.acao.DesativarWifi;
 import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
+import exception.HdmException;
 import exception.JsonUtilException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -254,7 +256,7 @@ public class EquipamentoDAO {
     public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 15000, "");
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 55000, "");
         return JsonUtil.firmwareInfo(a);
     }
 
@@ -262,6 +264,10 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9511, opt, 10000, "");
+        String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
+        if (a.getValue().contains(wifiDisable)) {
+            throw new HdmException(wifiDisable);
+        }
         return JsonUtil.getWifiInfo(a);
     }
 
@@ -270,15 +276,41 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         GetParameterNamesDTO g = new GetParameterNamesDTO();
         g.setParameterPath("InternetGatewayDevice.");
-
         GetParameterNamesResponseDTO r = synch.getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "");
         for (ParameterInfoStructDTO p : r.getParameterList()) {
             System.out.println(p.getName());
         }
+    }
+
+    public void getParametersWifi(NbiDeviceData eqp) throws Exception {
+        this.initSynchDeviceOperations();
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        GetParameterNamesDTO g = new GetParameterNamesDTO();
+        g.setParameterPath("InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.");
+        GetParameterNamesResponseDTO r = synch.getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "");
+        for (ParameterInfoStructDTO p : r.getParameterList()) {
+            System.out.println(p.getName());
+        }
+    }
+
+    public void getParametersValues(NbiDeviceData eqp, List<String> paths) throws Exception {
+        this.initSynchDeviceOperations();
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+
+        motive.hdm.synchdeviceops.GetParameterValuesDTO g = new motive.hdm.synchdeviceops.GetParameterValuesDTO();
+        for (int i = 0; i < paths.size(); i++) {
+            g.getParameterNames().add(i, paths.get(i));
+        }
+        GetParameterValuesResponseDTO r = synch.getParameterValues(NbiDecorator.adapter(eqp), g, opt, 30000, "");
+        for (ParameterValueStructDTO p : r.getParameterList()) {
+            System.out.println("Nome: " + p.getName());
+            System.out.println("Type: " + p.getType());
+            System.out.println("Value: " + p.getValue());
+        }
 
     }
 
-    public void getParametersValues(NbiDeviceData eqp, String path) throws Exception {
+    public void getParameterValue(NbiDeviceData eqp, String path) throws Exception {
         this.initSynchDeviceOperations();
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
 
@@ -295,6 +327,10 @@ public class EquipamentoDAO {
 
     public void ativarWifi(NbiDeviceData eqp) throws Exception {
         this.setParametersValues(eqp, new AtivarWifi());
+    }
+
+    public void desativarWifi(NbiDeviceData eqp) throws Exception {
+        this.setParametersValues(eqp, new DesativarWifi());
     }
 
     public void setParametersValues(NbiDeviceData eqp, ParameterValueStructDTO p) throws Exception {
@@ -352,20 +388,19 @@ public class EquipamentoDAO {
         return JsonUtil.dmzInfo(a);
     }
 
-    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, JsonUtilException, HdmException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 100000, "");
 
         WifiInfoFull i;
-        try {
-            i = JsonUtil.getWifiInfoFull(a);
-        } catch (JsonUtilException e) {
-            System.out.println("Falha getWifiInfoFull no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
-            throw new JsonUtilException(e.getMessage());
+
+        String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
+        if (a.getValue().contains(wifiDisable)) {
+            throw new HdmException(wifiDisable);
         }
-        return i;
+
+        return JsonUtil.getWifiInfoFull(a);
     }
 
     public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {

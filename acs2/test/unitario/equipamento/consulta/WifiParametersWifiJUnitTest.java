@@ -19,9 +19,9 @@ import org.junit.Test;
  *
  * @author G0042204
  */
-public class GetParamWifiJUnitTest {
+public class WifiParametersWifiJUnitTest {
 
-    public GetParamWifiJUnitTest() {
+    public WifiParametersWifiJUnitTest() {
     }
 
     @BeforeClass
@@ -52,7 +52,7 @@ public class GetParamWifiJUnitTest {
 //            eqp = d.findDeviceByGUID(new Long(23006));
 //            eqp = d.findDeviceByGUID(new Long(23006));
 
-            d.getParameterValue(eqp, "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable");
+            d.getParametersWifi(eqp);
 
         } catch (Exception e) {
             e.printStackTrace();
