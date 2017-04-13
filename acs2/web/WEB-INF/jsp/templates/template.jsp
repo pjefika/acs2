@@ -52,35 +52,11 @@
                             <li><a href="${linkTo[LogController].create()}">Logs</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>Perfil <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="navbar-login">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <p class="text-center">
-                                                        <img src="http://portalcolaboradores/idc/portalcolaboradores/userimages/${sessionUsuarioEfika.usuario.login}.jpg" alt="User" class="img-rounded" style="width: 90px; height: 100px;">
-                                                    </p>
-                                                </div>
-                                                <div class="col-lg-1"></div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <div class="navbar-login navbar-login-session">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <p>
-                                                        <a href="${linkTo[UsuarioController].logout()}" class="btn btn-danger btn-block">Sair</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                            <li>
+                                <a href="${linkTo[UsuarioController].logout()}">Sair</a>
                             </li>
+                        </ul>
+                        </li>
                         </ul>
                     </c:if>
                 </div><!--/.nav-collapse -->
