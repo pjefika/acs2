@@ -364,6 +364,22 @@ public class EquipamentoDAO {
         return JsonUtil.getServiceClass(a);
     }
 
+    public Boolean setServiceClass(NbiDeviceData eqp, ServiceClass sc) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        String jsonSc = JsonUtil.serialize(sc, sc.getClass());
+        List<Object> json = NbiDecorator.getEmptyJson();
+        json.set(0, jsonSc);
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9504, opt, 10000, "");
+        System.out.println(a.toString());
+        if (a.toString().contains("SUCCESS")) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
