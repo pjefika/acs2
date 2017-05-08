@@ -347,15 +347,8 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9515, opt, 10000, "");
-        WanInfo i;
-        try {
-            i = JsonUtil.getWanInfo(a);
-        } catch (JsonUtilException e) {
-            System.out.println("Falha getWanInfo no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
-            throw new JsonUtilException(e.getMessage());
-        }
-        return i;
+        System.out.println(a.getValue());
+        return (WanInfo) GsonUtil.convert(a.getValue(), WanInfo.class);
     }
 
     public ServiceClass getServiceClass(NbiDeviceData eqp) throws Exception {

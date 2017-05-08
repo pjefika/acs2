@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import init.EquipamentoTestValues;
+import model.device.wan.WanInfo;
 import util.SoutUtil;
 
 /**
@@ -55,8 +56,9 @@ public class WanDiagnosticJUnitTest {
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
-            SoutUtil.print(eqp);
-            d.getWanInfo(eqp);
+            //SoutUtil.print(eqp);             
+            WanInfo w = d.getWanInfo(eqp);
+            
             assertTrue(true);
 
         } catch (Exception ex) {
