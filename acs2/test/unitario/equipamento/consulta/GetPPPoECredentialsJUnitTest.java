@@ -54,31 +54,18 @@ public class GetPPPoECredentialsJUnitTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void getPPPoECredentials() throws NBIException_Exception {
+    public void getPPPoECredentials() throws Exception {
 
         EquipamentoDAO d = new EquipamentoDAO();
         Long l = EquipamentoTestValues.GUID;
         NbiDeviceData eqp;
         eqp = d.findDeviceByGUID(l);
-
         //d.capture(l);
         // d.release(l);
-        PPPoECredentialsInfo info = null;
-        try {
-            info = d.getPPPoECredentials(eqp);
-        } catch (DeviceOperationException ex) {
-            Logger.getLogger(GetPPPoECredentialsJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NBIException ex) {
-            Logger.getLogger(GetPPPoECredentialsJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (OperationTimeoutException ex) {
-            Logger.getLogger(GetPPPoECredentialsJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ProviderException ex) {
-            Logger.getLogger(GetPPPoECredentialsJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JsonUtilException ex) {
-            Logger.getLogger(GetPPPoECredentialsJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        PPPoECredentialsInfo info = d.getPPPoECredentials(eqp);
 
-        SoutUtil.print(info);
+        //System.out.println(info.getUsername());
 
         assertTrue(true);
 

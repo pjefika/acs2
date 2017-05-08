@@ -8,7 +8,7 @@
 var pPPoEC = function (p) {
     //console.log(p);
     if (p) {
-        this.username = p.username;
-        this.password = p.password;
+        this.username = p.Username;
+        this.password = p.Password;
     }
 }
