@@ -30,6 +30,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -408,8 +409,8 @@ public class EquipamentoDAO {
         String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
         if (a.getValue().contains(wifiDisable)) {
             throw new HdmException(wifiDisable);
-        }        
-        WifiInfoFull[] wifi = (WifiInfoFull[]) GsonUtil.convert(a.getValue(), WifiInfoFull[].class);        
+        }
+        WifiInfoFull[] wifi = (WifiInfoFull[]) GsonUtil.convert(a.getValue(), WifiInfoFull[].class);
         return wifi[0];
     }
 
@@ -417,15 +418,10 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
-        List<PortMappingInfo> i;
-        try {
-            i = JsonUtil.getPortMappingInfo(a);
-        } catch (JsonUtilException e) {
-            System.out.println("Falha getPortMappingInfo no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
-            throw new JsonUtilException(e.getMessage());
-        }
-        return i;
+        //System.out.println(a.getValue());
+        PortMappingInfo[] pmi = (PortMappingInfo[]) GsonUtil.convert(a.getValue(), PortMappingInfo[].class);        
+        //List<PortMappingInfo> l = ;
+        return Arrays.asList(pmi);
     }
 
     public PortMappingInfo traceroute(NbiDeviceData eqp, TraceRouteRequest trace) throws Exception {

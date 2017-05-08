@@ -57,10 +57,9 @@ public class GetPortMappingJUnitTest {
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
             List<PortMappingInfo> info = d.getPortMapping(eqp);
-
-            for (PortMappingInfo portMappingInfo : info) {
+            info.forEach((portMappingInfo) -> {
                 SoutUtil.print(portMappingInfo);
-            }
+            });
 
             assertTrue(true);
 
