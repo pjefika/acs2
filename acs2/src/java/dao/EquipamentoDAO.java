@@ -517,15 +517,15 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9514, opt, 10000, "");
-        XdslDiagnostics i;
-        try {
-            i = JsonUtil.getXdslDiagnostics(a);
-        } catch (JsonUtilException e) {
-            System.out.println("Falha getXdslDiagnostics no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
-            throw new JsonUtilException(e.getMessage());
-        }
-        return i;
+//        XdslDiagnostics i;
+//        try {
+//            i = JsonUtil.getXdslDiagnostics(a);
+//        } catch (JsonUtilException e) {
+//            System.out.println("Falha getXdslDiagnostics no deviceGUID " + eqp.getDeviceGUID());
+//            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+//            throw new JsonUtilException(e.getMessage());
+//        }
+        return (XdslDiagnostics) GsonUtil.convert(a.getValue(), XdslDiagnostics.class);
     }
 
     public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws Exception {

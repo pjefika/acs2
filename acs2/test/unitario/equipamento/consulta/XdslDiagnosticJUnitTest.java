@@ -16,6 +16,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import init.EquipamentoTestValues;
+import model.device.xdsldiagnostics.XdslDiagnostics;
+import util.SoutUtil;
 
 /**
  *
@@ -53,8 +55,8 @@ public class XdslDiagnosticJUnitTest {
 
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-
-            d.getXdslDiagnostic(eqp);
+            XdslDiagnostics xd = d.getXdslDiagnostic(eqp);            
+            System.out.println(xd.getDownstreamCurrRate());
 
         } catch (Exception ex) {
             Logger.getLogger(XdslDiagnosticJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
