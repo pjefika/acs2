@@ -429,7 +429,8 @@ public class EquipamentoDAO {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             this.initSynchDeviceOperations();
 
-            String traceStr = JsonUtil.serialize(trace, trace.getClass());
+            //String traceStr = JsonUtil.serialize(trace, trace.getClass());            
+            String traceStr = GsonUtil.serialize(trace);            
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, traceStr);
 
