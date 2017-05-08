@@ -658,8 +658,8 @@ public class EquipamentoDAO {
         if (nbi == null) {
             try {
                 URL url;
-//                url = new URL("http://200.168.104.216:7015/NBIServiceImpl/NBIService?wsdl");
-                url = new URL("http://201.95.254.37:7035/NBIServiceImpl/NBIService?wsdl");
+                url = new URL("http://200.168.104.216:7015/NBIServiceImpl/NBIService?wsdl");
+//                url = new URL("http://201.95.254.37:7035/NBIServiceImpl/NBIService?wsdl");
                 QName qname = new QName("http://nbi2.service.hdm.alcatel.com/",
                         "NBIService");
                 Service service = Service.create(url, qname);
@@ -678,8 +678,8 @@ public class EquipamentoDAO {
         if (synch == null) {
             try {
                 URL url;
-//                url = new URL("http://200.168.104.216:7015/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
-                url = new URL("http://201.95.254.37:7035/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
+                url = new URL("http://200.168.104.216:7015/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
+//                url = new URL("http://201.95.254.37:7035/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
                 QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
                         "SynchDeviceOperationsNBIService");
                 Service service = Service.create(url, qname);

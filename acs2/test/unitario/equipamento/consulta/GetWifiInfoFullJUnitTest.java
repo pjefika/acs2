@@ -14,6 +14,7 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderExc
 import dao.EquipamentoDAO;
 import exception.HdmException;
 import exception.JsonUtilException;
+import init.EquipamentoTestValues;
 import model.device.wifi.WifiInfoFull;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -21,7 +22,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -58,8 +58,11 @@ public class GetWifiInfoFullJUnitTest {
 
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
             WifiInfoFull info = d.getWifiInfoFull(eqp);
-
+            
             SoutUtil.print(info);
+            
+
+//            SoutUtil.print(info);
 
             assertTrue(true);
 
