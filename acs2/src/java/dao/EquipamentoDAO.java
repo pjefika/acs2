@@ -575,7 +575,8 @@ public class EquipamentoDAO {
 
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        String jsonPppoe = JsonUtil.serialize(p, p.getClass());
+        //String jsonPppoe = JsonUtil.serialize(p, p.getClass());
+        String jsonPppoe = GsonUtil.serialize(p);
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, jsonPppoe);
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9530, opt, 150000, "");
@@ -597,7 +598,8 @@ public class EquipamentoDAO {
 
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
+        //String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
+        String jsonPppoe = GsonUtil.serialize(pPPoECredentialsInfo);
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, jsonPppoe);
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 10000, "");
