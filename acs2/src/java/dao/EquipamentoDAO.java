@@ -396,7 +396,8 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9503, opt, 10000, "");
         System.out.println(a.getValue());
-        return JsonUtil.dmzInfo(a);
+        //return JsonUtil.dmzInfo(a);
+        return (DmzInfo) GsonUtil.convert(a.getValue(), DmzInfo.class);
     }
 
     public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, JsonUtilException, HdmException, ProviderException {
