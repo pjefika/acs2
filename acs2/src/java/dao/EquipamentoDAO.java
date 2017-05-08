@@ -531,23 +531,24 @@ public class EquipamentoDAO {
     public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9519, opt, 10000, "");
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9519, opt, 30000, "");
         return JsonUtil.deviceLog(a);
     }
 
     public List<InterfaceStatistics> getInterfaceStatistics(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 15000, "");
-        List<InterfaceStatistics> i;
-        try {
-            i = JsonUtil.getInterfaceStatistics(a);
-        } catch (JsonUtilException e) {
-            System.out.println("Falha getInterfaceStatistics no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
-            throw new JsonUtilException(e.getMessage());
-        }
-        return i;
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 30000, "");        
+        InterfaceStatistics[] is = (InterfaceStatistics[]) GsonUtil.convert(a.getValue(), InterfaceStatistics[].class);        
+//        List<InterfaceStatistics> i;
+//        try {
+//            i = JsonUtil.getInterfaceStatistics(a);
+//        } catch (JsonUtilException e) {
+//            System.out.println("Falha getInterfaceStatistics no deviceGUID " + eqp.getDeviceGUID());
+//            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+//            throw new JsonUtilException(e.getMessage());
+//        }
+        return Arrays.asList(is);
     }
 
     public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
