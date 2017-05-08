@@ -555,16 +555,19 @@ public class EquipamentoDAO {
 
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9523, opt, 10000, "");
-        PPPoECredentialsInfo i;
-        try {
-            i = JsonUtil.getPPPoECredentialsInfo(a);
-        } catch (JsonUtilException e) {
-            System.out.println("Falha getPPPoECredentialsInfo no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
-            throw new JsonUtilException(e.getMessage());
-        }
-        return i;
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9523, opt, 10000, "");        
+        System.out.println(a.getValue());
+        PPPoECredentialsInfo ppoe = (PPPoECredentialsInfo) GsonUtil.convert(a.getValue(), PPPoECredentialsInfo.class);
+        System.out.println(ppoe.getUsername());        
+//        PPPoECredentialsInfo i;
+//        try {
+//            i = JsonUtil.getPPPoECredentialsInfo(a);
+//        } catch (JsonUtilException e) {
+//            System.out.println("Falha getPPPoECredentialsInfo no deviceGUID " + eqp.getDeviceGUID());
+//            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+//            throw new JsonUtilException(e.getMessage());
+//        }
+        return ppoe;
 
     }
 
