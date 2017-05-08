@@ -355,7 +355,8 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9505, opt, 10000, "");
-        return JsonUtil.getServiceClass(a);
+        //return JsonUtil.getServiceClass(a);
+        return (ServiceClass) GsonUtil.convert(a.getValue(), ServiceClass.class);
     }
 
     public Boolean setServiceClass(NbiDeviceData eqp, ServiceClass sc) throws Exception {
