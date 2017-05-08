@@ -501,15 +501,16 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 10000, "");
-        DdnsInfo i;
-        try {
-            i = JsonUtil.ddnsInfo(a);
-        } catch (JsonUtilException e) {
-            System.out.println("Falha ddnsInfo no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
-            throw new JsonUtilException(e.getMessage());
-        }
-        return i;
+        //System.out.println(a.getValue());               
+//        DdnsInfo i;
+//        try {
+//            i = JsonUtil.ddnsInfo(a);
+//        } catch (JsonUtilException e) {
+//            System.out.println("Falha ddnsInfo no deviceGUID " + eqp.getDeviceGUID());
+//            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+//            throw new JsonUtilException(e.getMessage());
+//        }
+        return (DdnsInfo) GsonUtil.convert(a.getValue(), DdnsInfo.class);
     }
 
     public XdslDiagnostics getXdslDiagnostic(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
