@@ -419,7 +419,7 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
         //System.out.println(a.getValue());
-        PortMappingInfo[] pmi = (PortMappingInfo[]) GsonUtil.convert(a.getValue(), PortMappingInfo[].class);        
+        PortMappingInfo[] pmi = (PortMappingInfo[]) GsonUtil.convert(a.getValue(), PortMappingInfo[].class);
         //List<PortMappingInfo> l = ;
         return Arrays.asList(pmi);
     }
@@ -430,7 +430,7 @@ public class EquipamentoDAO {
             this.initSynchDeviceOperations();
 
             //String traceStr = JsonUtil.serialize(trace, trace.getClass());            
-            String traceStr = GsonUtil.serialize(trace);            
+            String traceStr = GsonUtil.serialize(trace);
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, traceStr);
 
@@ -488,9 +488,14 @@ public class EquipamentoDAO {
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonWifi);
 
-            //System.out.println(jsonWifi);
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
-            return true;
+            System.out.println(a.getValue());
+            if (a.getValue().equalsIgnoreCase("SUCCESS")) {
+                return true;
+            } else {
+                return false;
+            }
+
         } catch (OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
             return true;
@@ -538,8 +543,8 @@ public class EquipamentoDAO {
     public List<InterfaceStatistics> getInterfaceStatistics(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 30000, "");        
-        InterfaceStatistics[] is = (InterfaceStatistics[]) GsonUtil.convert(a.getValue(), InterfaceStatistics[].class);        
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9531, opt, 30000, "");
+        InterfaceStatistics[] is = (InterfaceStatistics[]) GsonUtil.convert(a.getValue(), InterfaceStatistics[].class);
 //        List<InterfaceStatistics> i;
 //        try {
 //            i = JsonUtil.getInterfaceStatistics(a);
@@ -555,10 +560,10 @@ public class EquipamentoDAO {
 
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9523, opt, 10000, "");        
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9523, opt, 10000, "");
         System.out.println(a.getValue());
         PPPoECredentialsInfo ppoe = (PPPoECredentialsInfo) GsonUtil.convert(a.getValue(), PPPoECredentialsInfo.class);
-        System.out.println(ppoe.getUsername());        
+        System.out.println(ppoe.getUsername());
 //        PPPoECredentialsInfo i;
 //        try {
 //            i = JsonUtil.getPPPoECredentialsInfo(a);

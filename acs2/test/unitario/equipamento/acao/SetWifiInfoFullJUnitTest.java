@@ -7,6 +7,7 @@ package unitario.equipamento.acao;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import init.EquipamentoTestValues;
 import model.device.wifi.WifiInfoFull;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,7 +15,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -54,16 +54,16 @@ public class SetWifiInfoFullJUnitTest {
             WifiInfoFull info = d.getWifiInfoFull(eqp);
             SoutUtil.print(info);
             info.setSsid("efika-dev");
-            info.setAuthMode("None");
-            info.setEncType("None");
-            info.setBcEnabled(Boolean.TRUE);
-            info.setChannel("5");
-            info.setStandard("b");
-            info.setKey("1303000712");
+//            info.setAuthMode("None");
+//            info.setEncType("None");
+//            info.setBcEnabled(Boolean.TRUE);
+//            info.setChannel("5");
+//            info.setStandard("b");
+//            info.setKey("1303000712");
 
             assertTrue(d.setWifiInfoFull(eqp, info));
 
-            SoutUtil.print(d.getWifiInfoFull(eqp));
+//            SoutUtil.print(d.getWifiInfoFull(eqp));
 
         } catch (Exception ex) {
             ex.printStackTrace();
