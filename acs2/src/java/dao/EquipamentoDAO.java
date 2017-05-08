@@ -361,7 +361,7 @@ public class EquipamentoDAO {
 
     public Boolean setServiceClass(NbiDeviceData eqp, ServiceClass sc) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        String jsonSc = JsonUtil.serialize(sc, sc.getClass());
+        String jsonSc = GsonUtil.serialize(sc);
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, jsonSc);
         this.initSynchDeviceOperations();
