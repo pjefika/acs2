@@ -63,6 +63,7 @@ import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 import motive.hdm.synchdeviceops.SetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import org.apache.axis.AxisFault;
+import util.GsonUtil;
 import util.JsonUtil;
 
 /**
@@ -409,14 +410,12 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 100000, "");
 
-        WifiInfoFull i;
-
         String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
         if (a.getValue().contains(wifiDisable)) {
             throw new HdmException(wifiDisable);
-        }
-
-        return JsonUtil.getWifiInfoFull(a);
+        }        
+        WifiInfoFull[] wifi = (WifiInfoFull[]) GsonUtil.convert(a.getValue(), WifiInfoFull[].class);        
+        return wifi[0];
     }
 
     public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {

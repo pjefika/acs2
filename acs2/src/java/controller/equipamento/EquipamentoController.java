@@ -39,6 +39,7 @@ import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfoFull;
 import model.entity.Log;
+import util.GsonUtil;
 
 /**
  *
@@ -159,9 +160,7 @@ public class EquipamentoController extends AbstractController {
     public void getWifiInfoFull(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             WifiInfoFull wifiInfoFull = dao.getWifiInfoFull(nbiDeviceData);
-            Gson gson = new Gson();
-            String obj = gson.toJson(wifiInfoFull);
-            this.gerarLog(nbiDeviceData, "getWifi", obj);
+            this.gerarLog(nbiDeviceData, "getWifi", GsonUtil.serialize(wifiInfoFull));
             this.includeSerializer(wifiInfoFull);
         } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao obter os dados de Wifi do equipamento.");
