@@ -646,7 +646,7 @@ public class EquipamentoDAO {
         json.set(0, leJson);
 
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9520, opt, 30000, "");
-
+//        System.out.println(a.getValue());
         if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados")) {
             throw new HdmException(a.getValue());
         }
@@ -663,7 +663,7 @@ public class EquipamentoDAO {
         json.set(0, leJson);
         
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9500, opt, 30000, "");
-        System.out.println(a.getValue());
+//        System.out.println(a.getValue());
         if(a.getValue().contains("SUCCESS")){
             return true;
         }

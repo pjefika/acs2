@@ -50,7 +50,7 @@ public class GetSIPDiagnosticslJUnitTest {
 
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
            
-            SipDiagnostics sip = d.getSipDiagnostics(eqp, 1);
+            SipDiagnostics sip = d.getSipDiagnostics(eqp, 50);
 
             System.out.println(sip.getDirectoryNumber());
             

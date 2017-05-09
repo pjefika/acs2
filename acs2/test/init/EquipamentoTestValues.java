@@ -10,11 +10,12 @@ package init;
  * ok)
  * 147035 - primeira migracao
  * 152015 - sip
+ * 151061 - PACE
  *
  * @author G0042204
  */
 public class EquipamentoTestValues {
 
-    public static Long GUID = new Long(152015);
+    public static Long GUID = new Long(151061);
 
 }

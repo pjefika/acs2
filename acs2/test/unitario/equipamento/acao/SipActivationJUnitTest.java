@@ -9,7 +9,6 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import init.EquipamentoTestValues;
 import model.device.sipactivation.SipActivation;
-import model.device.sipdiagnostics.SipDiagnostics;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -48,17 +47,17 @@ public class SipActivationJUnitTest {
 
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
-            SipDiagnostics leGet = d.getSipDiagnostics(eqp, 1);
+//            SipDiagnostics leGet = d.getSipDiagnostics(eqp, 1);
             
             SipActivation leSet = new SipActivation();
             
-            leSet.setDirectoryNumber(leGet.getDirectoryNumber());
-            leSet.setAuthUserName(leGet.getAuthUserName());
-            leSet.setAuthPassword(leGet.getDirectoryNumber().replace("+55", ""));
-            leSet.setProxyServer(leGet.getProxyServer());
-            leSet.setRegistrarServer(leGet.getRegistrarServer());
-            leSet.setUserAgentDomain(leGet.getUserAgentDomain());
-            leSet.setOutboundProxy(leGet.getOutboundProxy());
+            leSet.setDirectoryNumber("+554130401484");
+            leSet.setAuthUserName("+554130401484");
+            leSet.setAuthPassword("4130401484");
+            leSet.setProxyServer("192.168.80.1");
+            leSet.setRegistrarServer("ims3.gvt.net.br");
+            leSet.setUserAgentDomain("ims3.gvt.net.br");
+            leSet.setOutboundProxy("192.168.80.1");
             leSet.setPhyReferenceList("1");
             
             Boolean foi = d.setSipActivation(eqp, leSet);
