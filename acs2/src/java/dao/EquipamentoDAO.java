@@ -49,9 +49,9 @@ import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.serviceclass.ServiceClass;
+import model.device.sipdiagnostics.SipDiagnostics;
 import model.device.traceroute.TraceRouteRequest;
 import model.device.wan.WanInfo;
-import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiInfoSet;
 import model.device.xdsldiagnostics.XdslDiagnostics;
@@ -635,6 +635,22 @@ public class EquipamentoDAO {
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 20000, "");
         //System.out.println(a.getValue());
 
+    }
+
+    public SipDiagnostics getSipDiagnostics(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, HdmException  {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        String leJson = "{\"phyreferencelist\":\""+phyref.toString()+"\"}";
+        List<Object> json = NbiDecorator.getEmptyJson();
+        json.set(0, leJson);
+        
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9520, opt, 30000, "");
+        
+        if(a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados")){
+            throw new HdmException(a.getValue());
+        }
+        
+        return (SipDiagnostics) GsonUtil.convert(a.getValue(), SipDiagnostics.class);
     }
 
     /**
