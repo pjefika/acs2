@@ -4,13 +4,12 @@
  * and open the template in the editor.
  */
 
-/* global Vue, Integer, SipDiagnostics */
+/* global Vue, Integer, SipDiagnostics, vm */
 
 var url = "/acs/equipamento/";
 
 Vue.component("getSip", {
     mounted: function () {
-        this.getSipDiagnostics();
     },
     props: {
         eqpString: {
@@ -139,7 +138,7 @@ Vue.component("getSip", {
                     </div>\n\
                     <div class='modal-footer'>\n\
                         <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                        <button type='button' class='btn btn-primary' @click='setSipDiagnostics()'>Alterar</button>\n\
+                        <button type='button' class='btn btn-primary' @click='getSipDiagnostics()'>Consultar</button>\n\
                     </div>\n\
                 </div>",
     create: function () {
@@ -162,13 +161,19 @@ Vue.component("getSip", {
                 },
                 success: function (data) {
                     //console.log(data);
-                    self.diagnostics = new SipDiagnostics(data.sipDiagnostics);
+                    if (data.sipDiagnostics !== null) {
+                        self.diagnostics = new SipDiagnostics(data.sipDiagnostics);
+                    } else {
+                        vm.$emit("error", data.string);
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                },
+                complete: function () {
                     self.$parent.loading = false;
                 }
-            })
-        },
-        setSipDiagnostics: function () {
-            console.log("Not Working");
+            });
         }
     }
 });
