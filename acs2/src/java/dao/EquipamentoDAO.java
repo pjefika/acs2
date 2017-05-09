@@ -262,17 +262,16 @@ public class EquipamentoDAO {
         return JsonUtil.firmwareInfo(a);
     }
 
-    public WifiInfo getWifiInfo(NbiDeviceData eqp) throws Exception {
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9511, opt, 10000, "");
-        String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
-        if (a.getValue().contains(wifiDisable)) {
-            throw new HdmException(wifiDisable);
-        }
-        return JsonUtil.getWifiInfo(a);
-    }
-
+//    public WifiInfo getWifiInfo(NbiDeviceData eqp) throws Exception {
+//        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+//        this.initSynchDeviceOperations();
+//        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9511, opt, 10000, "");
+//        String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
+//        if (a.getValue().contains(wifiDisable)) {
+//            throw new HdmException(wifiDisable);
+//        }
+//        return JsonUtil.getWifiInfo(a);
+//    }
     public void getParameters(NbiDeviceData eqp) throws Exception {
         this.initSynchDeviceOperations();
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
@@ -452,30 +451,29 @@ public class EquipamentoDAO {
      * @return
      * @throws Exception
      */
-    public Boolean setWifiInfo(NbiDeviceData eqp, WifiInfo wifi) throws Exception {
-
-        try {
-            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-            this.initSynchDeviceOperations();
-
-            WifiInfoSet adapter = NbiDecorator.getWifiInfoSet(wifi);
-
-            String jsonWifi = JsonUtil.serialize(adapter, adapter.getClass());
-            List<Object> json = NbiDecorator.getEmptyJson();
-            json.set(0, jsonWifi);
-
-            //System.out.println(jsonWifi);
-            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 10000, "");
-            return true;
-        } catch (OperationTimeoutException | ProviderException e) {
-            e.printStackTrace();
-            return true;
-        } catch (DeviceOperationException | NBIException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
+//    public Boolean setWifiInfo(NbiDeviceData eqp, WifiInfo wifi) throws Exception {
+//
+//        try {
+//            NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+//            this.initSynchDeviceOperations();
+//
+//            WifiInfoSet adapter = NbiDecorator.getWifiInfoSet(wifi);
+//
+//            String jsonWifi = JsonUtil.serialize(adapter, adapter.getClass());
+//            List<Object> json = NbiDecorator.getEmptyJson();
+//            json.set(0, jsonWifi);
+//
+//            //System.out.println(jsonWifi);
+//            StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 10000, "");
+//            return true;
+//        } catch (OperationTimeoutException | ProviderException e) {
+//            e.printStackTrace();
+//            return true;
+//        } catch (DeviceOperationException | NBIException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
     public Boolean setWifiInfoFull(NbiDeviceData eqp, WifiInfoFull wifi) throws DeviceOperationException, NBIException {
 
         try {
@@ -483,8 +481,8 @@ public class EquipamentoDAO {
             this.initSynchDeviceOperations();
 
             WifiInfoSet adapter = NbiDecorator.getWifiInfoSetFull(wifi);
-
-            String jsonWifi = JsonUtil.serialize(adapter, adapter.getClass());
+            //String jsonWifi = JsonUtil.serialize(adapter, adapter.getClass());
+            String jsonWifi = GsonUtil.serialize(adapter);
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonWifi);
 

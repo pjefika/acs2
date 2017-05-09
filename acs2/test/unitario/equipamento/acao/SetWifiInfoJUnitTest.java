@@ -7,7 +7,7 @@ package unitario.equipamento.acao;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
-import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoFull;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -50,7 +50,7 @@ public class SetWifiInfoJUnitTest {
 
             eqp = d.findDeviceByGUID(new Long(139020));
 
-            WifiInfo info = d.getWifiInfo(eqp);
+            WifiInfoFull info = d.getWifiInfoFull(eqp);
 
             SoutUtil.print(info);
 
@@ -60,7 +60,7 @@ public class SetWifiInfoJUnitTest {
             info.setSsid("Teste Efika - Set Wifi");
             //info.setSsid("Teste Efika");
 
-            assertTrue(d.setWifiInfo(eqp, info));
+            assertTrue(d.setWifiInfoFull(eqp, info));
 
         } catch (Exception ex) {
             ex.printStackTrace();

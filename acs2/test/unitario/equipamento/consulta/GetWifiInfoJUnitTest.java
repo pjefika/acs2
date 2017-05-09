@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import init.EquipamentoTestValues;
+import model.device.wifi.WifiInfoFull;
 import util.SoutUtil;
 
 /**
@@ -51,7 +52,7 @@ public class GetWifiInfoJUnitTest {
 
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
-            WifiInfo info = d.getWifiInfo(eqp);
+            WifiInfoFull info = d.getWifiInfoFull(eqp);
 
             SoutUtil.print(info);
 
