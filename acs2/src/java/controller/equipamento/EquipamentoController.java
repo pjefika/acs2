@@ -553,6 +553,18 @@ public class EquipamentoController extends AbstractController {
         }
     }
 
+    @Post
+    @Consumes(value = "application/json", options = WithRoot.class)
+    @Path("/equipamento/getSipDiagnostics/")
+    @Logado
+    public void getSipDiagnostics(NbiDeviceData nbiDeviceData, Integer phyref) {
+        try {
+            this.includeSerializer(this.dao.getSipDiagnostics(nbiDeviceData, phyref));
+        } catch (Exception e) {
+            this.includeSerializer(e);
+        }
+    }
+
     public void gerarLog(NbiDeviceData nbiDeviceData, String acao, String valores) {
         Gson gson = new Gson();
         String nbb = gson.toJson(nbiDeviceData);

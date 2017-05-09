@@ -87,6 +87,7 @@
                                 <acs-button acao="Consultar LAN Host" comp="get-lan-hosts" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Consultar Sip" comp="get-sip" v-bind:ativo="equipamento.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -98,7 +99,7 @@
                                 <!--<acs-button acao="Gerenciar DMZ" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                                 <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="equipamento.checkOn"></acs-button>
-                                <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="equipamento.checkOn"></acs-button>                                
                                 <!--<acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                             </div>
                         </div>
@@ -120,6 +121,7 @@
     </div>
 </div>
 
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/sipDiagnostics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamentoAdapter.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/xdslDiagnostics.js"></script>
@@ -131,6 +133,7 @@
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/pPPoECredentialsInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/util/funcIndisponivel.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getInterfaceStatistics.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/sipDiagnostics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWan.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/reboot.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/factoryReset.js"></script>
