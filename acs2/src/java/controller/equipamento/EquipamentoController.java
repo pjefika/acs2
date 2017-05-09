@@ -26,6 +26,7 @@ import dao.EquipamentoDAO;
 import dao.LogDAO;
 import exception.HdmException;
 import exception.JsonUtilException;
+import exception.UnsupportedException;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.List;
@@ -571,6 +572,9 @@ public class EquipamentoController extends AbstractController {
         } catch (ProviderException e) {
             this.includeSerializer("Erro no provedor da plataforma ao obter as informações de SIP.");
             throw new HdmException("Erro no provedor da plataforma ao obter as informações de SIP.");
+        } catch (UnsupportedException e){
+            this.includeSerializer(e.getMessage());
+            throw new HdmException(e.getMessage());
         }
     }
 

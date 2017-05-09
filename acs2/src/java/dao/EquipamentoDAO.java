@@ -26,6 +26,7 @@ import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
 import exception.HdmException;
 import exception.JsonUtilException;
+import exception.UnsupportedException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -638,7 +639,7 @@ public class EquipamentoDAO {
 
     }
 
-    public SipDiagnostics getSipDiagnostics(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, HdmException {
+    public SipDiagnostics getSipDiagnostics(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         String leJson = "{\"phyreferencelist\":\"" + phyref.toString() + "\"}";
@@ -647,8 +648,8 @@ public class EquipamentoDAO {
 
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9520, opt, 30000, "");
 //        System.out.println(a.getValue());
-        if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados")) {
-            throw new HdmException(a.getValue());
+        if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+            throw new UnsupportedException();
         }
 
         return (SipDiagnostics) GsonUtil.convert(a.getValue(), SipDiagnostics.class);

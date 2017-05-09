@@ -48,7 +48,7 @@ Vue.component("getSip", {
                             <input class='form-control' v-model='phyref'>\n\
                         </div>\n\
                         <hr/>\n\
-                        <div v-if='diagnostics'>\n\
+                        <div v-if='diagnostics.DirectoryNumber'>\n\
                             <table class='table table-bordered'>\n\
                                 <thead>\n\
                                     <tr>\n\
@@ -161,7 +161,7 @@ Vue.component("getSip", {
                 },
                 success: function (data) {
                     //console.log(data);
-                    if (data.sipDiagnostics !== null) {
+                    if (data.sipDiagnostics != null) {
                         self.diagnostics = new SipDiagnostics(data.sipDiagnostics);
                     } else {
                         vm.$emit("error", data.string);
