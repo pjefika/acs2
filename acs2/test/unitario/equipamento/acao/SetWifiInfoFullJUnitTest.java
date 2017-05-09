@@ -63,7 +63,7 @@ public class SetWifiInfoFullJUnitTest {
 
             assertTrue(d.setWifiInfoFull(eqp, info));
 
-//            SoutUtil.print(d.getWifiInfoFull(eqp));
+
 
         } catch (Exception ex) {
             ex.printStackTrace();

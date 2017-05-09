@@ -209,7 +209,6 @@ public class EquipamentoController extends AbstractController {
     @Consumes("application/json")
     @Path("/equipamento/getXdslDiagnostics/")
     @Logado
-
     public void getXdslDiagnostics(NbiDeviceData nbiDeviceData) throws HdmException {
         try {
             this.includeSerializer(dao.getXdslDiagnostic(nbiDeviceData));
@@ -557,11 +556,21 @@ public class EquipamentoController extends AbstractController {
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/getSipDiagnostics/")
     @Logado
-    public void getSipDiagnostics(NbiDeviceData nbiDeviceData, Integer phyref) {
+    public void getSipDiagnostics(NbiDeviceData nbiDeviceData, Integer phyref) throws HdmException {
         try {
             this.includeSerializer(this.dao.getSipDiagnostics(nbiDeviceData, phyref));
-        } catch (Exception e) {
-            this.includeSerializer(e);
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as informações de SIP do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as informações de SIP do equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de SIP.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de SIP.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de SIP.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de SIP.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de SIP.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de SIP.");
         }
     }
 
