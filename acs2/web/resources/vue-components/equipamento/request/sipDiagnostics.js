@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global Vue, Integer, SipDiagnostics, vm */
+/* global Vue, Integer, SipDiagnostics, vm, SipActivation, Equipamento */
 
 var url = "/acs/equipamento/";
 
@@ -174,6 +174,117 @@ Vue.component("getSip", {
                     self.$parent.loading = false;
                 }
             });
+        }
+    }
+});
+
+Vue.component("setSip", {
+    mounted: function () {
+    },
+    props: {
+        eqpString: {
+            type: String,
+            required: true
+        },
+        equipamento: {
+            type: Equipamento,
+            default: function () {
+                return new Equipamento();
+            }
+        },
+        alertPanel: {
+            type: Object
+        },
+        sipAct: {
+            type: SipActivation,
+            default: function () {
+                return new SipActivation();
+            }
+        }
+    },
+    data: function () {
+        return {mensagem: '', erro: ''};
+    },
+    template: "<div>\n\
+                    <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
+                    <div class='modal-body'>\n\
+                        <div class='form-group'>\n\
+                            <label>DirectoryNumber</label>\n\
+                            <input class='form-control' v-model='sipAct.DirectoryNumber' placeholder='+55 Instância'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label>AuthUserName</label>\n\
+                            <input class='form-control' v-model='sipAct.AuthUserName' placeholder='+55 Instância'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label>AuthPassword</label>\n\
+                            <input class='form-control' v-model='sipAct.AuthPassword' placeholder='Senha'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label>ProxyServer</label>\n\
+                            <input class='form-control' v-model='sipAct.ProxyServer' placeholder='Proxy'>\n\
+                        </div>\n\
+                         <div class='form-group'>\n\
+                            <label>OutboundProxy</label>\n\
+                            <input class='form-control' v-model='sipAct.OutboundProxy' placeholder='Proxy'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label>RegistrarServer</label>\n\
+                            <input class='form-control' v-model='sipAct.RegistrarServer' placeholder='Domain IMS'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label>UserAgentDomain</label>\n\
+                            <input class='form-control' v-model='sipAct.UserAgentDomain' placeholder='Domain IMS'>\n\
+                        </div>\n\
+                        <div class='form-group'>\n\
+                            <label>phyReferenceList</label>\n\
+                            <input class='form-control' v-model='sipAct.phyReferenceList' placeholder='Phy Reference List'>\n\
+                        </div>\n\
+                    </div>\n\
+                    <div class='modal-footer'>\n\
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
+                        <button type='button' class='btn btn-primary' @click='setSip()'>Alterar</button>\n\
+                    </div>\n\
+                </div>",
+    create: function () {
+    },
+    methods: {
+        setSip: function () {
+            var self = this;
+            var _data = {};
+            _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
+            _data.sipAct = self.sipAct;
+            $.ajax({
+                type: "POST",
+                url: url + "setSipActivation/",
+                data: JSON.stringify(_data),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    self.$parent.loading = true
+                },
+                success: function (data) {
+                    if (data.boolean) {
+                        vm.$emit("success", "Alterações realizadas com sucesso.");
+                    } else {
+                        vm.$emit("error", data.string);
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                    vm.$emit("error", "Falha ao realizar alterações.");
+                },
+                complete: function () {
+                    self.$parent.loading = false;
+                }
+            });
+        },
+        changes: function () {
+            var self = this;
+            
+            self.sipAct.AuthUserName = self.sipAct.DirectoryNumber;
+            
+            
         }
     }
 });

@@ -38,6 +38,7 @@ import model.device.firmware.FirmwareInfo;
 import model.device.ping.PingRequest;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.sipactivation.SipActivation;
 import model.device.wifi.WifiInfoFull;
 import model.entity.Log;
 import util.GsonUtil;
@@ -575,6 +576,18 @@ public class EquipamentoController extends AbstractController {
         } catch (UnsupportedException e){
             this.includeSerializer(e.getMessage());
             throw new HdmException(e.getMessage());
+        }
+    }
+    
+    @Post
+    @Consumes(value = "application/json", options = WithRoot.class)
+    @Path("/equipamento/setSipActivation/")
+    @Logado
+    public void setSipActivation(NbiDeviceData nbiDeviceData, SipActivation sipAct) {
+        try {
+            this.includeSerializer(this.dao.setSipActivation(nbiDeviceData, sipAct));
+        } catch (Exception e) {
+            this.includeSerializer(e);
         }
     }
 

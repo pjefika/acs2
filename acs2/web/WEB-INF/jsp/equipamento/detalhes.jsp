@@ -99,7 +99,8 @@
                                 <!--<acs-button acao="Gerenciar DMZ" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                                 <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="equipamento.checkOn"></acs-button>
-                                <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="equipamento.checkOn"></acs-button>                                
+                                <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Configurar Sip" comp="set-sip" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <!--<acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                             </div>
                         </div>
@@ -122,6 +123,7 @@
 </div>
 
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/sipDiagnostics.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/sipActivation.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamentoAdapter.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/xdslDiagnostics.js"></script>
