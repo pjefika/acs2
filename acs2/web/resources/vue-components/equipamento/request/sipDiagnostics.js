@@ -210,7 +210,7 @@ Vue.component("setSip", {
                     <div class='modal-body'>\n\
                         <div class='form-group'>\n\
                             <label>DirectoryNumber</label>\n\
-                            <input class='form-control' v-model='sipAct.DirectoryNumber' placeholder='+55 Instância'>\n\
+                            <input class='form-control' v-model='sipAct.DirectoryNumber' placeholder='+55 Instância' @change='changes()'>\n\
                         </div>\n\
                         <div class='form-group'>\n\
                             <label>AuthUserName</label>\n\
@@ -222,7 +222,7 @@ Vue.component("setSip", {
                         </div>\n\
                         <div class='form-group'>\n\
                             <label>ProxyServer</label>\n\
-                            <input class='form-control' v-model='sipAct.ProxyServer' placeholder='Proxy'>\n\
+                            <input class='form-control' v-model='sipAct.ProxyServer' placeholder='Proxy' @change='changes()'>\n\
                         </div>\n\
                          <div class='form-group'>\n\
                             <label>OutboundProxy</label>\n\
@@ -230,7 +230,7 @@ Vue.component("setSip", {
                         </div>\n\
                         <div class='form-group'>\n\
                             <label>RegistrarServer</label>\n\
-                            <input class='form-control' v-model='sipAct.RegistrarServer' placeholder='Domain IMS'>\n\
+                            <input class='form-control' v-model='sipAct.RegistrarServer' placeholder='Domain IMS' @change='changes()'>\n\
                         </div>\n\
                         <div class='form-group'>\n\
                             <label>UserAgentDomain</label>\n\
@@ -243,7 +243,7 @@ Vue.component("setSip", {
                     </div>\n\
                     <div class='modal-footer'>\n\
                         <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                        <button type='button' class='btn btn-primary' @click='setSip()'>Alterar</button>\n\
+                        <button type='button' class='btn btn-primary' @click='setSip()'>Enviar</button>\n\
                     </div>\n\
                 </div>",
     create: function () {
@@ -261,11 +261,12 @@ Vue.component("setSip", {
                 dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
-                    self.$parent.loading = true
+                    self.$parent.loading = true;
                 },
                 success: function (data) {
                     if (data.boolean) {
                         vm.$emit("success", "Alterações realizadas com sucesso.");
+                        $("#actionModal").modal("hide");
                     } else {
                         vm.$emit("error", data.string);
                     }
@@ -281,10 +282,12 @@ Vue.component("setSip", {
         },
         changes: function () {
             var self = this;
-            
-            self.sipAct.AuthUserName = self.sipAct.DirectoryNumber;
-            
-            
+            this.$set(self.sipAct, "AuthUserName", self.sipAct.DirectoryNumber);
+            var pass = self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 4);
+            this.$set(self.sipAct, "AuthPassword", pass);
+            this.$set(self.sipAct, "OutboundProxy", self.sipAct.ProxyServer);
+            this.$set(self.sipAct, "UserAgentDomain", self.sipAct.RegistrarServer);
+
         }
     }
 });
