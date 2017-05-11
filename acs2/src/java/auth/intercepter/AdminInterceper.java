@@ -1,16 +1,15 @@
 package auth.intercepter;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-
+import auth.annotation.Admin;
+import auth.controller.SessionUsuarioEfika;
 import br.com.caelum.vraptor.AroundCall;
 import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.interceptor.AcceptsWithAnnotations;
 import br.com.caelum.vraptor.interceptor.SimpleInterceptorStack;
-import auth.annotation.Admin;
-import auth.controller.SessionUsuarioEfika;
 import controller.HomeController;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 @Intercepts
 @RequestScoped
@@ -37,16 +36,19 @@ public class AdminInterceper {
 
     @AroundCall
     public void around(SimpleInterceptorStack stack) {
+        if (session.getUsuario() == null) {
+            restrito();
+            return;
+        }
 
-        try {
-            if (session.getUsuario().getNivel() > 7) {
-                stack.next();
-            } else {
-                result.forwardTo(HomeController.class).restrito();
-            }
-        } catch (Exception e) {
-            result.forwardTo(HomeController.class).restrito();
+        if (session.getUsuario().getNivel() > 7) {
+            stack.next();
+        } else {
+            restrito();
         }
     }
 
+    public void restrito() {
+        result.forwardTo(HomeController.class).restrito();
+    }
 }

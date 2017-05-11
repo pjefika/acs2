@@ -101,6 +101,7 @@
                                 <acs-button acao="Configurar Wifi" comp="get-wifi" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Configurar Sip" comp="set-sip" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Configurar ServiceClass" comp="get-service-class" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <!--<acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                             </div>
                         </div>
@@ -122,6 +123,7 @@
     </div>
 </div>
 
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/serviceClass.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/sipDiagnostics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/sipActivation.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/equipamento.js"></script>
@@ -134,6 +136,7 @@
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/pingInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/pPPoECredentialsInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/util/funcIndisponivel.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getServiceClass.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getInterfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/sipDiagnostics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getWan.js"></script>

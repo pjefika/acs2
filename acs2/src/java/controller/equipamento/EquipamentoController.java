@@ -573,12 +573,12 @@ public class EquipamentoController extends AbstractController {
         } catch (ProviderException e) {
             this.includeSerializer("Erro no provedor da plataforma ao obter as informações de SIP.");
             throw new HdmException("Erro no provedor da plataforma ao obter as informações de SIP.");
-        } catch (UnsupportedException e){
+        } catch (UnsupportedException e) {
             this.includeSerializer(e.getMessage());
             throw new HdmException(e.getMessage());
         }
     }
-    
+
     @Post
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setSipActivation/")
@@ -588,6 +588,31 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer(this.dao.setSipActivation(nbiDeviceData, sipAct));
         } catch (Exception e) {
             this.includeSerializer(e);
+        }
+    }
+
+    @Post
+    @Consumes(value = "application/json")
+    @Path("/equipamento/getServiceClass/")
+    @Logado
+    public void getServiceClass(NbiDeviceData nbiDeviceData) throws HdmException {
+        try {
+            this.includeSerializer(this.dao.getServiceClass(nbiDeviceData));
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as informações de SIP do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as informações de SIP do equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de SIP.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de SIP.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de SIP.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de SIP.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de SIP.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de SIP.");
+        } catch (UnsupportedException e) {
+            this.includeSerializer(e.getMessage());
+            throw new HdmException(e.getMessage());
         }
     }
 

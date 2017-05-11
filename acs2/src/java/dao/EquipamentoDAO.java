@@ -353,11 +353,13 @@ public class EquipamentoDAO {
         return (WanInfo) GsonUtil.convert(a.getValue(), WanInfo.class);
     }
 
-    public ServiceClass getServiceClass(NbiDeviceData eqp) throws Exception {
+    public ServiceClass getServiceClass(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9505, opt, 10000, "");
-        //return JsonUtil.getServiceClass(a);
+        if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+            throw new UnsupportedException();
+        }
         return (ServiceClass) GsonUtil.convert(a.getValue(), ServiceClass.class);
     }
 
@@ -647,7 +649,7 @@ public class EquipamentoDAO {
         json.set(0, leJson);
 
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9520, opt, 30000, "");
-//        System.out.println(a.getValue());
+
         if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
             throw new UnsupportedException();
         }
@@ -658,14 +660,14 @@ public class EquipamentoDAO {
     public Boolean setSipActivation(NbiDeviceData eqp, SipActivation sip) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        
+
         String leJson = GsonUtil.serialize(sip);
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, leJson);
-        
+
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9500, opt, 30000, "");
 
-        if(a.getValue().contains("SUCCESS")){
+        if (a.getValue().contains("SUCCESS")) {
             return true;
         }
 
