@@ -584,12 +584,24 @@ public class EquipamentoController extends AbstractController {
     @Consumes(value = "application/json", options = WithRoot.class)
     @Path("/equipamento/setSipActivation/")
     @Logado
-    public void setSipActivation(NbiDeviceData nbiDeviceData, SipActivation sipAct) {
+    public void setSipActivation(NbiDeviceData nbiDeviceData, SipActivation sipAct) throws HdmException {
+        
         try {
             this.includeSerializer(this.dao.setSipActivation(nbiDeviceData, sipAct));
-        } catch (Exception e) {
-            this.includeSerializer(e);
+        } catch (DeviceOperationException ex) {
+           this.includeSerializer("A plataforma falhou ao ativar linha SIP no equipamento.");
+            throw new HdmException("A plataforma falhou ao ativar linha de SIP no equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao ativar linha SIP.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao ativar linha SIP.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao ativar linha SIP.");
+            throw new HdmException("A plataforma demorou muito para responder ao ativar linha SIP.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao ativar linha SIP.");
+            throw new HdmException("Erro no provedor da plataforma ao ativar linha SIP.");
         }
+        
     }
 
     @Post
