@@ -654,6 +654,28 @@ public class EquipamentoController extends AbstractController {
         }
     }
 
+    @Post
+    @Consumes(value = "application/json")
+    @Path("/equipamento/getDhcp/")
+    @Logado
+    public void getDhcp(NbiDeviceData nbiDeviceData) throws HdmException {
+        try {
+            this.includeSerializer(this.dao.getDhcp(nbiDeviceData));
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as informações de DHCP do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as informações de DHCP do equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de DHCP.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de DHCP.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de DHCP.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de DHCP.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de DHCP.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de DHCP.");
+        }
+    }
+
     public void gerarLog(NbiDeviceData nbiDeviceData, String acao, String valores) {
         Gson gson = new Gson();
         String nbb = gson.toJson(nbiDeviceData);
