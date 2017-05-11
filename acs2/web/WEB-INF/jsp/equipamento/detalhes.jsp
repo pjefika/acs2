@@ -88,7 +88,6 @@
                                 <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Consultar Sip" comp="get-sip" v-bind:ativo="equipamento.checkOn"></acs-button>
-                                <acs-button acao="Consultar DHCP" comp="get-dhcp" v-bind:ativo="equipamento.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -103,6 +102,7 @@
                                 <acs-button acao="Configurar Autenticação PPPoE" comp="pppoe-credentials" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Configurar Sip" comp="set-sip" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Configurar ServiceClass" comp="get-service-class" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Configurar DHCP" comp="get-dhcp" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <!--<acs-button acao="Configurar DNS" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                             </div>
                         </div>

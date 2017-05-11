@@ -72,7 +72,7 @@ Vue.component("getDhcp", {
 
             $.ajax({
                 type: "POST",
-                url: url + "setWifiInfoFull/",
+                url: "/acs/equipamento/setDhcp/",
                 data: JSON.stringify(_data),
                 dataType: "json",
                 beforeSend: function(xhr) {

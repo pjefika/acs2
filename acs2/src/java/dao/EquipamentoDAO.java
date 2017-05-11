@@ -432,7 +432,7 @@ public class EquipamentoDAO {
     public Dhcp getDhcp(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9509, opt, 10000, "");
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9509, opt, 30000, "");
         return (Dhcp) GsonUtil.convert(a.getValue(), Dhcp.class);
     }
 
@@ -442,7 +442,7 @@ public class EquipamentoDAO {
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, jsonD);
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9508, opt, 10000, "");
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9508, opt, 30000, "");
         
         return a.getValue().contains("SUCCESS");
     }
@@ -512,11 +512,8 @@ public class EquipamentoDAO {
 
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
             System.out.println(a.getValue());
-            if (a.getValue().equalsIgnoreCase("SUCCESS")) {
-                return true;
-            } else {
-                return false;
-            }
+            
+            return a.getValue().contains("SUCCESS");
 
         } catch (OperationTimeoutException | ProviderException e) {
             e.printStackTrace();
@@ -647,7 +644,7 @@ public class EquipamentoDAO {
         }
     }
 
-    public void setPortMapping(NbiDeviceData eqp, List<PortMappingInfo> ports) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
+    public Boolean setPortMapping(NbiDeviceData eqp, List<PortMappingInfo> ports) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
 
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
@@ -657,6 +654,8 @@ public class EquipamentoDAO {
         String jsonPm = gson.toJson(ports);
         json.set(0, jsonPm.toString().toString().replace("\"", "'"));
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 20000, "");
+        
+        return a.getValue().contains("SUCCESS");
         //System.out.println(a.getValue());
 
     }

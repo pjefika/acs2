@@ -538,9 +538,11 @@ public class EquipamentoController extends AbstractController {
             Gson gson = new Gson();
             String obj = gson.toJson(ports);
             this.gerarLog(nbiDeviceData, "setPortMappingInfo", obj);
-            dao.setPortMapping(nbiDeviceData, ports);
-//            this.includeSerializer(dao.getPortMapping(nbiDeviceData));
-            getPortMappingInfo(nbiDeviceData);
+            if(!dao.setPortMapping(nbiDeviceData, ports)){
+                this.includeSerializer("Não foi possível alterar as configurações de Port Mapping.");
+            }else{
+                this.includeSerializer(ports);
+            }
         } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao definir os dados de Port Mapping do equipamento.");
             throw new HdmException("A plataforma falhou ao definir os dados de Port Mapping do equipamento.");
@@ -638,8 +640,12 @@ public class EquipamentoController extends AbstractController {
             Gson gson = new Gson();
             String obj = gson.toJson(info);
             this.gerarLog(nbiDeviceData, "setServiceClass", obj);
-            dao.setServiceClass(nbiDeviceData, info);
-            getServiceClass(nbiDeviceData);
+            if(!dao.setServiceClass(nbiDeviceData, info)){
+                this.includeSerializer("Não foi possível alterar as configurações de Service Class.");
+            }else{
+                this.includeSerializer(info);
+            }
+            
         } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
             throw new HdmException("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
@@ -647,11 +653,11 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao definir as configurações de Service Class.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao definir as configurações de Service Class.");
         } catch (OperationTimeoutException ex) {
-            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de Service Class.");
-            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de Service Class.");
+            this.includeSerializer("A plataforma demorou muito para responder ao definir as informações de Service Class.");
+            throw new HdmException("A plataforma demorou muito para responder ao definir as informações de Service Class.");
         } catch (ProviderException ex) {
-            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de Service Class.");
-            throw new HdmException("Erro no provedor da plataforma ao obter as informações de Service Class.");
+            this.includeSerializer("Erro no provedor da plataforma ao definir as informações de Service Class.");
+            throw new HdmException("Erro no provedor da plataforma ao definir as informações de Service Class.");
         }
     }
 
@@ -677,7 +683,7 @@ public class EquipamentoController extends AbstractController {
         }
     }
 
-    @Post("/equipamento/setServiceClass/")
+    @Post("/equipamento/setDhcp/")
     @Consumes(value = "application/json", options = WithRoot.class)
     @Logado
     public void setDhcp(NbiDeviceData nbiDeviceData, Dhcp info) throws HdmException {
@@ -685,20 +691,24 @@ public class EquipamentoController extends AbstractController {
             Gson gson = new Gson();
             String obj = gson.toJson(info);
             this.gerarLog(nbiDeviceData, "setDhcp", obj);
-            dao.setDhcp(nbiDeviceData, info);
-            getServiceClass(nbiDeviceData);
+            if(!dao.setDhcp(nbiDeviceData, info)){
+                this.includeSerializer("Não foi possível alterar as configurações de DHCP.");    
+            }else{
+                this.includeSerializer(info);
+            }
+            
         } catch (DeviceOperationException e) {
-            this.includeSerializer("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
-            throw new HdmException("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
+            this.includeSerializer("A plataforma falhou ao definir as configurações de DHCP do equipamento.");
+            throw new HdmException("A plataforma falhou ao definir as configurações de DHCP do equipamento.");
         } catch (NBIException e) {
-            this.includeSerializer("A plataforma apresentou um erro generalizado ao definir as configurações de Service Class.");
-            throw new HdmException("A plataforma apresentou um erro generalizado ao definir as configurações de Service Class.");
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao definir as configurações de DHCP.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao definir as configurações de DHCP.");
         } catch (OperationTimeoutException ex) {
-            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de Service Class.");
-            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de Service Class.");
+            this.includeSerializer("A plataforma demorou muito para responder ao definir as informações de DHCP.");
+            throw new HdmException("A plataforma demorou muito para responder ao definir as informações de DHCP.");
         } catch (ProviderException ex) {
-            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de Service Class.");
-            throw new HdmException("Erro no provedor da plataforma ao obter as informações de Service Class.");
+            this.includeSerializer("Erro no provedor da plataforma ao definir as informações de DHCP.");
+            throw new HdmException("Erro no provedor da plataforma ao definir as informações de DHCP.");
         }
     }
 
