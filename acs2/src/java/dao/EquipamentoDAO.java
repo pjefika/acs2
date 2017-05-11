@@ -41,6 +41,7 @@ import javax.xml.soap.SOAPException;
 import javax.xml.ws.Service;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
+import model.device.dhcp.Dhcp;
 import model.device.firmware.FirmwareInfo;
 import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
@@ -425,6 +426,13 @@ public class EquipamentoDAO {
         PortMappingInfo[] pmi = (PortMappingInfo[]) GsonUtil.convert(a.getValue(), PortMappingInfo[].class);
         //List<PortMappingInfo> l = ;
         return Arrays.asList(pmi);
+    }
+
+    public Dhcp getDhcp(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9509, opt, 10000, "");
+        return (Dhcp) GsonUtil.convert(a.getValue(), Dhcp.class);
     }
 
     public PortMappingInfo traceroute(NbiDeviceData eqp, TraceRouteRequest trace) throws Exception {
