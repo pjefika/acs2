@@ -38,6 +38,7 @@ import model.device.firmware.FirmwareInfo;
 import model.device.ping.PingRequest;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.serviceclass.ServiceClass;
 import model.device.sipactivation.SipActivation;
 import model.device.wifi.WifiInfoFull;
 import model.entity.Log;
@@ -599,20 +600,45 @@ public class EquipamentoController extends AbstractController {
         try {
             this.includeSerializer(this.dao.getServiceClass(nbiDeviceData));
         } catch (DeviceOperationException e) {
-            this.includeSerializer("A plataforma falhou ao obter as informações de SIP do equipamento.");
-            throw new HdmException("A plataforma falhou ao obter as informações de SIP do equipamento.");
+            this.includeSerializer("A plataforma falhou ao obter as informações de Service Class do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as informações de Service Class do equipamento.");
         } catch (NBIException e) {
-            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de SIP.");
-            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de SIP.");
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de Service Class.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de Service Class.");
         } catch (OperationTimeoutException e) {
-            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de SIP.");
-            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de SIP.");
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de Service Class.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de Service Class.");
         } catch (ProviderException e) {
-            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de SIP.");
-            throw new HdmException("Erro no provedor da plataforma ao obter as informações de SIP.");
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de Service Class.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de Service Class.");
         } catch (UnsupportedException e) {
             this.includeSerializer(e.getMessage());
             throw new HdmException(e.getMessage());
+        }
+    }
+
+    @Post("/equipamento/setServiceClass/")
+    @Consumes(value = "application/json", options = WithRoot.class)
+    @Logado
+    public void setServiceClass(NbiDeviceData nbiDeviceData, ServiceClass info) throws HdmException {
+        try {
+            Gson gson = new Gson();
+            String obj = gson.toJson(info);
+            this.gerarLog(nbiDeviceData, "setServiceClass", obj);
+            dao.setServiceClass(nbiDeviceData, info);
+            getServiceClass(nbiDeviceData);
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
+            throw new HdmException("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao definir as configurações de Service Class.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao definir as configurações de Service Class.");
+        } catch (OperationTimeoutException ex) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de Service Class.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de Service Class.");
+        } catch (ProviderException ex) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de Service Class.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de Service Class.");
         }
     }
 

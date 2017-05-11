@@ -363,7 +363,7 @@ public class EquipamentoDAO {
         return (ServiceClass) GsonUtil.convert(a.getValue(), ServiceClass.class);
     }
 
-    public Boolean setServiceClass(NbiDeviceData eqp, ServiceClass sc) throws Exception {
+    public Boolean setServiceClass(NbiDeviceData eqp, ServiceClass sc) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         String jsonSc = GsonUtil.serialize(sc);
         List<Object> json = NbiDecorator.getEmptyJson();

@@ -59,7 +59,7 @@ Vue.component("getServiceClass", {
                 }
             });
         },
-        setWifi: function() {
+        setServiceClass: function() {
             var self = this;
             /**
              * Utilizar este padrão para enviar duas variaveis json para a controller
@@ -71,7 +71,7 @@ Vue.component("getServiceClass", {
 
             $.ajax({
                 type: "POST",
-                url: url + "setWifiInfoFull/",
+                url: url + "setServiceClass/",
                 data: JSON.stringify(_data),
                 dataType: "json",
                 beforeSend: function(xhr) {
@@ -79,8 +79,8 @@ Vue.component("getServiceClass", {
                     self.$parent.loading = true
                 },
                 success: function(data) {
-                    if(data.wifiInfoFull != null){
-                        self.info = new WifiInfoFull(data.wifiInfoFull);
+                    if(data.serviceClass != null){
+                        self.info = new ServiceClass(data.serviceClass);
                         vm.$emit("success", "Alterações realizadas com sucesso.");
                     }else{
                         vm.$emit("error", data.string);
@@ -99,6 +99,7 @@ Vue.component("getServiceClass", {
     template: "<div>\n\
                 <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                 <div class='modal-body row'>\n\
+                    <div class='col-md-3'></div>\n\
                     <div class='form-group col-md-6'>\n\
                         <label for='classOfService'>Service Class</label>\n\
                         <select class='form-control' v-model='info.classOfService'>\n\
@@ -109,7 +110,7 @@ Vue.component("getServiceClass", {
                 </div>\n\
                 <div class='modal-footer'>\n\
                     <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                    <!--<button type='button' class='btn btn-primary' @click='setWifi()'>Alterar</button>-->\n\
+                    <button type='button' class='btn btn-primary' @click='setServiceClass()'>Alterar</button>\n\
                 </div>\n\
             </div>"
 });
