@@ -49,7 +49,7 @@ Vue.component("getSip", {
                         </div>\n\
                         <hr/>\n\
                         <div v-if='diagnostics.DirectoryNumber'>\n\
-                            <table class='table table-bordered'>\n\
+                            <table class='table table-bordered small'>\n\
                                 <thead>\n\
                                     <tr>\n\
                                         <th colspan='2'>Informações</th>\n\
@@ -209,48 +209,39 @@ Vue.component("setSip", {
                     <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                     <div class='modal-body'>\n\
                         <div class='form-group'>\n\
-                            <label>DirectoryNumber</label>\n\
-                            <input class='form-control' v-model='sipAct.DirectoryNumber' placeholder='+55 Instância' @change='changes()'>\n\
+                            <label>Instância</label>\n\
+                            <input class='form-control' v-model='sipAct.DirectoryNumber' placeholder='Instância' @change='changePass()'>\n\
                         </div>\n\
                         <div class='form-group'>\n\
-                            <label>AuthUserName</label>\n\
-                            <input class='form-control' v-model='sipAct.AuthUserName' placeholder='+55 Instância'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label>AuthPassword</label>\n\
+                            <label>Senha</label>\n\
                             <input class='form-control' v-model='sipAct.AuthPassword' placeholder='Senha'>\n\
                         </div>\n\
                         <div class='form-group'>\n\
-                            <label>ProxyServer</label>\n\
-                            <input class='form-control' v-model='sipAct.ProxyServer' placeholder='Proxy' @change='changes()'>\n\
-                        </div>\n\
-                         <div class='form-group'>\n\
-                            <label>OutboundProxy</label>\n\
-                            <input class='form-control' v-model='sipAct.OutboundProxy' placeholder='Proxy'>\n\
+                            <label>Proxy</label>\n\
+                            <input class='form-control' v-model='sipAct.ProxyServer' placeholder='Proxy'>\n\
                         </div>\n\
                         <div class='form-group'>\n\
-                            <label>RegistrarServer</label>\n\
-                            <input class='form-control' v-model='sipAct.RegistrarServer' placeholder='Domain IMS' @change='changes()'>\n\
+                            <label>Domínio IMS</label>\n\
+                            <input class='form-control' v-model='sipAct.RegistrarServer' placeholder='Domínio IMS'>\n\
                         </div>\n\
                         <div class='form-group'>\n\
-                            <label>UserAgentDomain</label>\n\
-                            <input class='form-control' v-model='sipAct.UserAgentDomain' placeholder='Domain IMS'>\n\
-                        </div>\n\
-                        <div class='form-group'>\n\
-                            <label>phyReferenceList</label>\n\
+                            <label>PhyReferenceList</label>\n\
                             <input class='form-control' v-model='sipAct.phyReferenceList' placeholder='Phy Reference List'>\n\
                         </div>\n\
                     </div>\n\
                     <div class='modal-footer'>\n\
                         <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                        <button type='button' class='btn btn-primary' @click='setSip()'>Enviar</button>\n\
+                        <button type='button' class='btn btn-primary' @click='setSipOto()'>Enviar</button>\n\
                     </div>\n\
                 </div>",
     create: function () {
     },
     methods: {
-        setSip: function () {
+        setSipOto: function () {
             var self = this;
+            self.sipAct.AuthUserName = self.sipAct.DirectoryNumber;
+            self.sipAct.OutboundProxy = self.sipAct.ProxyServer;
+            self.sipAct.UserAgentDomain = self.sipAct.RegistrarServer;
             var _data = {};
             _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
             _data.sipAct = self.sipAct;
@@ -280,14 +271,55 @@ Vue.component("setSip", {
                 }
             });
         },
-        changes: function () {
+        changePass: function () {
             var self = this;
-            this.$set(self.sipAct, "AuthUserName", self.sipAct.DirectoryNumber);
-            var pass = self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 4);
+            var pass = self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 6);
             this.$set(self.sipAct, "AuthPassword", pass);
-            this.$set(self.sipAct, "OutboundProxy", self.sipAct.ProxyServer);
-            this.$set(self.sipAct, "UserAgentDomain", self.sipAct.RegistrarServer);
 
-        }
+            if (self.sipAct.DirectoryNumber.substring(0, 3) != "+55") {
+                var instancia = "+55" + self.sipAct.DirectoryNumber;
+                this.$set(self.sipAct, "DirectoryNumber", instancia);
+            }
+        },
+//        setSip: function () {
+//            var self = this;
+//            var _data = {};
+//            _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
+//            _data.sipAct = self.sipAct;
+//            $.ajax({
+//                type: "POST",
+//                url: url + "setSipActivation/",
+//                data: JSON.stringify(_data),
+//                dataType: "json",
+//                beforeSend: function (xhr) {
+//                    xhr.setRequestHeader("Content-Type", "application/json");
+//                    self.$parent.loading = true;
+//                },
+//                success: function (data) {
+//                    if (data.boolean) {
+//                        vm.$emit("success", "Alterações realizadas com sucesso.");
+//                        $("#actionModal").modal("hide");
+//                    } else {
+//                        vm.$emit("error", data.string);
+//                    }
+//                },
+//                error: function (e) {
+//                    console.log(e);
+//                    vm.$emit("error", "Falha ao realizar alterações.");
+//                },
+//                complete: function () {
+//                    self.$parent.loading = false;
+//                }
+//            });
+//        },        
+//        changes: function () {
+//            var self = this;
+//            this.$set(self.sipAct, "AuthUserName", self.sipAct.DirectoryNumber);
+//            var pass = self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 4);
+//            this.$set(self.sipAct, "AuthPassword", pass);
+//            this.$set(self.sipAct, "OutboundProxy", self.sipAct.ProxyServer);
+//            this.$set(self.sipAct, "UserAgentDomain", self.sipAct.RegistrarServer);
+//
+//        }
     }
 });
