@@ -34,6 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
+import model.device.dhcp.Dhcp;
 import model.device.firmware.FirmwareInfo;
 import model.device.ping.PingRequest;
 import model.device.portmapping.PortMappingInfo;
@@ -673,6 +674,31 @@ public class EquipamentoController extends AbstractController {
         } catch (ProviderException e) {
             this.includeSerializer("Erro no provedor da plataforma ao obter as informações de DHCP.");
             throw new HdmException("Erro no provedor da plataforma ao obter as informações de DHCP.");
+        }
+    }
+
+    @Post("/equipamento/setServiceClass/")
+    @Consumes(value = "application/json", options = WithRoot.class)
+    @Logado
+    public void setDhcp(NbiDeviceData nbiDeviceData, Dhcp info) throws HdmException {
+        try {
+            Gson gson = new Gson();
+            String obj = gson.toJson(info);
+            this.gerarLog(nbiDeviceData, "setDhcp", obj);
+            dao.setDhcp(nbiDeviceData, info);
+            getServiceClass(nbiDeviceData);
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
+            throw new HdmException("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao definir as configurações de Service Class.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao definir as configurações de Service Class.");
+        } catch (OperationTimeoutException ex) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de Service Class.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de Service Class.");
+        } catch (ProviderException ex) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de Service Class.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de Service Class.");
         }
     }
 

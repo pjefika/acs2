@@ -42,6 +42,7 @@ import javax.xml.ws.Service;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.dhcp.Dhcp;
+import model.device.dhcp.DhcpSet;
 import model.device.firmware.FirmwareInfo;
 import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
@@ -371,7 +372,7 @@ public class EquipamentoDAO {
         json.set(0, jsonSc);
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9504, opt, 10000, "");
-        System.out.println(a.toString());
+//        System.out.println(a.toString());
         if (a.toString().contains("SUCCESS")) {
             return true;
         } else {
@@ -433,6 +434,17 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9509, opt, 10000, "");
         return (Dhcp) GsonUtil.convert(a.getValue(), Dhcp.class);
+    }
+
+    public Boolean setDhcp(NbiDeviceData eqp, Dhcp dh) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        String jsonD = GsonUtil.serialize(new DhcpSet(dh));
+        List<Object> json = NbiDecorator.getEmptyJson();
+        json.set(0, jsonD);
+        this.initSynchDeviceOperations();
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9508, opt, 10000, "");
+        
+        return a.getValue().contains("SUCCESS");
     }
 
     public PortMappingInfo traceroute(NbiDeviceData eqp, TraceRouteRequest trace) throws Exception {
