@@ -88,6 +88,7 @@
                                 <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Consultar Sip" comp="get-sip" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Consultar Dmz" comp="get-dmz" v-bind:ativo="equipamento.checkOn"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -125,6 +126,7 @@
 </div>
 
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/serviceClass.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-viewmodel/dmz.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/dhcp.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/sipDiagnostics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/sipActivation.js"></script>
@@ -139,6 +141,7 @@
 <script src="${pageContext.request.contextPath}/resources/vue-viewmodel/pPPoECredentialsInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/util/funcIndisponivel.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getServiceClass.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getDMZ.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getDhcp.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/getInterfaceStatistics.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vue-components/equipamento/request/sipDiagnostics.js"></script>

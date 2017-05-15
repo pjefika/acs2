@@ -538,9 +538,9 @@ public class EquipamentoController extends AbstractController {
             Gson gson = new Gson();
             String obj = gson.toJson(ports);
             this.gerarLog(nbiDeviceData, "setPortMappingInfo", obj);
-            if(!dao.setPortMapping(nbiDeviceData, ports)){
+            if (!dao.setPortMapping(nbiDeviceData, ports)) {
                 this.includeSerializer("Não foi possível alterar as configurações de Port Mapping.");
-            }else{
+            } else {
                 this.includeSerializer(ports);
             }
         } catch (DeviceOperationException e) {
@@ -588,11 +588,11 @@ public class EquipamentoController extends AbstractController {
     @Path("/equipamento/setSipActivation/")
     @Logado
     public void setSipActivation(NbiDeviceData nbiDeviceData, SipActivation sipAct) throws HdmException {
-        
+
         try {
             this.includeSerializer(this.dao.setSipActivation(nbiDeviceData, sipAct));
         } catch (DeviceOperationException ex) {
-           this.includeSerializer("A plataforma falhou ao ativar linha SIP no equipamento.");
+            this.includeSerializer("A plataforma falhou ao ativar linha SIP no equipamento.");
             throw new HdmException("A plataforma falhou ao ativar linha de SIP no equipamento.");
         } catch (NBIException e) {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao ativar linha SIP.");
@@ -604,7 +604,7 @@ public class EquipamentoController extends AbstractController {
             this.includeSerializer("Erro no provedor da plataforma ao ativar linha SIP.");
             throw new HdmException("Erro no provedor da plataforma ao ativar linha SIP.");
         }
-        
+
     }
 
     @Post
@@ -640,12 +640,12 @@ public class EquipamentoController extends AbstractController {
             Gson gson = new Gson();
             String obj = gson.toJson(info);
             this.gerarLog(nbiDeviceData, "setServiceClass", obj);
-            if(!dao.setServiceClass(nbiDeviceData, info)){
+            if (!dao.setServiceClass(nbiDeviceData, info)) {
                 this.includeSerializer("Não foi possível alterar as configurações de Service Class.");
-            }else{
+            } else {
                 this.includeSerializer(info);
             }
-            
+
         } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
             throw new HdmException("A plataforma falhou ao definir as configurações de Service Class do equipamento.");
@@ -691,12 +691,12 @@ public class EquipamentoController extends AbstractController {
             Gson gson = new Gson();
             String obj = gson.toJson(info);
             this.gerarLog(nbiDeviceData, "setDhcp", obj);
-            if(!dao.setDhcp(nbiDeviceData, info)){
-                this.includeSerializer("Não foi possível alterar as configurações de DHCP.");    
-            }else{
+            if (!dao.setDhcp(nbiDeviceData, info)) {
+                this.includeSerializer("Não foi possível alterar as configurações de DHCP.");
+            } else {
                 this.includeSerializer(info);
             }
-            
+
         } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao definir as configurações de DHCP do equipamento.");
             throw new HdmException("A plataforma falhou ao definir as configurações de DHCP do equipamento.");
@@ -709,6 +709,28 @@ public class EquipamentoController extends AbstractController {
         } catch (ProviderException ex) {
             this.includeSerializer("Erro no provedor da plataforma ao definir as informações de DHCP.");
             throw new HdmException("Erro no provedor da plataforma ao definir as informações de DHCP.");
+        }
+    }
+
+    @Post
+    @Consumes(value = "application/json")
+    @Path("/equipamento/getDmzInfo/")
+    @Logado
+    public void getDmzInfo(NbiDeviceData nbiDeviceData) throws HdmException {
+        try {
+            this.includeSerializer(this.dao.getDmzInfo(nbiDeviceData));
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as informações de DMZ do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as informações de DMZ do equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de DMZ.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de DMZ.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de DMZ.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de DMZ.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de DMZ.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de DMZ.");
         }
     }
 
