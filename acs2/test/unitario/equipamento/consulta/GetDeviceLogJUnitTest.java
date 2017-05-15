@@ -13,11 +13,10 @@ import java.util.logging.Logger;
 import model.device.log.DeviceLog;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -54,7 +53,8 @@ public class GetDeviceLogJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
 
-            Long l = EquipamentoTestValues.GUID;
+//            Long l = EquipamentoTestValues.GUID;
+            Long l = new Long("149041");
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
 

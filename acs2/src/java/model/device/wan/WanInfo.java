@@ -11,77 +11,77 @@ package model.device.wan;
  */
 public class WanInfo {
     
-    private String EthernetBytesSent,
-            EthernetBytesReceived,
-            EthernetPacketsSent,
-            EthernetPacketsReceived,
-            EthernetErrorsSent,
-            EthernetErrorsReceived,
-            EthernetDiscardPacketsSent,
-            EthernetDiscardPacketsReceived;
+    private String BytesSent,
+            BytesReceived,
+            PacketsSent,
+            PacketsReceived,
+            ErrorsSent,
+            ErrorsReceived,
+            DiscardPacketsSent,
+            DiscardPacketsReceived;
 
-    public String getEthernetBytesSent() {
-        return EthernetBytesSent;
+    public String getBytesSent() {
+        return BytesSent;
     }
 
-    public void setEthernetBytesSent(String EthernetBytesSent) {
-        this.EthernetBytesSent = EthernetBytesSent;
+    public void setBytesSent(String BytesSent) {
+        this.BytesSent = BytesSent;
     }
 
-    public String getEthernetBytesReceived() {
-        return EthernetBytesReceived;
+    public String getBytesReceived() {
+        return BytesReceived;
     }
 
-    public void setEthernetBytesReceived(String EthernetBytesReceived) {
-        this.EthernetBytesReceived = EthernetBytesReceived;
+    public void setBytesReceived(String BytesReceived) {
+        this.BytesReceived = BytesReceived;
     }
 
-    public String getEthernetPacketsSent() {
-        return EthernetPacketsSent;
+    public String getPacketsSent() {
+        return PacketsSent;
     }
 
-    public void setEthernetPacketsSent(String EthernetPacketsSent) {
-        this.EthernetPacketsSent = EthernetPacketsSent;
+    public void setPacketsSent(String PacketsSent) {
+        this.PacketsSent = PacketsSent;
     }
 
-    public String getEthernetPacketsReceived() {
-        return EthernetPacketsReceived;
+    public String getPacketsReceived() {
+        return PacketsReceived;
     }
 
-    public void setEthernetPacketsReceived(String EthernetPacketsReceived) {
-        this.EthernetPacketsReceived = EthernetPacketsReceived;
+    public void setPacketsReceived(String PacketsReceived) {
+        this.PacketsReceived = PacketsReceived;
     }
 
-    public String getEthernetErrorsSent() {
-        return EthernetErrorsSent;
+    public String getErrorsSent() {
+        return ErrorsSent;
     }
 
-    public void setEthernetErrorsSent(String EthernetErrorsSent) {
-        this.EthernetErrorsSent = EthernetErrorsSent;
+    public void setErrorsSent(String ErrorsSent) {
+        this.ErrorsSent = ErrorsSent;
     }
 
-    public String getEthernetErrorsReceived() {
-        return EthernetErrorsReceived;
+    public String getErrorsReceived() {
+        return ErrorsReceived;
     }
 
-    public void setEthernetErrorsReceived(String EthernetErrorsReceived) {
-        this.EthernetErrorsReceived = EthernetErrorsReceived;
+    public void setErrorsReceived(String ErrorsReceived) {
+        this.ErrorsReceived = ErrorsReceived;
     }
 
-    public String getEthernetDiscardPacketsSent() {
-        return EthernetDiscardPacketsSent;
+    public String getDiscardPacketsSent() {
+        return DiscardPacketsSent;
     }
 
-    public void setEthernetDiscardPacketsSent(String EthernetDiscardPacketsSent) {
-        this.EthernetDiscardPacketsSent = EthernetDiscardPacketsSent;
+    public void setDiscardPacketsSent(String DiscardPacketsSent) {
+        this.DiscardPacketsSent = DiscardPacketsSent;
     }
 
-    public String getEthernetDiscardPacketsReceived() {
-        return EthernetDiscardPacketsReceived;
+    public String getDiscardPacketsReceived() {
+        return DiscardPacketsReceived;
     }
 
-    public void setEthernetDiscardPacketsReceived(String EthernetDiscardPacketsReceived) {
-        this.EthernetDiscardPacketsReceived = EthernetDiscardPacketsReceived;
+    public void setDiscardPacketsReceived(String DiscardPacketsReceived) {
+        this.DiscardPacketsReceived = DiscardPacketsReceived;
     }
             
 }

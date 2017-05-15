@@ -253,14 +253,14 @@ public class JsonUtil {
             String EthernetDiscardPacketsSent = jobject.get("EthernetDiscardPacketsSent").toString().replace("\"", "");
             String EthernetDiscardPacketsReceived = jobject.get("EthernetDiscardPacketsReceived").toString().replace("\"", "");
 
-            i.setEthernetBytesReceived(EthernetBytesReceived);
-            i.setEthernetBytesSent(EthernetBytesSent);
-            i.setEthernetDiscardPacketsReceived(EthernetDiscardPacketsReceived);
-            i.setEthernetDiscardPacketsSent(EthernetDiscardPacketsSent);
-            i.setEthernetErrorsReceived(EthernetErrorsReceived);
-            i.setEthernetErrorsSent(EthernetErrorsSent);
-            i.setEthernetPacketsReceived(EthernetPacketsReceived);
-            i.setEthernetPacketsSent(EthernetPacketsSent);
+            i.setBytesReceived(EthernetBytesReceived);
+            i.setBytesSent(EthernetBytesSent);
+            i.setDiscardPacketsReceived(EthernetDiscardPacketsReceived);
+            i.setDiscardPacketsSent(EthernetDiscardPacketsSent);
+            i.setErrorsReceived(EthernetErrorsReceived);
+            i.setErrorsSent(EthernetErrorsSent);
+            i.setPacketsReceived(EthernetPacketsReceived);
+            i.setPacketsSent(EthernetPacketsSent);
         } catch (IllegalStateException e) {
             throw new JsonUtilException("A resposta da plataforma não era um Json");
         } catch (NullPointerException e) {

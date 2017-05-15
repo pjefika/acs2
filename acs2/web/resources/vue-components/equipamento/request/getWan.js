@@ -76,23 +76,23 @@ Vue.component("getWan", {
                         <tbody>\n\
                             <tr>\n\
                                 <td>Bytes</td>\n\
-                                <td>{{info.EthernetBytesSent}}</td>\n\
-                                <td>{{info.EthernetBytesReceived}}</td>\n\
+                                <td>{{info.BytesSent}}</td>\n\
+                                <td>{{info.BytesReceived}}</td>\n\
                             </tr>\n\
                             <tr>\n\
                                 <td>Packets</td>\n\
-                                <td>{{info.EthernetPacketsSent}}</td>\n\
-                                <td>{{info.EthernetPacketsReceived}}</td>\n\
+                                <td>{{info.PacketsSent}}</td>\n\
+                                <td>{{info.PacketsReceived}}</td>\n\
                             </tr>\n\
                             <tr>\n\
                                 <td>Errors</td>\n\
-                                <td>{{info.EthernetErrorsSent}}</td>\n\
-                                <td>{{info.EthernetErrorsReceived}}</td>\n\
+                                <td>{{info.ErrorsSent}}</td>\n\
+                                <td>{{info.ErrorsReceived}}</td>\n\
                             </tr>\n\
                             <tr>\n\
                                 <td>Discard Packets</td>\n\
-                                <td>{{info.EthernetDiscardPacketsSent}}</td>\n\
-                                <td>{{info.EthernetDiscardPacketsReceived}}</td>\n\
+                                <td>{{info.DiscardPacketsSent}}</td>\n\
+                                <td>{{info.DiscardPacketsReceived}}</td>\n\
                             </tr>\n\
                         </tbody>\n\
                     </table>\n\

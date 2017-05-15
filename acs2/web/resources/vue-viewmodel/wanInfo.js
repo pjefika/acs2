@@ -7,13 +7,13 @@
 // CLASSES
 var WanInfo = function(p) {
     if (p) {
-        this.EthernetBytesSent = p.EthernetBytesSent;
-        this.EthernetBytesReceived = p.EthernetBytesReceived;
-        this.EthernetPacketsSent = p.EthernetPacketsSent;
-        this.EthernetPacketsReceived = p.EthernetPacketsReceived;
-        this.EthernetErrorsSent = p.EthernetErrorsSent;
-        this.EthernetErrorsReceived = p.EthernetErrorsReceived;
-        this.EthernetDiscardPacketsSent = p.EthernetDiscardPacketsSent;
-        this.EthernetDiscardPacketsReceived = p.EthernetDiscardPacketsReceived;
+        this.BytesSent = p.BytesSent;
+        this.BytesReceived = p.BytesReceived;
+        this.PacketsSent = p.PacketsSent;
+        this.PacketsReceived = p.PacketsReceived;
+        this.ErrorsSent = p.ErrorsSent;
+        this.ErrorsReceived = p.ErrorsReceived;
+        this.DiscardPacketsSent = p.DiscardPacketsSent;
+        this.DiscardPacketsReceived = p.DiscardPacketsReceived;
     }
 };

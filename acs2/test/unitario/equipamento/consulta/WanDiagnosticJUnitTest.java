@@ -9,15 +9,13 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.device.wan.WanInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import init.EquipamentoTestValues;
-import model.device.wan.WanInfo;
-import util.SoutUtil;
 
 /**
  *
@@ -54,12 +52,13 @@ public class WanDiagnosticJUnitTest {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
+//            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
+            eqp = d.findDeviceByGUID(new Long("147035"));
 
             //SoutUtil.print(eqp);             
             WanInfo w = d.getWanInfo(eqp);
             
-            assertTrue(true);
+            assertTrue(w.getBytesReceived() != null);
 
         } catch (Exception ex) {
             Logger.getLogger(WanDiagnosticJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
