@@ -384,13 +384,13 @@ public class EquipamentoDAO {
     public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
-        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 10000, "");
+        StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 30000, "");
 
         List<LanDevice> i;
         try {
             i = JsonUtil.getLanHosts(a);
         } catch (JsonUtilException e) {
-            System.out.println("Falha getWifiInfoFull no deviceGUID " + eqp.getDeviceGUID());
+            System.out.println("Falha getLanHosts no deviceGUID " + eqp.getDeviceGUID());
             System.out.println("StringResponseDTO fornecida: " + a.getValue());
             throw new JsonUtilException(e.getMessage());
         }
