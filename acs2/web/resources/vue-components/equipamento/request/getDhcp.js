@@ -101,29 +101,30 @@ Vue.component("getDhcp", {
     mounted: function() {
         this.getDhcp();
     },
-    template: "\
-            <div class='modal-body'>\n\
-                <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
-                <div class='row'>\n\
-                    <div class='col-md-4 form-group'>\n\
-                        <label for='MaxAddress'>MaxAddress</label>\n\
-                        <input class='form-control' v-model='info.MaxAddress'>\n\
+    template: "<div>\n\
+                    <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
+                    <div class='modal-body'>\n\
+                        <div class='row'>\n\
+                            <div class='col-md-4 form-group'>\n\
+                                <label for='MaxAddress'>MaxAddress</label>\n\
+                                <input class='form-control' v-model='info.MaxAddress'>\n\
+                            </div>\n\
+                            <div class='col-md-4 form-group'>\n\
+                                <label for='MinAddress'>MinAddress</label>\n\
+                                <input class='form-control' v-model='info.MinAddress'>\n\
+                            </div>\n\
+                            <div class='col-md-4 form-group'>\n\
+                                <label for='Estado'>Estado</label>\n\
+                                <select class='form-control' v-model='info.DHCPServerEnable'>\n\
+                                    <option value='1'>Habilitado</option>\n\
+                                    <option value='0'>Desabilitado</option>\n\
+                                </select>\n\
+                            </div>\n\
+                        </div>\n\
                     </div>\n\
-                    <div class='col-md-4 form-group'>\n\
-                        <label for='MinAddress'>MinAddress</label>\n\
-                        <input class='form-control' v-model='info.MinAddress'>\n\
+                    <div class='modal-footer'>\n\
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
+                        <button type='button' class='btn btn-primary' @click='setDhcp()'>Alterar</button>\n\
                     </div>\n\
-                    <div class='col-md-4 form-group'>\n\
-                        <label for='Estado'>Estado</label>\n\
-                        <select class='form-control' v-model='info.DHCPServerEnable'>\n\
-                            <option value='1'>Habilitado</option>\n\
-                            <option value='0'>Desabilitado</option>\n\
-                        </select>\n\
-                    </div>\n\
-                </div>\n\
-                <div class='modal-footer'>\n\
-                    <button type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>\n\
-                    <button type='button' class='btn btn-primary' @click='setDhcp()'>Alterar</button>\n\
-                </div>\n\
-            </div>"
+                </div>"
 });
