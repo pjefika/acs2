@@ -7,17 +7,17 @@ package unitario.equipamento.consulta;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import init.EquipamentoTestValues;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.device.log.DeviceLog;
+import model.device.log.DeviceLogR;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import util.SoutUtil;
 
 /**
  *
@@ -49,28 +49,24 @@ public class GetDeviceLogJUnitTest {
     //
     @Test
     public void getDeviceLog() {
-
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
-//            Long l = EquipamentoTestValues.GUID;
-            Long l = new Long("149041");
+            Long l = EquipamentoTestValues.GUID;
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
-
-            //d.capture(l);
-            // d.release(l);
-            List<DeviceLog> log = d.getDeviceLog(eqp);
-
-            SoutUtil.printl(log);
-
-            assertTrue(log.size() > 1);
-
+            List<DeviceLogR> log = d.getDeviceLogR(eqp);
+            for (DeviceLogR deviceLogR : log) {
+                System.out.println("Index: " + deviceLogR.getIndex());
+                System.out.println("Time: " + deviceLogR.getTime());
+                System.out.println("Type: " + deviceLogR.getType());
+                System.out.println("Servity: " + deviceLogR.getServity());
+                System.out.println("LogInformation: " + deviceLogR.getLogInformation());
+                System.out.println("------------------------------------------");
+            }
+            assertTrue(true);
         } catch (Exception ex) {
             Logger.getLogger(GetDeviceLogJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
             assertTrue(false);
-
         }
-
     }
 }
