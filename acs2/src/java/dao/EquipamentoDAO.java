@@ -561,7 +561,7 @@ public class EquipamentoDAO {
         return JsonUtil.deviceLog(a);
     }
     
-    public List<DeviceLogR> getDeviceLogR(NbiDeviceData eqp) throws Exception {
+    public List<DeviceLogR> getDeviceLogR(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9519, opt, 30000, "");

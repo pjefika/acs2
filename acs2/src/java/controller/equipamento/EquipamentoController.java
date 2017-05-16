@@ -733,6 +733,28 @@ public class EquipamentoController extends AbstractController {
             throw new HdmException("Erro no provedor da plataforma ao obter as informações de DMZ.");
         }
     }
+    
+    @Post
+    @Consumes(value = "application/json")
+    @Path("/equipamento/getDeviceLogR/")
+    @Logado
+    public void getDeviceLogR(NbiDeviceData nbiDeviceData) throws HdmException {
+        try {
+            this.includeSerializer(this.dao.getDeviceLogR(nbiDeviceData));
+        } catch (DeviceOperationException e) {
+            this.includeSerializer("A plataforma falhou ao obter as informações de Device Log do equipamento.");
+            throw new HdmException("A plataforma falhou ao obter as informações de Device Log do equipamento.");
+        } catch (NBIException e) {
+            this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de Device Log.");
+            throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de Device Log.");
+        } catch (OperationTimeoutException e) {
+            this.includeSerializer("A plataforma demorou muito para responder ao obter as informações de Device Log.");
+            throw new HdmException("A plataforma demorou muito para responder ao obter as informações de Device Log.");
+        } catch (ProviderException e) {
+            this.includeSerializer("Erro no provedor da plataforma ao obter as informações de Device Log.");
+            throw new HdmException("Erro no provedor da plataforma ao obter as informações de Device Log.");
+        }
+    }
 
     public void gerarLog(NbiDeviceData nbiDeviceData, String acao, String valores) {
         Gson gson = new Gson();
