@@ -46,19 +46,13 @@ public class GetLanHostJUnitTest {
     public void getLanHosts() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             NbiDeviceData eqp;
-
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-
             List<LanDevice> oi = d.getLanHosts(eqp);
-
             for (LanDevice lanDevice : oi) {
                 lanDevice.sout();
             }
-
             assertTrue(true);
-
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

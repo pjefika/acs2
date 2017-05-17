@@ -46,18 +46,14 @@ public class GetInterfaceStatisticsJUnitTest {
     public void getInterfaceStatistics() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             NbiDeviceData eqp;
-
-            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID); 
-
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
             List<InterfaceStatistics> i = d.getInterfaceStatistics(eqp);
-
             for (InterfaceStatistics interfaceStatistics : i) {
                 System.out.println(interfaceStatistics.getIfType() + " - " + interfaceStatistics.getIpAddress());
             }
-            assertTrue(true);
-
+            assertTrue(!i.isEmpty());
+            //assertTrue(true);
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
