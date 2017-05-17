@@ -15,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import init.EquipamentoTestValues;
+import model.device.ping.PingResponse;
 import util.SoutUtil;
 
 /**
@@ -46,20 +47,14 @@ public class PingDiagnosticJUnitTest {
     public void pingDiagnostic() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             NbiDeviceData eqp;
-
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-
             PingRequest p = new PingRequest();
-
             p.setDestAddress("www.google.com");
             p.setQtdRequisitions("4");
-
-            SoutUtil.print(d.pingDiagnostic(eqp, p));
-
-            assertTrue(true);
-
+            PingResponse pingResponse = d.pingDiagnostic(eqp, p);
+            assertTrue(pingResponse != null);
+            SoutUtil.print(pingResponse);            
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

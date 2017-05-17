@@ -137,9 +137,9 @@ public class SoutUtil {
     }
 
     public static void print(PingResponse p) {
-        System.out.println("Status" + p.getStatus());
-        System.out.println("QtdSuccess" + p.getQtdSuccess());
-        System.out.println("QtdFailures" + p.getQtdFailures());
+        System.out.println("Status: " + p.getStatus());
+        System.out.println("QtdSuccess: " + p.getQtdSuccess());
+        System.out.println("QtdFailures: " + p.getQtdFailures());
     }
 
 }
