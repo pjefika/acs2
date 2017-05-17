@@ -568,6 +568,9 @@ public class EquipamentoController extends AbstractController {
         } catch (DeviceOperationException e) {
             this.includeSerializer("A plataforma falhou ao obter as informações de SIP do equipamento.");
             throw new HdmException("A plataforma falhou ao obter as informações de SIP do equipamento.");
+        } catch (JsonUtilException e) {
+            this.includeSerializer("A plataforma não retornou os dados de Sip Diagnostics do equipamento devidamente.");
+            throw new HdmException("A plataforma não retornou os dados de Sip Diagnostics do equipamento devidamente.");
         } catch (NBIException e) {
             this.includeSerializer("A plataforma apresentou um erro generalizado ao obter as informações de SIP.");
             throw new HdmException("A plataforma apresentou um erro generalizado ao obter as informações de SIP.");
@@ -733,7 +736,7 @@ public class EquipamentoController extends AbstractController {
             throw new HdmException("Erro no provedor da plataforma ao obter as informações de DMZ.");
         }
     }
-    
+
     @Post
     @Consumes(value = "application/json")
     @Path("/equipamento/getDeviceLogR/")

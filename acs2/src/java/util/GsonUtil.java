@@ -30,6 +30,13 @@ public class GsonUtil {
         reader.setLenient(true);
         return gson.fromJson(reader, c);
     }
+    
+    public static Object convertValues(StringResponseDTO a, Class c) {
+        JsonElement jelement = new JsonParser().parse(a.getValue());
+        JsonObject jobject = jelement.getAsJsonObject();        
+        JsonObject jo = (JsonObject) jobject.get("values");
+        return gson.fromJson(jo, c);
+    }
 
     public static String serialize(Object ob) {
         return gson.toJson(ob, ob.getClass());
