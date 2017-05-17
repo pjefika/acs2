@@ -41,19 +41,16 @@ public class SetDhcpJUnitTest {
     public void setDhcp() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             NbiDeviceData eqp;
-
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-
             Dhcp dh = d.getDhcp(eqp);
             dh.setDHCPServerEnable("1");
-            d.setDhcp(eqp, dh);
+            Boolean b = d.setDhcp(eqp, dh);
             dh = d.getDhcp(eqp);
+            System.out.println(dh.getMaxAddress());
+            System.out.println(dh.getMinAddress());
             System.out.println(dh.getDHCPServerEnable());
-
-            assertTrue(true);
-
+            assertTrue(b);
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

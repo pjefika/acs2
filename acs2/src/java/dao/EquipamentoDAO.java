@@ -444,7 +444,7 @@ public class EquipamentoDAO {
         json.set(0, jsonD);
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9508, opt, 30000, "");
-
+        //System.out.println(a.getValue());
         return a.getValue().contains("SUCCESS");
     }
 
