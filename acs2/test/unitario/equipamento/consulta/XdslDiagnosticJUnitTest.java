@@ -55,9 +55,29 @@ public class XdslDiagnosticJUnitTest {
 
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-            XdslDiagnostics xd = d.getXdslDiagnostic(eqp);            
-            System.out.println(xd.getDownstreamCurrRate());
-
+            XdslDiagnostics xd = d.getXdslDiagnostic(eqp);
+            assertTrue(xd != null);
+            System.out.println("getATUCCRCErrors: " + xd.getATUCCRCErrors());
+            System.out.println("getATUCFECErrors: " + xd.getATUCFECErrors());
+            System.out.println("getATUCHECErrors: " + xd.getATUCHECErrors());
+            System.out.println("getCRCErrors: " + xd.getCRCErrors());
+            System.out.println("getDownstreamAttenuation: " + xd.getDownstreamAttenuation());
+            System.out.println("getDownstreamCurrRate: " + xd.getDownstreamCurrRate());
+            System.out.println("getDownstreamMaxRate: " + xd.getDownstreamMaxRate());
+            System.out.println("getDownstreamNoiseMargin: " + xd.getDownstreamNoiseMargin());
+            System.out.println("getDownstreamPower: " + xd.getDownstreamPower());
+            System.out.println("getFECErrors: " + xd.getFECErrors());
+            System.out.println("getHECErrors: " + xd.getHECErrors());
+            System.out.println("getLinkRetrain: " + xd.getLinkRetrain());
+            System.out.println("getLossOfFraming: " + xd.getLossOfFraming());
+            System.out.println("getModulationType: " + xd.getModulationType());
+            System.out.println("getSeverelyErroredSecs: " + xd.getSeverelyErroredSecs());
+            System.out.println("getShowtimeStart: " + xd.getShowtimeStart());
+            System.out.println("getUpstreamAttenuation: " + xd.getUpstreamAttenuation());
+            System.out.println("getUpstreamCurrRate: " + xd.getUpstreamCurrRate());
+            System.out.println("getUpstreamMaxRate: " + xd.getUpstreamMaxRate());
+            System.out.println("getUpstreamNoiseMargin: " + xd.getUpstreamNoiseMargin());
+            System.out.println("getUpstreamPower: " + xd.getUpstreamPower());
         } catch (Exception ex) {
             Logger.getLogger(XdslDiagnosticJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
             assertTrue(false);
