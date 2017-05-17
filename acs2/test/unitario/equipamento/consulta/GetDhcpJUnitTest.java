@@ -42,18 +42,13 @@ public class GetDhcpJUnitTest {
     public void getDhcp() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             NbiDeviceData eqp;
-
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
             Dhcp dh = d.getDhcp(eqp);
+            assertTrue(dh != null);
             System.out.println(dh.getMaxAddress());
             System.out.println(dh.getMinAddress());
-            System.out.println(dh.getDHCPServerEnable());
-            
-
-            assertTrue(true);
-
+            System.out.println(dh.getDHCPServerEnable());            
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
