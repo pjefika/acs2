@@ -38,7 +38,7 @@ Vue.component("getDevicesLogs", {
                     //console.log(data);                    
                     if (data.list != null) {
                         self.deviceslogs = data.list;
-                        vm.$emit("success", "Informações de DHCP obtidas com sucesso.");
+                        vm.$emit("success", "Log do equipamento obtido com sucesso.");
                     } else {
                         vm.$emit("error", data.string);
                         $("#actionModal").modal("hide");

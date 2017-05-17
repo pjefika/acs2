@@ -51,6 +51,17 @@ public class SoutUtil {
         System.out.println("Type: " + d.getType());
         System.out.println("Model: " + d.getModel());
 
+        System.out.println("C1: "+d.getCustomAttribute1());
+        System.out.println("C2: "+d.getCustomAttribute2());
+        System.out.println("C3: "+d.getCustomAttribute3());
+        System.out.println("C4: "+d.getCustomAttribute4());
+        System.out.println("C5: "+d.getCustomAttribute5());
+        System.out.println("C6: "+d.getCustomAttribute6());
+        System.out.println("C7: "+d.getCustomAttribute7());
+        System.out.println("C8: "+d.getCustomAttribute8());
+        System.out.println("C9: "+d.getCustomAttribute9());
+        System.out.println("C10: "+d.getCustomAttribute10());
+        
         for (NbiUserTag tag : d.getUserTagArray()) {
             System.out.println("UserTagArray: " + tag.getName() + "| Valor: " + tag.getValue());
         }

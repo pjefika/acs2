@@ -7,13 +7,13 @@ package unitario.equipamento.consulta;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import init.EquipamentoTestValues;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import init.EquipamentoTestValues;
 import util.SoutUtil;
 
 /**
@@ -46,7 +46,7 @@ public class GetDeviceInfoJUnitTest {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
             NbiDeviceData eqp;
-            eqp = d.findDeviceByGUID(new Long(EquipamentoTestValues.GUID));
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
             assertTrue(eqp != null);
             SoutUtil.print(eqp);
             // SoutUtil.print(d.getDeviceInfo(eqp));

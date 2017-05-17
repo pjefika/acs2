@@ -53,11 +53,11 @@ public class SetWifiInfoFullJUnitTest {
 
             WifiInfoFull info = d.getWifiInfoFull(eqp);
             SoutUtil.print(info);
-            info.setSsid("efika-dev");
+//            info.setSsid("efika-dev");
 //            info.setAuthMode("None");
 //            info.setEncType("None");
 //            info.setBcEnabled(Boolean.TRUE);
-//            info.setChannel("5");
+            info.setChannel("5");
 //            info.setStandard("b");
 //            info.setKey("1303000712");
 

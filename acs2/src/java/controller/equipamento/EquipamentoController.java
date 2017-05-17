@@ -111,12 +111,12 @@ public class EquipamentoController extends AbstractController {
 
     @Path("/equipamento/detalhe/json/{guid}")
     @Logado
-    public void detalhesJson(String guid
-    ) {
+    public void detalhesJson(String guid) throws NBIException_Exception {
         try {
             this.includeSerializer(dao.findDeviceByGUID(new Long(guid)));
         } catch (NBIException_Exception ex) {
             this.includeSerializer(ex);
+            throw ex;
         }
     }
 
