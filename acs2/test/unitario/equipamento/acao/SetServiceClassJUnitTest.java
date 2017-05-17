@@ -16,7 +16,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
 public class SetServiceClassJUnitTest {
 
     public SetServiceClassJUnitTest() {
@@ -42,20 +41,17 @@ public class SetServiceClassJUnitTest {
     public void setServiceClass() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             NbiDeviceData eqp;
-
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-//            eqp = d.findDeviceByGUID(new Long(74021));
+            //eqp = d.findDeviceByGUID(new Long(74021));
             ServiceClass sc = new ServiceClass();
-            sc.setClassOfService("service04");
-            d.setServiceClass(eqp, sc);
+            sc.setClassOfService("service02");
+            Boolean b = d.setServiceClass(eqp, sc);
             sc = d.getServiceClass(eqp);
-            
-//            System.out.println(sc.getClassOfService());
-
-            assertTrue(true);
-
+            System.out.println(sc.getClassOfService());
+            assertTrue(b);
+            //System.out.println(sc.getClassOfService());
+            //assertTrue(true);
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

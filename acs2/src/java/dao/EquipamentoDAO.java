@@ -373,8 +373,8 @@ public class EquipamentoDAO {
         json.set(0, jsonSc);
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9504, opt, 30000, "");
-//        System.out.println(a.toString());
-        if (a.toString().contains("SUCCESS")) {
+        //System.out.println(a.getValue());
+        if (a.getValue().contains("SUCCESS")) {
             return true;
         } else {
             return false;
@@ -444,7 +444,7 @@ public class EquipamentoDAO {
         json.set(0, jsonD);
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9508, opt, 30000, "");
-        
+
         return a.getValue().contains("SUCCESS");
     }
 
@@ -513,7 +513,7 @@ public class EquipamentoDAO {
 
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
             System.out.println(a.getValue());
-            
+
             return a.getValue().contains("SUCCESS");
 
         } catch (OperationTimeoutException | ProviderException e) {
@@ -526,7 +526,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 30000, "");
-        System.out.println(a.getValue());               
+        System.out.println(a.getValue());
 //        DdnsInfo i;
 //        try {
 //            i = JsonUtil.ddnsInfo(a);
@@ -560,7 +560,7 @@ public class EquipamentoDAO {
         System.out.println(a.getValue());
         return JsonUtil.deviceLog(a);
     }
-    
+
     public List<DeviceLogR> getDeviceLogR(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
@@ -663,7 +663,7 @@ public class EquipamentoDAO {
         String jsonPm = gson.toJson(ports);
         json.set(0, jsonPm.toString().toString().replace("\"", "'"));
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9512, opt, 20000, "");
-        
+
         return a.getValue().contains("SUCCESS");
         //System.out.println(a.getValue());
 
@@ -679,7 +679,7 @@ public class EquipamentoDAO {
         //System.out.println(a.getValue());        
         if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
             throw new UnsupportedException();
-        }        
+        }
         return (SipDiagnostics) GsonUtil.convertValues(a, SipDiagnostics.class);
     }
 
