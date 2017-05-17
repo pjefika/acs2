@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import init.EquipamentoTestValues;
+import java.util.List;
 
 import util.SoutUtil;
 
@@ -50,23 +51,19 @@ public class SetPortMappingJUnitTest {
     public void setPortMapping() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             NbiDeviceData eqp;
-
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-
-            // d.setPortMapping(eqp, d.getPortMapping(eqp));
-            int i = 1;
-
-            for (PortMappingInfo portMappingInfo : d.getPortMapping(eqp)) {
+            //Boolean b = d.setPortMapping(eqp, d.getPortMapping(eqp));
+            int i = 1;            
+            List<PortMappingInfo> lpm = d.getPortMapping(eqp);
+            for (PortMappingInfo portMappingInfo : lpm) {
                 System.out.println("Número: " + i);
                 SoutUtil.print(portMappingInfo);
                 System.out.println("-----------------");
                 i++;
             }
-
             assertTrue(true);
-
+            //assertTrue(b);
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);

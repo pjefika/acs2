@@ -47,9 +47,9 @@ public class SetServiceClassJUnitTest {
             ServiceClass sc = new ServiceClass();
             sc.setClassOfService("service02");
             Boolean b = d.setServiceClass(eqp, sc);
-            sc = d.getServiceClass(eqp);
-            System.out.println(sc.getClassOfService());
             assertTrue(b);
+            sc = d.getServiceClass(eqp);
+            System.out.println(sc.getClassOfService());            
             //System.out.println(sc.getClassOfService());
             //assertTrue(true);
         } catch (Exception ex) {
