@@ -53,19 +53,11 @@ public class GetWifiInfoFullJUnitTest {
     public void getWifiInfoFull() throws HdmException {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             NbiDeviceData eqp;
-
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-            WifiInfoFull info = d.getWifiInfoFull(eqp);
-            
+            WifiInfoFull info = d.getWifiInfoFull(eqp);            
+            assertTrue(info != null);            
             SoutUtil.print(info);
-            
-
-//            SoutUtil.print(info);
-
-            assertTrue(true);
-
         } catch(DeviceOperationException e){
             throw new HdmException("A plataforma falhou ao obter os dados de Wifi do equipamento.");
         } catch(JsonUtilException e){
@@ -79,10 +71,5 @@ public class GetWifiInfoFullJUnitTest {
         } catch(ProviderException e){
             throw new HdmException("Erro no provedor da plataforma ao obter os dados de Wifi.");
         }
-        
-        
-//        catch (Exception ex) {
-//            assertTrue(false);
-//        } 
     }
 }
