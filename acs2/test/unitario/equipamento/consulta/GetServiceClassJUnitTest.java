@@ -16,7 +16,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import init.EquipamentoTestValues;
 
-
 public class GetServiceClassJUnitTest {
 
     public GetServiceClassJUnitTest() {
@@ -48,11 +47,8 @@ public class GetServiceClassJUnitTest {
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 //            eqp = d.findDeviceByGUID(new Long(74021));
             ServiceClass sc = d.getServiceClass(eqp);
-
+            assertTrue(!sc.getClassOfService().isEmpty());
             System.out.println(sc.getClassOfService());
-
-            assertTrue(true);
-
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
