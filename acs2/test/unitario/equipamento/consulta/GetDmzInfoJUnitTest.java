@@ -46,17 +46,11 @@ public class GetDmzInfoJUnitTest {
     public void getDmzInfo() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             NbiDeviceData eqp;
-
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-
             DmzInfo info = d.getDmzInfo(eqp);
-
-            SoutUtil.print(info);
-
-            assertTrue(true);
-
+            assertTrue(info != null);
+            //SoutUtil.print(info);
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
