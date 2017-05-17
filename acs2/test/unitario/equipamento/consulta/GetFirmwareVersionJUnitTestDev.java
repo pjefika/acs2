@@ -44,26 +44,20 @@ public class GetFirmwareVersionJUnitTestDev {
 
     @Test
     public void getFirmwareVersion() {
-
         try {
-
             EquipamentoDAO d = new EquipamentoDAO();
-
             //d.capture(guid);
             //d.release(guid);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
             SoutUtil.print(eqp);
-
             FirmwareInfo firmwareVersion = d.getFirmwareVersion(eqp);
-
+            assertTrue(firmwareVersion != null);  
             SoutUtil.print(firmwareVersion);
-            System.out.println("firmwareVersion::isOk(): " + firmwareVersion.isOk());
-
+            System.out.println("firmwareVersion::isOk(): " + firmwareVersion.isOk());                      
         } catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
         }
-
     }
 }
