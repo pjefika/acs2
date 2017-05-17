@@ -5,16 +5,8 @@
  */
 package unitario.equipamento.consulta;
 
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
-import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
-import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
-import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderException;
 import dao.EquipamentoDAO;
-import exception.JsonUtilException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.device.pppoe.PPPoECredentialsInfo;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -23,7 +15,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import init.EquipamentoTestValues;
-import util.SoutUtil;
 
 /**
  *
@@ -55,19 +46,19 @@ public class GetPPPoECredentialsJUnitTest {
     //
     @Test
     public void getPPPoECredentials() throws Exception {
-
-        EquipamentoDAO d = new EquipamentoDAO();
-        Long l = EquipamentoTestValues.GUID;
-        NbiDeviceData eqp;
-        eqp = d.findDeviceByGUID(l);
-        //d.capture(l);
-        // d.release(l);
-        
-        PPPoECredentialsInfo info = d.getPPPoECredentials(eqp);
-
-        //System.out.println(info.getUsername());
-
-        assertTrue(true);
-
+        try {
+            EquipamentoDAO d = new EquipamentoDAO();
+            Long l = EquipamentoTestValues.GUID;
+            NbiDeviceData eqp;
+            eqp = d.findDeviceByGUID(l);
+            //d.capture(l);
+            // d.release(l);        
+            PPPoECredentialsInfo info = d.getPPPoECredentials(eqp);
+            //System.out.println(info.getUsername());
+            assertTrue(info != null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            assertTrue(false);
+        }
     }
 }

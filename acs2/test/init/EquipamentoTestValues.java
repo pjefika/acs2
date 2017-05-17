@@ -17,6 +17,6 @@ package init;
  */
 public class EquipamentoTestValues {
 
-    public static Long GUID = new Long(151061);
+    public static Long GUID = new Long(151031);
 
 }
