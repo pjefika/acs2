@@ -52,22 +52,13 @@ public class GetDdnsInfoJUnitTest {
 
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-
             Long l = new Long(EquipamentoTestValues.GUID);
 //            Long l = new Long(74021);
             NbiDeviceData eqp;
             eqp = d.findDeviceByGUID(l);
-
-            SoutUtil.print(eqp);
-
-            //d.capture(l);
-            // d.release(l);
             DdnsInfo ddns = d.getDdns(eqp);
-
-            SoutUtil.print(ddns);
-
-            assertTrue(true);
-
+            //SoutUtil.print(ddns);
+            assertTrue(ddns != null);
         } catch (Exception ex) {
             Logger.getLogger(GetDdnsInfoJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
             assertTrue(false);
