@@ -149,7 +149,7 @@ public class EquipamentoDAO {
 
     public Long firmwareUpdate(NbiDeviceData eqp, FirmwareInfo info) throws NBIException_Exception, RemoteException {
         this.initRemote();
-        System.out.println("PreferredVersion: " + info.getPreferredVersion());
+        //System.out.println("PreferredVersion: " + info.getPreferredVersion());
         return remote.createSingleFirmwareUpdateOperation(new NBIDeviceID(eqp.getDeviceId().getOUI(),
                 eqp.getDeviceId().getProductClass(),
                 eqp.getDeviceId().getProtocol(), eqp.getDeviceId().getSerialNumber()),
@@ -160,8 +160,8 @@ public class EquipamentoDAO {
         try {
             this.initRemote();
             for (NBIFirmwareImageData firm : remote.getAvailableFirmwareImages(cast(eqp))) {
-                System.out.println(firm.getName());
-                System.out.println(firm.getDescription());
+//                System.out.println(firm.getName());
+//                System.out.println(firm.getDescription());
             }
         } catch (RemoteException ex) {
             Logger.getLogger(EquipamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -196,9 +196,9 @@ public class EquipamentoDAO {
     public void getSup() {
         try {
             this.initNbi();
-            for (NbiSupportedRPCMethod a : nbi.getSupportedRPCMethods()) {
-                System.out.println("Nome: " + a.getName() + "|   Function:" + a.getFunctionCode());
-            }
+//            for (NbiSupportedRPCMethod a : nbi.getSupportedRPCMethods()) {
+//                System.out.println("Nome: " + a.getName() + "|   Function:" + a.getFunctionCode());
+//            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -283,9 +283,9 @@ public class EquipamentoDAO {
         GetParameterNamesDTO g = new GetParameterNamesDTO();
         g.setParameterPath("InternetGatewayDevice.");
         GetParameterNamesResponseDTO r = synch.getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "");
-        for (ParameterInfoStructDTO p : r.getParameterList()) {
-            System.out.println(p.getName());
-        }
+//        for (ParameterInfoStructDTO p : r.getParameterList()) {
+//            System.out.println(p.getName());
+//        }
     }
 
     public void getParametersWifi(NbiDeviceData eqp) throws Exception {
@@ -294,9 +294,9 @@ public class EquipamentoDAO {
         GetParameterNamesDTO g = new GetParameterNamesDTO();
         g.setParameterPath("InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.");
         GetParameterNamesResponseDTO r = synch.getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "");
-        for (ParameterInfoStructDTO p : r.getParameterList()) {
-            System.out.println(p.getName());
-        }
+//        for (ParameterInfoStructDTO p : r.getParameterList()) {
+//            System.out.println(p.getName());
+//        }
     }
 
     public void getParametersValues(NbiDeviceData eqp, List<String> paths) throws Exception {
@@ -308,11 +308,11 @@ public class EquipamentoDAO {
             g.getParameterNames().add(i, paths.get(i));
         }
         GetParameterValuesResponseDTO r = synch.getParameterValues(NbiDecorator.adapter(eqp), g, opt, 30000, "");
-        for (ParameterValueStructDTO p : r.getParameterList()) {
-            System.out.println("Nome: " + p.getName());
-            System.out.println("Type: " + p.getType());
-            System.out.println("Value: " + p.getValue());
-        }
+//        for (ParameterValueStructDTO p : r.getParameterList()) {
+//            System.out.println("Nome: " + p.getName());
+//            System.out.println("Type: " + p.getType());
+//            System.out.println("Value: " + p.getValue());
+//        }
 
     }
 
@@ -323,11 +323,11 @@ public class EquipamentoDAO {
         motive.hdm.synchdeviceops.GetParameterValuesDTO g = new motive.hdm.synchdeviceops.GetParameterValuesDTO();
         g.getParameterNames().add(0, path);
         GetParameterValuesResponseDTO r = synch.getParameterValues(NbiDecorator.adapter(eqp), g, opt, 50000, "");
-        for (ParameterValueStructDTO p : r.getParameterList()) {
-            System.out.println("Nome: " + p.getName());
-            System.out.println("Type: " + p.getType());
-            System.out.println("Value: " + p.getValue());
-        }
+//        for (ParameterValueStructDTO p : r.getParameterList()) {
+//            System.out.println("Nome: " + p.getName());
+//            System.out.println("Type: " + p.getType());
+//            System.out.println("Value: " + p.getValue());
+//        }
 
     }
 
@@ -345,14 +345,14 @@ public class EquipamentoDAO {
         motive.hdm.synchdeviceops.SetParameterValuesDTO g = new motive.hdm.synchdeviceops.SetParameterValuesDTO();
         g.getParameterValueStructs().add(p);
         SetParameterValuesResponseDTO s = synch.setParameterValues(NbiDecorator.adapter(eqp), g, opt, 50000, "");
-        System.out.println("Retorno: " + s.getStatus());
+//        System.out.println("Retorno: " + s.getStatus());
     }
 
     public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9515, opt, 30000, "");
-        System.out.println(a.getValue());
+//        System.out.println(a.getValue());
         return (WanInfo) GsonUtil.convert(a.getValue(), WanInfo.class);
     }
 
@@ -391,8 +391,8 @@ public class EquipamentoDAO {
         try {
             i = JsonUtil.getLanHosts(a);
         } catch (JsonUtilException e) {
-            System.out.println("Falha getLanHosts no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+//            System.out.println("Falha getLanHosts no deviceGUID " + eqp.getDeviceGUID());
+//            System.out.println("StringResponseDTO fornecida: " + a.getValue());
             throw new JsonUtilException(e.getMessage());
         }
         return i;
@@ -402,7 +402,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9503, opt, 30000, "");
-        System.out.println(a.getValue());
+        //System.out.println(a.getValue());
         //return JsonUtil.dmzInfo(a);
         return (DmzInfo) GsonUtil.convert(a.getValue(), DmzInfo.class);
     }
@@ -512,7 +512,7 @@ public class EquipamentoDAO {
             json.set(0, jsonWifi);
 
             StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
-            System.out.println(a.getValue());
+            //System.out.println(a.getValue());
 
             return a.getValue().contains("SUCCESS");
 
@@ -526,7 +526,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 30000, "");
-        System.out.println(a.getValue());
+        //System.out.println(a.getValue());
 //        DdnsInfo i;
 //        try {
 //            i = JsonUtil.ddnsInfo(a);
@@ -557,7 +557,7 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9519, opt, 30000, "");
-        System.out.println(a.getValue());
+        //System.out.println(a.getValue());
         return JsonUtil.deviceLog(a);
     }
 
@@ -589,9 +589,9 @@ public class EquipamentoDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         this.initSynchDeviceOperations();
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9523, opt, 30000, "");
-        System.out.println(a.getValue());
+        //System.out.println(a.getValue());
         PPPoECredentialsInfo ppoe = (PPPoECredentialsInfo) GsonUtil.convert(a.getValue(), PPPoECredentialsInfo.class);
-        System.out.println(ppoe.getUsername());
+        //System.out.println(ppoe.getUsername());
 //        PPPoECredentialsInfo i;
 //        try {
 //            i = JsonUtil.getPPPoECredentialsInfo(a);
@@ -619,8 +619,8 @@ public class EquipamentoDAO {
         try {
             i = JsonUtil.pingResponse(a);
         } catch (JsonUtilException e) {
-            System.out.println("Falha pingResponse no deviceGUID " + eqp.getDeviceGUID());
-            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+//            System.out.println("Falha pingResponse no deviceGUID " + eqp.getDeviceGUID());
+//            System.out.println("StringResponseDTO fornecida: " + a.getValue());
             throw new JsonUtilException(e.getMessage());
         }
 
@@ -647,10 +647,10 @@ public class EquipamentoDAO {
 
     public void getAvailableFirmwareImages2(NbiDeviceData eqp) throws NBIException_Exception {
         this.initNbi();
-        for (NbiFirmwareImageData o : nbi.getAvailableFirmwareImagesByPrerequsite(eqp.getDeviceId())) {
-            System.out.println(o.getName());
-            System.out.println(o.getDescription());
-        }
+//        for (NbiFirmwareImageData o : nbi.getAvailableFirmwareImagesByPrerequsite(eqp.getDeviceId())) {
+//            System.out.println(o.getName());
+//            System.out.println(o.getDescription());
+//        }
     }
 
     public Boolean setPortMapping(NbiDeviceData eqp, List<PortMappingInfo> ports) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {

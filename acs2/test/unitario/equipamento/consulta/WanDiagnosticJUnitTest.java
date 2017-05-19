@@ -7,6 +7,7 @@ package unitario.equipamento.consulta;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import init.EquipamentoTestValues;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.device.wan.WanInfo;
@@ -52,8 +53,8 @@ public class WanDiagnosticJUnitTest {
             EquipamentoDAO d = new EquipamentoDAO();
 
             NbiDeviceData eqp;
-//            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
-            eqp = d.findDeviceByGUID(new Long("147035"));
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
+            //eqp = d.findDeviceByGUID(new Long("147035"));
 
             //SoutUtil.print(eqp);             
             WanInfo w = d.getWanInfo(eqp);
