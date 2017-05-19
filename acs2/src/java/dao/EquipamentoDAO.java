@@ -393,6 +393,7 @@ public class EquipamentoDAO {
         } catch (JsonUtilException e) {
 //            System.out.println("Falha getLanHosts no deviceGUID " + eqp.getDeviceGUID());
 //            System.out.println("StringResponseDTO fornecida: " + a.getValue());
+            e.printStackTrace();
             throw new JsonUtilException(e.getMessage());
         }
         return i;

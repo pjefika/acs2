@@ -71,6 +71,11 @@ Vue.component("getXdslDiagnostics", {
                                 <table class='table table-bordered small'>\n\
                                     <tbody>\n\
                                         <tr>\n\
+                                            <td colspan='2' style='text-align: center;'>\n\
+                                                <label>Informações</label>\n\
+                                            </td>\n\
+                                        </tr>\n\
+                                        <tr>\n\
                                             <td><label>Modulação</label></td>\n\
                                             <td>{{info.ModulationType}}</td>\n\
                                         </tr>\n\
@@ -97,7 +102,7 @@ Vue.component("getXdslDiagnostics", {
                                 <table class='table table-bordered small'>\n\
                                     <thead>\n\
                                         <tr>\n\
-                                            <th></th>\n\
+                                            <th>Parametros</th>\n\
                                             <th>Downstream</th>\n\
                                             <th>Upstream</th>\n\
                                         </tr>\n\

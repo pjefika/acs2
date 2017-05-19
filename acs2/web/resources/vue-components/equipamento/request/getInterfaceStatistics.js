@@ -15,7 +15,7 @@ Vue.component("getInterfaceStatistics", {
         },
         equipamento: {
             type: Equipamento,
-            default: function() {
+            default: function () {
                 return new Equipamento();
             }
         },
@@ -27,30 +27,30 @@ Vue.component("getInterfaceStatistics", {
         },
         info: {
             type: InterfaceStatistics,
-            default: function() {
+            default: function () {
                 return new InterfaceStatistics();
             }
         }
     },
-    data: function() {
+    data: function () {
         return {mensagem: '', erro: ''}
     },
-    mounted: function() {
+    mounted: function () {
         this.getInterfaceStatistics();
     },
     methods: {
-        getInterfaceStatistics: function() {
+        getInterfaceStatistics: function () {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: url + "getInterfaceStatistics/",
                 data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data.list != null) {
                         if (data.list.length > 0) {
                             self.infoList = data;
@@ -63,12 +63,12 @@ Vue.component("getInterfaceStatistics", {
                         $("#actionModal").modal("hide");
                     }
                 },
-                error: function(e) {
+                error: function (e) {
                     console.log(e)
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                 },
-                complete: function() {
+                complete: function () {
                     self.$parent.loading = false
                 }
             });
@@ -98,7 +98,7 @@ Vue.component("infoStatistics", {
         }
     },
     methods: {
-        toggle: function() {
+        toggle: function () {
             var self = this;
             if (self.visivel) {
                 self.visivel = false;
@@ -110,8 +110,8 @@ Vue.component("infoStatistics", {
     },
     template: "\
                 <div class='panel panel-default'>\n\
-                    <div class='panel-heading'>\n\
-                        <h4 class='panel-title'><a href='#' @click='toggle()'>{{info.ifType}} - {{info.ipAddress}}</a></h4>\n\
+                    <div class='panel-heading' @click='toggle()' style='cursor: pointer'>\n\
+                        <h4 class='panel-title'>{{info.ifType}} - {{info.ipAddress}}</h4>\n\
                     </div>\n\
                     <div v-show='visivel' class='panel-body'>\n\
                         <div class='form-inline row'>\n\
