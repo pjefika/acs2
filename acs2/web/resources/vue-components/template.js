@@ -15,7 +15,8 @@ var vm = new Vue({
     data: {
         modal: {
             comp: '',
-            titulo: 'Carregando...'
+            titulo: 'Carregando...',
+            size: null
         },
         currentView: 'searchAction',
         notif: {

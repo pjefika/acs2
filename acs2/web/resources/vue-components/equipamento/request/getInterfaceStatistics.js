@@ -116,31 +116,31 @@ Vue.component("infoStatistics", {
                     <div v-show='visivel' class='panel-body'>\n\
                         <div class='form-inline row'>\n\
                             <div class='form-group col-md-6'>\n\
-                                <label for='ifType'>ifType</label>\n\
+                                <label for='ifType'>ifType:</label>\n\
                                 {{info.ifType}}\n\
                             </div>\n\
                             <div class='form-group col-md-6'>\n\
-                                <label for='ifName'>ifName</label>\n\
+                                <label for='ifName'>ifName:</label>\n\
                                 {{info.ifName}}\n\
                             </div>\n\
                             <div v-show='\"operStatus\" != \"Up\"' class='form-group col-md-6'>\n\
-                                <label for='adminStatus'>adminStatus</label>\n\
+                                <label for='adminStatus'>adminStatus:</label>\n\
                                 {{info.adminStatus}}\n\
                             </div>\n\
                             <div v-show='\"operStatus\" == \"Up\"' class='form-group col-md-6'>\n\
-                                <label for='operStatus'>operStatus</label>\n\
+                                <label for='operStatus'>operStatus:</label>\n\
                                 {{info.operStatus}}\n\
                             </div>\n\
                             <div class='form-group col-md-6'>\n\
-                                <label for='ipAddress'>ipAddress</label>\n\
+                                <label for='ipAddress'>ipAddress:</label>\n\
                                 {{info.ipAddress}}\n\
                             </div>\n\
                             <div class='form-group col-md-6'>\n\
-                                <label for='ipAddrType'>ipAddrType</label>\n\
+                                <label for='ipAddrType'>ipAddrType:</label>\n\
                                 {{info.ipAddrType}}\n\
                             </div>\n\
                             <div class='form-group col-md-6'>\n\
-                                <label for='macAddress'>macAddress</label>\n\
+                                <label for='macAddress'>macAddress:</label>\n\
                                 {{info.macAddress}}\n\
                             </div>\n\
                         </div>\n\

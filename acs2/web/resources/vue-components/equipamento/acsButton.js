@@ -13,7 +13,7 @@ Vue.component("acsButton", {
         acao: {
             type: String,
             required: true,
-            default: function() {
+            default: function () {
                 return "Ação";
             }
         },
@@ -24,13 +24,16 @@ Vue.component("acsButton", {
         ativo: {
             type: Boolean,
             required: true,
-            default: function() {
+            default: function () {
                 return true;
             }
+        },
+        tamanhomodal: {
+            type: String
         }
     },
     methods: {
-        setComp: function() {
+        setComp: function () {
             var self = this;
 
             self.$emit('notif', 'setComp -> acsButton');
@@ -38,14 +41,16 @@ Vue.component("acsButton", {
             if (self.ativo) {
                 vm.modal = {
                     titulo: 'Carregando...',
-                    comp: 'loading'
+                    comp: 'loading',
+                    size: 'normal'
                 };
 
-                Vue.nextTick(function() {
+                Vue.nextTick(function () {
                     self.ativo = false;
                     vm.modal = {
                         titulo: self.acao,
-                        comp: self.comp
+                        comp: self.comp,
+                        size: self.tamanhomodal
                     };
 
                     $("#actionModal").modal({

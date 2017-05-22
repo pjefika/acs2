@@ -7,7 +7,7 @@
 
     <script type="text/html" id="detalhequip">
         <div>
-            <acs-modal v-bind:data="equipamento" v-bind:body="modal.comp" v-bind:titulo="modal.titulo"></acs-modal>
+            <acs-modal v-bind:data="equipamento" v-bind:body="modal.comp" v-bind:titulo="modal.titulo" v-bind:tamanho="modal.size"></acs-modal>
             <div class="page-header">
                 <h1>Detalhes do Equipamento: <span v-text="equipamento.deviceId.serialNumber"></span></h1>
             </div>
@@ -83,20 +83,20 @@
                             <div class="list-group" v-if="equipamento.isModem()">
                                 <label class="list-group-item">Consultas</label>
                                 <acs-button acao="Consultar WAN" comp="get-wan" v-bind:ativo="equipamento.checkOn"></acs-button>
-                                <acs-button acao="Consultar Interface Statistics" comp="get-interface-statistics" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Consultar Interface Statistics" comp="get-interface-statistics" v-bind:ativo="equipamento.checkOn" tamanhomodal="grande"></acs-button>
                                 <acs-button acao="Consultar LAN Host" comp="get-lan-hosts" v-bind:ativo="equipamento.checkOn"></acs-button>
-                                <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Consultar xDSL" comp="get-xdsl-diagnostics" v-bind:ativo="equipamento.checkOn" tamanhomodal="grande"></acs-button>
                                 <acs-button acao="Consultar Port Mapping" comp="port-mapping" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Consultar Sip" comp="get-sip" v-bind:ativo="equipamento.checkOn"></acs-button>
                                 <acs-button acao="Consultar Dmz" comp="get-dmz" v-bind:ativo="equipamento.checkOn"></acs-button>
-                                <acs-button acao="Historia" comp="get-devices-logs" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Historia" comp="get-devices-logs" v-bind:ativo="equipamento.checkOn" tamanhomodal="grande"></acs-button>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="list-group" v-if="equipamento.isModem()">
                                 <label class="list-group-item">Ações</label>
-                                <acs-button acao="Reiniciar" comp="reboot" v-bind:ativo="equipamento.checkOn"></acs-button>
-                                <acs-button acao="Reset de Fábrica" comp="reset-factory" v-bind:ativo="equipamento.checkOn"></acs-button>
+                                <acs-button acao="Reiniciar" comp="reboot" v-bind:ativo="equipamento.checkOn" tamanhomodal="pequeno"></acs-button>
+                                <acs-button acao="Reset de Fábrica" comp="reset-factory" v-bind:ativo="equipamento.checkOn" tamanhomodal="pequeno"></acs-button>
                                 <!--<acs-button acao="Efetuar Traceroute" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                                 <!--<acs-button acao="Gerenciar DMZ" comp="func-indisponivel" v-bind:ativo="equipamento.checkOn"></acs-button>-->
                                 <acs-button acao="Efetuar Ping" comp="get-ping" v-bind:ativo="equipamento.checkOn"></acs-button>

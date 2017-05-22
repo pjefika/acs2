@@ -27,15 +27,33 @@ Vue.component("acsModal", {
                 return false;
             }
         },
-        big: {
-            type: Boolean,
+        tamanho: {
+            type: String,
             default: function () {
-                return true;
+                return "normal";
+            }
+        },
+        classe: {
+            type: String,
+            default: function () {
+                return '';
+            }
+        }
+    },
+    watch: {
+        tamanho: function () {
+            var self = this;
+            if (self.tamanho == "pequeno") {
+                self.classe = "modal-sm";
+            } else if (self.tamanho == "normal") {
+                self.classe = "";
+            } else if (self.tamanho == "grande") {
+                self.classe = "modal-lg";
             }
         }
     },
     template: "<div class='modal fade' id='actionModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>\n\
-                <div class='modal-dialog' :class='{\"modal-lg\": big}' role='document'>\n\
+                <div class='modal-dialog' :class='classe' role='document'>\n\
                     <div class='modal-content'>\n\
                         <div class='modal-header'>\n\
                             <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>\n\
