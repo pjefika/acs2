@@ -19,7 +19,8 @@ Vue.component("detail", {
             default: function() {
                 return {
                     comp: 'get-wifi',
-                    titulo: 'Titulo Dev'
+                    titulo: 'Titulo Dev',
+                    size: "normal"
                 }
             }
         },
@@ -101,7 +102,7 @@ Vue.component("detail", {
                     vm.$emit("error", "Falha ao realizar atualização.");
                 },
                 complete: function() {
-                    self.$parent.loading = false
+                    self.$parent.loading = false;
                 }
             });
         }

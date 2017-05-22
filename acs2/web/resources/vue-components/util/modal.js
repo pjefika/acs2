@@ -67,6 +67,6 @@ Vue.component("acsModal", {
                         </div>\n\
                     </div>\n\
                 </div>\n\
-            </div>",
+            </div>"
 });
 
