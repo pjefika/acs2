@@ -54,10 +54,10 @@ public class SipActivationJUnitTest {
             leSet.setDirectoryNumber("+554130401484");
             leSet.setAuthUserName("+554130401484");
             leSet.setAuthPassword("4130401484");
-            leSet.setProxyServer("192.168.80.1");
-            leSet.setRegistrarServer("ims3.gvt.net.br");
-            leSet.setUserAgentDomain("ims3.gvt.net.br");
-            leSet.setOutboundProxy("192.168.80.1");
+            leSet.setProxyServer("192.168.80.2");
+            leSet.setRegistrarServer("ims2.gvt.net.br");
+            leSet.setUserAgentDomain("ims2.gvt.net.br");
+            leSet.setOutboundProxy("192.168.80.2");
             leSet.setPhyReferenceList("1");
             
             Boolean foi = d.setSipActivation(eqp, leSet);

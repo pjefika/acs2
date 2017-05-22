@@ -4,10 +4,8 @@ import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import com.alcatel.hdm.service.nbi2.NbiFirmwareImageData;
 import com.alcatel.hdm.service.nbi2.NbiOperationStatus;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
-import com.alcatel.hdm.service.nbi2.NbiSupportedRPCMethod;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import com.google.gson.Gson;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
@@ -64,7 +62,6 @@ import motive.hdm.synchdeviceops.GetParameterNamesDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
-import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 import motive.hdm.synchdeviceops.SetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
@@ -694,10 +691,10 @@ public class EquipamentoDAO {
 
         StringResponseDTO a = (StringResponseDTO) synch.executeFunction(NbiDecorator.adapter(eqp), json, 9500, opt, 30000, "");
 
-        if (a.getValue().contains("SUCCESS")) {
+        if (a.getValue().contains("SUCCESS") || a.getValue().contains("\"statusCode\":\"0\"")) {
             return true;
         }
-
+        System.out.println(a.getValue());
         return false;
     }
 

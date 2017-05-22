@@ -12,11 +12,12 @@ package init;
  * 152015 - sip
  * 151061 - PACE
  * 151031 - REALTEK
+ * 149041 - sip
  *
  * @author G0042204
  */
 public class EquipamentoTestValues {
 
-    public static Long GUID = new Long(151031);
+    public static Long GUID = new Long(149041);
 
 }
