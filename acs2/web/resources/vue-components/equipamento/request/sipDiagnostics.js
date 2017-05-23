@@ -274,52 +274,14 @@ Vue.component("setSip", {
         changePass: function () {
             var self = this;
             var pass = self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 6);
-            this.$set(self.sipAct, "AuthPassword", pass);
-
-            if (self.sipAct.DirectoryNumber.substring(0, 3) != "+55") {
-                var instancia = "+55" + self.sipAct.DirectoryNumber;
-                this.$set(self.sipAct, "DirectoryNumber", instancia);
-            }
-        },
-//        setSip: function () {
-//            var self = this;
-//            var _data = {};
-//            _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
-//            _data.sipAct = self.sipAct;
-//            $.ajax({
-//                type: "POST",
-//                url: url + "setSipActivation/",
-//                data: JSON.stringify(_data),
-//                dataType: "json",
-//                beforeSend: function (xhr) {
-//                    xhr.setRequestHeader("Content-Type", "application/json");
-//                    self.$parent.loading = true;
-//                },
-//                success: function (data) {
-//                    if (data.boolean) {
-//                        vm.$emit("success", "Alterações realizadas com sucesso.");
-//                        $("#actionModal").modal("hide");
-//                    } else {
-//                        vm.$emit("error", data.string);
-//                    }
-//                },
-//                error: function (e) {
-//                    console.log(e);
-//                    vm.$emit("error", "Falha ao realizar alterações.");
-//                },
-//                complete: function () {
-//                    self.$parent.loading = false;
-//                }
-//            });
-//        },        
-//        changes: function () {
-//            var self = this;
-//            this.$set(self.sipAct, "AuthUserName", self.sipAct.DirectoryNumber);
-//            var pass = self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 4);
-//            this.$set(self.sipAct, "AuthPassword", pass);
-//            this.$set(self.sipAct, "OutboundProxy", self.sipAct.ProxyServer);
-//            this.$set(self.sipAct, "UserAgentDomain", self.sipAct.RegistrarServer);
-//
-//        }
+            this.$set(self.sipAct, "AuthPassword", pass);            
+            //console.log(self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 10));            
+            var instancia = "+55" + self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 10);
+            this.$set(self.sipAct, "DirectoryNumber", instancia);            
+//            if (self.sipAct.DirectoryNumber.substring(0, 3) != "+55") {
+//                var instancia = "+55" + self.sipAct.DirectoryNumber;
+//                this.$set(self.sipAct, "DirectoryNumber", instancia);
+//            }
+        }
     }
 });
