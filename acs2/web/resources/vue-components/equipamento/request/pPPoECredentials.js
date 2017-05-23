@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global Vue, pPPoEC */
+/* global Vue, pPPoEC, vm */
 
 var url = "/acs/equipamento/";
 
@@ -63,6 +63,7 @@ Vue.component("pppoeCredentials", {
                 },
                 complete: function () {
                     self.$parent.loading = false;
+                    self.changeusername();
                 }
             });
         },
@@ -71,7 +72,6 @@ Vue.component("pppoeCredentials", {
             var _data = {};
             _data.nbiDeviceData = new EquipamentoAdapted(self.equipamento);
             _data.pPPoECredentialsInfo = self.pPPoEcred;
-
             $.ajax({
                 type: "POST",
                 url: url + "setPPPoe/",
@@ -91,15 +91,29 @@ Vue.component("pppoeCredentials", {
                     console.log(e);
                 }
             });
+        },
+        changeusername: function () {
+            var self = this;
+            console.log("entrou changename");
+            if (!self.pPPoEcred.username.match(/[@]/g)) {
+                console.log("numtem @");
+                $("#usernamex").removeClass("has-success");
+                $("#usernamex").addClass("has-error");
+                vm.$emit("error", "Username incorreto por favor verifique.");
+            } else {
+                console.log("tem @");
+                $("#usernamex").removeClass("has-error");
+                $("#usernamex").addClass("has-success");
+            }
         }
     },
     template: "<div>\n\
                     <div class='form'>\n\
                         <div class='modal-body'>\n\
                             <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
-                            <div class='form-group'>\n\
+                            <div class='form-group' id='usernamex'>\n\
                                 <label for='username'>Username</label>\n\
-                                <input class='form-control' v-model='pPPoEcred.username'>\n\
+                                <input class='form-control' v-model='pPPoEcred.username' @blur='changeusername()'>\n\
                             </div>\n\
                             <div class='form-group'>\n\
                                 <label for='password'>Password</label>\n\
