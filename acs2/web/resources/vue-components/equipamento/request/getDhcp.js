@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* global Equipamento, Vue, XdslDiagnostics */
+/* global Equipamento, Vue, XdslDiagnostics, vm */
 
 Vue.component("getDhcp", {
     props: {
@@ -14,53 +14,54 @@ Vue.component("getDhcp", {
         },
         equipamento: {
             type: Equipamento,
-            default: function() {
+            default: function () {
                 return new Equipamento();
             }
         },
         info: {
             type: Dhcp,
-            default: function() {
+            default: function () {
                 return new Dhcp();
             }
         }
     },
-    data: function() {
+    data: function () {
         return {mensagem: '', erro: ''};
     },
     methods: {
-        getDhcp: function() {
+        getDhcp: function () {
             var self = this;
             $.ajax({
                 type: "POST",
                 url: "/acs/equipamento/getDhcp/",
                 data: JSON.stringify(new EquipamentoAdapted(self.equipamento)),
                 dataType: "json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true;
                 },
-                success: function(data) {
-                    if(data.dhcp != null){
-                        self.info = new Dhcp(data.dhcp);    
+                success: function (data) {
+                    if (data.dhcp != null) {
+                        self.info = new Dhcp(data.dhcp);
                         vm.$emit("success", "Informações de DHCP obtidas com sucesso.");
-                    }else{
+                    } else {
                         vm.$emit("error", data.string);
                         $("#actionModal").modal("hide");
                     }
-                    
+
                 },
-                error: function(e) {
+                error: function (e) {
                     console.log(e);
                     self.mensagem = 'Falha ao buscar informações';
                     self.erro = 'true';
                 },
-                complete: function() {
+                complete: function () {
                     self.$parent.loading = false;
+                    self.changeips();
                 }
             });
         },
-        setDhcp: function() {
+        setDhcp: function () {
             var self = this;
             /**
              * Utilizar este padrão para enviar duas variaveis json para a controller
@@ -75,43 +76,66 @@ Vue.component("getDhcp", {
                 url: "/acs/equipamento/setDhcp/",
                 data: JSON.stringify(_data),
                 dataType: "json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Content-Type", "application/json");
                     self.$parent.loading = true
                 },
-                success: function(data) {
-                     if(data.dhcp != null){
-                        self.info = new Dhcp(data.dhcp);    
+                success: function (data) {
+                    if (data.dhcp != null) {
+                        self.info = new Dhcp(data.dhcp);
                         vm.$emit("success", "Alterações realizadas com sucesso.");
-                    }else{
+                    } else {
                         vm.$emit("error", data.string);
                         $("#actionModal").modal("hide");
                     }
                 },
-                error: function(e) {
+                error: function (e) {
                     console.log(e);
                     vm.$emit("error", "Falha ao realizar alterações.");
                 },
-                complete: function() {
+                complete: function () {
                     self.$parent.loading = false
                 }
             });
+        },
+        changeips: function () {
+            var self = this;
+
+            if (!self.info.MaxAddress.match(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/g)) {
+                vm.$emit("error", "MaxAddress incorreto por favor verifique.");
+                $("#maxadressx").removeClass("has-success");
+                $("#maxadressx").addClass("has-error");
+                $("#maxadressx input").focus();
+            } else {
+                $("#maxadressx").removeClass("has-error");
+                $("#maxadressx").addClass("has-success");
+            }
+
+            if (!self.info.MinAddress.match(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/g)) {
+                vm.$emit("error", "MinAddress incorreto por favor verifique.");
+                $("#minadressx").removeClass("has-success");
+                $("#minadressx").addClass("has-error");
+                $("#minadressx input").focus();
+            } else {
+                $("#minadressx").removeClass("has-error");
+                $("#minadressx").addClass("has-success");
+            }
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.getDhcp();
     },
     template: "<div>\n\
                     <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                     <div class='modal-body'>\n\
                         <div class='row'>\n\
-                            <div class='col-md-4 form-group'>\n\
+                            <div class='col-md-4 form-group' id='maxadressx'>\n\
                                 <label for='MaxAddress'>MaxAddress</label>\n\
-                                <input class='form-control' v-model='info.MaxAddress'>\n\
+                                <input class='form-control' v-model='info.MaxAddress' @change='changeips()'>\n\
                             </div>\n\
-                            <div class='col-md-4 form-group'>\n\
+                            <div class='col-md-4 form-group' id='minadressx'>\n\
                                 <label for='MinAddress'>MinAddress</label>\n\
-                                <input class='form-control' v-model='info.MinAddress'>\n\
+                                <input class='form-control' v-model='info.MinAddress' @change='changeips()'>\n\
                             </div>\n\
                             <div class='col-md-4 form-group'>\n\
                                 <label for='Estado'>Estado</label>\n\

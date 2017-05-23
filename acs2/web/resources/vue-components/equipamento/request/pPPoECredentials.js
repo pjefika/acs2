@@ -96,12 +96,11 @@ Vue.component("pppoeCredentials", {
             var self = this;
             console.log("entrou changename");
             if (!self.pPPoEcred.username.match(/[@]/g)) {
-                console.log("numtem @");
                 $("#usernamex").removeClass("has-success");
                 $("#usernamex").addClass("has-error");
                 vm.$emit("error", "Username incorreto por favor verifique.");
+                $("#usernamex input").focus();
             } else {
-                console.log("tem @");
                 $("#usernamex").removeClass("has-error");
                 $("#usernamex").addClass("has-success");
             }
