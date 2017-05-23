@@ -208,9 +208,9 @@ Vue.component("setSip", {
     template: "<div>\n\
                     <component is='alertpanel' :mensagem='mensagem' :erro='erro'></component>\n\
                     <div class='modal-body'>\n\
-                        <div class='form-group'>\n\
+                        <div class='form-group' id='instance'>\n\
                             <label>Instância</label>\n\
-                            <input class='form-control' v-model='sipAct.DirectoryNumber' placeholder='Instância' @change='changePass()'>\n\
+                            <input class='form-control' v-model='sipAct.DirectoryNumber' placeholder='Instância' @change='changeInst()'>\n\
                         </div>\n\
                         <div class='form-group'>\n\
                             <label>Senha</label>\n\
@@ -271,17 +271,25 @@ Vue.component("setSip", {
                 }
             });
         },
-        changePass: function () {
+        changeInst: function () {
+            console.log("Entrou change");
             var self = this;
             var pass = self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 6);
-            this.$set(self.sipAct, "AuthPassword", pass);            
-            //console.log(self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 10));            
+            this.$set(self.sipAct, "AuthPassword", pass);
+
             var instancia = "+55" + self.sipAct.DirectoryNumber.substring(self.sipAct.DirectoryNumber.length - 10);
-            this.$set(self.sipAct, "DirectoryNumber", instancia);            
-//            if (self.sipAct.DirectoryNumber.substring(0, 3) != "+55") {
-//                var instancia = "+55" + self.sipAct.DirectoryNumber;
-//                this.$set(self.sipAct, "DirectoryNumber", instancia);
-//            }
+            this.$set(self.sipAct, "DirectoryNumber", instancia);
+
+
+            if (self.sipAct.DirectoryNumber.length != 13) {
+                $("#instance").removeClass("has-success");
+                $("#instance").addClass("has-error");
+                vm.$emit("error", "Campo instancia está incorreto, por favor verifique.");
+                $("#instance input").focus();
+            } else {
+                $("#instance").removeClass("has-error");
+                $("#instance").addClass("has-success");
+            }
         }
     }
 });
