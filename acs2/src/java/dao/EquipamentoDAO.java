@@ -84,7 +84,7 @@ public class EquipamentoDAO {
     public EquipamentoDAO() {
         System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
         System.setProperty("http.proxyPort", "8080");
-        System.setProperty("http.nonProxyHosts", "10.200.35.67");
+        System.setProperty("http.nonProxyHosts", "*.gvt.net.br|10.200.35.67|10.*");
     }
 
     /**

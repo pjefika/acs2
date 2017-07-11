@@ -7,11 +7,10 @@ package controller.log;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.view.Results;
 import controller.AbstractController;
 import dao.LogDAO;
 import java.util.List;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import model.entity.Log;
 
