@@ -5,14 +5,13 @@
  */
 package controller.search;
 
-import auth.annotation.Logado;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.view.Results;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import controller.AbstractController;
 import dao.EquipamentoDAO;
-import exception.HdmException;
+import model.exception.HdmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -31,12 +30,10 @@ public class SearchController extends AbstractController {
     }
 
     @Path("/busca")
-    @Logado
     public void create() {
     }
 
     @Path("/action")
-    @Logado
     public void action() {
     }
 
@@ -44,10 +41,9 @@ public class SearchController extends AbstractController {
     /**
      *
      * @param serial
-     * @throws exception.HdmException
+     * @throws model.exception.HdmException
      */
     @Path("/busca/listar/serial/{serial}")
-    @Logado
     public void listarPorSerial(String serial) throws HdmException {
         try {
             this.includeSerializer(dao.listarEquipamentosPorSerial(serial));
@@ -59,7 +55,6 @@ public class SearchController extends AbstractController {
     }
 
     @Path("/busca/listar/ip/{ip}")
-    @Logado
     public void listarPorIp(String ip) throws HdmException {
         try {
             this.includeSerializer(dao.listarEquipamentosPorIp(ip));
@@ -71,7 +66,6 @@ public class SearchController extends AbstractController {
     }
 
     @Path("/busca/listar/subscriber/{subscriber}")
-    @Logado
     public void listarPorSubscriber(String subscriber) throws HdmException {
         try {
             this.includeSerializer(dao.listarEquipamentosPorSubscriber(subscriber));
@@ -82,7 +76,6 @@ public class SearchController extends AbstractController {
     }
 
     @Path("/busca/listar/mac/{mac}")
-    @Logado
     public void listarPorMac(String mac) throws HdmException {
         try {
             this.includeSerializer(dao.listarEquipamentosPorMac(mac.toUpperCase()));
@@ -94,7 +87,6 @@ public class SearchController extends AbstractController {
     }
 
     @Path("/busca/listar/guid/{guid}")
-    @Logado
     public void listarPorGuid(Long guid) {
         try {
             this.includeSerializer(dao.findDeviceByGUID(guid));

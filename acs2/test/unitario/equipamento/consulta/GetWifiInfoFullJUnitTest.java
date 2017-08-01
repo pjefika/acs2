@@ -12,8 +12,8 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIExceptio
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderException;
 import dao.EquipamentoDAO;
-import exception.HdmException;
-import exception.JsonUtilException;
+import model.exception.HdmException;
+import model.exception.JsonUtilException;
 import init.EquipamentoTestValues;
 import model.device.wifi.WifiInfoFull;
 import org.junit.After;

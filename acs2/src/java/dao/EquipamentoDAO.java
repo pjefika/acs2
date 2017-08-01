@@ -22,9 +22,9 @@ import dao.util.acao.AtivarWifi;
 import dao.util.acao.DesativarWifi;
 import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
-import exception.HdmException;
-import exception.JsonUtilException;
-import exception.UnsupportedException;
+import model.exception.HdmException;
+import model.exception.JsonUtilException;
+import model.exception.UnsupportedException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -137,7 +137,6 @@ public class EquipamentoDAO {
         this.initSynchDeviceOperations();
         synch.checkOnline(NbiDecorator.adapter(eqp), opt, 15000, "");
         return true;
-
     }
 
     public void teste() {

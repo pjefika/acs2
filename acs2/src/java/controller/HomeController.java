@@ -1,6 +1,5 @@
 package controller;
 
-import auth.annotation.Logado;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 
@@ -12,7 +11,6 @@ public class HomeController extends AbstractController {
     }
 
     @Path("/")
-    @Logado
     public void index() {
 
     }
