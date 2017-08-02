@@ -708,7 +708,7 @@ public class EquipamentoDAO {
         try {
             if (remote == null) {
                 NBIServicePortStub stub = new NBIServicePortStub(new URL("http://10.113.64.1:7025/NBIServiceImpl/NBIService?wsdl"), new NBIServiceLocator());
-                remote = (NBIServicePortStub) SoapUtil.addWsSecurityHeader(stub, "nbi_user", "nbibrasil");
+                remote = (NBIServicePortStub) SoapUtil.addWsSecurityHeader(stub, "co_efika", "nbibrasilefika02");
             }
         } catch (Exception e) {
             e.printStackTrace();

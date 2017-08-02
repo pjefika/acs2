@@ -56,6 +56,7 @@ public class GetPPPoECredentialsJUnitTest {
             PPPoECredentialsInfo info = d.getPPPoECredentials(eqp);
             //System.out.println(info.getUsername());
             assertTrue(info != null);
+            System.out.println("end");
         } catch (Exception e) {
             e.printStackTrace();
             assertTrue(false);
