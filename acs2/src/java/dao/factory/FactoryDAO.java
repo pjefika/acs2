@@ -5,10 +5,17 @@
  */
 package dao.factory;
 
+import dao.NbiDAO;
+import dao.NbiDAO_Impl;
+
 /**
  *
  * @author G0042204
  */
 public class FactoryDAO {
+    
+    public static NbiDAO createNBI(){
+        return new NbiDAO_Impl();
+    }
     
 }

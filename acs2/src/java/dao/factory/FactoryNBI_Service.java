@@ -20,7 +20,7 @@ import javax.xml.ws.Service;
  *
  * @author G0042204
  */
-public class FactoryNBI_DAO {
+public class FactoryNBI_Service {
 
     public static NBIService createNBIService() {
         try {

@@ -10,7 +10,7 @@ import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
-import dao.factory.FactoryNBI_DAO;
+import dao.factory.FactoryNBI_Service;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class NbiDAO_Impl implements NbiDAO {
     private final NBIService nbi;
 
     public NbiDAO_Impl() {
-        nbi = FactoryNBI_DAO.createNBIService();
+        nbi = FactoryNBI_Service.createNBIService();
     }
 
     @Override

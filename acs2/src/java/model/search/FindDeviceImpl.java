@@ -6,6 +6,8 @@
 package model.search;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import dao.NbiDAO;
+import dao.factory.FactoryDAO;
 import java.util.List;
 import model.exception.SearchCriteriaException;
 
@@ -15,20 +17,23 @@ import model.exception.SearchCriteriaException;
  */
 public class FindDeviceImpl implements FindDevice {
 
-//    private SearchIn in;
-    
     @Override
     public List<NbiDeviceData> find(SearchIn in) throws Exception {
 
+        NbiDAO dao = FactoryDAO.createNBI();
+
         switch (in.getCriterio()) {
             case IP:
-                System.out.println("Domingo");
-                break;
-          
+                return dao.findDeviceByExternalIPAddress(in.getInput());
+            case MAC:
+                return dao.findDevicesByMac(in.getInput());
+            case SERIAL:
+                return dao.findDeviceBySerialNumber(in.getInput());
+            case SUBCRIBER:
+                return dao.findDevicesBySubscriberId(in.getInput());
             default:
                 throw new SearchCriteriaException();
         }
-        return null;
     }
 
 }
