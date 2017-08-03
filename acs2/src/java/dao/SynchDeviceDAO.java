@@ -9,6 +9,6 @@ package dao;
  *
  * @author G0042204
  */
-public interface SynchDeviceHDM {
+public interface SynchDeviceDAO {
     
 }

@@ -15,7 +15,7 @@ import model.exception.SearchCriteriaException;
  */
 public class FindDeviceImpl implements FindDevice {
 
-    private SearchIn in;
+//    private SearchIn in;
     
     @Override
     public List<NbiDeviceData> find(SearchIn in) throws Exception {

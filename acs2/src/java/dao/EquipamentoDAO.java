@@ -186,7 +186,6 @@ public class EquipamentoDAO {
             }
             throw ex;
         }
-
     }
 
     public void getSup() {
@@ -707,7 +706,7 @@ public class EquipamentoDAO {
     public void initRemote() {
         try {
             if (remote == null) {
-                NBIServicePortStub stub = new NBIServicePortStub(new URL("http://10.113.64.1:7025/NBIServiceImpl/NBIService?wsdl"), new NBIServiceLocator());
+                NBIServicePortStub stub = new NBIServicePortStub(new URL("http://10.113.64.1:7025/remotehdm/NBIService?wsdl"), new NBIServiceLocator());
                 remote = (NBIServicePortStub) SoapUtil.addWsSecurityHeader(stub, "co_efika", "nbibrasilefika02");
             }
         } catch (Exception e) {
