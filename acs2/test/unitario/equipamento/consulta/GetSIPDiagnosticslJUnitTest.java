@@ -12,9 +12,9 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIExceptio
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderException;
 import dao.EquipamentoDAO;
-import exception.HdmException;
-import exception.JsonUtilException;
-import exception.UnsupportedException;
+import model.exception.HdmException;
+import model.exception.JsonUtilException;
+import model.exception.UnsupportedException;
 import init.EquipamentoTestValues;
 import model.device.sipdiagnostics.SipDiagnostics;
 import org.junit.After;

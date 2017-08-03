@@ -48,7 +48,7 @@ public class FindDevicesBySerialJUnitTest {
     public void listarEquipamentosPorSerial() {
         try {
             EquipamentoDAO d = new EquipamentoDAO();
-            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("QX431EB606806");
+            List<NbiDeviceData> eqp = d.listarEquipamentosPorSerial("QX4S1EB598946");
             SoutUtil.print(eqp);
             assertTrue(true);
         } catch (Exception ex) {

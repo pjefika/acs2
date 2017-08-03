@@ -8,6 +8,7 @@ package unitario.equipamento.acao;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.EquipamentoDAO;
+import init.EquipamentoTestValues;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
@@ -53,7 +54,7 @@ public class RebootJUnitTest {
 
             NbiDeviceData eqp;
             // eqp = d.findDeviceByGUID(new Long(142014));
-            eqp = d.findDeviceByGUID(new Long(74021));
+            eqp = d.findDeviceByGUID(EquipamentoTestValues.GUID);
 
             assertTrue(d.reboot(eqp));
 
