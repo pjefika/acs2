@@ -21,7 +21,7 @@ import javax.xml.ws.Service;
  *
  * @author G0042204
  */
-public class FactoryNBI_Service {
+public class FactoryNBI {
 
 //    private static String ENDPOINT = "10.113.64.1"; // ENG
     private static String ENDPOINT = "200.168.104.216"; // WEB
