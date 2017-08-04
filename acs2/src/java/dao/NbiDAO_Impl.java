@@ -20,21 +20,27 @@ import java.util.List;
  */
 public class NbiDAO_Impl implements NbiDAO {
 
-    private final NBIService nbi;
+    private NBIService nbi;
 
     public NbiDAO_Impl() {
-        nbi = FactoryNBI_Service.createNBIService();
+    }
+
+    protected NBIService nbi() {
+        if (nbi == null) {
+            nbi = FactoryNBI_Service.createNBIService();
+        }
+        return nbi;
     }
 
     @Override
     public NbiDeviceData findDeviceByGUID(Long guid) throws NBIException_Exception {
-        return nbi.findDeviceByGUID(guid);
+        return nbi().findDeviceByGUID(guid);
     }
 
     @Override
     public List<NbiDeviceData> findDevicesBySubscriberId(String subscriberId) throws NBIException_Exception {
         try {
-            return nbi.findDevicesBySubscriberId(subscriberId);
+            return nbi().findDevicesBySubscriberId(subscriberId);
         } catch (NBIException_Exception ex) {
             if (ex.getFaultInfo().getFaultCode().contentEquals("devices.for.subscriberid.could.not.be.found")) {
                 return new ArrayList<>();
@@ -55,13 +61,13 @@ public class NbiDAO_Impl implements NbiDAO {
 
         n.getParameters().add(param);
 
-        return nbi.findDevicesByTemplate(n, 1, -1);
+        return nbi().findDevicesByTemplate(n, 1, -1);
     }
 
     @Override
     public List<NbiDeviceData> findDeviceByExternalIPAddress(String ipAddress) throws NBIException_Exception {
         List<NbiDeviceData> r = new ArrayList<>();
-        NbiDeviceData d = nbi.findDeviceByExternalIPAddress(ipAddress);
+        NbiDeviceData d = nbi().findDeviceByExternalIPAddress(ipAddress);
 
         if (d != null) {
             r.add(d);
@@ -78,7 +84,7 @@ public class NbiDAO_Impl implements NbiDAO {
         param.setValue(serial);
         n.getParameters().add(param);
 
-        return nbi.findDevicesByTemplate(n, 1, -1);
+        return nbi().findDevicesByTemplate(n, 1, -1);
     }
 
 }

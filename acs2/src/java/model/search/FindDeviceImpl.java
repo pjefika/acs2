@@ -20,6 +20,10 @@ public class FindDeviceImpl implements FindDevice {
     @Override
     public List<NbiDeviceData> find(SearchIn in) throws Exception {
 
+        if (in == null) {
+            throw new SearchCriteriaException();
+        }
+
         NbiDAO dao = FactoryDAO.createNBI();
 
         switch (in.getCriterio()) {
