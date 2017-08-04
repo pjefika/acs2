@@ -5,13 +5,13 @@
  */
 package controller;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import model.factory.FactoryService;
 import model.search.FindDevice;
 import model.search.SearchIn;
 
@@ -26,9 +26,11 @@ public class SearchController extends RestAbstractController {
 
     @POST
     @Path("/search")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response search(SearchIn in) {
         try {
+            find = FactoryService.create();
             return ok(find.find(in));
         } catch (Exception e) {
             return internalServerError(e);
