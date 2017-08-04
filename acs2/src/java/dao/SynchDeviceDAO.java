@@ -10,9 +10,7 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOpera
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderException;
-import exception.HdmException;
-import exception.JsonUtilException;
-import exception.UnsupportedException;
+
 import java.util.List;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
@@ -33,6 +31,9 @@ import model.device.traceroute.TraceRouteRequest;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.xdsldiagnostics.XdslDiagnostics;
+import model.exception.HdmException;
+import model.exception.JsonUtilException;
+import model.exception.UnsupportedException;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 

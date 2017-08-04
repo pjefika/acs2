@@ -14,9 +14,7 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderExc
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDeviceOperationsService;
 import com.sun.xml.wss.XWSSConstants;
 import dao.util.NbiDecorator;
-import exception.HdmException;
-import exception.JsonUtilException;
-import exception.UnsupportedException;
+
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +43,9 @@ import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiInfoSet;
 import model.device.xdsldiagnostics.XdslDiagnostics;
+import model.exception.HdmException;
+import model.exception.JsonUtilException;
+import model.exception.UnsupportedException;
 import motive.hdm.synchdeviceops.GetParameterNamesDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
