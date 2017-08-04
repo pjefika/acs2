@@ -100,6 +100,14 @@ public class NbiDecorator {
         return id;
     }
 
+    public static NBIDeviceID adapterCaps(NbiDeviceData d) {
+
+        return new NBIDeviceID(d.getDeviceId().getOUI(),
+                d.getDeviceId().getProductClass(),
+                d.getDeviceId().getProtocol(), d.getDeviceId().getSerialNumber());
+
+    }
+
     /**
      *
      * @param d
