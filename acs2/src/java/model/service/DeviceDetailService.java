@@ -11,7 +11,7 @@ import model.dto.DeviceDetail;
  *
  * @author G0042204
  */
-interface DeviceDetailService {
+public interface DeviceDetailService {
 
     public DeviceDetail consultar(Long guid) throws Exception;
 

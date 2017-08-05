@@ -7,15 +7,21 @@ package model.factory;
 
 import model.search.FindDevice;
 import model.search.FindDeviceImpl;
+import model.service.DeviceDetailService;
+import model.service.DeviceDetailServiceImpl;
 
 /**
  *
  * @author G0042204
  */
 public class FactoryService {
-    
-    public static FindDevice create(){
+
+    public static FindDevice createFindDevice() {
         return new FindDeviceImpl();
     }
-    
+
+    public static DeviceDetailService createDeviceDetailService() {
+        return new DeviceDetailServiceImpl();
+    }
+
 }

@@ -30,7 +30,7 @@ public class SearchController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response search(SearchIn in) {
         try {
-            find = FactoryService.create();
+            find = FactoryService.createFindDevice();
             return ok(find.find(in));
         } catch (Exception e) {
             return internalServerError(e);
