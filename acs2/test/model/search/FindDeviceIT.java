@@ -49,7 +49,7 @@ public class FindDeviceIT {
     public void testFindSerial() throws Exception {
         try {
             System.out.println("find - SearchCriteria.SERIAL");
-            SearchIn in = new SearchIn(SearchCriteria.SERIAL, "QX4S1E6565496");
+            SearchIn in = new SearchIn(SearchCriteria.SERIAL, "QX4S1EB598946");
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {
@@ -66,7 +66,7 @@ public class FindDeviceIT {
     public void testFindSubscriber() throws Exception {
         try {
             System.out.println("find - SearchCriteria.SUBCRIBER");
-            SearchIn in = new SearchIn(SearchCriteria.SUBCRIBER, "NO_SUBSCRIBER");
+            SearchIn in = new SearchIn(SearchCriteria.SUBCRIBER, "FLA-81D2X6SWR-013");
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {
@@ -84,6 +84,23 @@ public class FindDeviceIT {
         try {
             System.out.println("find - SearchCriteria.MAC");
             SearchIn in = new SearchIn(SearchCriteria.MAC, "B8:88:E3:EA:14:C8");
+            List<NbiDeviceData> result = instance.find(in);
+
+            result.forEach((t) -> {
+                SoutUtil.print(t);
+            });
+            assertTrue(!result.isEmpty());
+            // TODO review the generated test code and remove the default call to fail.
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+    
+        @Test
+    public void testFindIP() throws Exception {
+        try {
+            System.out.println("find - SearchCriteria.IP");
+            SearchIn in = new SearchIn(SearchCriteria.IP, "B8:88:E3:EA:14:C8");
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {

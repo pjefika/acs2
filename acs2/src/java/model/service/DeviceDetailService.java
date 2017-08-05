@@ -5,7 +5,7 @@
  */
 package model.service;
 
-import model.device.DeviceDetail;
+import model.dto.DeviceDetail;
 
 /**
  *

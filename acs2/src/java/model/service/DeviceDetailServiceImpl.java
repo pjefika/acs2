@@ -9,7 +9,9 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.NbiDAO;
 import dao.SynchDeviceDAO;
 import dao.factory.FactoryDAO;
-import model.device.DeviceDetail;
+import model.dto.DeviceDetail;
+import model.dto.FirmwareDetail;
+import model.exception.JsonUtilException;
 
 public class DeviceDetailServiceImpl implements DeviceDetailService {
 
@@ -28,8 +30,14 @@ public class DeviceDetailServiceImpl implements DeviceDetailService {
         eqp = dao.findDeviceByGUID(guid);
         result.setDevice(eqp);
         result.setOnline(sync.checkOnline(eqp));
+
         if (result.getOnline()) {
-            result.setFirmwareUpdated(sync.getFirmwareVersion(eqp).isOk());
+            try {
+                Thread.sleep(5000l);
+                result.setFirmware(new FirmwareDetail(sync.getFirmwareVersion(eqp)));
+            } catch (JsonUtilException e) {
+                result.setFirmware(null);
+            }
         }
 
         return result;

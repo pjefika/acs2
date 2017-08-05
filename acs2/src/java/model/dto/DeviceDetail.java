@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.device;
+package model.dto;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-
 
 /**
  *
@@ -18,7 +17,7 @@ public class DeviceDetail {
 
     private Boolean online;
 
-    private Boolean firmwareUpdated;
+    private FirmwareDetail firmware;
 
     public NbiDeviceData getDevice() {
         return device;
@@ -36,12 +35,12 @@ public class DeviceDetail {
         this.online = online;
     }
 
-    public Boolean getFirmwareUpdated() {
-        return firmwareUpdated;
+    public FirmwareDetail getFirmware() {
+        return firmware;
     }
 
-    public void setFirmwareUpdated(Boolean firmwareUpdated) {
-        this.firmwareUpdated = firmwareUpdated;
+    public void setFirmware(FirmwareDetail firmware) {
+        this.firmware = firmware;
     }
 
 }

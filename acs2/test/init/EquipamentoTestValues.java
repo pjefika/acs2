@@ -18,6 +18,12 @@ package init;
  */
 public class EquipamentoTestValues {
 
-    public static Long GUID = new Long(147037);
+    /**
+     * Prod
+     * 18523038 - cliente
+     * 
+     * BANCADA ARNO - QX4S1EB598946 (18358162)
+     */
+    public static Long GUID = new Long(18358162);
 
 }

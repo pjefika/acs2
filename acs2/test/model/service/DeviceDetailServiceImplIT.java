@@ -6,9 +6,10 @@
 package model.service;
 
 import init.EquipamentoTestValues;
-import model.device.DeviceDetail;
+import model.dto.DeviceDetail;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,23 +18,23 @@ import org.junit.Test;
  *
  * @author G0042204
  */
-public class DeviceDetailServiceImplIT extends EquipamentoTestValues{
-    
+public class DeviceDetailServiceImplIT extends EquipamentoTestValues {
+
     public DeviceDetailServiceImplIT() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -45,8 +46,10 @@ public class DeviceDetailServiceImplIT extends EquipamentoTestValues{
     public void testConsultar() throws Exception {
         System.out.println("consultar");
         DeviceDetailServiceImpl instance = new DeviceDetailServiceImpl();
-        DeviceDetail result = instance.consultar(this.GUID);
+        DeviceDetail result = instance.consultar(GUID);
         System.out.println("end");
+        assertTrue(result != null);
+
     }
-    
+
 }
