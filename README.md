@@ -1,17 +1,4 @@
-Efika Acs
+Efika ACS
 ===================
-### Desenvolvedores
-\#| Nome
--------- | ---
-1| Henrique Antonio Merlin Junior
-2| Matheus Henrique Agibert
-3| Fabio Henrique Clem
 
-
-### Implementação
-
-Item     | Ferramenta
--------- | ---
-Framework Server-Side| Vraptor 4
-Framework Client-Side| Vue.js 2
-ORM| JPA (Hibernate)
+Restlet Client - https://github.com/pjefika/acs2/blob/development/acs2.json
