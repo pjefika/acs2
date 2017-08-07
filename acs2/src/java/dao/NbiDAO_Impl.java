@@ -52,7 +52,7 @@ public class NbiDAO_Impl implements NbiDAO {
     @Override
     public List<NbiDeviceData> findDevicesByMac(String mac) throws NBIException_Exception {
         NbiTemplate n = new NbiTemplate();
-        n.setName("Find Devices By MacAddress");
+        n.setName("MacAddress");
 
         NbiParameter param = new NbiParameter();
 
@@ -60,8 +60,14 @@ public class NbiDAO_Impl implements NbiDAO {
         param.setValue(mac);
 
         n.getParameters().add(param);
+        
+       
 
         return nbi().findDevicesByTemplate(n, 1, -1);
+    }
+    
+    public List<NbiTemplate> getAvailableCriteriaTemplates() throws NBIException_Exception{
+        return  nbi().getAvailableCriteriaTemplates();
     }
 
     @Override

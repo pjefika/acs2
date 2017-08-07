@@ -6,6 +6,7 @@
 package dao;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,9 +19,12 @@ import static org.junit.Assert.*;
  *
  * @author G0042204
  */
-public class NbiDAOIT {
+public class NbiDAO_ImplIT {
 
-    private NbiDAO instance = new NbiDAO_Impl();
+    private NbiDAO_Impl instance = new NbiDAO_Impl();
+
+    public NbiDAO_ImplIT() {
+    }
 
     @BeforeClass
     public static void setUpClass() {
@@ -39,7 +43,7 @@ public class NbiDAOIT {
     }
 
     /**
-     * Test of findDeviceByGUID method, of class NbiDAO.
+     * Test of findDeviceByGUID method, of class NbiDAO_Impl.
      */
     @Test
     public void testFindDeviceByGUID() throws Exception {
@@ -54,7 +58,7 @@ public class NbiDAOIT {
     }
 
     /**
-     * Test of findDevicesBySubscriberId method, of class NbiDAO.
+     * Test of findDevicesBySubscriberId method, of class NbiDAO_Impl.
      */
     @Test
     public void testFindDevicesBySubscriberId() throws Exception {
@@ -69,7 +73,7 @@ public class NbiDAOIT {
     }
 
     /**
-     * Test of findDevicesByMac method, of class NbiDAO.
+     * Test of findDevicesByMac method, of class NbiDAO_Impl.
      */
     @Test
     public void testFindDevicesByMac() throws Exception {
@@ -84,7 +88,21 @@ public class NbiDAOIT {
     }
 
     /**
-     * Test of findDeviceByExternalIPAddress method, of class NbiDAO.
+     * Test of getAvailableCriteriaTemplates method, of class NbiDAO_Impl.
+     */
+    @Test
+    public void testGetAvailableCriteriaTemplates() throws Exception {
+        System.out.println("getAvailableCriteriaTemplates");
+        List<NbiTemplate> expResult = null;
+        List<NbiTemplate> result = instance.getAvailableCriteriaTemplates();
+        System.out.println("end");
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of findDeviceByExternalIPAddress method, of class NbiDAO_Impl.
      */
     @Test
     public void testFindDeviceByExternalIPAddress() throws Exception {
@@ -99,7 +117,7 @@ public class NbiDAOIT {
     }
 
     /**
-     * Test of findDeviceBySerialNumber method, of class NbiDAO.
+     * Test of findDeviceBySerialNumber method, of class NbiDAO_Impl.
      */
     @Test
     public void testFindDeviceBySerialNumber() throws Exception {

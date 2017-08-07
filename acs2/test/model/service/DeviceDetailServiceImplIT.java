@@ -48,7 +48,7 @@ public class DeviceDetailServiceImplIT extends EquipamentoTestValues {
         DeviceDetailServiceImpl instance = new DeviceDetailServiceImpl();
         DeviceDetail result = instance.consultar(GUID);
         System.out.println("end");
-        assertTrue(result != null);
+        assertTrue(result.getOnline() && result != null);
 
     }
 

@@ -51,6 +51,7 @@ public class SoutUtil {
         System.out.println("Type: " + d.getType());
         System.out.println("Model: " + d.getModel());
         System.out.println("Mac: " + d.getMacAddress());
+        System.out.println("IPAddress: " + d.getIPAddress());
 
 //        System.out.println("C1: "+d.getCustomAttribute1());
 //        System.out.println("C2: "+d.getCustomAttribute2());
