@@ -7,7 +7,7 @@ package model.service;
 
 import model.service.detail.DeviceDetailServiceImpl;
 import init.EquipamentoTestValues;
-import model.service.dto.DeviceDetail;
+import model.service.dto.DetailOut;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertTrue;
@@ -47,7 +47,7 @@ public class DeviceDetailServiceImplIT extends EquipamentoTestValues {
     public void testConsultar() throws Exception {
         System.out.println("consultar");
         DeviceDetailServiceImpl instance = new DeviceDetailServiceImpl();
-        DeviceDetail result = instance.consultar(GUID);
+        DetailOut result = instance.consultar(GUID);
         System.out.println("end");
         assertTrue(result.getOnline() && result != null);
 

@@ -11,11 +11,11 @@ import model.device.firmware.FirmwareInfo;
  *
  * @author G0042204
  */
-public class FirmwareDetail {
+public class FirmwareOut {
 
     private final FirmwareInfo info;
 
-    public FirmwareDetail(FirmwareInfo info) {
+    public FirmwareOut(FirmwareInfo info) {
         this.info = info;
     }
 

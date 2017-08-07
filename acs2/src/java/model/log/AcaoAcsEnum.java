@@ -11,6 +11,6 @@ package model.log;
  */
 public enum AcaoAcsEnum {
 
-    BUSCA_EQUIPAMENTO, DETALHE_EQUIPAMENTO;
+    BUSCA_EQUIPAMENTO, DETALHE_EQUIPAMENTO, GET_WIFI_INFO;
 
 }

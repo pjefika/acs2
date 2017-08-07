@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service.detail;
-
-import model.service.dto.DetailOut;
+package model.service.dto;
 
 /**
  *
  * @author G0042204
  */
-public interface DeviceDetailService {
-
-    public DetailOut consultar(Long guid) throws Exception;
-
+public class GetDeviceDataIn {
+    
 }

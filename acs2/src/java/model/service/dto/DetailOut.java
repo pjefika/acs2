@@ -11,13 +11,13 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
  *
  * @author G0042204
  */
-public class DeviceDetail {
+public class DetailOut {
 
     private NbiDeviceData device;
 
     private Boolean online;
 
-    private FirmwareDetail firmware;
+    private FirmwareOut firmware;
 
     public NbiDeviceData getDevice() {
         return device;
@@ -35,11 +35,11 @@ public class DeviceDetail {
         this.online = online;
     }
 
-    public FirmwareDetail getFirmware() {
+    public FirmwareOut getFirmware() {
         return firmware;
     }
 
-    public void setFirmware(FirmwareDetail firmware) {
+    public void setFirmware(FirmwareOut firmware) {
         this.firmware = firmware;
     }
 
