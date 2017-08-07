@@ -81,9 +81,9 @@ public class NbiDecorator {
         return opt;
     }
 
-    public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
-        return new WifiInfoSet(i.getOperStatus(), i.getSsid(), i.getChannel());
-    }
+//    public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
+//        return new WifiInfoSet(true, i.getSsid(), i.getChannel());
+//    }
 
     public static WifiInfoSet getWifiInfoSetFull(WifiInfoFull i) {
         return new WifiInfoSet(i);

@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
+import model.device.ping.PingResponse;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfoFull;
@@ -25,6 +26,8 @@ import model.log.AcaoAcsEnum;
 import model.service.factory.FactoryService;
 import model.service.dto.DetailIn;
 import model.service.dto.GetDeviceDataIn;
+import model.service.dto.PingDiagnosticIn;
+import model.service.dto.SetWifiIn;
 
 /**
  *
@@ -64,6 +67,28 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             WifiInfoFull wifi = FactoryDAO.createSynch().getWifiInfoFull(in.getDevice());
+            l.setSaida(wifi);
+            return ok(wifi);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/setWifiInfo")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setWifiInfo(SetWifiIn in) {
+        LogEntity l = in.create();
+        try {
+            Boolean wifi = FactoryDAO.createSynch().setWifiInfoFull(in.getDevice(), in.getWifi());
             l.setSaida(wifi);
             return ok(wifi);
         } catch (Exception e) {
@@ -192,8 +217,7 @@ public class EquipamentoController extends RestAbstractController {
             }
         }
     }
-    
-    
+
     @POST
     @Path("/reboot")
     @Produces(MediaType.APPLICATION_JSON)
@@ -203,6 +227,52 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             Boolean w = FactoryDAO.createSynch().reboot(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(false);
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/factoryReset")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response factoryReset(GetDeviceDataIn in) {
+        in.setAcao(AcaoAcsEnum.FACTORY_RESET);
+        LogEntity l = in.create();
+        try {
+            Boolean w = FactoryDAO.createSynch().factoryReset(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(false);
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/pingDiagnostic")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response pingDiagnostic(PingDiagnosticIn in) {
+        in.setAcao(AcaoAcsEnum.FACTORY_RESET);
+        LogEntity l = in.create();
+        try {
+            PingResponse w = FactoryDAO.createSynch().pingDiagnostic(in.getDevice(), in.getRequest());
             l.setSaida(w);
             return ok(w);
         } catch (Exception e) {

@@ -153,9 +153,9 @@ public class JsonUtil {
 //        i.setAuthentication(authentication);
         i.setBroadcastEnabled(broadcastEnabled);
         i.setChannel(channel);
-        i.setOperStatus(operStatus);
+//        i.setOperStatus(tr);
 //        i.setEncryptation(encryptation);
-        i.setRadioOperStatus(radioStatus);
+//        i.setRadioOperStatus(radioStatus);
         i.setSsid(ssid);
 //        i.setStandard(standard);
         i.setSsidPassword(password);

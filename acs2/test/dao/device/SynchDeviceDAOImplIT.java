@@ -3,14 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dao.device;
 
-import dao.device.SynchDeviceDAO;
-import dao.device.NbiDAO;
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import dao.factory.FactoryDAO;
-import init.EquipamentoTestValues;
 import java.util.List;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
@@ -39,45 +34,40 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.GsonUtil;
 
 /**
  *
  * @author G0042204
  */
-public class SynchDeviceDAOIT extends EquipamentoTestValues {
-
-    private SynchDeviceDAO instance = FactoryDAO.createSynch();
-    private NbiDAO nbi = FactoryDAO.createNBI();
-    private NbiDeviceData eqp;
-
-    public SynchDeviceDAOIT() {
+public class SynchDeviceDAOImplIT {
+    
+    public SynchDeviceDAOImplIT() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
-    public void setUp() throws NBIException_Exception {
-        eqp = nbi.findDeviceByGUID(this.GUID);
+    public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of reboot method, of class SynchDeviceDAO.
+     * Test of reboot method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testReboot() throws Exception {
         System.out.println("reboot");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         Boolean expResult = null;
         Boolean result = instance.reboot(eqp);
         assertEquals(expResult, result);
@@ -86,12 +76,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of factoryReset method, of class SynchDeviceDAO.
+     * Test of factoryReset method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testFactoryReset() throws Exception {
         System.out.println("factoryReset");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         Boolean expResult = null;
         Boolean result = instance.factoryReset(eqp);
         assertEquals(expResult, result);
@@ -100,99 +91,111 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of checkOnline method, of class SynchDeviceDAO.
+     * Test of checkOnline method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testCheckOnline() throws Exception {
         System.out.println("checkOnline");
-        Boolean expResult = true;
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        Boolean expResult = null;
         Boolean result = instance.checkOnline(eqp);
         assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getFirmwareVersion method, of class SynchDeviceDAO.
+     * Test of getFirmwareVersion method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetFirmwareVersion() throws Exception {
         System.out.println("getFirmwareVersion");
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        FirmwareInfo expResult = null;
         FirmwareInfo result = instance.getFirmwareVersion(eqp);
-        assertTrue(result != null);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getParameters method, of class SynchDeviceDAO.
+     * Test of getParameters method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetParameters() throws Exception {
         System.out.println("getParameters");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         instance.getParameters(eqp);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getParametersWifi method, of class SynchDeviceDAO.
+     * Test of getParametersWifi method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetParametersWifi() throws Exception {
         System.out.println("getParametersWifi");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         instance.getParametersWifi(eqp);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getParametersValues method, of class SynchDeviceDAO.
+     * Test of getParametersValues method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetParametersValues() throws Exception {
         System.out.println("getParametersValues");
-
+        NbiDeviceData eqp = null;
         List<String> paths = null;
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         instance.getParametersValues(eqp, paths);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getParameterValue method, of class SynchDeviceDAO.
+     * Test of getParameterValue method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetParameterValue() throws Exception {
         System.out.println("getParameterValue");
-
+        NbiDeviceData eqp = null;
         String path = "";
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         instance.getParameterValue(eqp, path);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setParametersValues method, of class SynchDeviceDAO.
+     * Test of setParametersValues method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testSetParametersValues() throws Exception {
         System.out.println("setParametersValues");
-
+        NbiDeviceData eqp = null;
         ParameterValueStructDTO p = null;
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         instance.setParametersValues(eqp, p);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getWanInfo method, of class SynchDeviceDAO.
+     * Test of getWanInfo method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetWanInfo() throws Exception {
         System.out.println("getWanInfo");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         WanInfo expResult = null;
         WanInfo result = instance.getWanInfo(eqp);
         assertEquals(expResult, result);
@@ -201,12 +204,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getServiceClass method, of class SynchDeviceDAO.
+     * Test of getServiceClass method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetServiceClass() throws Exception {
         System.out.println("getServiceClass");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         ServiceClass expResult = null;
         ServiceClass result = instance.getServiceClass(eqp);
         assertEquals(expResult, result);
@@ -215,14 +219,14 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of setServiceClass method, of class SynchDeviceDAO.
+     * Test of setServiceClass method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testSetServiceClass() throws Exception {
         System.out.println("setServiceClass");
-
+        NbiDeviceData eqp = null;
         ServiceClass sc = null;
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         Boolean expResult = null;
         Boolean result = instance.setServiceClass(eqp, sc);
         assertEquals(expResult, result);
@@ -231,12 +235,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getLanHosts method, of class SynchDeviceDAO.
+     * Test of getLanHosts method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetLanHosts() throws Exception {
         System.out.println("getLanHosts");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         List<LanDevice> expResult = null;
         List<LanDevice> result = instance.getLanHosts(eqp);
         assertEquals(expResult, result);
@@ -245,12 +250,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getDmzInfo method, of class SynchDeviceDAO.
+     * Test of getDmzInfo method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetDmzInfo() throws Exception {
         System.out.println("getDmzInfo");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         DmzInfo expResult = null;
         DmzInfo result = instance.getDmzInfo(eqp);
         assertEquals(expResult, result);
@@ -259,23 +265,28 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getWifiInfoFull method, of class SynchDeviceDAO.
+     * Test of getWifiInfoFull method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetWifiInfoFull() throws Exception {
         System.out.println("getWifiInfoFull");
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        WifiInfoFull expResult = null;
         WifiInfoFull result = instance.getWifiInfoFull(eqp);
-        System.out.println(GsonUtil.serialize(result));
-        assertTrue(result != null);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getPortMapping method, of class SynchDeviceDAO.
+     * Test of getPortMapping method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetPortMapping() throws Exception {
         System.out.println("getPortMapping");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         List<PortMappingInfo> expResult = null;
         List<PortMappingInfo> result = instance.getPortMapping(eqp);
         assertEquals(expResult, result);
@@ -284,12 +295,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getDhcp method, of class SynchDeviceDAO.
+     * Test of getDhcp method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetDhcp() throws Exception {
         System.out.println("getDhcp");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         Dhcp expResult = null;
         Dhcp result = instance.getDhcp(eqp);
         assertEquals(expResult, result);
@@ -298,14 +310,14 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of setDhcp method, of class SynchDeviceDAO.
+     * Test of setDhcp method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testSetDhcp() throws Exception {
         System.out.println("setDhcp");
-
+        NbiDeviceData eqp = null;
         Dhcp dh = null;
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         Boolean expResult = null;
         Boolean result = instance.setDhcp(eqp, dh);
         assertEquals(expResult, result);
@@ -314,14 +326,14 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of traceroute method, of class SynchDeviceDAO.
+     * Test of traceroute method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testTraceroute() throws Exception {
         System.out.println("traceroute");
-
+        NbiDeviceData eqp = null;
         TraceRouteRequest trace = null;
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         PortMappingInfo expResult = null;
         PortMappingInfo result = instance.traceroute(eqp, trace);
         assertEquals(expResult, result);
@@ -330,26 +342,29 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of setWifiInfoFull method, of class SynchDeviceDAO.
+     * Test of setWifiInfoFull method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testSetWifiInfoFull() throws Exception {
         System.out.println("setWifiInfoFull");
-        WifiInfoFull wi = instance.getWifiInfoFull(eqp);
-        wi.setChannel("6");
-//        wi.setSsid(wi.getSsid() + "-efika");
-                wi.setSsid("GVT-72D9");
-
-        assertTrue(instance.setWifiInfoFull(eqp, wi));
+        NbiDeviceData eqp = null;
+        WifiInfoFull wifi = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        Boolean expResult = null;
+        Boolean result = instance.setWifiInfoFull(eqp, wifi);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getDdns method, of class SynchDeviceDAO.
+     * Test of getDdns method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetDdns() throws Exception {
         System.out.println("getDdns");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         DdnsInfo expResult = null;
         DdnsInfo result = instance.getDdns(eqp);
         assertEquals(expResult, result);
@@ -358,12 +373,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getXdslDiagnostic method, of class SynchDeviceDAO.
+     * Test of getXdslDiagnostic method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetXdslDiagnostic() throws Exception {
         System.out.println("getXdslDiagnostic");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         XdslDiagnostics expResult = null;
         XdslDiagnostics result = instance.getXdslDiagnostic(eqp);
         assertEquals(expResult, result);
@@ -372,12 +388,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getDeviceLog method, of class SynchDeviceDAO.
+     * Test of getDeviceLog method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetDeviceLog() throws Exception {
         System.out.println("getDeviceLog");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         List<DeviceLog> expResult = null;
         List<DeviceLog> result = instance.getDeviceLog(eqp);
         assertEquals(expResult, result);
@@ -386,12 +403,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getDeviceLogR method, of class SynchDeviceDAO.
+     * Test of getDeviceLogR method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetDeviceLogR() throws Exception {
         System.out.println("getDeviceLogR");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         List<DeviceLogR> expResult = null;
         List<DeviceLogR> result = instance.getDeviceLogR(eqp);
         assertEquals(expResult, result);
@@ -400,12 +418,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getInterfaceStatistics method, of class SynchDeviceDAO.
+     * Test of getInterfaceStatistics method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetInterfaceStatistics() throws Exception {
         System.out.println("getInterfaceStatistics");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         List<InterfaceStatistics> expResult = null;
         List<InterfaceStatistics> result = instance.getInterfaceStatistics(eqp);
         assertEquals(expResult, result);
@@ -414,12 +433,13 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getPPPoECredentials method, of class SynchDeviceDAO.
+     * Test of getPPPoECredentials method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetPPPoECredentials() throws Exception {
         System.out.println("getPPPoECredentials");
-
+        NbiDeviceData eqp = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         PPPoECredentialsInfo expResult = null;
         PPPoECredentialsInfo result = instance.getPPPoECredentials(eqp);
         assertEquals(expResult, result);
@@ -428,33 +448,30 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of pingDiagnostic method, of class SynchDeviceDAO.
+     * Test of pingDiagnostic method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testPingDiagnostic() throws Exception {
         System.out.println("pingDiagnostic");
-
-        try {
-            PingRequest p = new PingRequest();
-            p.setDestAddress("www.google.com.br");
-
-            PingResponse result = instance.pingDiagnostic(eqp, p);
-            assertTrue(result.getStatus().equalsIgnoreCase("Complete"));
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-
+        NbiDeviceData eqp = null;
+        PingRequest p = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        PingResponse expResult = null;
+        PingResponse result = instance.pingDiagnostic(eqp, p);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setPPPoECredentials method, of class SynchDeviceDAO.
+     * Test of setPPPoECredentials method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testSetPPPoECredentials() throws Exception {
         System.out.println("setPPPoECredentials");
-
+        NbiDeviceData eqp = null;
         PPPoECredentialsInfo pPPoECredentialsInfo = null;
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         StringResponseDTO expResult = null;
         StringResponseDTO result = instance.setPPPoECredentials(eqp, pPPoECredentialsInfo);
         assertEquals(expResult, result);
@@ -463,14 +480,14 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of setPortMapping method, of class SynchDeviceDAO.
+     * Test of setPortMapping method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testSetPortMapping() throws Exception {
         System.out.println("setPortMapping");
-
+        NbiDeviceData eqp = null;
         List<PortMappingInfo> ports = null;
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         Boolean expResult = null;
         Boolean result = instance.setPortMapping(eqp, ports);
         assertEquals(expResult, result);
@@ -479,14 +496,14 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of getSipDiagnostics method, of class SynchDeviceDAO.
+     * Test of getSipDiagnostics method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testGetSipDiagnostics() throws Exception {
         System.out.println("getSipDiagnostics");
-
+        NbiDeviceData eqp = null;
         Integer phyref = null;
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         SipDiagnostics expResult = null;
         SipDiagnostics result = instance.getSipDiagnostics(eqp, phyref);
         assertEquals(expResult, result);
@@ -495,19 +512,19 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     }
 
     /**
-     * Test of setSipActivation method, of class SynchDeviceDAO.
+     * Test of setSipActivation method, of class SynchDeviceDAOImpl.
      */
     @Test
     public void testSetSipActivation() throws Exception {
         System.out.println("setSipActivation");
-
+        NbiDeviceData eqp = null;
         SipActivation sip = null;
-
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         Boolean expResult = null;
         Boolean result = instance.setSipActivation(eqp, sip);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
+    
 }

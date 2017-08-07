@@ -210,7 +210,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     @Override
     public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, JsonUtilException, HdmException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 300000, "");
+        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 20000, "");
 
         String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
         if (a.getValue().contains(wifiDisable)) {
@@ -271,6 +271,8 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             String jsonWifi = GsonUtil.serialize(adapter);
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonWifi);
+            
+            System.out.println("json: " + json.toString());
 
             StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
             //System.out.println(a.getValue());
