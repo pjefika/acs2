@@ -33,7 +33,7 @@ public class FindDeviceImpl implements FindDevice {
                 return dao.findDevicesByMac(in.getInput());
             case SERIAL:
                 return dao.findDeviceBySerialNumber(in.getInput());
-            case SUBCRIBER:
+            case SUBSCRIBER:
                 return dao.findDevicesBySubscriberId(in.getInput());
             default:
                 throw new SearchCriteriaException();

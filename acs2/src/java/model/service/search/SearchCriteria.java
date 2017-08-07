@@ -11,6 +11,6 @@ package model.service.search;
  */
 public enum SearchCriteria {
     
-    SUBCRIBER, SERIAL, MAC, IP;
+    SUBSCRIBER, SERIAL, MAC, IP;
     
 }

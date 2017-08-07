@@ -199,14 +199,14 @@ public class EquipamentoController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response reboot(GetDeviceDataIn in) {
-        in.setAcao(AcaoAcsEnum.GET_PPPOE_CREDENTIALS);
+        in.setAcao(AcaoAcsEnum.REBOOT);
         LogEntity l = in.create();
         try {
-            PPPoECredentialsInfo w = FactoryDAO.createSynch().getPPPoECredentials(in.getDevice());
+            Boolean w = FactoryDAO.createSynch().reboot(in.getDevice());
             l.setSaida(w);
             return ok(w);
         } catch (Exception e) {
-            l.setSaida(e.getMessage());
+            l.setSaida(false);
             return internalServerError(e);
         } finally {
             try {
