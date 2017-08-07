@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.search;
+package model.service.search;
+
+import model.log.AcaoAcsEnum;
+import model.log.LogInAcs;
+import util.GsonUtil;
 
 /**
  *
  * @author G0042204
  */
-public class SearchIn {
+public class SearchIn extends LogInAcs {
 
     private SearchCriteria criterio;
 
@@ -37,6 +41,16 @@ public class SearchIn {
 
     public void setInput(String input) {
         this.input = input;
+    }
+
+    @Override
+    public String input() {
+        return GsonUtil.serialize(this);
+    }
+
+    @Override
+    public AcaoAcsEnum acao() {
+        return AcaoAcsEnum.BUSCA_EQUIPAMENTO;
     }
 
 }

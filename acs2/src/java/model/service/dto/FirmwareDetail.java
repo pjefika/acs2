@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.dto;
+package model.service.dto;
 
 import model.device.firmware.FirmwareInfo;
 
@@ -14,7 +14,6 @@ import model.device.firmware.FirmwareInfo;
 public class FirmwareDetail {
 
     private final FirmwareInfo info;
-    private Boolean updated;
 
     public FirmwareDetail(FirmwareInfo info) {
         this.info = info;
@@ -25,10 +24,11 @@ public class FirmwareDetail {
     }
 
     public Boolean getUpdated() {
-        if (info == null) {
+        if (info != null) {
+            return info.isOk();
+        } else {
             return true;
         }
-        return info.isOk();
     }
 
 }

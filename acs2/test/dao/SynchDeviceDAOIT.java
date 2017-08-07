@@ -5,6 +5,8 @@
  */
 package dao;
 
+import dao.device.SynchDeviceDAO;
+import dao.device.NbiDAO;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.factory.FactoryDAO;

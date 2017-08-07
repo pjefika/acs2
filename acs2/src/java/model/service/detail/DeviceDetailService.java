@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service;
+package model.service.detail;
 
-import model.dto.DeviceDetail;
+import model.service.dto.DeviceDetail;
 
 /**
  *

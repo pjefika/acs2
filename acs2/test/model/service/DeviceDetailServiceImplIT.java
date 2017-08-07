@@ -5,8 +5,9 @@
  */
 package model.service;
 
+import model.service.detail.DeviceDetailServiceImpl;
 import init.EquipamentoTestValues;
-import model.dto.DeviceDetail;
+import model.service.dto.DeviceDetail;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertTrue;

@@ -5,12 +5,15 @@
  */
 package dao.factory;
 
-import dao.NbiDAO;
-import dao.NbiDAO_Impl;
-import dao.RemoteDAO;
-import dao.RemoteDAOImpl;
-import dao.SynchDeviceDAO;
-import dao.SynchDeviceDAOImpl;
+import dao.db.InterfaceDAO;
+import dao.db.LogDAOImpl;
+import dao.device.NbiDAO;
+import dao.device.NbiDAO_Impl;
+import dao.device.RemoteDAO;
+import dao.device.RemoteDAOImpl;
+import dao.device.SynchDeviceDAO;
+import dao.device.SynchDeviceDAOImpl;
+import model.entity.LogEntity;
 
 /**
  *
@@ -28,6 +31,10 @@ public class FactoryDAO {
 
     public static SynchDeviceDAO createSynch() {
         return new SynchDeviceDAOImpl();
+    }
+
+    public static InterfaceDAO<LogEntity> createLogDAO() {
+        return new LogDAOImpl();
     }
 
 }

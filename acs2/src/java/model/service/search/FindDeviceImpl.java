@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.search;
+package model.service.search;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import dao.NbiDAO;
+import dao.device.NbiDAO;
 import dao.factory.FactoryDAO;
 import java.util.List;
 import model.exception.SearchCriteriaException;

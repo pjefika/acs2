@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.search;
-
-import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import java.util.List;
+package model.log;
 
 /**
  *
  * @author G0042204
  */
-public interface FindDevice {
+public enum AcaoAcsEnum {
 
-    public List<NbiDeviceData> find(SearchIn in) throws Exception;
+    BUSCA_EQUIPAMENTO, DETALHE_EQUIPAMENTO;
 
 }

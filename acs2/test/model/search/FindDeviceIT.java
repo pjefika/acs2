@@ -5,6 +5,10 @@
  */
 package model.search;
 
+import model.service.search.SearchCriteria;
+import model.service.search.SearchIn;
+import model.service.search.FindDeviceImpl;
+import model.service.search.FindDevice;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
 import org.junit.After;

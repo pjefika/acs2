@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service;
+package model.service.detail;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import dao.NbiDAO;
-import dao.SynchDeviceDAO;
+import dao.device.NbiDAO;
+import dao.device.SynchDeviceDAO;
 import dao.factory.FactoryDAO;
-import model.dto.DeviceDetail;
-import model.dto.FirmwareDetail;
+import model.service.dto.DeviceDetail;
+import model.service.dto.FirmwareDetail;
 import model.exception.JsonUtilException;
 
 public class DeviceDetailServiceImpl implements DeviceDetailService {

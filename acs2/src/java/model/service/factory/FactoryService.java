@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.factory;
+package model.service.factory;
 
-import model.search.FindDevice;
-import model.search.FindDeviceImpl;
-import model.service.DeviceDetailService;
-import model.service.DeviceDetailServiceImpl;
+import model.service.search.FindDevice;
+import model.service.search.FindDeviceImpl;
+import model.service.detail.DeviceDetailService;
+import model.service.detail.DeviceDetailServiceImpl;
 
 /**
  *

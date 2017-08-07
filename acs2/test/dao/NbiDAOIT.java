@@ -5,6 +5,8 @@
  */
 package dao;
 
+import dao.device.NbiDAO_Impl;
+import dao.device.NbiDAO;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
 import org.junit.After;
