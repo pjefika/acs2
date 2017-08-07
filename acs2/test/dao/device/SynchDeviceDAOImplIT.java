@@ -473,8 +473,8 @@ public class SynchDeviceDAOImplIT {
         PPPoECredentialsInfo pPPoECredentialsInfo = null;
         SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         StringResponseDTO expResult = null;
-        StringResponseDTO result = instance.setPPPoECredentials(eqp, pPPoECredentialsInfo);
-        assertEquals(expResult, result);
+//        StringResponseDTO result = instance.setPPPoECredentials(eqp, pPPoECredentialsInfo);
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

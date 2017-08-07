@@ -319,7 +319,7 @@ public class JsonUtil {
     public static List<DeviceLog> deviceLog(StringResponseDTO a) {
         JsonElement jelement = new JsonParser().parse(a.getValue());
         JsonObject jobject = jelement.getAsJsonObject();
-        String[] split = jobject.get("DeviceLog").toString().replace("\"", "").replace("\\n", "\n").split("\n");
+        String[] split = jobject.get("DeviceLog").toString().replace("\"", "").replace("\\n", "\n").replace("\\t", "    ").split("\n");
 
         List<DeviceLog> logs = new ArrayList<>();
 

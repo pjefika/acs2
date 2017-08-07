@@ -30,6 +30,7 @@ import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.pppoe.PPPoECredentialsInfoOut;
 import model.device.serviceclass.ServiceClass;
 import model.device.sipactivation.SipActivation;
 import model.device.sipdiagnostics.SipDiagnostics;
@@ -199,11 +200,12 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public DmzInfo getDmzInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
+    public DmzInfo getDmzInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9503, opt, 30000, "");
-        //System.out.println(a.getValue());
-        //return JsonUtil.dmzInfo(a);
+        if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+            throw new UnsupportedException();
+        }
         return (DmzInfo) GsonUtil.convert(a.getValue(), DmzInfo.class);
     }
 
@@ -244,20 +246,30 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, jsonD);
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9508, opt, 30000, "");
-        //System.out.println(a.getValue());
+        System.out.println(a.getValue());
         return a.getValue().contains("SUCCESS");
     }
 
+    /**
+     * Não há doc do retorno
+     *
+     * @param eqp
+     * @param trace
+     * @return
+     * @throws DeviceOperationException
+     * @throws NBIException
+     * @throws OperationTimeoutException
+     * @throws ProviderException
+     */
     @Override
     public PortMappingInfo traceroute(NbiDeviceData eqp, TraceRouteRequest trace) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        //String traceStr = JsonUtil.serialize(trace, trace.getClass());            
         String traceStr = GsonUtil.serialize(trace);
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, traceStr);
 
-        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9524, opt, 15000, "");
-
+        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9524, opt, 120000, "");
+        System.out.println(a.getValue());
         return (PortMappingInfo) GsonUtil.convert(a.getValue(), PortMappingInfo.class);
 
     }
@@ -271,7 +283,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             String jsonWifi = GsonUtil.serialize(adapter);
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonWifi);
-            
+
             System.out.println("json: " + json.toString());
 
             StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9510, opt, 30000, "");
@@ -286,23 +298,41 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public DdnsInfo getDdns(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+    public DdnsInfo getDdns(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException, UnsupportedException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9507, opt, 30000, "");
+        if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+            throw new UnsupportedException();
+        }
         return (DdnsInfo) GsonUtil.convert(a.getValue(), DdnsInfo.class);
     }
 
     @Override
-    public XdslDiagnostics getXdslDiagnostic(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+    public XdslDiagnostics getXdslDiagnostic(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException, UnsupportedException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9514, opt, 30000, "");
+        if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+            throw new UnsupportedException();
+        }
         return (XdslDiagnostics) GsonUtil.convert(a.getValue(), XdslDiagnostics.class);
     }
 
+    /**
+     * não retorna adequadamente
+     *
+     * @param eqp
+     * @return
+     * @throws NBIException
+     * @throws OperationTimeoutException
+     * @throws ProviderException
+     * @throws DeviceOperationException
+     * @throws JsonUtilException
+     */
     @Override
     public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws NBIException, OperationTimeoutException, ProviderException, DeviceOperationException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9519, opt, 30000, "");
+        System.out.println(a.getValue());
         return JsonUtil.deviceLog(a);
     }
 
@@ -341,7 +371,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public StringResponseDTO setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfo pPPoECredentialsInfo) throws DeviceOperationException, OperationTimeoutException, NBIException, ProviderException {
+    public StringResponseDTO setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfoOut pPPoECredentialsInfo) throws DeviceOperationException, OperationTimeoutException, NBIException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         //String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
         String jsonPppoe = GsonUtil.serialize(pPPoECredentialsInfo);
@@ -365,6 +395,20 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         //System.out.println(a.getValue());
     }
 
+    /**
+     * Não segue o padrão para CPEs que não suportam o parâmetro
+     *
+     * @param eqp
+     * @param phyref
+     * @return
+     * @throws DeviceOperationException
+     * @throws NBIException
+     * @throws OperationTimeoutException
+     * @throws JsonUtilException
+     * @throws HdmException
+     * @throws ProviderException
+     * @throws UnsupportedException
+     */
     @Override
     public SipDiagnostics getSipDiagnostics(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, JsonUtilException, HdmException, ProviderException, UnsupportedException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();

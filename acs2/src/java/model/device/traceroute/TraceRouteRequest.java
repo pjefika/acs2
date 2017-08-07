@@ -16,8 +16,9 @@ public class TraceRouteRequest {
     public TraceRouteRequest(String host) {
         this.numberOfTries = "3";
         this.dataBlockSize = "38";
-        this.maxHopCount = "5";
-        this.ipInterface = "Device.IP.Interface.1";
+        this.maxHopCount = "50";
+//        this.ipInterface = "Device.IP.Interface.1";
+        this.ipInterface = "InternetGatewayDevice.LANDevice.1.LANHostConfigManagement.IPInterface.1";
         this.timeout = "100000";
         this.dscp = "0";
         this.host = host;

@@ -24,6 +24,7 @@ import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.pppoe.PPPoECredentialsInfoOut;
 import model.device.serviceclass.ServiceClass;
 import model.device.sipactivation.SipActivation;
 import model.device.sipdiagnostics.SipDiagnostics;
@@ -193,11 +194,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetWanInfo() throws Exception {
         System.out.println("getWanInfo");
 
-        WanInfo expResult = null;
         WanInfo result = instance.getWanInfo(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -207,11 +206,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetServiceClass() throws Exception {
         System.out.println("getServiceClass");
 
-        ServiceClass expResult = null;
         ServiceClass result = instance.getServiceClass(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -221,9 +218,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testSetServiceClass() throws Exception {
         System.out.println("setServiceClass");
 
-        ServiceClass sc = null;
+        ServiceClass sc = instance.getServiceClass(eqp);
 
-        Boolean expResult = null;
+        Boolean expResult = true;
         Boolean result = instance.setServiceClass(eqp, sc);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
@@ -237,11 +234,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetLanHosts() throws Exception {
         System.out.println("getLanHosts");
 
-        List<LanDevice> expResult = null;
         List<LanDevice> result = instance.getLanHosts(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -251,11 +246,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetDmzInfo() throws Exception {
         System.out.println("getDmzInfo");
 
-        DmzInfo expResult = null;
         DmzInfo result = instance.getDmzInfo(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -276,11 +269,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetPortMapping() throws Exception {
         System.out.println("getPortMapping");
 
-        List<PortMappingInfo> expResult = null;
         List<PortMappingInfo> result = instance.getPortMapping(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -290,43 +281,49 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetDhcp() throws Exception {
         System.out.println("getDhcp");
 
-        Dhcp expResult = null;
         Dhcp result = instance.getDhcp(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
      * Test of setDhcp method, of class SynchDeviceDAO.
      */
     @Test
-    public void testSetDhcp() throws Exception {
+    public void testSetDhcp() {
         System.out.println("setDhcp");
+        try {
+            Dhcp dh = instance.getDhcp(eqp);
 
-        Dhcp dh = null;
+            Boolean result = instance.setDhcp(eqp, dh);
+            assertEquals(true, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
 
-        Boolean expResult = null;
-        Boolean result = instance.setDhcp(eqp, dh);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
+     * Não há doc do retorno
+     *
+     *
      * Test of traceroute method, of class SynchDeviceDAO.
      */
     @Test
     public void testTraceroute() throws Exception {
         System.out.println("traceroute");
 
-        TraceRouteRequest trace = null;
+        TraceRouteRequest trace = new TraceRouteRequest("www.google.com.br");
+        try {
+            PortMappingInfo result = instance.traceroute(eqp, trace);
+            System.out.println(GsonUtil.serialize(result));
+            assertTrue(result != null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
 
-        PortMappingInfo expResult = null;
-        PortMappingInfo result = instance.traceroute(eqp, trace);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -338,7 +335,7 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
         WifiInfoFull wi = instance.getWifiInfoFull(eqp);
         wi.setChannel("6");
 //        wi.setSsid(wi.getSsid() + "-efika");
-                wi.setSsid("GVT-72D9");
+//        wi.setSsid("GVT-72D9");
 
         assertTrue(instance.setWifiInfoFull(eqp, wi));
     }
@@ -350,11 +347,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetDdns() throws Exception {
         System.out.println("getDdns");
 
-        DdnsInfo expResult = null;
         DdnsInfo result = instance.getDdns(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -364,25 +359,22 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetXdslDiagnostic() throws Exception {
         System.out.println("getXdslDiagnostic");
 
-        XdslDiagnostics expResult = null;
         XdslDiagnostics result = instance.getXdslDiagnostic(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
+     * não retorna adequadamente
      * Test of getDeviceLog method, of class SynchDeviceDAO.
      */
     @Test
     public void testGetDeviceLog() throws Exception {
         System.out.println("getDeviceLog");
 
-        List<DeviceLog> expResult = null;
         List<DeviceLog> result = instance.getDeviceLog(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -392,11 +384,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetDeviceLogR() throws Exception {
         System.out.println("getDeviceLogR");
 
-        List<DeviceLogR> expResult = null;
         List<DeviceLogR> result = instance.getDeviceLogR(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -406,11 +396,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetInterfaceStatistics() throws Exception {
         System.out.println("getInterfaceStatistics");
 
-        List<InterfaceStatistics> expResult = null;
         List<InterfaceStatistics> result = instance.getInterfaceStatistics(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -420,11 +408,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testGetPPPoECredentials() throws Exception {
         System.out.println("getPPPoECredentials");
 
-        PPPoECredentialsInfo expResult = null;
         PPPoECredentialsInfo result = instance.getPPPoECredentials(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -439,6 +425,7 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
             p.setDestAddress("www.google.com.br");
 
             PingResponse result = instance.pingDiagnostic(eqp, p);
+            System.out.println(GsonUtil.serialize(result));
             assertTrue(result.getStatus().equalsIgnoreCase("Complete"));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -453,13 +440,11 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testSetPPPoECredentials() throws Exception {
         System.out.println("setPPPoECredentials");
 
-        PPPoECredentialsInfo pPPoECredentialsInfo = null;
+        PPPoECredentialsInfo pPPoECredentialsInfo = new PPPoECredentialsInfo("turbonet@turbonet", "gvt25");
 
-        StringResponseDTO expResult = null;
-        StringResponseDTO result = instance.setPPPoECredentials(eqp, pPPoECredentialsInfo);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        StringResponseDTO result = instance.setPPPoECredentials(eqp, new PPPoECredentialsInfoOut(pPPoECredentialsInfo));
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -473,25 +458,23 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
 
         Boolean expResult = null;
         Boolean result = instance.setPortMapping(eqp, ports);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
+     * Não segue o padrão para CPEs que não suportam o parâmetro
      * Test of getSipDiagnostics method, of class SynchDeviceDAO.
      */
     @Test
     public void testGetSipDiagnostics() throws Exception {
         System.out.println("getSipDiagnostics");
 
-        Integer phyref = null;
+        Integer phyref = 1;
 
-        SipDiagnostics expResult = null;
         SipDiagnostics result = instance.getSipDiagnostics(eqp, phyref);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
     /**
@@ -501,13 +484,11 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     public void testSetSipActivation() throws Exception {
         System.out.println("setSipActivation");
 
-        SipActivation sip = null;
+        SipActivation sip = new SipActivation();
 
-        Boolean expResult = null;
         Boolean result = instance.setSipActivation(eqp, sip);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result != null);
     }
 
 }
