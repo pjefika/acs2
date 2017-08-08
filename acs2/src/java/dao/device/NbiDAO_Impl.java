@@ -9,8 +9,10 @@ import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
+import com.alcatel.hdm.service.nbi2.NbiParameterType;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import dao.factory.FactoryNBI;
+import dto.nbi.service.hdm.alcatel.com.NBIParameterType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,16 +73,13 @@ public class NbiDAO_Impl implements NbiDAO {
     @Override
     public List<NbiDeviceData> findDeviceByExternalIPAddress(String ipAddress) throws NBIException_Exception {
         NbiTemplate n = new NbiTemplate();
-        n.setName("ct.find.devices.deviceProtocol.device.externalIPAddress");
-
+        n.setName("Find Devices By External IP Address");
         NbiParameter param = new NbiParameter();
-
-        param.setName("externalIPAddress");
+        param.setName("deviceExternalIPAddress");
         param.setValue(ipAddress);
-
         n.getParameters().add(param);
 
-        return nbi().findDevicesByTemplate(n, 1000, -1);
+        return nbi().findDevicesByTemplate(n, 1, -1);
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import util.GsonUtil;
 
 /**
  *
@@ -96,6 +97,7 @@ public class NbiDAO_ImplIT {
         try {
             System.out.println("getAvailableCriteriaTemplates");
             List<NbiTemplate> result = instance.getAvailableCriteriaTemplates();
+            System.out.println(GsonUtil.serialize(result));
             System.out.println("end");
             assertTrue(!result.isEmpty());
             // TODO review the generated test code and remove the default call to fail.
