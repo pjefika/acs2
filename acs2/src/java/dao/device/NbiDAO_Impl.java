@@ -9,10 +9,8 @@ import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
-import com.alcatel.hdm.service.nbi2.NbiParameterType;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import dao.factory.FactoryNBI;
-import dto.nbi.service.hdm.alcatel.com.NBIParameterType;
 import java.util.ArrayList;
 import java.util.List;
 
