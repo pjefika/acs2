@@ -36,8 +36,8 @@ public class FactoryNBI {
             ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
             ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
 
-            ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(BindingProviderProperties.REQUEST_TIMEOUT, 3000);
-            ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(BindingProviderProperties.CONNECT_TIMEOUT, 3000);
+            ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(BindingProviderProperties.REQUEST_TIMEOUT, 30000);
+            ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(BindingProviderProperties.CONNECT_TIMEOUT, 10000);
 
             return nbi;
         } catch (MalformedURLException e) {
