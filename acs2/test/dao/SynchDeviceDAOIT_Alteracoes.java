@@ -166,6 +166,8 @@ public class SynchDeviceDAOIT_Alteracoes extends EquipamentoTestValues {
 
     /**
      * Test of setPPPoECredentials method, of class SynchDeviceDAO.
+     * 
+     * Retornando O CPE não suporta o(s) parâmetro(s) solicitados.
      */
     @Test
     public void testSetPPPoECredentials() throws Exception {

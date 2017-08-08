@@ -378,6 +378,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, jsonPppoe);
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 30000, "");
+        System.out.println(a.getValue());
         return a.getValue().contains("SUCCESS");
     }
 
