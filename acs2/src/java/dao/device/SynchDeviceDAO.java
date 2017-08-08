@@ -36,7 +36,6 @@ import model.exception.HdmException;
 import model.exception.JsonUtilException;
 import model.exception.UnsupportedException;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
-import motive.hdm.synchdeviceops.StringResponseDTO;
 
 /**
  *

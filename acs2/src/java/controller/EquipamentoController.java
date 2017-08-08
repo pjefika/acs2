@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import model.device.dhcp.Dhcp;
 import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.ping.PingResponse;
@@ -25,6 +26,7 @@ import model.entity.LogEntity;
 import model.log.AcaoAcsEnum;
 import model.service.factory.FactoryService;
 import model.service.dto.DetailIn;
+import model.service.dto.DhcpIn;
 import model.service.dto.GetDeviceDataIn;
 import model.service.dto.PingDiagnosticIn;
 import model.service.dto.SetWifiIn;
@@ -277,6 +279,52 @@ public class EquipamentoController extends RestAbstractController {
             return ok(w);
         } catch (Exception e) {
             l.setSaida(false);
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getDhcp")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getDhcp(GetDeviceDataIn in) {
+        in.setAcao(AcaoAcsEnum.GET_PPPOE_CREDENTIALS);
+        LogEntity l = in.create();
+        try {
+            Dhcp w = FactoryDAO.createSynch().getDhcp(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/setDhcp")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setDhcp(DhcpIn in) {
+        in.setAcao(AcaoAcsEnum.GET_DHCP);
+        LogEntity l = in.create();
+        try {
+            Boolean w = FactoryDAO.createSynch().setDhcp(in.getDevice(), in.getDhcp());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
             return internalServerError(e);
         } finally {
             try {

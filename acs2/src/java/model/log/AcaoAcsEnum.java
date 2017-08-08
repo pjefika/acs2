@@ -22,6 +22,8 @@ public enum AcaoAcsEnum {
     GET_PPPOE_CREDENTIALS,
     REBOOT,
     FACTORY_RESET,
-    PING_DIAGNOSTIC;
+    PING_DIAGNOSTIC,
+    GET_DHCP,
+    SET_DHCP;
 
 }
