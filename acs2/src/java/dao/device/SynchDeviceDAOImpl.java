@@ -371,14 +371,14 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public StringResponseDTO setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfoOut pPPoECredentialsInfo) throws DeviceOperationException, OperationTimeoutException, NBIException, ProviderException {
+    public Boolean setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfoOut pPPoECredentialsInfo) throws DeviceOperationException, OperationTimeoutException, NBIException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         //String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
         String jsonPppoe = GsonUtil.serialize(pPPoECredentialsInfo);
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, jsonPppoe);
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 30000, "");
-        return a;
+        return a.getValue().contains("SUCCESS");
     }
 
     @Override
