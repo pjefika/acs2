@@ -78,12 +78,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     @Test
     public void testReboot() throws Exception {
         System.out.println("reboot");
-
-        Boolean expResult = null;
+        Boolean expResult = true;
         Boolean result = instance.reboot(eqp);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

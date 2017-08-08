@@ -83,12 +83,12 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public Boolean checkOnline(NbiDeviceData eqp) throws DeviceOperationException, NBIException, ProviderException {
+    public Boolean checkOnline(NbiDeviceData eqp) throws NBIException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         try {
             synch().checkOnline(NbiDecorator.adapter(eqp), opt, 15000, "");
             return true;
-        } catch (OperationTimeoutException e) {
+        } catch (DeviceOperationException | OperationTimeoutException e) {
             return false;
         }
     }

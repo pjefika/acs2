@@ -92,14 +92,17 @@ public class NbiDAO_ImplIT {
      * Test of getAvailableCriteriaTemplates method, of class NbiDAO_Impl.
      */
     @Test
-    public void testGetAvailableCriteriaTemplates() throws Exception {
-        System.out.println("getAvailableCriteriaTemplates");
-        List<NbiTemplate> expResult = null;
-        List<NbiTemplate> result = instance.getAvailableCriteriaTemplates();
-        System.out.println("end");
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGetAvailableCriteriaTemplates() {
+        try {
+            System.out.println("getAvailableCriteriaTemplates");
+            List<NbiTemplate> result = instance.getAvailableCriteriaTemplates();
+            System.out.println("end");
+            assertTrue(!result.isEmpty());
+            // TODO review the generated test code and remove the default call to fail.
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
     }
 
     /**

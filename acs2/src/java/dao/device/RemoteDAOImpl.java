@@ -12,6 +12,7 @@ import dao.factory.FactoryNBI;
 import static dao.util.NbiDecorator.adapterCaps;
 import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
+import dto.nbi.service.hdm.alcatel.com.NBITemplate;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +46,10 @@ public class RemoteDAOImpl implements RemoteDAO {
         List<NBIFirmwareImageData> l = new ArrayList<>();
         l.addAll(Arrays.asList(remote().getAvailableFirmwareImages(adapterCaps(eqp))));
         return l;
+    }
+
+    public NBITemplate[] getAvailableCriteriaTemplates() throws RemoteException {
+        return remote().getAvailableCriteriaTemplates();
     }
 
 }
