@@ -50,7 +50,7 @@ public interface SynchDeviceDAO {
 
     public Boolean checkOnline(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
 
-    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, ProviderException, model.exception.JsonUtilException;
+    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws Exception;
 
     public void getParameters(NbiDeviceData eqp) throws Exception;
 

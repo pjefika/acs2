@@ -94,7 +94,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, ProviderException, model.exception.JsonUtilException {
+    public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 55000, "");
         return JsonUtil.firmwareInfo(a);
@@ -415,12 +415,17 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         String leJson = "{\"phyreferencelist\":\"" + phyref.toString() + "\"}";
         List<Object> json = NbiDecorator.getEmptyJson();
         json.set(0, leJson);
-        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9520, opt, 30000, "");
-        //System.out.println(a.getValue());        
-        if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+
+        try {
+            StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9520, opt, 30000, "");
+            //System.out.println(a.getValue());        
+            if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+                throw new UnsupportedException();
+            }
+            return (SipDiagnostics) GsonUtil.convertValues(a, SipDiagnostics.class);
+        } catch (DeviceOperationException e) {
             throw new UnsupportedException();
         }
-        return (SipDiagnostics) GsonUtil.convertValues(a, SipDiagnostics.class);
     }
 
     @Override

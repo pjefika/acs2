@@ -70,7 +70,7 @@ public class FindDeviceIT {
     public void testFindSubscriber() throws Exception {
         try {
             System.out.println("find - SearchCriteria.SUBCRIBER");
-            SearchIn in = new SearchIn(SearchCriteria.SUBSCRIBER, "FLA-81D2X6SWR-013");
+            SearchIn in = new SearchIn(SearchCriteria.SUBSCRIBER, "CTA-81BEK5U33-013");
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {
@@ -87,7 +87,7 @@ public class FindDeviceIT {
     public void testFindMac() throws Exception {
         try {
             System.out.println("find - SearchCriteria.MAC");
-            SearchIn in = new SearchIn(SearchCriteria.MAC, "B8:88:E3:EA:14:C8");
+            SearchIn in = new SearchIn(SearchCriteria.MAC, "3C:1E:04:7F:72:DA");
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {

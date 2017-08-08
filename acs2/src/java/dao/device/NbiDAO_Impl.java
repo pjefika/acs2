@@ -75,7 +75,7 @@ public class NbiDAO_Impl implements NbiDAO {
 
         NbiParameter param = new NbiParameter();
 
-        param.setName("ct.find.devices.deviceProtocol.device.externalIPAddress");
+        param.setName("externalIPAddress");
         param.setValue(ipAddress);
 
         n.getParameters().add(param);

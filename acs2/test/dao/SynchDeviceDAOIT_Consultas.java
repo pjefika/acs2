@@ -65,6 +65,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
             System.out.println("Consultando...");
             try {
                 eqp = nbi.findDeviceByGUID(GUID);
+                System.out.println("Retorno: " + GsonUtil.serialize(eqp));
             } catch (NBIException_Exception ex) {
                 Logger.getLogger(SynchDeviceDAOIT_Consultas.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -247,13 +248,14 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      */
     @Test
     public void testGetDeviceLog() throws Exception {
-        System.out.println("getDeviceLog");
-
-        List<DeviceLog> expResult = null;
-        List<DeviceLog> result = instance.getDeviceLog(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            System.out.println("getDeviceLog");
+            List<DeviceLog> result = instance.getDeviceLog(eqp);
+            System.out.println("Retorno: " + GsonUtil.serialize(result));
+            assertTrue(!result.isEmpty());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -263,8 +265,8 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
     public void testGetDeviceLogR() throws Exception {
         try {
             System.out.println("getDeviceLogR");
-            List<DeviceLogR> expResult = null;
             List<DeviceLogR> result = instance.getDeviceLogR(eqp);
+            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(!result.isEmpty());
         } catch (Exception e) {
             fail("The test case is a prototype.");
@@ -279,8 +281,9 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
     public void testGetInterfaceStatistics() throws Exception {
         try {
             System.out.println("getInterfaceStatistics");
-            List<InterfaceStatistics> expResult = null;
             List<InterfaceStatistics> result = instance.getInterfaceStatistics(eqp);
+            System.out.println("Retorno: " + GsonUtil.serialize(result));
+
             assertTrue(!result.isEmpty());
 
         } catch (Exception e) {
@@ -314,6 +317,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
             PingRequest p = new PingRequest();
             p.setDestAddress("www.google.com.br");
             PingResponse result = instance.pingDiagnostic(eqp, p);
+            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result.getStatus().equalsIgnoreCase("Complete"));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -331,6 +335,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
             SipDiagnostics result = instance.getSipDiagnostics(eqp, 1);
             assertTrue(result != null);
         } catch (Exception e) {
+            e.printStackTrace();
             fail(e.getMessage());
         }
 

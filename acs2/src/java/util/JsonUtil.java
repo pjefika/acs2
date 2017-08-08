@@ -28,6 +28,7 @@ import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.xdsldiagnostics.XdslDiagnostics;
+import model.exception.UnsupportedException;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 
 /**
@@ -36,7 +37,7 @@ import motive.hdm.synchdeviceops.StringResponseDTO;
  */
 public class JsonUtil {
 
-    public static FirmwareInfo firmwareInfo(StringResponseDTO a) throws JsonUtilException {
+    public static FirmwareInfo firmwareInfo(StringResponseDTO a) throws Exception {
         String firmwareVersion = "";
         String preferredVersion = "";
         try {
@@ -45,7 +46,9 @@ public class JsonUtil {
             firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
             preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
         } catch (Exception e) {
-            System.out.println(a.getValue());
+            if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+                throw new UnsupportedException();
+            }
             throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
         return new FirmwareInfo(firmwareVersion, preferredVersion);
