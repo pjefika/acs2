@@ -13,11 +13,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import model.device.ddns.DdnsInfo;
 import model.device.dhcp.Dhcp;
 import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.ping.PingResponse;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.serviceclass.ServiceClass;
+import model.device.sipdiagnostics.SipDiagnostics;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.xdsldiagnostics.XdslDiagnostics;
@@ -29,7 +32,10 @@ import model.service.dto.DetailIn;
 import model.service.dto.DhcpIn;
 import model.service.dto.GetDeviceDataIn;
 import model.service.dto.PingDiagnosticIn;
+import model.service.dto.ServiceClassIn;
 import model.service.dto.SetWifiIn;
+import model.service.dto.SipActivationIn;
+import model.service.dto.SipDiagnosticsIn;
 
 /**
  *
@@ -271,7 +277,6 @@ public class EquipamentoController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response pingDiagnostic(PingDiagnosticIn in) {
-        in.setAcao(AcaoAcsEnum.FACTORY_RESET);
         LogEntity l = in.create();
         try {
             PingResponse w = FactoryDAO.createSynch().pingDiagnostic(in.getDevice(), in.getRequest());
@@ -317,7 +322,6 @@ public class EquipamentoController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response setDhcp(DhcpIn in) {
-        in.setAcao(AcaoAcsEnum.GET_DHCP);
         LogEntity l = in.create();
         try {
             Boolean w = FactoryDAO.createSynch().setDhcp(in.getDevice(), in.getDhcp());
@@ -334,5 +338,119 @@ public class EquipamentoController extends RestAbstractController {
             }
         }
     }
+
+    @POST
+    @Path("/getDdns")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getDdns(GetDeviceDataIn in) {
+        in.setAcao(AcaoAcsEnum.GET_DDNS);
+        LogEntity l = in.create();
+        try {
+            DdnsInfo w = FactoryDAO.createSynch().getDdns(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getServiceClass")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getServiceClass(GetDeviceDataIn in) {
+        in.setAcao(AcaoAcsEnum.GET_SERVICE_CLASS);
+        LogEntity l = in.create();
+        try {
+            ServiceClass w = FactoryDAO.createSynch().getServiceClass(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/setServiceClass")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setServiceClass(ServiceClassIn in) {
+        LogEntity l = in.create();
+        try {
+            Boolean w = FactoryDAO.createSynch().setServiceClass(in.getDevice(), in.getService());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getSipDiagnostics")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getSipDiagnostics(SipDiagnosticsIn in) {
+        in.setAcao(AcaoAcsEnum.GET_SERVICE_CLASS);
+        LogEntity l = in.create();
+        try {
+            SipDiagnostics w = FactoryDAO.createSynch().getSipDiagnostics(in.getDevice(), in.getPhyref());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
+    @POST
+    @Path("/setSipActivation")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setSipActivation(SipActivationIn in) {
+        LogEntity l = in.create();
+        try {
+            Boolean w = FactoryDAO.createSynch().setSipActivation(in.getDevice(), in.getSip());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
 
 }

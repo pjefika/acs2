@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.device.DmzInfo;
+import model.device.ddns.DdnsInfo;
 import model.device.dhcp.Dhcp;
 import model.device.firmware.FirmwareInfo;
 import model.device.interfacestatistics.InterfaceStatistics;
@@ -74,12 +75,12 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
 
     @After
     public void tearDown() {
-        try {
-            System.out.println("sleep");
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SynchDeviceDAOIT_Consultas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            System.out.println("sleep");
+//            Thread.sleep(5000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(SynchDeviceDAOIT_Consultas.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     /**
@@ -219,8 +220,8 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
     @Test
     public void testGetDdns() throws Exception {
         try {
-            System.out.println("traceroute");
-            PortMappingInfo result = instance.traceroute(eqp, new TraceRouteRequest("www.google.com.br"));
+            System.out.println("testGetDdns");
+            DdnsInfo result = instance.getDdns(eqp);
             System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
