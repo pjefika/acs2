@@ -45,13 +45,13 @@ import util.GsonUtil;
  *
  * @author G0042204
  */
-public class SynchDeviceDAOIT extends EquipamentoTestValues {
+public class SynchDeviceDAOIT_Acoes extends EquipamentoTestValues {
 
     private SynchDeviceDAO instance = FactoryDAO.createSynch();
     private NbiDAO nbi = FactoryDAO.createNBI();
     private NbiDeviceData eqp;
 
-    public SynchDeviceDAOIT() {
+    public SynchDeviceDAOIT_Acoes() {
     }
 
     @BeforeClass
@@ -64,7 +64,8 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
 
     @Before
     public void setUp() throws NBIException_Exception {
-        eqp = nbi.findDeviceByGUID(this.GUID);
+        System.out.println("setUp");
+        eqp = nbi.findDeviceByGUID(SynchDeviceDAOIT_Acoes.GUID);
     }
 
     @After
@@ -75,14 +76,15 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
      * Test of reboot method, of class SynchDeviceDAO.
      */
     @Test
-    public void testReboot() throws Exception {
-        System.out.println("reboot");
-
-        Boolean expResult = null;
-        Boolean result = instance.reboot(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testReboot() {
+        try {
+            System.out.println("reboot");
+            Boolean expResult = true;
+            Boolean result = instance.reboot(eqp);
+            assertEquals(expResult, result);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -90,13 +92,16 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
      */
     @Test
     public void testFactoryReset() throws Exception {
-        System.out.println("factoryReset");
+        try {
+            System.out.println("factoryReset");
+            Boolean expResult = true;
+            Boolean result = instance.factoryReset(eqp);
+            assertEquals(expResult, result);
+            // TODO review the generated test code and remove the default call to fail.
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
 
-        Boolean expResult = null;
-        Boolean result = instance.factoryReset(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -206,9 +211,10 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     @Test
     public void testGetServiceClass() throws Exception {
         System.out.println("getServiceClass");
-
-        ServiceClass expResult = null;
+        ServiceClass expResult = new ServiceClass();
+        expResult.setClassOfService("RonaldoServiceClass");
         ServiceClass result = instance.getServiceClass(eqp);
+        System.out.println("end");
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -250,12 +256,9 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
     @Test
     public void testGetDmzInfo() throws Exception {
         System.out.println("getDmzInfo");
-
-        DmzInfo expResult = null;
         DmzInfo result = instance.getDmzInfo(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("end");
+        assertTrue(result != null);
     }
 
     /**
@@ -338,7 +341,7 @@ public class SynchDeviceDAOIT extends EquipamentoTestValues {
         WifiInfoFull wi = instance.getWifiInfoFull(eqp);
         wi.setChannel("6");
 //        wi.setSsid(wi.getSsid() + "-efika");
-                wi.setSsid("GVT-72D9");
+        wi.setSsid("GVT-72D9");
 
         assertTrue(instance.setWifiInfoFull(eqp, wi));
     }

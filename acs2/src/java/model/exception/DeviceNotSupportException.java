@@ -9,10 +9,9 @@ package model.exception;
  *
  * @author G0042204
  */
-public class HdmException extends Exception {
+public class DeviceNotSupportException extends Exception {
 
-    public HdmException() {
+    public DeviceNotSupportException() {
         super("Falha ao consultar a plataforma Motive.");
     }
-
 }

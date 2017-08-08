@@ -60,25 +60,27 @@ public class NbiDAO_Impl implements NbiDAO {
         param.setValue(mac);
 
         n.getParameters().add(param);
-        
-       
 
-        return nbi().findDevicesByTemplate(n, 1, -1);
+        return nbi().findDevicesByTemplate(n, 1000, -1);
     }
-    
-    public List<NbiTemplate> getAvailableCriteriaTemplates() throws NBIException_Exception{
-        return  nbi().getAvailableCriteriaTemplates();
+
+    public List<NbiTemplate> getAvailableCriteriaTemplates() throws NBIException_Exception {
+        return nbi().getAvailableCriteriaTemplates();
     }
 
     @Override
     public List<NbiDeviceData> findDeviceByExternalIPAddress(String ipAddress) throws NBIException_Exception {
-        List<NbiDeviceData> r = new ArrayList<>();
-        NbiDeviceData d = nbi().findDeviceByExternalIPAddress(ipAddress);
+        NbiTemplate n = new NbiTemplate();
+        n.setName("MacAddress");
 
-        if (d != null) {
-            r.add(d);
-        }
-        return r;
+        NbiParameter param = new NbiParameter();
+
+        param.setName("macAddress");
+        param.setValue(ipAddress);
+
+        n.getParameters().add(param);
+
+        return nbi().findDevicesByTemplate(n, 1000, -1);
     }
 
     @Override

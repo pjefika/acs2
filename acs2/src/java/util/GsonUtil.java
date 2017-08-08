@@ -27,7 +27,7 @@ public class GsonUtil {
 
     public static Object convert(String str, Class c) {
         JsonReader reader = new JsonReader(new StringReader(str));
-        reader.setLenient(true);
+//        reader.setLenient(true);
         return gson.fromJson(reader, c);
     }
     

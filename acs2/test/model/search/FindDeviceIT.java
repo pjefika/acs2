@@ -104,7 +104,7 @@ public class FindDeviceIT {
     public void testFindIP() throws Exception {
         try {
             System.out.println("find - SearchCriteria.IP");
-            SearchIn in = new SearchIn(SearchCriteria.IP, "177.134.146.39");
+            SearchIn in = new SearchIn(SearchCriteria.IP, "177.133.214.86");
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {
