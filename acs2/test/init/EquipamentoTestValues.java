@@ -23,7 +23,8 @@ public class EquipamentoTestValues {
      * 18523038 - cliente
      * 
      * BANCADA ARNO - QX4S1EB598946 (18358162)
+     * 165014 - PACE HOMOLOG
      */
-    public static Long GUID = new Long(18358162);
+    public static Long GUID = new Long(165014);
 
 }

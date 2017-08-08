@@ -23,13 +23,16 @@ import javax.xml.ws.Service;
  */
 public class FactoryNBI {
 
-    private static String ENDPOINT = "10.113.64.1"; // ENG
-//    private static String ENDPOINT = "200.168.104.216"; // WEB
+//    private static String ENDPOINT = "10.113.64.1"; // ENG
+    private static String ENDPOINT = "200.168.104.216"; // WEB
 
     public static NBIService createNBIService() {
+        
+        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
+        System.setProperty("http.proxyPort", "8080");
         try {
             URL url;
-            url = new URL("http://" + ENDPOINT + ":7025/NBIServiceImpl/NBIService?wsdl");
+            url = new URL("http://" + ENDPOINT + ":7015/NBIServiceImpl/NBIService?wsdl");
             QName qname = new QName("http://nbi2.service.hdm.alcatel.com/", "NBIService");
             Service service = Service.create(url, qname);
             NBIService nbi = service.getPort(NBIService.class);
@@ -57,13 +60,15 @@ public class FactoryNBI {
     public static SynchDeviceOperationsService createSynch() {
         try {
             URL url;
-            url = new URL("http://" + ENDPOINT + ":7025/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
+            url = new URL("http://" + ENDPOINT + ":7015/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
             QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
                     "SynchDeviceOperationsNBIService");
             Service service = Service.create(url, qname);
             SynchDeviceOperationsService synch = service.getPort(SynchDeviceOperationsService.class);
-            ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
-            ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
+//            ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
+//            ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
+            ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "nbi_user");
+            ((javax.xml.ws.BindingProvider) synch).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibrasil");
             return synch;
         } catch (MalformedURLException e) {
             return null;

@@ -65,13 +65,17 @@ public class NbiDAO_ImplIT {
     @Test
     public void testFindDevicesBySubscriberId() throws Exception {
         System.out.println("findDevicesBySubscriberId");
-        String subscriberId = "";
+        String subscriberId = "NO_SUBSCRIBER";
 
         List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDevicesBySubscriberId(subscriberId);
-        assertEquals(expResult, result);
+        for (NbiDeviceData nbiDeviceData : result) {
+            System.out.println("LeDevice: "+GsonUtil.serialize(nbiDeviceData));
+        }
+        
+        assertTrue(result!=null);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//        fail("The test case is a prototype.");
     }
 
     /**
@@ -128,10 +132,11 @@ public class NbiDAO_ImplIT {
     @Test
     public void testFindDeviceBySerialNumber() throws Exception {
         System.out.println("findDeviceBySerialNumber");
-        String serial = "";
+        String serial = "N71327865001810";
 
         List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDeviceBySerialNumber(serial);
+        System.out.println(GsonUtil.serialize(result));
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

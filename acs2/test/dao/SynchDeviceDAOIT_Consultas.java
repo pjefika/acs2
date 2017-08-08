@@ -334,6 +334,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getSipDiagnostics");
             SipDiagnostics result = instance.getSipDiagnostics(eqp, 1);
+            System.out.println("leSIP: "+GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             e.printStackTrace();
