@@ -26,6 +26,7 @@ import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
+import model.device.serviceclass.ServiceClass;
 import model.device.sipdiagnostics.SipDiagnostics;
 import model.device.traceroute.TraceRouteRequest;
 import model.device.wan.WanInfo;
@@ -106,6 +107,18 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getFirmwareVersion");
             FirmwareInfo result = instance.getFirmwareVersion(eqp);
+            System.out.println("Retorno: " + GsonUtil.serialize(result));
+            assertTrue(result != null);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetServiceClass() throws Exception {
+        try {
+            System.out.println("getFirmwareVersion");
+            ServiceClass result = instance.getServiceClass(eqp);
             System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
@@ -334,7 +347,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getSipDiagnostics");
             SipDiagnostics result = instance.getSipDiagnostics(eqp, 1);
-            System.out.println("leSIP: "+GsonUtil.serialize(result));
+            System.out.println("leSIP: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             e.printStackTrace();

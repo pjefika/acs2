@@ -53,7 +53,7 @@ public class FindDeviceIT {
     public void testFindSerial() throws Exception {
         try {
             System.out.println("find - SearchCriteria.SERIAL");
-            SearchIn in = new SearchIn(SearchCriteria.SERIAL, "LU1322503001553");
+            SearchIn in = new SearchIn(SearchCriteria.SERIAL, "4D528426309390");
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {
@@ -87,7 +87,7 @@ public class FindDeviceIT {
     public void testFindMac() throws Exception {
         try {
             System.out.println("find - SearchCriteria.MAC");
-            SearchIn in = new SearchIn(SearchCriteria.MAC, "3C:1E:04:7F:72:DA");
+            SearchIn in = new SearchIn(SearchCriteria.MAC, "68:15:90:66:D9:AA");
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {

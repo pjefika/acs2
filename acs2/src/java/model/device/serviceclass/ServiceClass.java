@@ -11,14 +11,14 @@ package model.device.serviceclass;
  */
 public class ServiceClass {
     
-    private String name;
+    private String classOfService;
 
     public String getClassOfService() {
-        return name;
+        return classOfService;
     }
 
     public void setClassOfService(String classOfService) {
-        this.name = classOfService;
+        this.classOfService = classOfService;
     }
     
 }

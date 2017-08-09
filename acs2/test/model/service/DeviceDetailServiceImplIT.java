@@ -10,7 +10,7 @@ import init.EquipamentoTestValues;
 import model.service.dto.DetailOut;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -51,8 +51,11 @@ public class DeviceDetailServiceImplIT extends EquipamentoTestValues {
             System.out.println("consultar");
             DeviceDetailServiceImpl instance = new DeviceDetailServiceImpl();
             DetailOut result = instance.consultar(GUID);
-            System.out.println("end: " + GsonUtil.serialize(result));
-            assertTrue(result != null);
+            System.out.println(GsonUtil.serialize(result));
+
+            assertEquals("Online", result.getOnline(), true);
+            assertEquals("FirmwareUpdated", result.getFirmware().getUpdated(), true);
+
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage());
