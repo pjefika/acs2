@@ -24,13 +24,12 @@ import javax.xml.ws.Service;
 public class FactoryNBI {
 
 //    private static String ENDPOINT = "10.113.64.1"; // ENG
-    private static String ENDPOINT = "200.168.104.216"; // WEB
+    private static String ENDPOINT = "200.168.104.216"; // QA
 
     public static NBIService createNBIService() {
-        
-        System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
-        System.setProperty("http.proxyPort", "8080");
+
         try {
+            applyProxy();
             URL url;
             url = new URL("http://" + ENDPOINT + ":7015/NBIServiceImpl/NBIService?wsdl");
             QName qname = new QName("http://nbi2.service.hdm.alcatel.com/", "NBIService");
@@ -45,20 +44,26 @@ public class FactoryNBI {
             return nbi;
         } catch (MalformedURLException e) {
             return null;
+        } finally {
+            removeProxy();
         }
     }
 
     public static NBIServicePortStub createRemote() {
         try {
+            applyProxy();
             NBIServicePortStub stub = new NBIServicePortStub(new URL("http://" + ENDPOINT + ":7025/remotehdm/NBIService?wsdl"), new NBIServiceLocator());
             return (NBIServicePortStub) SoapUtil.addWsSecurityHeader(stub, "nbi_user", "nbibrasil");
         } catch (Exception e) {
             return null;
+        } finally {
+            removeProxy();
         }
     }
 
     public static SynchDeviceOperationsService createSynch() {
         try {
+            applyProxy();
             URL url;
             url = new URL("http://" + ENDPOINT + ":7015/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
             QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
@@ -72,6 +77,29 @@ public class FactoryNBI {
             return synch;
         } catch (MalformedURLException e) {
             return null;
+        } finally {
+            removeProxy();
+        }
+    }
+
+    public static void applyProxy() {
+        if (ENDPOINT.equalsIgnoreCase("200.168.104.216")) {
+            System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
+            System.setProperty("http.proxyPort", "8080");
+        }
+    }
+
+    public static void removeProxy() {
+        clearConditionalProperty("http.proxyHost");
+        clearConditionalProperty("http.proxyHost");
+    }
+
+    protected static void clearConditionalProperty(String prop) {
+        try {
+            if (!System.getProperty(prop).isEmpty()) {
+                System.clearProperty(prop);
+            }
+        } catch (Exception e) {
         }
     }
 
