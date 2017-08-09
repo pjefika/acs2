@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.device.dhcp.Dhcp;
 import model.device.portmapping.PortMappingInfo;
-import model.device.pppoe.PPPoECredentialsInfoOut;
+import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.serviceclass.ServiceClass;
 import model.device.sipactivation.SipActivation;
 import model.device.wifi.WifiInfoFull;
@@ -144,8 +144,17 @@ public class SynchDeviceDAOIT_Alteracoes extends EquipamentoTestValues {
             System.out.println("setWifiInfoFull");
             Boolean expResult = true;
             WifiInfoFull w = instance.getWifiInfoFull(eqp);
+            System.out.println(GsonUtil.serialize(w));
+            String channel = "11";
+
+            w.setChannel(channel);
             Boolean result = instance.setWifiInfoFull(eqp, w);
-            assertEquals(expResult, result);
+
+            WifiInfoFull result1 = instance.getWifiInfoFull(eqp);
+
+            assertEquals("Consulta", expResult, result);
+            assertEquals("Alteração", result1.getChannel(), channel);
+
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -153,7 +162,7 @@ public class SynchDeviceDAOIT_Alteracoes extends EquipamentoTestValues {
 
     /**
      * Test of setPPPoECredentials method, of class SynchDeviceDAO.
-     * 
+     *
      * Retornando O CPE não suporta o(s) parâmetro(s) solicitados.
      */
     @Test
@@ -161,7 +170,9 @@ public class SynchDeviceDAOIT_Alteracoes extends EquipamentoTestValues {
         try {
             System.out.println("setPPPoECredentials");
             Boolean expResult = true;
-            PPPoECredentialsInfoOut p = new PPPoECredentialsInfoOut(instance.getPPPoECredentials(eqp));
+            PPPoECredentialsInfo p = instance.getPPPoECredentials(eqp);
+            System.out.println(GsonUtil.serialize(p));
+            Thread.sleep(3000);
             Boolean result = instance.setPPPoECredentials(eqp, p);
             assertEquals(expResult, result);
         } catch (Exception e) {

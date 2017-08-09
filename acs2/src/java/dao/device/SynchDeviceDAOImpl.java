@@ -30,7 +30,6 @@ import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
-import model.device.pppoe.PPPoECredentialsInfoOut;
 import model.device.serviceclass.ServiceClass;
 import model.device.sipactivation.SipActivation;
 import model.device.sipdiagnostics.SipDiagnostics;
@@ -372,15 +371,22 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public Boolean setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfoOut pPPoECredentialsInfo) throws DeviceOperationException, OperationTimeoutException, NBIException, ProviderException {
+    public Boolean setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfo pPPoECredentialsInfo) throws DeviceOperationException, OperationTimeoutException, NBIException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        //String jsonPppoe = JsonUtil.serialize(pPPoECredentialsInfo, pPPoECredentialsInfo.getClass());
         String jsonPppoe = GsonUtil.serialize(pPPoECredentialsInfo);
         List<Object> json = NbiDecorator.getEmptyJson();
-        json.set(0, jsonPppoe);
-        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 30000, "");
-        System.out.println(a.getValue());
-        return a.getValue().contains("SUCCESS");
+        try {
+            json.set(0, jsonPppoe);
+            StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 30000, "");
+            System.out.println(a.getValue());
+            return a.getValue().contains("SUCCESS");
+        } catch (Exception e) {
+            json.set(0, jsonPppoe.toLowerCase());
+            StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9522, opt, 30000, "");
+            System.out.println(a.getValue());
+            return a.getValue().contains("SUCCESS");
+        }
+
     }
 
     @Override
