@@ -68,16 +68,28 @@ public class NbiDAO_Impl implements NbiDAO {
         return nbi().getAvailableCriteriaTemplates();
     }
 
+    /**
+     * Implementação divergente entre homolog/prod;
+     *
+     * @param ipAddress
+     * @return
+     * @throws NBIException_Exception
+     */
     @Override
     public List<NbiDeviceData> findDeviceByExternalIPAddress(String ipAddress) throws NBIException_Exception {
-        NbiTemplate n = new NbiTemplate();
-        n.setName("Find Devices By External IP Address");
-        NbiParameter param = new NbiParameter();
-        param.setName("deviceExternalIPAddress");
-        param.setValue(ipAddress);
-        n.getParameters().add(param);
+        // Prod
+//        NbiTemplate n = new NbiTemplate();
+//        n.setName("Find Devices By External IP Address");
+//        NbiParameter param = new NbiParameter();
+//        param.setName("deviceExternalIPAddress");
+//        param.setValue(ipAddress);
+//        n.getParameters().add(param);
+//
+//        return nbi().findDevicesByTemplate(n, 1, -1);
 
-        return nbi().findDevicesByTemplate(n, 1, -1);
+        List<NbiDeviceData> lst = new ArrayList<>();
+        lst.add(nbi().findDeviceByExternalIPAddress(ipAddress));
+        return lst;
     }
 
     @Override
