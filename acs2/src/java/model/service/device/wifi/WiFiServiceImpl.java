@@ -9,6 +9,7 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import model.device.wifi.WifiInfoFull;
 import model.exception.WifiInativoException;
 import model.service.device.ServiceAbstract;
+import model.service.device.ThreadControl;
 import model.service.device.wifi.acao.SetParameters;
 
 /**
@@ -22,9 +23,9 @@ public class WiFiServiceImpl extends ServiceAbstract implements WiFiService {
         try {
             return getSynch().getWifiInfoFull(device);
         } catch (WifiInativoException e) {
-            Thread.sleep(4500);
+            ThreadControl.sleep();
             this.ativar(device);
-            Thread.sleep(4500);
+            ThreadControl.sleep();
             return getSynch().getWifiInfoFull(device);
         }
     }
@@ -39,6 +40,13 @@ public class WiFiServiceImpl extends ServiceAbstract implements WiFiService {
     public void desativar(NbiDeviceData device) throws Exception {
         System.out.println("Desativar WiFi...");
         getSynch().setParametersValues(device, SetParameters.DESATIVAR_WIFI);
+    }
+
+    @Override
+    public WifiInfoFull alterar(NbiDeviceData device, WifiInfoFull wifi) throws Exception {
+        getSynch().setWifiInfoFull(device, wifi);
+        ThreadControl.sleep();
+        return consultar(device);
     }
 
 }

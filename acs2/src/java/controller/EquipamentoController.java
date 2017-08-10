@@ -96,7 +96,7 @@ public class EquipamentoController extends RestAbstractController {
     public Response setWifiInfo(SetWifiIn in) {
         LogEntity l = in.create();
         try {
-            Boolean wifi = FactoryDAO.createSynch().setWifiInfoFull(in.getDevice(), in.getWifi());
+            WifiInfoFull wifi = FactoryService.createWiFiService().alterar(in.getDevice(), in.getWifi());
             l.setSaida(wifi);
             return ok(wifi);
         } catch (Exception e) {

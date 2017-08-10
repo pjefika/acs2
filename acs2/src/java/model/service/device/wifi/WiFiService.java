@@ -7,14 +7,19 @@ package model.service.device.wifi;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import model.device.wifi.WifiInfoFull;
+import model.service.device.MotiveService;
 
 /**
  *
  * @author G0042204
  */
-public interface WiFiService {
+public interface WiFiService extends MotiveService<WifiInfoFull>{
 
+    @Override
     public WifiInfoFull consultar(NbiDeviceData device) throws Exception;
+
+    @Override
+    public WifiInfoFull alterar(NbiDeviceData device, WifiInfoFull wifi) throws Exception;
 
     public void ativar(NbiDeviceData device) throws Exception;
 

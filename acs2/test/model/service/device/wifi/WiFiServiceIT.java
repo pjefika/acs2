@@ -50,7 +50,7 @@ public class WiFiServiceIT extends EquipamentoTestValues {
      * Test of consultar method, of class WiFiService.
      */
     @Test
-    public void testConsultar() throws Exception {
+    public void testConsultar() {
         try {
             System.out.println("consultar");
             WifiInfoFull result = instance.consultar(device);
@@ -65,7 +65,7 @@ public class WiFiServiceIT extends EquipamentoTestValues {
      * Test of ativar method, of class WiFiService.
      */
     @Test
-    public void testAtivar() throws Exception {
+    public void testAtivar() {
         try {
             System.out.println("ativar");
             instance.ativar(device);
@@ -75,7 +75,7 @@ public class WiFiServiceIT extends EquipamentoTestValues {
     }
 
     @Test
-    public void testDesativar() throws Exception {
+    public void testDesativar() {
         try {
             System.out.println("desativar");
             instance.desativar(device);
