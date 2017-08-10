@@ -13,6 +13,7 @@ import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import dao.factory.FactoryNBI;
 import java.util.ArrayList;
 import java.util.List;
+import model.exception.SearchNotFound;
 
 /**
  *
@@ -33,8 +34,15 @@ public class NbiDAO_Impl implements NbiDAO {
     }
 
     @Override
-    public NbiDeviceData findDeviceByGUID(Long guid) throws NBIException_Exception {
-        return nbi().findDeviceByGUID(guid);
+    public NbiDeviceData findDeviceByGUID(Long guid) throws Exception {
+        try {
+            return nbi().findDeviceByGUID(guid);
+        } catch (NBIException_Exception e) {
+            if (e.getFaultInfo().getFaultCode().equalsIgnoreCase("device.could.not.be.found")) {
+                throw new SearchNotFound();
+            }
+            throw e;
+        }
     }
 
     @Override

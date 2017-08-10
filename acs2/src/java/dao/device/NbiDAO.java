@@ -15,14 +15,14 @@ import java.util.List;
  */
 public interface NbiDAO {
 
-    public NbiDeviceData findDeviceByGUID(Long guid) throws NBIException_Exception;
+    public NbiDeviceData findDeviceByGUID(Long guid) throws Exception;
 
     public List<NbiDeviceData> findDevicesBySubscriberId(String subscriberId) throws NBIException_Exception;
 
     public List<NbiDeviceData> findDevicesByMac(String mac) throws NBIException_Exception;
 
     public List<NbiDeviceData> findDeviceByExternalIPAddress(String ipAddress) throws NBIException_Exception;
-    
+
     public List<NbiDeviceData> findDeviceBySerialNumber(String serial) throws NBIException_Exception;
 
 }
