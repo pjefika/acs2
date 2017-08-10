@@ -41,6 +41,8 @@ public class SingletonDeviceTest {
             System.out.println(GsonUtil.serialize(device));
         } catch (NBIException_Exception ex) {
             Logger.getLogger(SingletonDeviceTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(SingletonDeviceTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
