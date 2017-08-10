@@ -5,7 +5,7 @@
  */
 package model.service;
 
-import model.service.detail.DeviceDetailServiceImpl;
+import model.service.device.detail.DeviceDetailServiceImpl;
 import init.EquipamentoTestValues;
 import model.service.dto.DetailOut;
 import org.junit.After;

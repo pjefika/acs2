@@ -12,6 +12,7 @@ public class LogDAOImpl extends AbstractHibernateDAO implements InterfaceDAO<Log
     @Override
     public void cadastrar(LogEntity l) throws Exception {
         persist(l);
+        close();
     }
     
 }

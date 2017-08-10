@@ -6,11 +6,10 @@
 package dao;
 
 import dao.device.SynchDeviceDAO;
-import dao.device.NbiDAO;
-import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.factory.FactoryDAO;
 import init.EquipamentoTestValues;
+import init.SingletonDeviceTest;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,9 +45,8 @@ import util.GsonUtil;
  */
 public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
 
-    private SynchDeviceDAO instance = FactoryDAO.createSynch();
-    private NbiDAO nbi = FactoryDAO.createNBI();
-    private NbiDeviceData eqp;
+    private final SynchDeviceDAO instance = FactoryDAO.createSynch();
+    private final NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();
 
     public SynchDeviceDAOIT_Consultas() {
     }
@@ -62,33 +60,33 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
     }
 
     @Before
-    public void setUp() throws NBIException_Exception {
-        if (eqp == null) {
-            System.out.println("Consultando...");
-            try {
-                eqp = nbi.findDeviceByGUID(GUID);
-                System.out.println("Retorno: " + GsonUtil.serialize(eqp));
-            } catch (NBIException_Exception ex) {
-                Logger.getLogger(SynchDeviceDAOIT_Consultas.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public void setUp() {
+//        if (eqp == null) {
+//            System.out.println("Consultando...");
+//            try {
+//                eqp = nbi.findDeviceByGUID(GUID);
+//                System.out.println("Retorno: " + GsonUtil.serialize(eqp));
+//            } catch (NBIException_Exception ex) {
+//                Logger.getLogger(SynchDeviceDAOIT_Consultas.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }
 
     @After
     public void tearDown() {
-//        try {
-//            System.out.println("sleep");
-//            Thread.sleep(5000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(SynchDeviceDAOIT_Consultas.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            System.out.println("sleep");
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SynchDeviceDAOIT_Consultas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
      * Test of checkOnline method, of class SynchDeviceDAO.
      */
     @Test
-    public void testCheckOnline() throws Exception {
+    public void testCheckOnline() {
         try {
             System.out.println("checkOnline");
             Boolean expResult = true;
@@ -103,7 +101,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      * Test of getFirmwareVersion method, of class SynchDeviceDAO.
      */
     @Test
-    public void testGetFirmwareVersion() throws Exception {
+    public void testGetFirmwareVersion() {
         try {
             System.out.println("getFirmwareVersion");
             FirmwareInfo result = instance.getFirmwareVersion(eqp);
@@ -115,7 +113,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
     }
 
     @Test
-    public void testGetServiceClass() throws Exception {
+    public void testGetServiceClass() {
         try {
             System.out.println("getFirmwareVersion");
             ServiceClass result = instance.getServiceClass(eqp);
@@ -175,18 +173,23 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      * Test of getWifiInfoFull method, of class SynchDeviceDAO.
      */
     @Test
-    public void testGetWifiInfoFull() throws Exception {
-        System.out.println("getWifiInfoFull");
-        WifiInfoFull result = instance.getWifiInfoFull(eqp);
-        System.out.println("Retorno: " + GsonUtil.serialize(result));
-        assertTrue(result != null);
+    public void testGetWifiInfoFull() {
+        try {
+            System.out.println("getWifiInfoFull");
+            WifiInfoFull result = instance.getWifiInfoFull(eqp);
+            System.out.println("Retorno: " + GsonUtil.serialize(result));
+            assertTrue(result != null);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
     }
 
     /**
      * Test of getPortMapping method, of class SynchDeviceDAO.
      */
     @Test
-    public void testGetPortMapping() throws Exception {
+    public void testGetPortMapping() {
         try {
             System.out.println("getPortMapping");
             List<PortMappingInfo> result = instance.getPortMapping(eqp);
@@ -231,7 +234,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      * Test of getDdns method, of class SynchDeviceDAO.
      */
     @Test
-    public void testGetDdns() throws Exception {
+    public void testGetDdns() {
         try {
             System.out.println("testGetDdns");
             DdnsInfo result = instance.getDdns(eqp);
@@ -246,7 +249,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      * Test of getXdslDiagnostic method, of class SynchDeviceDAO.
      */
     @Test
-    public void testGetXdslDiagnostic() throws Exception {
+    public void testGetXdslDiagnostic() {
         try {
             System.out.println("getXdslDiagnostic");
             XdslDiagnostics result = instance.getXdslDiagnostic(eqp);
@@ -261,7 +264,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      * Test of getDeviceLog method, of class SynchDeviceDAO.
      */
     @Test
-    public void testGetDeviceLog() throws Exception {
+    public void testGetDeviceLog() {
         try {
             System.out.println("getDeviceLog");
             List<DeviceLog> result = instance.getDeviceLog(eqp);
@@ -276,7 +279,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      * Test of getDeviceLogR method, of class SynchDeviceDAO.
      */
     @Test
-    public void testGetDeviceLogR() throws Exception {
+    public void testGetDeviceLogR() {
         try {
             System.out.println("getDeviceLogR");
             List<DeviceLogR> result = instance.getDeviceLogR(eqp);
@@ -292,7 +295,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      * Test of getInterfaceStatistics method, of class SynchDeviceDAO.
      */
     @Test
-    public void testGetInterfaceStatistics() throws Exception {
+    public void testGetInterfaceStatistics() {
         try {
             System.out.println("getInterfaceStatistics");
             List<InterfaceStatistics> result = instance.getInterfaceStatistics(eqp);
@@ -310,7 +313,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      * Test of getPPPoECredentials method, of class SynchDeviceDAO.
      */
     @Test
-    public void testGetPPPoECredentials() throws Exception {
+    public void testGetPPPoECredentials() {
         try {
             System.out.println("getPPPoECredentials");
             PPPoECredentialsInfo result = instance.getPPPoECredentials(eqp);
@@ -325,7 +328,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
      * Test of pingDiagnostic method, of class SynchDeviceDAO.
      */
     @Test
-    public void testPingDiagnostic() throws Exception {
+    public void testPingDiagnostic() {
         System.out.println("pingDiagnostic");
         try {
             PingRequest p = new PingRequest();

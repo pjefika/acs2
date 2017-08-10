@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.util.acao;
+package model.exception;
 
 /**
  *
  * @author G0042204
  */
-public class AcaoDecorator {
+public class WifiInativoException extends Exception {
+
+    public WifiInativoException() {
+        super("Nenhuma interface WiFi se encontra habilitada.");
+    }
 
 }

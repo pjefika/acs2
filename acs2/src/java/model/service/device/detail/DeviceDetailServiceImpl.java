@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service.detail;
+package model.service.device.detail;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.device.NbiDAO;

@@ -6,11 +6,11 @@
 package dao;
 
 import dao.device.SynchDeviceDAO;
-import dao.device.NbiDAO;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.factory.FactoryDAO;
 import init.EquipamentoTestValues;
+import init.SingletonDeviceTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,8 +36,7 @@ import util.GsonUtil;
 public class SynchDeviceDAOIT_Alteracoes extends EquipamentoTestValues {
 
     private SynchDeviceDAO instance = FactoryDAO.createSynch();
-    private NbiDAO nbi = FactoryDAO.createNBI();
-    private NbiDeviceData eqp;
+    private NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();
 
     public SynchDeviceDAOIT_Alteracoes() {
     }
@@ -52,15 +51,15 @@ public class SynchDeviceDAOIT_Alteracoes extends EquipamentoTestValues {
 
     @Before
     public void setUp() throws NBIException_Exception {
-        if (eqp == null) {
-            System.out.println("Consultando...");
-            try {
-                eqp = nbi.findDeviceByGUID(GUID);
-                System.out.println("Retorno: " + GsonUtil.serialize(eqp));
-            } catch (NBIException_Exception ex) {
-                Logger.getLogger(SynchDeviceDAOIT_Alteracoes.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        if (eqp == null) {
+//            System.out.println("Consultando...");
+//            try {
+//                eqp = nbi.findDeviceByGUID(GUID);
+//                System.out.println("Retorno: " + GsonUtil.serialize(eqp));
+//            } catch (NBIException_Exception ex) {
+//                Logger.getLogger(SynchDeviceDAOIT_Alteracoes.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }
 
     @After

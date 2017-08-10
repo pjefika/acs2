@@ -41,6 +41,7 @@ import model.device.xdsldiagnostics.XdslDiagnostics;
 import model.exception.HdmException;
 import model.exception.JsonUtilException;
 import model.exception.UnsupportedException;
+import model.exception.WifiInativoException;
 import motive.hdm.synchdeviceops.GetParameterNamesDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
@@ -157,7 +158,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         motive.hdm.synchdeviceops.SetParameterValuesDTO g = new motive.hdm.synchdeviceops.SetParameterValuesDTO();
         g.getParameterValueStructs().add(p);
         SetParameterValuesResponseDTO s = synch().setParameterValues(NbiDecorator.adapter(eqp), g, opt, 50000, "");
-//        System.out.println("Retorno: " + s.getStatus());
+        System.out.println("Retorno: " + s.getStatus());
     }
 
     @Override
@@ -210,13 +211,13 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, JsonUtilException, HdmException, ProviderException {
+    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws Exception{
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 20000, "");
 
         String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
         if (a.getValue().contains(wifiDisable)) {
-            throw new HdmException(wifiDisable);
+            throw new WifiInativoException();
         }
         WifiInfoFull[] wifi = (WifiInfoFull[]) GsonUtil.convert(a.getValue(), WifiInfoFull[].class);
         return wifi[0];

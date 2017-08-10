@@ -7,8 +7,10 @@ package model.service.factory;
 
 import model.service.search.FindDevice;
 import model.service.search.FindDeviceImpl;
-import model.service.detail.DeviceDetailService;
-import model.service.detail.DeviceDetailServiceImpl;
+import model.service.device.detail.DeviceDetailService;
+import model.service.device.detail.DeviceDetailServiceImpl;
+import model.service.device.wifi.WiFiService;
+import model.service.device.wifi.WiFiServiceImpl;
 
 /**
  *
@@ -22,6 +24,10 @@ public class FactoryService {
 
     public static DeviceDetailService createDeviceDetailService() {
         return new DeviceDetailServiceImpl();
+    }
+
+    public static WiFiService createWiFiService() {
+        return new WiFiServiceImpl();
     }
 
 }

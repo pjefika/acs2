@@ -74,7 +74,7 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_WIFI_INFO);
         LogEntity l = in.create();
         try {
-            WifiInfoFull wifi = FactoryDAO.createSynch().getWifiInfoFull(in.getDevice());
+            WifiInfoFull wifi = FactoryService.createWiFiService().consultar(in.getDevice());
             l.setSaida(wifi);
             return ok(wifi);
         } catch (Exception e) {

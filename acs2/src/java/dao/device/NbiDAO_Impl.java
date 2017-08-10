@@ -61,7 +61,7 @@ public class NbiDAO_Impl implements NbiDAO {
 
         n.getParameters().add(param);
 
-        return nbi().findDevicesByTemplate(n, 1, -1);
+        return nbi().findDevicesByTemplate(n, 9000, -1);
     }
 
     public List<NbiTemplate> getAvailableCriteriaTemplates() throws NBIException_Exception {
@@ -101,7 +101,7 @@ public class NbiDAO_Impl implements NbiDAO {
         param.setValue(serial);
         n.getParameters().add(param);
 
-        return nbi().findDevicesByTemplate(n, 1, -1);
+        return nbi().findDevicesByTemplate(n, 9000, -1);
     }
 
 }
