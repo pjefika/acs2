@@ -5,7 +5,6 @@
  */
 package model.service.dto;
 
-import model.device.ping.PingRequest;
 import model.device.wifi.WifiInfoFull;
 import model.log.AcaoAcsEnum;
 

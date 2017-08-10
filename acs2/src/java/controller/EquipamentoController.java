@@ -5,6 +5,7 @@
  */
 package controller;
 
+import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.factory.FactoryDAO;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -27,6 +28,7 @@ import model.device.xdsldiagnostics.XdslDiagnostics;
 import model.service.dto.DetailOut;
 import model.entity.LogEntity;
 import model.log.AcaoAcsEnum;
+import model.service.device.MotiveService;
 import model.service.factory.FactoryService;
 import model.service.dto.DetailIn;
 import model.service.dto.DhcpIn;
@@ -36,6 +38,7 @@ import model.service.dto.ServiceClassIn;
 import model.service.dto.SetWifiIn;
 import model.service.dto.SipActivationIn;
 import model.service.dto.SipDiagnosticsIn;
+import model.service.factory.FactoryMotiveService;
 
 /**
  *
@@ -324,9 +327,10 @@ public class EquipamentoController extends RestAbstractController {
     public Response setDhcp(DhcpIn in) {
         LogEntity l = in.create();
         try {
-            Boolean w = FactoryDAO.createSynch().setDhcp(in.getDevice(), in.getDhcp());
-            l.setSaida(w);
-            return ok(w);
+            MotiveService<Dhcp> fac = (MotiveService<Dhcp>) FactoryMotiveService.create(in.getDhcp());
+            Dhcp dhcp = fac.alterar(in.getDevice(), in.getDhcp());
+            l.setSaida(dhcp);
+            return ok(dhcp);
         } catch (Exception e) {
             l.setSaida(e.getMessage());
             return internalServerError(e);

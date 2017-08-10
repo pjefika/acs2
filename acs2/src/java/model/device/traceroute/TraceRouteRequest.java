@@ -19,7 +19,7 @@ public class TraceRouteRequest {
         this.maxHopCount = "50";
 //        this.ipInterface = "Device.IP.Interface.1";
         this.ipInterface = "InternetGatewayDevice.LANDevice.1.LANHostConfigManagement.IPInterface.1";
-        this.timeout = "100000";
+        this.timeout = "1000";
         this.dscp = "0";
         this.host = host;
     }

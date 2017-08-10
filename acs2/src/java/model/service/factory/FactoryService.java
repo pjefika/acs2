@@ -5,12 +5,13 @@
  */
 package model.service.factory;
 
+import static javafx.scene.input.KeyCode.T;
 import model.service.search.FindDevice;
 import model.service.search.FindDeviceImpl;
 import model.service.device.detail.DeviceDetailService;
 import model.service.device.detail.DeviceDetailServiceImpl;
-import model.service.device.wifi.WiFiService;
-import model.service.device.wifi.WiFiServiceImpl;
+import model.service.device.impl.wifi.WiFiService;
+import model.service.device.impl.wifi.WiFiServiceImpl;
 
 /**
  *
@@ -27,6 +28,10 @@ public class FactoryService {
     }
 
     public static WiFiService createWiFiService() {
+        return new WiFiServiceImpl();
+    }
+
+    public static WiFiService createServiceClassService() {
         return new WiFiServiceImpl();
     }
 

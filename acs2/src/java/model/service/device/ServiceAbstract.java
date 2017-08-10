@@ -16,7 +16,7 @@ public class ServiceAbstract {
 
     private SynchDeviceDAO synch;
 
-    public SynchDeviceDAO getSynch() {
+    public SynchDeviceDAO synch() {
         if (synch == null) {
             synch = FactoryDAO.createSynch();
         }

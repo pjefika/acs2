@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service.device.wifi.acao;
+package model.service.device.impl.wifi.acao;
 
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
@@ -11,8 +11,11 @@ import motive.hdm.synchdeviceops.ParameterValueStructDTO;
  *
  * @author G0042204
  */
-public class SetParameters {
+public class AtivarWifi extends ParameterValueStructDTO {
 
-    public static final ParameterValueStructDTO ATIVAR_WIFI = new AtivarWifi();
-    public static final ParameterValueStructDTO DESATIVAR_WIFI = new DesativarWifi();
+    public AtivarWifi() {
+        this.name = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable";
+        this.type = "boolean";
+        this.value = "1";
+    }
 }
