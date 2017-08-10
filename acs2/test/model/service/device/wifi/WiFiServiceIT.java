@@ -6,8 +6,6 @@
 package model.service.device.wifi;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import dao.device.SynchDeviceDAO;
-import dao.factory.FactoryDAO;
 import init.EquipamentoTestValues;
 import init.SingletonDeviceTest;
 import model.device.wifi.WifiInfoFull;
@@ -18,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import util.GsonUtil;
 
 /**
  *
@@ -55,6 +54,7 @@ public class WiFiServiceIT extends EquipamentoTestValues {
         try {
             System.out.println("consultar");
             WifiInfoFull result = instance.consultar(device);
+            System.out.println(GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -66,12 +66,22 @@ public class WiFiServiceIT extends EquipamentoTestValues {
      */
     @Test
     public void testAtivar() throws Exception {
-        System.out.println("ativar");
-        NbiDeviceData device = null;
+        try {
+            System.out.println("ativar");
+            instance.ativar(device);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
 
-        instance.ativar(device);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    @Test
+    public void testDesativar() throws Exception {
+        try {
+            System.out.println("desativar");
+            instance.desativar(device);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
     }
 
 }
