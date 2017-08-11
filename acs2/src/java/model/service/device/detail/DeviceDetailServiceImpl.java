@@ -11,7 +11,6 @@ import dao.device.SynchDeviceDAO;
 import dao.factory.FactoryDAO;
 import model.service.dto.DetailOut;
 import model.service.dto.FirmwareOut;
-import model.exception.JsonUtilException;
 import model.service.device.ThreadControl;
 
 public class DeviceDetailServiceImpl implements DeviceDetailService {
@@ -36,7 +35,7 @@ public class DeviceDetailServiceImpl implements DeviceDetailService {
             try {
                 ThreadControl.sleep();
                 result.setFirmware(new FirmwareOut(sync.getFirmwareVersion(eqp)));
-            } catch (JsonUtilException e) {
+            } catch (Exception e) {
                 result.setFirmware(null);
             }
         }

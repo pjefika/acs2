@@ -23,15 +23,21 @@ import javax.xml.ws.Service;
  */
 public class FactoryNBI {
 
-//    private static String ENDPOINT = "10.113.64.1"; // ENG
-    private static String ENDPOINT = "200.168.104.216"; // QA
+    private static String ENDPOINT = "10.113.64.1"; // PROD
+//    private static String ENDPOINT = "200.168.104.216"; // QA
 
     public static NBIService createNBIService() {
 
         try {
             applyProxy();
             URL url;
-            url = new URL("http://" + ENDPOINT + ":7015/NBIServiceImpl/NBIService?wsdl");
+
+            String port = "7015";
+            if (ENDPOINT.equalsIgnoreCase("10.113.64.1")) {
+                port = "7025";
+            }
+
+            url = new URL("http://" + ENDPOINT + ":" + port + "/NBIServiceImpl/NBIService?wsdl");
             QName qname = new QName("http://nbi2.service.hdm.alcatel.com/", "NBIService");
             Service service = Service.create(url, qname);
             NBIService nbi = service.getPort(NBIService.class);
@@ -65,7 +71,13 @@ public class FactoryNBI {
         try {
             applyProxy();
             URL url;
-            url = new URL("http://" + ENDPOINT + ":7015/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
+
+            String port = "7015";
+            if (ENDPOINT.equalsIgnoreCase("10.113.64.1")) {
+                port = "7025";
+            }
+
+            url = new URL("http://" + ENDPOINT + ":" + port + "/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
             QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
                     "SynchDeviceOperationsNBIService");
             Service service = Service.create(url, qname);
