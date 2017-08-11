@@ -25,6 +25,7 @@ import util.GsonUtil;
 public class ParameterServiceImplIT {
 
     private final NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();
+    private ParameterServiceImpl instance = new ParameterServiceImpl();
 
     public ParameterServiceImplIT() {
     }
@@ -52,7 +53,6 @@ public class ParameterServiceImplIT {
     public void testGetParameters() {
         try {
             System.out.println("getParameters");
-            ParameterServiceImpl instance = new ParameterServiceImpl();
             List<ParameterInfoStructDTO> result = instance.getParameters(eqp);
             System.out.println(GsonUtil.serialize(result));
             assertTrue(result != null);

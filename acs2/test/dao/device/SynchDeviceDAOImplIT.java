@@ -155,6 +155,7 @@ public class SynchDeviceDAOImplIT {
             System.out.println("getParametersValues");
             List<String> paths = new ArrayList<>();
             paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
+
             GetParameterValuesResponseDTO parameters = instance.getParametersValues(eqp, paths);
             System.out.println(GsonUtil.serialize(parameters));
             assertTrue("Cheio", parameters != null);
