@@ -42,10 +42,12 @@ import model.exception.HdmException;
 import model.exception.JsonUtilException;
 import model.exception.UnsupportedException;
 import model.exception.WifiInativoException;
+import motive.hdm.synchdeviceops.GetParameterAttributesDTO;
+import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesDTO;
-import motive.hdm.synchdeviceops.GetParameterNamesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
+import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 import motive.hdm.synchdeviceops.SetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
@@ -101,55 +103,47 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public void getParameters(NbiDeviceData eqp) throws Exception {
+    public List<ParameterInfoStructDTO> getParameters(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         GetParameterNamesDTO g = new GetParameterNamesDTO();
-        g.setParameterPath("InternetGatewayDevice.");
-        GetParameterNamesResponseDTO r = synch().getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "");
-//        for (ParameterInfoStructDTO p : r.getParameterList()) {
-//            System.out.println(p.getName());
-//        }
+        g.setNextLevel(true);
+        try {
+            g.setParameterPath(" ");
+            return synch().getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "").getParameterList();
+        } catch (Exception e) {
+            g.setParameterPath("InternetGatewayDevice.");
+            return synch().getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "").getParameterList();
+        }
+
     }
 
     @Override
-    public void getParametersWifi(NbiDeviceData eqp) throws Exception {
-        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        GetParameterNamesDTO g = new GetParameterNamesDTO();
-        g.setParameterPath("InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.");
-        GetParameterNamesResponseDTO r = synch().getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "");
-//        for (ParameterInfoStructDTO p : r.getParameterList()) {
-//            System.out.println(p.getName());
-//        }
-    }
-
-    @Override
-    public void getParametersValues(NbiDeviceData eqp, List<String> paths) throws Exception {
+    public GetParameterValuesResponseDTO getParametersValues(NbiDeviceData eqp, List<String> paths) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
 
         motive.hdm.synchdeviceops.GetParameterValuesDTO g = new motive.hdm.synchdeviceops.GetParameterValuesDTO();
-        for (int i = 0; i < paths.size(); i++) {
-            g.getParameterNames().add(i, paths.get(i));
-        }
-        GetParameterValuesResponseDTO r = synch().getParameterValues(NbiDecorator.adapter(eqp), g, opt, 30000, "");
-//        for (ParameterValueStructDTO p : r.getParameterList()) {
-//            System.out.println("Nome: " + p.getName());
-//            System.out.println("Type: " + p.getType());
-//            System.out.println("Value: " + p.getValue());
-//        }
+
+        paths.forEach((t) -> {
+            g.getParameterNames().add(t);
+        });
+
+        return synch().getParameterValues(NbiDecorator.adapter(eqp), g, opt, 30000, "");
     }
 
     @Override
-    public void getParameterValue(NbiDeviceData eqp, String path) throws Exception {
+    public GetParameterValuesResponseDTO getParameterValue(NbiDeviceData eqp, String path) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
 
         motive.hdm.synchdeviceops.GetParameterValuesDTO g = new motive.hdm.synchdeviceops.GetParameterValuesDTO();
         g.getParameterNames().add(0, path);
-        GetParameterValuesResponseDTO r = synch().getParameterValues(NbiDecorator.adapter(eqp), g, opt, 50000, "");
-//        for (ParameterValueStructDTO p : r.getParameterList()) {
-//            System.out.println("Nome: " + p.getName());
-//            System.out.println("Type: " + p.getType());
-//            System.out.println("Value: " + p.getValue());
-//        }
+        return synch().getParameterValues(NbiDecorator.adapter(eqp), g, opt, 30000, "");
+    }
+
+    public GetParameterAttributesResponseDTO getParameterAttributes(NbiDeviceData eqp, String path) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        GetParameterAttributesDTO g = new GetParameterAttributesDTO();
+        g.getParameterNames().add(0, path);
+        return synch().getParameterAttributes(NbiDecorator.adapter(eqp), g, opt, 30000, "");
     }
 
     @Override
@@ -211,7 +205,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws Exception{
+    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9529, opt, 20000, "");
 

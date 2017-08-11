@@ -34,6 +34,8 @@ import model.device.xdsldiagnostics.XdslDiagnostics;
 import model.exception.HdmException;
 import model.exception.JsonUtilException;
 import model.exception.UnsupportedException;
+import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
+import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
 /**
@@ -50,13 +52,11 @@ public interface SynchDeviceDAO {
 
     public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws Exception;
 
-    public void getParameters(NbiDeviceData eqp) throws Exception;
+    public List<ParameterInfoStructDTO> getParameters(NbiDeviceData eqp) throws Exception;
 
-    public void getParametersWifi(NbiDeviceData eqp) throws Exception;
+    public GetParameterValuesResponseDTO getParametersValues(NbiDeviceData eqp, List<String> paths) throws Exception;
 
-    public void getParametersValues(NbiDeviceData eqp, List<String> paths) throws Exception;
-
-    public void getParameterValue(NbiDeviceData eqp, String path) throws Exception;
+    public GetParameterValuesResponseDTO getParameterValue(NbiDeviceData eqp, String path) throws Exception;
 
     public void setParametersValues(NbiDeviceData eqp, ParameterValueStructDTO p) throws Exception;
 

@@ -5,7 +5,6 @@
  */
 package controller;
 
-import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.factory.FactoryDAO;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -416,7 +415,7 @@ public class EquipamentoController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getSipDiagnostics(SipDiagnosticsIn in) {
-        in.setAcao(AcaoAcsEnum.GET_SERVICE_CLASS);
+        in.setAcao(AcaoAcsEnum.SIP_DIAGNOSTICS);
         LogEntity l = in.create();
         try {
             SipDiagnostics w = FactoryDAO.createSynch().getSipDiagnostics(in.getDevice(), in.getPhyref());
