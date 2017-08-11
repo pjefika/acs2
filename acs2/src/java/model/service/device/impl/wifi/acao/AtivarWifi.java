@@ -16,6 +16,6 @@ public class AtivarWifi extends ParameterValueStructDTO {
     public AtivarWifi() {
         this.name = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable";
         this.type = "boolean";
-        this.value = "1";
+        this.value = "true";
     }
 }

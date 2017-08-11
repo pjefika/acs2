@@ -147,10 +147,14 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public void setParametersValues(NbiDeviceData eqp, ParameterValueStructDTO p) throws Exception {
+    public void setParametersValues(NbiDeviceData eqp, List<ParameterValueStructDTO> p) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         motive.hdm.synchdeviceops.SetParameterValuesDTO g = new motive.hdm.synchdeviceops.SetParameterValuesDTO();
-        g.getParameterValueStructs().add(p);
+
+        p.forEach((t) -> {
+            g.getParameterValueStructs().add(t);
+        });
+
         SetParameterValuesResponseDTO s = synch().setParameterValues(NbiDecorator.adapter(eqp), g, opt, 50000, "");
         System.out.println("Retorno: " + s.getStatus());
     }

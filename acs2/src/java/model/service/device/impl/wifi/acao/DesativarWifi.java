@@ -16,6 +16,6 @@ public class DesativarWifi extends ParameterValueStructDTO {
     public DesativarWifi() {
         this.name = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable";
         this.type = "boolean";
-        this.value = "0";
+        this.value = "false";
     }
 }

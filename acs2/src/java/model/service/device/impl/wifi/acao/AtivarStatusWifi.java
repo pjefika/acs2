@@ -11,9 +11,11 @@ import motive.hdm.synchdeviceops.ParameterValueStructDTO;
  *
  * @author G0042204
  */
-public class SetParameters {
+public class AtivarStatusWifi extends ParameterValueStructDTO {
 
-    public static final ParameterValueStructDTO ATIVAR_WIFI = new AtivarWifi();
-    public static final ParameterValueStructDTO ATIVAR_STATUS_WIFI = new AtivarStatusWifi();
-    public static final ParameterValueStructDTO DESATIVAR_WIFI = new DesativarWifi();
+    public AtivarStatusWifi() {
+        this.name = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.RadioEnabled";
+        this.type = "boolean";
+        this.value = "true";
+    }
 }

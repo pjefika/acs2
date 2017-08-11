@@ -58,7 +58,7 @@ public interface SynchDeviceDAO {
 
     public GetParameterValuesResponseDTO getParameterValue(NbiDeviceData eqp, String path) throws Exception;
 
-    public void setParametersValues(NbiDeviceData eqp, ParameterValueStructDTO p) throws Exception;
+    public void setParametersValues(NbiDeviceData eqp, List<ParameterValueStructDTO> p) throws Exception;
 
     public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException;
 

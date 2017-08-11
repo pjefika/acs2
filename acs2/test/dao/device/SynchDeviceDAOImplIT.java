@@ -7,7 +7,6 @@ package dao.device;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import init.SingletonDeviceTest;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import model.device.DmzInfo;
@@ -32,7 +31,6 @@ import model.device.xdsldiagnostics.XdslDiagnostics;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
-import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -156,7 +154,7 @@ public class SynchDeviceDAOImplIT {
         try {
             System.out.println("getParametersValues");
             List<String> paths = new ArrayList<>();
-            paths.add("InternetGatewayDevice.X_GVT_AccessClass");
+            paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
             GetParameterValuesResponseDTO parameters = instance.getParametersValues(eqp, paths);
             System.out.println(GsonUtil.serialize(parameters));
             assertTrue("Cheio", parameters != null);
@@ -166,12 +164,12 @@ public class SynchDeviceDAOImplIT {
 
         // TODO review the generated test code and remove the default call to fail.
     }
-    
+
     @Test
     public void testMethod() {
         try {
             System.out.println("getParameterAttributes");
-            String paths = "InternetGatewayDevice.X_GVT_AccessClass";
+            String paths = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable";
             GetParameterAttributesResponseDTO parameters = instance.getParameterAttributes(eqp, paths);
             System.out.println(GsonUtil.serialize(parameters));
             assertTrue("Cheio", parameters != null);
@@ -188,20 +186,6 @@ public class SynchDeviceDAOImplIT {
         System.out.println("getParameterValue");
         String path = "";
         instance.getParameterValue(eqp, path);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setParametersValues method, of class SynchDeviceDAOImpl.
-     */
-    @Test
-    public void testSetParametersValues() throws Exception {
-        System.out.println("setParametersValues");
-
-        ParameterValueStructDTO p = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        instance.setParametersValues(eqp, p);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
