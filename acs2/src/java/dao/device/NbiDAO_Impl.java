@@ -7,12 +7,18 @@ package dao.device;
 
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
+import com.alcatel.hdm.service.nbi2.NbiCommunicationLog;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiDeviceID;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
 import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import dao.factory.FactoryNBI;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import model.exception.SearchNotFound;
 
 /**
@@ -43,6 +49,13 @@ public class NbiDAO_Impl implements NbiDAO {
             }
             throw e;
         }
+    }
+
+    public List<NbiCommunicationLog> getCommunicationLogsByDeviceID(NbiDeviceID nbi) throws Exception {
+        GregorianCalendar c = new GregorianCalendar();
+        c.setTime(Calendar.getInstance().getTime());
+        XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+        return nbi().getCommunicationLogsByDeviceID(nbi, 0, cal, cal);
     }
 
     @Override

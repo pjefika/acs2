@@ -23,8 +23,8 @@ import javax.xml.ws.Service;
  */
 public class FactoryNBI {
 
-    private static String ENDPOINT = "10.113.64.1"; // PROD
-//    private static String ENDPOINT = "200.168.104.216"; // QA
+//    private static String ENDPOINT = "10.113.64.1"; // PROD
+    private static String ENDPOINT = "200.168.104.216"; // QA
 
     public static NBIService createNBIService() {
 

@@ -66,7 +66,7 @@ public interface SynchDeviceDAO {
 
     public Boolean setServiceClass(NbiDeviceData eqp, ServiceClass sc) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
 
-    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, model.exception.JsonUtilException;
+    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception;
 
     public DmzInfo getDmzInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException;
 

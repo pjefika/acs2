@@ -191,11 +191,17 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, model.exception.JsonUtilException {
+    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception{
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 30000, "");
-
+        tratativa(a);
         return JsonUtil.getLanHosts(a);
+    }
+
+    protected void tratativa(StringResponseDTO response) throws UnsupportedException{
+        if (response.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+            throw new UnsupportedException();
+        }
     }
 
     @Override
@@ -225,7 +231,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9513, opt, 20000, "");
-        //System.out.println(a.getValue());
+        System.out.println("Value: " + a.getValue());
         PortMappingInfo[] pmi = (PortMappingInfo[]) GsonUtil.convert(a.getValue(), PortMappingInfo[].class);
         //List<PortMappingInfo> l = ;
         return Arrays.asList(pmi);

@@ -18,6 +18,7 @@ import model.device.dhcp.Dhcp;
 import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.ping.PingResponse;
+import model.device.portmapping.PortMappingInfo;
 import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.serviceclass.ServiceClass;
 import model.device.sipdiagnostics.SipDiagnostics;
@@ -214,6 +215,29 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             PPPoECredentialsInfo w = FactoryDAO.createSynch().getPPPoECredentials(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getPortMapping")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getPortMapping(GetDeviceDataIn in) {
+        in.setAcao(AcaoAcsEnum.GET_PORT_MAPPING);
+        LogEntity l = in.create();
+        try {
+            List<PortMappingInfo> w = FactoryDAO.createSynch().getPortMapping(in.getDevice());
             l.setSaida(w);
             return ok(w);
         } catch (Exception e) {
@@ -432,7 +456,7 @@ public class EquipamentoController extends RestAbstractController {
             }
         }
     }
-    
+
     @POST
     @Path("/setSipActivation")
     @Produces(MediaType.APPLICATION_JSON)
@@ -454,6 +478,5 @@ public class EquipamentoController extends RestAbstractController {
             }
         }
     }
-    
 
 }
