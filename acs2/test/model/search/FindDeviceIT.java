@@ -11,6 +11,7 @@ import model.service.search.FindDeviceImpl;
 import model.service.search.FindDevice;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
+import model.exception.SearchNotFound;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -70,7 +71,7 @@ public class FindDeviceIT {
     public void testFindSubscriber() throws Exception {
         try {
             System.out.println("find - SearchCriteria.SUBCRIBER");
-            SearchIn in = new SearchIn(SearchCriteria.SUBSCRIBER, "CTA-81BEK5U33-013");
+            SearchIn in = new SearchIn(SearchCriteria.SUBSCRIBER, "NO_SUBSCRIBER");
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {
@@ -84,19 +85,30 @@ public class FindDeviceIT {
     }
 
     @Test
-    public void testFindMac() throws Exception {
+    public void testFindMac() {
         try {
             System.out.println("find - SearchCriteria.MAC");
-            SearchIn in = new SearchIn(SearchCriteria.MAC, "68:15:90:66:D9:AA");
+            SearchIn in = new SearchIn(SearchCriteria.MAC, "2C:39:96:89:D2:8F");
             List<NbiDeviceData> result = instance.find(in);
-
             result.forEach((t) -> {
                 SoutUtil.print(t);
             });
+            
             assertTrue(!result.isEmpty());
             // TODO review the generated test code and remove the default call to fail.
         } catch (Exception e) {
             fail(e.getMessage());
+        }
+    }
+    
+    
+    @Test
+    public void testFindMacNaoEncontrado() {
+        try {
+            System.out.println("find - SearchCriteria.MAC");
+            SearchIn in = new SearchIn(SearchCriteria.MAC, "MAC_Inválido");
+        } catch (Exception e) {
+            assertTrue(e instanceof SearchNotFound);
         }
     }
 

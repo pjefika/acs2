@@ -5,11 +5,13 @@
  */
 package model.service.search;
 
+import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.device.NbiDAO;
 import dao.factory.FactoryDAO;
 import java.util.List;
 import model.exception.SearchCriteriaException;
+import model.exception.SearchNotFound;
 
 /**
  *
@@ -17,14 +19,13 @@ import model.exception.SearchCriteriaException;
  */
 public class FindDeviceImpl implements FindDevice {
 
-    @Override
-    public List<NbiDeviceData> find(SearchIn in) throws Exception {
+    public List<NbiDeviceData> methods(SearchIn in) throws Exception {
+        List<NbiDeviceData> lst = null;
+        NbiDAO dao = FactoryDAO.createNBI();
 
         if (in == null) {
             throw new SearchCriteriaException();
         }
-
-        NbiDAO dao = FactoryDAO.createNBI();
 
         switch (in.getCriterio()) {
             case IP:
@@ -38,6 +39,23 @@ public class FindDeviceImpl implements FindDevice {
             default:
                 throw new SearchCriteriaException();
         }
+    }
+
+    @Override
+    public List<NbiDeviceData> find(SearchIn in) throws Exception {
+
+        try {
+            List<NbiDeviceData> lst = methods(in);
+            if (lst.isEmpty()) {
+                throw new SearchNotFound();
+            }
+            return lst;
+        } catch (NBIException_Exception | SearchCriteriaException e) {
+            if (e instanceof NBIException_Exception) {
+                throw new SearchNotFound();
+            }
+        }
+        return null;
     }
 
 }
