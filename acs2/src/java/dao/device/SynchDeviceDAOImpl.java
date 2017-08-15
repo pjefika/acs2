@@ -191,14 +191,14 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception{
+    public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9517, opt, 30000, "");
         tratativa(a);
         return JsonUtil.getLanHosts(a);
     }
 
-    protected void tratativa(StringResponseDTO response) throws UnsupportedException{
+    protected void tratativa(StringResponseDTO response) throws UnsupportedException {
         if (response.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
             throw new UnsupportedException();
         }
@@ -223,7 +223,10 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         if (a.getValue().contains(wifiDisable)) {
             throw new WifiInativoException();
         }
+        System.out.println("Retorno: " + a.getValue());
         WifiInfoFull[] wifi = (WifiInfoFull[]) GsonUtil.convert(a.getValue(), WifiInfoFull[].class);
+//        System.out.println("Retorno: " + GsonUtil.serialize(wifi));
+
         return wifi[0];
     }
 

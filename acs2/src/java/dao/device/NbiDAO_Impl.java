@@ -60,14 +60,7 @@ public class NbiDAO_Impl implements NbiDAO {
 
     @Override
     public List<NbiDeviceData> findDevicesBySubscriberId(String subscriberId) throws NBIException_Exception {
-        try {
-            return nbi().findDevicesBySubscriberId(subscriberId);
-        } catch (NBIException_Exception ex) {
-            if (ex.getFaultInfo().getFaultCode().contentEquals("devices.for.subscriberid.could.not.be.found")) {
-                return new ArrayList<>();
-            }
-            throw ex;
-        }
+        return nbi().findDevicesBySubscriberId(subscriberId);
     }
 
     @Override

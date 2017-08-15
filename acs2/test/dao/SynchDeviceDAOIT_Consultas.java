@@ -177,7 +177,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getWifiInfoFull");
             WifiInfoFull result = instance.getWifiInfoFull(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
