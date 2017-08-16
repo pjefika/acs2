@@ -22,6 +22,9 @@ public abstract class AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    public AbstractEntity() {
+    }
+
     public Long getId() {
         return id;
     }

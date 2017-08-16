@@ -43,7 +43,7 @@ public class LogEntity extends AbstractEntity {
     private AcaoAcsEnum acao;
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private final Calendar dataLog;
+    private Calendar dataLog;
 
     public LogEntity() {
         dataLog = Calendar.getInstance();
