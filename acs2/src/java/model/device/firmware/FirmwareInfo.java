@@ -20,8 +20,23 @@ public class FirmwareInfo {
         this.preferredVersion = preferredVersion;
     }
 
+    /**
+     * Validação de Firmware Equipamentos sem Firmware Cadastrados devem ser
+     * considerados atualizados;
+     *
+     * @return
+     */
     public Boolean isOk() {
-        return firmwareVersion.equalsIgnoreCase(preferredVersion);
+        /**
+         * Sem firmware preferencials
+         */
+        if (this.preferredVersion.isEmpty()) {
+            return true;
+        }
+        /**
+         * Tratativa Gambiarra devido a falha de arquitetura MOTIVE
+         */
+        return firmwareVersion.concat("-preferred").equalsIgnoreCase(preferredVersion);
     }
 
     public String getFirmwareVersion() {

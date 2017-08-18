@@ -11,30 +11,30 @@ package model.device.pppoe;
  */
 public class PPPoECredentialsInfo {
 
-    private String username, password;
+    private String Username, Password;
 
     public PPPoECredentialsInfo() {
     }
 
     public PPPoECredentialsInfo(String username, String password) {
-        this.username = username;
-        this.password = password;
+        this.Username = username;
+        this.Password = password;
     }
 
     public String getUsername() {
-        return username;
+        return Username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.Username = username;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.Password = password;
     }
 
 }

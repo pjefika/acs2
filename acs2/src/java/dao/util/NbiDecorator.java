@@ -6,8 +6,12 @@
 package dao.util;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import java.util.ArrayList;
 import java.util.List;
+import model.device.wifi.WifiInfo;
+import model.device.wifi.WifiInfoFull;
+import model.device.wifi.WifiInfoSet;
 import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationCallBackInfo;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
@@ -43,6 +47,7 @@ public class NbiDecorator {
 
         com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo cb = new com.alcatel.hdm.service.nbi2.NbiSingleDeviceOperationCallBackInfo();
         cb.setRetry(false);
+
         opt.setDisableCaptureConstraint(true);
         opt.setExecutionTimeoutSeconds(1200);
         opt.setExpirationTimeoutSeconds(60);
@@ -53,8 +58,35 @@ public class NbiDecorator {
         opt.setPriority(100);
         opt.setReplaceDeviceCachedDataRecord(false);
         opt.setUpdateCachedDataRecord(true);
+        return opt;
+    }
+
+    public static NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault3() {
+        NbiSingleDeviceOperationOptions opt = new NbiSingleDeviceOperationOptions();
+
+        NbiSingleDeviceOperationCallBackInfo cb = new NbiSingleDeviceOperationCallBackInfo();
+        cb.setRetry(false);
+
+        opt.setDisableCaptureConstraint(true);
+        opt.setExecutionTimeoutSeconds(1200);
+        opt.setExpirationTimeoutSeconds(60);
+        opt.setFailOnConnectionRequestFailure(true);
+        opt.setNBISingleDeviceOperationCallBackInfo(cb);
+        opt.setOpaqueTransactionId("teste5555");
+        opt.setPolicyClass("policytest");
+        opt.setPriority(100);
+        opt.setReplaceDeviceCachedDataRecord(false);
+        opt.setUpdateCachedDataRecord(false);
 
         return opt;
+    }
+
+//    public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
+//        return new WifiInfoSet(true, i.getSsid(), i.getChannel());
+//    }
+
+    public static WifiInfoSet getWifiInfoSetFull(WifiInfoFull i) {
+        return new WifiInfoSet(i);
     }
 
     public static NbiDeviceID adapter(NbiDeviceData d) {
@@ -66,6 +98,14 @@ public class NbiDecorator {
         id.setSerialNumber(d.getDeviceId().getSerialNumber());
 
         return id;
+    }
+
+    public static NBIDeviceID adapterCaps(NbiDeviceData d) {
+
+        return new NBIDeviceID(d.getDeviceId().getOUI(),
+                d.getDeviceId().getProductClass(),
+                d.getDeviceId().getProtocol(), d.getDeviceId().getSerialNumber());
+
     }
 
     /**
