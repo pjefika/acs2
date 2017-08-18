@@ -144,12 +144,14 @@ public class SynchDeviceDAOIT_Alteracoes extends EquipamentoTestValues {
             Boolean expResult = true;
             WifiInfoFull w = instance.getWifiInfoFull(eqp);
             System.out.println(GsonUtil.serialize(w));
-            String channel = "11";
+            String channel = "3";
 
             w.setChannel(channel);
+            w.setSsid("GVT-CA15");
             Boolean result = instance.setWifiInfoFull(eqp, w);
 
             WifiInfoFull result1 = instance.getWifiInfoFull(eqp);
+            System.out.println(GsonUtil.serialize(result1));
 
             assertEquals("Consulta", expResult, result);
             assertEquals("Alteração", result1.getChannel(), channel);
@@ -217,6 +219,24 @@ public class SynchDeviceDAOIT_Alteracoes extends EquipamentoTestValues {
         } catch (Exception e) {
             fail(e.getMessage());
         }
+    }
+    
+     /**
+     * Test of sipRestart method, of class SynchDeviceDAO.
+     */
+    @Test
+    public void testSipRestart() throws Exception {
+        
+        Boolean expResult = true;
+        
+        try {
+            Boolean result = instance.sipRestart(eqp, 1);
+            assertEquals(expResult, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+    
     }
 
 }

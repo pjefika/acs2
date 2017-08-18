@@ -460,4 +460,28 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         return false;
     }
 
+    @Override
+    public Boolean setSipDeactivation(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean sipRestart(NbiDeviceData eqp, Integer phyref) throws UnsupportedException, NBIException, OperationTimeoutException, ProviderException {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        String leJson = "{\"phyreferencelist\":\"" + phyref.toString() + "\"}";
+        List<Object> json = NbiDecorator.getEmptyJson();
+        json.set(0, leJson);
+        try {
+            StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9521, opt, 30000, "");
+            if (a.getValue().contains("SUCCESS") || a.getValue().contains("\"statusCode\":\"0\"")) {
+                return true;
+            }
+        } catch (DeviceOperationException e) {
+            e.printStackTrace();
+            throw new UnsupportedException();
+        }
+
+        return false;
+    }
+
 }
