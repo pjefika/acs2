@@ -28,6 +28,7 @@ import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.xdsldiagnostics.XdslDiagnostics;
+import model.exception.UnsupportedException;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 
 /**
@@ -36,7 +37,7 @@ import motive.hdm.synchdeviceops.StringResponseDTO;
  */
 public class JsonUtil {
 
-    public static FirmwareInfo firmwareInfo(StringResponseDTO a) throws JsonUtilException {
+    public static FirmwareInfo firmwareInfo(StringResponseDTO a) throws Exception {
         String firmwareVersion = "";
         String preferredVersion = "";
         try {
@@ -45,7 +46,9 @@ public class JsonUtil {
             firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
             preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
         } catch (Exception e) {
-            System.out.println(a.getValue());
+            if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+                throw new UnsupportedException();
+            }
             throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
         }
         return new FirmwareInfo(firmwareVersion, preferredVersion);
@@ -153,9 +156,9 @@ public class JsonUtil {
 //        i.setAuthentication(authentication);
         i.setBroadcastEnabled(broadcastEnabled);
         i.setChannel(channel);
-        i.setOperStatus(operStatus);
+//        i.setOperStatus(tr);
 //        i.setEncryptation(encryptation);
-        i.setRadioOperStatus(radioStatus);
+//        i.setRadioOperStatus(radioStatus);
         i.setSsid(ssid);
 //        i.setStandard(standard);
         i.setSsidPassword(password);
@@ -319,7 +322,7 @@ public class JsonUtil {
     public static List<DeviceLog> deviceLog(StringResponseDTO a) {
         JsonElement jelement = new JsonParser().parse(a.getValue());
         JsonObject jobject = jelement.getAsJsonObject();
-        String[] split = jobject.get("DeviceLog").toString().replace("\"", "").replace("\\n", "\n").split("\n");
+        String[] split = jobject.get("DeviceLog").toString().replace("\"", "").replace("\\n", "\n").replace("\\t", "    ").split("\n");
 
         List<DeviceLog> logs = new ArrayList<>();
 

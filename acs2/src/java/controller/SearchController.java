@@ -5,13 +5,19 @@
  */
 package controller;
 
-import javax.ws.rs.GET;
+import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import dao.factory.FactoryDAO;
+import java.util.List;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.search.FindDeviceImpl;
+import model.entity.LogEntity;
+import model.service.factory.FactoryService;
+import model.service.search.FindDevice;
+import model.service.search.SearchIn;
 
 /**
  *
@@ -20,16 +26,28 @@ import model.search.FindDeviceImpl;
 @Path("/search")
 public class SearchController extends RestAbstractController {
 
-    private FindDeviceImpl find;
+    private FindDevice find;
 
-    @GET
-    @Path("/{instancia}")
+    @POST
+    @Path("/search")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCliente(@PathParam("instancia") String instancia) {
+    public Response search(SearchIn in) {
+        LogEntity l = in.create();
         try {
-            return ok(instancia);
+            find = FactoryService.createFindDevice();
+            List<NbiDeviceData> lst = find.find(in);
+            l.setSaida(lst);
+            return ok(lst);
         } catch (Exception e) {
+            l.setSaida(e.getMessage());
             return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

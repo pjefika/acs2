@@ -81,9 +81,9 @@ public class NbiDecorator {
         return opt;
     }
 
-    public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
-        return new WifiInfoSet(i.getOperStatus(), i.getSsid(), i.getChannel());
-    }
+//    public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
+//        return new WifiInfoSet(true, i.getSsid(), i.getChannel());
+//    }
 
     public static WifiInfoSet getWifiInfoSetFull(WifiInfoFull i) {
         return new WifiInfoSet(i);
@@ -98,6 +98,14 @@ public class NbiDecorator {
         id.setSerialNumber(d.getDeviceId().getSerialNumber());
 
         return id;
+    }
+
+    public static NBIDeviceID adapterCaps(NbiDeviceData d) {
+
+        return new NBIDeviceID(d.getDeviceId().getOUI(),
+                d.getDeviceId().getProductClass(),
+                d.getDeviceId().getProtocol(), d.getDeviceId().getSerialNumber());
+
     }
 
     /**
