@@ -23,28 +23,21 @@ import javax.xml.ws.Service;
  */
 public class FactoryNBI {
 
-//    private static String ENDPOINT = "10.113.64.1"; // PROD
-    private static String ENDPOINT = "200.168.104.216"; // QA
+    private static EndpointEnum ENDPOINT = EndpointEnum.LAB;
 
     public static NBIService createNBIService() {
 
         try {
             applyProxy();
-            URL url;
 
-            String port = "7015";
-            if (ENDPOINT.equalsIgnoreCase("10.113.64.1")) {
-                port = "7025";
-            }
-
-            url = new URL("http://" + ENDPOINT + ":" + port + "/NBIServiceImpl/NBIService?wsdl");
+            URL url = new URL("http://" + ENDPOINT.ip + ":" + ENDPOINT.porta + "/NBIServiceImpl/NBIService?wsdl");
             QName qname = new QName("http://nbi2.service.hdm.alcatel.com/", "NBIService");
             Service service = Service.create(url, qname);
             NBIService nbi = service.getPort(NBIService.class);
             ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.USERNAME_PROPERTY, "synchops");
             ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(XWSSConstants.PASSWORD_PROPERTY, "nbibr4s1l");
 
-            ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(BindingProviderProperties.REQUEST_TIMEOUT, 30000);
+            ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(BindingProviderProperties.REQUEST_TIMEOUT, 45000);
             ((javax.xml.ws.BindingProvider) nbi).getRequestContext().put(BindingProviderProperties.CONNECT_TIMEOUT, 10000);
 
             return nbi;
@@ -58,7 +51,7 @@ public class FactoryNBI {
     public static NBIServicePortStub createRemote() {
         try {
             applyProxy();
-            NBIServicePortStub stub = new NBIServicePortStub(new URL("http://" + ENDPOINT + ":7025/remotehdm/NBIService?wsdl"), new NBIServiceLocator());
+            NBIServicePortStub stub = new NBIServicePortStub(new URL("http://" + ENDPOINT.ip + ":" + ENDPOINT.porta + "/remotehdm/NBIService?wsdl"), new NBIServiceLocator());
             return (NBIServicePortStub) SoapUtil.addWsSecurityHeader(stub, "nbi_user", "nbibrasil");
         } catch (Exception e) {
             return null;
@@ -70,14 +63,8 @@ public class FactoryNBI {
     public static SynchDeviceOperationsService createSynch() {
         try {
             applyProxy();
-            URL url;
 
-            String port = "7015";
-            if (ENDPOINT.equalsIgnoreCase("10.113.64.1")) {
-                port = "7025";
-            }
-
-            url = new URL("http://" + ENDPOINT + ":" + port + "/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
+            URL url = new URL("http://" + ENDPOINT.ip + ":" + ENDPOINT.porta + "/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService?wsdl");
             QName qname = new QName("http://www.motive.com/SynchDeviceOpsImpl/SynchDeviceOperationsNBIService",
                     "SynchDeviceOperationsNBIService");
             Service service = Service.create(url, qname);
@@ -95,7 +82,7 @@ public class FactoryNBI {
     }
 
     public static void applyProxy() {
-        if (ENDPOINT.equalsIgnoreCase("200.168.104.216")) {
+        if (EndpointEnum.LAB == ENDPOINT) {
             System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
             System.setProperty("http.proxyPort", "8080");
         }
