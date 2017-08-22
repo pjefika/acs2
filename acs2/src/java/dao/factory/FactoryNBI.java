@@ -23,7 +23,7 @@ import javax.xml.ws.Service;
  */
 public class FactoryNBI {
 
-    private static EndpointEnum ENDPOINT = EndpointEnum.LAB;
+    private static EndpointEnum ENDPOINT = EndpointEnum.PROD;
 
     public static NBIService createNBIService() {
 
