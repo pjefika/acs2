@@ -29,10 +29,13 @@ import model.service.dto.DetailOut;
 import model.entity.LogEntity;
 import model.log.AcaoAcsEnum;
 import model.service.device.MotiveService;
+import model.service.device.impl.PppoeCredentialsInService;
+import model.service.device.impl.PppoeCredentialsInServiceImpl;
 import model.service.factory.FactoryService;
 import model.service.dto.DetailIn;
 import model.service.dto.DhcpIn;
 import model.service.dto.GetDeviceDataIn;
+import model.service.dto.PPPoECredentialsIn;
 import model.service.dto.PingDiagnosticIn;
 import model.service.dto.ServiceClassIn;
 import model.service.dto.SetWifiIn;
@@ -217,6 +220,29 @@ public class EquipamentoController extends RestAbstractController {
             PPPoECredentialsInfo w = FactoryDAO.createSynch().getPPPoECredentials(in.getDevice());
             l.setSaida(w);
             return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/setPPPoECredentials")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setPPPoECredentials(PPPoECredentialsIn in) {
+        LogEntity l = in.create();
+        try {
+            PppoeCredentialsInService pppoe = new PppoeCredentialsInServiceImpl();
+            Boolean ret = pppoe.alterar(in.getDevice(), in.getCredentials());
+            l.setSaida(ret);
+            return ok(ret);
         } catch (Exception e) {
             l.setSaida(e.getMessage());
             return internalServerError(e);

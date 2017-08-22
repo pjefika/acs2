@@ -16,7 +16,7 @@ public class ThreadControl {
     
     public static void sleep(){
         try {
-            Thread.sleep(4500);
+            Thread.sleep(7500);
         } catch (InterruptedException ex) {
             Logger.getLogger(ThreadControl.class.getName()).log(Level.SEVERE, null, ex);
         }
