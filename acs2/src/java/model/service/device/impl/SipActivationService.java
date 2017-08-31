@@ -15,6 +15,6 @@ import model.device.sipdiagnostics.SipDiagnostics;
  */
 public interface SipActivationService {
 
-    public SipDiagnostics alterar(NbiDeviceData device, SipActivation activation) throws Exception;
+    public SipDiagnostics ativar(NbiDeviceData device, SipActivation activation) throws Exception;
 
 }

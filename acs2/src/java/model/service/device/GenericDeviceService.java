@@ -14,7 +14,4 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 public abstract class GenericDeviceService extends ServiceAbstract{
 
     protected NbiDeviceData device;
-
-
-
 }

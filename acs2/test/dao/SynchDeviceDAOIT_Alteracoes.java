@@ -206,9 +206,9 @@ public class SynchDeviceDAOIT_Alteracoes extends EquipamentoTestValues {
             System.out.println("setSipActivation");
             Boolean expResult = true;
             SipActivation s = new SipActivation();
-            s.setAuthPassword("01485");
-            s.setAuthUserName("+554130401485");
-            s.setDirectoryNumber("+554130401485");
+            s.setAuthPassword("829718");
+            s.setAuthUserName("+554130829718");
+            s.setDirectoryNumber("+554130829718");
             s.setOutboundProxy("192.168.80.1");
             s.setPhyReferenceList("1");
             s.setProxyServer("192.168.80.1");

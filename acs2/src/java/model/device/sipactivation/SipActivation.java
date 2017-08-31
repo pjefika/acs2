@@ -11,8 +11,14 @@ package model.device.sipactivation;
  */
 public class SipActivation {
 
-    private String DirectoryNumber, AuthUserName, AuthPassword, ProxyServer,
-            RegistrarServer, UserAgentDomain, OutboundProxy, phyReferenceList;
+    private String 
+            DirectoryNumber, 
+            AuthUserName, 
+            AuthPassword, 
+            ProxyServer,
+            RegistrarServer,
+            UserAgentDomain, 
+            OutboundProxy, phyReferenceList;
 
     public SipActivation() {
     }

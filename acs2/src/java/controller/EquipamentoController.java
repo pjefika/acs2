@@ -31,6 +31,10 @@ import model.log.AcaoAcsEnum;
 import model.service.device.MotiveService;
 import model.service.device.impl.PppoeCredentialsInService;
 import model.service.device.impl.PppoeCredentialsInServiceImpl;
+import model.service.device.impl.SipActivationService;
+import model.service.device.impl.SipActivationServiceImpl;
+import model.service.device.impl.SipDiagnosticsService;
+import model.service.device.impl.SipDiagnosticsServiceImpl;
 import model.service.factory.FactoryService;
 import model.service.dto.DetailIn;
 import model.service.dto.DhcpIn;
@@ -468,7 +472,8 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.SIP_DIAGNOSTICS);
         LogEntity l = in.create();
         try {
-            SipDiagnostics w = FactoryDAO.createSynch().getSipDiagnostics(in.getDevice(), in.getPhyref());
+            SipDiagnosticsService sip = new SipDiagnosticsServiceImpl();
+            SipDiagnostics w = sip.consultar(in.getDevice(), in.getPhyref());
             l.setSaida(w);
             return ok(w);
         } catch (Exception e) {
@@ -490,7 +495,8 @@ public class EquipamentoController extends RestAbstractController {
     public Response setSipActivation(SipActivationIn in) {
         LogEntity l = in.create();
         try {
-            Boolean w = FactoryDAO.createSynch().setSipActivation(in.getDevice(), in.getSip());
+            SipActivationService sip = new SipActivationServiceImpl();
+            SipDiagnostics w = sip.ativar(in.getDevice(), in.getSip());
             l.setSaida(w);
             return ok(w);
         } catch (Exception e) {
