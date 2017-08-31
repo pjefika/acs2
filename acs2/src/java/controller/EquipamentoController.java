@@ -493,6 +493,7 @@ public class EquipamentoController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response setSipActivation(SipActivationIn in) {
+        
         LogEntity l = in.create();
         try {
             SipActivationService sip = new SipActivationServiceImpl();
