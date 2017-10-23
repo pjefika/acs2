@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dao.device;
 
 import dao.device.NbiDAO_Impl;
+import dao.device.NbiDAO;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,18 +15,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.GsonUtil;
 
 /**
  *
  * @author G0042204
  */
-public class NbiDAO_ImplIT {
+public class NbiDAOIT {
 
-    private NbiDAO_Impl instance = new NbiDAO_Impl();
-
-    public NbiDAO_ImplIT() {
-    }
+    private NbiDAO instance = new NbiDAO_Impl();
 
     @BeforeClass
     public static void setUpClass() {
@@ -45,7 +41,7 @@ public class NbiDAO_ImplIT {
     }
 
     /**
-     * Test of findDeviceByGUID method, of class NbiDAO_Impl.
+     * Test of findDeviceByGUID method, of class NbiDAO.
      */
     @Test
     public void testFindDeviceByGUID() throws Exception {
@@ -60,26 +56,22 @@ public class NbiDAO_ImplIT {
     }
 
     /**
-     * Test of findDevicesBySubscriberId method, of class NbiDAO_Impl.
+     * Test of findDevicesBySubscriberId method, of class NbiDAO.
      */
     @Test
     public void testFindDevicesBySubscriberId() throws Exception {
         System.out.println("findDevicesBySubscriberId");
-        String subscriberId = "NO_SUBSCRIBER";
+        String subscriberId = "";
 
         List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDevicesBySubscriberId(subscriberId);
-        for (NbiDeviceData nbiDeviceData : result) {
-            System.out.println("LeDevice: "+GsonUtil.serialize(nbiDeviceData));
-        }
-        
-        assertTrue(result!=null);
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of findDevicesByMac method, of class NbiDAO_Impl.
+     * Test of findDevicesByMac method, of class NbiDAO.
      */
     @Test
     public void testFindDevicesByMac() throws Exception {
@@ -94,25 +86,7 @@ public class NbiDAO_ImplIT {
     }
 
     /**
-     * Test of getAvailableCriteriaTemplates method, of class NbiDAO_Impl.
-     */
-    @Test
-    public void testGetAvailableCriteriaTemplates() {
-        try {
-            System.out.println("getAvailableCriteriaTemplates");
-            List<NbiTemplate> result = instance.getAvailableCriteriaTemplates();
-            System.out.println(GsonUtil.serialize(result));
-            System.out.println("end");
-            assertTrue(!result.isEmpty());
-            // TODO review the generated test code and remove the default call to fail.
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-
-    }
-
-    /**
-     * Test of findDeviceByExternalIPAddress method, of class NbiDAO_Impl.
+     * Test of findDeviceByExternalIPAddress method, of class NbiDAO.
      */
     @Test
     public void testFindDeviceByExternalIPAddress() throws Exception {
@@ -127,16 +101,15 @@ public class NbiDAO_ImplIT {
     }
 
     /**
-     * Test of findDeviceBySerialNumber method, of class NbiDAO_Impl.
+     * Test of findDeviceBySerialNumber method, of class NbiDAO.
      */
     @Test
     public void testFindDeviceBySerialNumber() throws Exception {
         System.out.println("findDeviceBySerialNumber");
-        String serial = "N71327865001810";
+        String serial = "";
 
         List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDeviceBySerialNumber(serial);
-        System.out.println(GsonUtil.serialize(result));
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

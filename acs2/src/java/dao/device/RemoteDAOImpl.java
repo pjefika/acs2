@@ -7,8 +7,10 @@ package dao.device;
 
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiDeviceID;
 import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortStub;
 import dao.factory.FactoryNBI;
+import dao.util.NbiDecorator;
 import static dao.util.NbiDecorator.adapterCaps;
 import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import model.device.firmware.FirmwareInfo;
+import notification.dto.nbi.service.hdm.alcatel.com.NBIDeviceActionResult;
 
 public class RemoteDAOImpl implements RemoteDAO {
 
@@ -31,6 +34,10 @@ public class RemoteDAOImpl implements RemoteDAO {
             remote = FactoryNBI.createRemote();
         }
         return remote;
+    }
+
+    public NBIDeviceActionResult[] getDeviceOperationsHistory(NbiDeviceID nbi) throws Exception {
+        return remote().getDeviceOperationsHistory(NbiDecorator.adapterRemote(nbi), 0, 1000);
     }
 
     @Override
