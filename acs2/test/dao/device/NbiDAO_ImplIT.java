@@ -154,7 +154,7 @@ public class NbiDAO_ImplIT {
     public void testGetCommunicationLogsByDeviceID() throws Exception {
         System.out.println("getCommunicationLogsByDeviceID");
         List<NbiCommunicationLog> result = instance.getCommunicationLogsByDeviceID(nbi.getDeviceId());
-
+        
         for (NbiCommunicationLog com : result) {
             System.out.println("com.getMessage(): " + com.getMessage());
             System.out.println("com.getDetail(): " + com.getDetail());
@@ -169,7 +169,6 @@ public class NbiDAO_ImplIT {
     @Test
     public void testGetDeviceOperationsHistory() throws Exception {
         System.out.println("getDeviceOperationsHistory");
-
         List<NbiDeviceActionResult> result = instance.getDeviceOperationsHistory(nbi.getDeviceId());
         System.out.println(GsonUtil.serialize(result));
         assertTrue(!result.isEmpty());

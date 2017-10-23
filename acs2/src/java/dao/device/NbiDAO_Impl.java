@@ -78,6 +78,8 @@ public class NbiDAO_Impl implements NbiDAO {
 
         XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
         XMLGregorianCalendar cal1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c1);
+        
+        nbi().
 
         return nbi().getCommunicationLogsByDeviceID(nbi, 1000, cal, cal1);
     }
