@@ -5,13 +5,21 @@
  */
 package dao.device;
 
+import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.alcatel.hdm.service.nbi2.NbiDeviceID;
+import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
 import dto.nbi.service.hdm.alcatel.com.NBITemplate;
+import init.SingletonDeviceTest;
 import java.rmi.RemoteException;
+import java.util.List;
+import model.device.firmware.FirmwareInfo;
+import notification.dto.nbi.service.hdm.alcatel.com.NBIDeviceActionResult;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import util.GsonUtil;
 
 /**
  *
@@ -20,6 +28,8 @@ import org.junit.Test;
 public class RemoteDAOImplIT {
 
     private RemoteDAOImpl instance = new RemoteDAOImpl();
+
+    private final NbiDeviceData nbi = SingletonDeviceTest.getInstance().getDevice();
 
     public RemoteDAOImplIT() {
     }
@@ -55,4 +65,17 @@ public class RemoteDAOImplIT {
         }
 
     }
+
+    /**
+     * Test of getDeviceOperationsHistory method, of class RemoteDAOImpl.
+     */
+    @Test
+    public void testGetDeviceOperationsHistory() throws Exception {
+        System.out.println("getDeviceOperationsHistory");
+        NBIDeviceActionResult[] result = instance.getDeviceOperationsHistory(nbi.getDeviceId());
+        for (NBIDeviceActionResult r : result) {
+        }
+
+    }
+
 }

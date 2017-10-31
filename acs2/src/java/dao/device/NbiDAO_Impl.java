@@ -8,6 +8,7 @@ package dao.device;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NBIService;
 import com.alcatel.hdm.service.nbi2.NbiCommunicationLog;
+import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiDeviceID;
 import com.alcatel.hdm.service.nbi2.NbiParameter;
@@ -15,6 +16,7 @@ import com.alcatel.hdm.service.nbi2.NbiTemplate;
 import dao.factory.FactoryNBI;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.xml.datatype.DatatypeFactory;
@@ -51,11 +53,33 @@ public class NbiDAO_Impl implements NbiDAO {
         }
     }
 
+    public List<NbiDeviceActionResult> getDeviceOperationsHistory(NbiDeviceID nbi) throws Exception {
+        return nbi().getDeviceOperationsHistory(nbi, 0, 1000);
+        
+    }
+
     public List<NbiCommunicationLog> getCommunicationLogsByDeviceID(NbiDeviceID nbi) throws Exception {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 0);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.YEAR, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date periodoInicial = calendar.getTime();
+
         GregorianCalendar c = new GregorianCalendar();
-        c.setTime(Calendar.getInstance().getTime());
+        c.setTime(periodoInicial);
+
+        GregorianCalendar c1 = new GregorianCalendar();
+        c1.setTime(new Date());
+
         XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-        return nbi().getCommunicationLogsByDeviceID(nbi, 0, cal, cal);
+        XMLGregorianCalendar cal1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c1);
+       
+        return nbi().getCommunicationLogsByDeviceID(nbi, 1000, cal, cal1);
     }
 
     @Override

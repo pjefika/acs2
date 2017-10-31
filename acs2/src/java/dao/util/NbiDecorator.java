@@ -9,7 +9,6 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import java.util.ArrayList;
 import java.util.List;
-import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiInfoSet;
 import motive.hdm.synchdeviceops.NbiDeviceID;
@@ -84,7 +83,6 @@ public class NbiDecorator {
 //    public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
 //        return new WifiInfoSet(true, i.getSsid(), i.getChannel());
 //    }
-
     public static WifiInfoSet getWifiInfoSetFull(WifiInfoFull i) {
         return new WifiInfoSet(i);
     }
@@ -120,6 +118,26 @@ public class NbiDecorator {
         id.setProductClass(d.getDeviceId().getProductClass());
         id.setProtocol(d.getDeviceId().getProtocol());
         id.setSerialNumber(d.getDeviceId().getSerialNumber());
+
+        return id;
+    }
+
+    public static dto.nbi.service.hdm.alcatel.com.NBIDeviceID adapterRemote(com.alcatel.hdm.service.nbi2.NbiDeviceID d) {
+        NBIDeviceID id = new dto.nbi.service.hdm.alcatel.com.NBIDeviceID();
+        id.setOUI(d.getOUI());
+        id.setProductClass(d.getProductClass());
+        id.setProtocol(d.getProtocol());
+        id.setSerialNumber(d.getSerialNumber());
+        return id;
+    }
+
+    public static com.alcatel.hdm.service.nbi2.NbiDeviceID adapterAlterReal(com.alcatel.hdm.service.nbi2.NbiDeviceID d) {
+
+        com.alcatel.hdm.service.nbi2.NbiDeviceID id = new com.alcatel.hdm.service.nbi2.NbiDeviceID();
+        id.setOUI(d.getOUI());
+        id.setProductClass(d.getProductClass());
+        id.setProtocol(d.getProtocol());
+        id.setSerialNumber(d.getSerialNumber());
 
         return id;
     }

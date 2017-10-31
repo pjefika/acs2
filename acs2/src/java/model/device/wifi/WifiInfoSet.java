@@ -20,7 +20,7 @@ public class WifiInfoSet {
             //            encryptation,
             //            standard,
             //            beaconType,
-            //            password,
+            password,
             channel;
 
     private Boolean radioOperStatus, operStatus;
@@ -37,6 +37,7 @@ public class WifiInfoSet {
         this.radioOperStatus = true;
         this.operStatus = true;
         this.ssid = getInfo.getSsid();
+        this.password = getInfo.getKey();
 //       this.standard = getInfo.getStandard();
     }
 
@@ -112,13 +113,14 @@ public class WifiInfoSet {
 //        this.beaconType = beaconType;
 //    }
 //
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Boolean getOperStatus() {
         return operStatus;
     }
