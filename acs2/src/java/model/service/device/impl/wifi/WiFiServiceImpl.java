@@ -55,12 +55,16 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 
         List<ParameterValueStructDTO> lst = new ArrayList<>();
         lst.add(SetParameters.DESATIVAR_WIFI);
-
         synch().setParametersValues(device, lst);
     }
 
     @Override
     public WifiInfoFull alterar(NbiDeviceData device, WifiInfoFull wifi) throws Exception {
+        List<ParameterValueStructDTO> lst = new ArrayList<>();
+        lst.add(SetParameters.DESATIVAR_AUTOCHANNEL);
+        lst.add(SetParameters.ATIVAR_WIFI);
+        synch().setParametersValues(device, lst);
+        ThreadControl.sleep();
         synch().setWifiInfoFull(device, wifi);
         ThreadControl.sleep();
         return consultar(device);

@@ -12,7 +12,7 @@ package model.device.wifi;
 public class WifiInfoSet {
 
     private String ssid,
-            //            index,
+            index,
             //            frequency,
             //            authentication,
             //            bcEnable,
@@ -22,8 +22,7 @@ public class WifiInfoSet {
             //            beaconType,
             password,
             channel;
-
-    private Boolean radioOperStatus, operStatus;
+    private Boolean radioOperStatus, operStatus, autochannel;
 
     public WifiInfoSet() {
     }
@@ -37,7 +36,15 @@ public class WifiInfoSet {
         this.radioOperStatus = true;
         this.operStatus = true;
         this.ssid = getInfo.getSsid();
-        this.password = getInfo.getKey();
+        this.index = "1";
+        try {
+            if (!getInfo.getKey().isEmpty()) {
+                this.password = getInfo.getKey();
+            }
+        } catch (Exception e) {
+        }
+
+        this.autochannel = false;
 //       this.standard = getInfo.getStandard();
     }
 
@@ -49,76 +56,28 @@ public class WifiInfoSet {
         this.radioOperStatus = radioOperStatus;
     }
 
-//    public String getIndex() {
-//        return index;
-//    }
-//
-//    public void setIndex(String index) {
-//        this.index = index;
-//    }
-//
-//    public String getFrequency() {
-//        return frequency;
-//    }
-//
-//    public void setFrequency(String frequency) {
-//        this.frequency = frequency;
-//    }
-//
-//    public String getAuthentication() {
-//        return authentication;
-//    }
-//
-//    public void setAuthentication(String authentication) {
-//        this.authentication = authentication;
-//    }
-//
-//    public String getBcEnable() {
-//        return bcEnable;
-//    }
-//
-//    public void setBcEnable(String bcEnable) {
-//        this.bcEnable = bcEnable;
-//    }
-//
-//    public String getAutochannel() {
-//        return autochannel;
-//    }
-//
-//    public void setAutochannel(String autochannel) {
-//        this.autochannel = autochannel;
-//    }
-//
-//    public String getEncryptation() {
-//        return encryptation;
-//    }
-//
-//    public void setEncryptation(String encryptation) {
-//        this.encryptation = encryptation;
-//    }
-//
-//    public String getStandard() {
-//        return standard;
-//    }
-//
-//    public void setStandard(String standard) {
-//        this.standard = standard;
-//    }
-//
-//    public String getBeaconType() {
-//        return beaconType;
-//    }
-//
-//    public void setBeaconType(String beaconType) {
-//        this.beaconType = beaconType;
-//    }
-//
+    public Boolean getAutochannel() {
+        return autochannel;
+    }
+
+    public void setAutochannel(Boolean autochannel) {
+        this.autochannel = autochannel;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     public Boolean getOperStatus() {

@@ -5,27 +5,28 @@
  */
 package model.device.wifi;
 
-
 /**
- *extends WifiInfoSet
+ * extends WifiInfoSet
+ *
  * @author G0042204
  */
-public class WifiInfoFull  {
+public class WifiInfoFull {
 
     private String admStatus,
-                operStatus,
-                ssid,
-                channel,
-                authMode,
-                encType,
-                key,
-                wepKeyIndex,
-                macAddress,
-                radioStatus, 
-                standard,
-                wpsDeviceName,
-                wpsDevicePassword,
-                maxBitRate;
+            operStatus,
+            autoChannel,
+            ssid,
+            channel,
+            authMode,
+            encType,
+            key,
+            wepKeyIndex,
+            macAddress,
+            radioStatus,
+            standard,
+            wpsDeviceName,
+            wpsDevicePassword,
+            maxBitRate;
 
     public String getOperStatus() {
         return operStatus;
@@ -52,21 +53,17 @@ public class WifiInfoFull  {
     }
 
     private String signal;
-    
-    private Boolean bcEnabled,
-                    macAddrControl,
-                    wpsEnabled;
-    
-    
-    private String bytesSent,
-                        bytesRecv,
-                        pctSent,
-                        pctRecv,
-                        errSent,
-                        errRecv;
-                        
 
-            
+    private Boolean bcEnabled,
+            macAddrControl,
+            wpsEnabled;
+
+    private String bytesSent,
+            bytesRecv,
+            pctSent,
+            pctRecv,
+            errSent,
+            errRecv;
 
     public WifiInfoFull() {
     }
@@ -239,5 +236,12 @@ public class WifiInfoFull  {
         this.errRecv = errRecv;
     }
 
-   
+    public String getAutochannel() {
+        return autoChannel;
+    }
+
+    public void setAutochannel(String autoChannel) {
+        this.autoChannel = autoChannel;
+    }
+
 }

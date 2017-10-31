@@ -287,7 +287,6 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         try {
             NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
             WifiInfoSet adapter = NbiDecorator.getWifiInfoSetFull(wifi);
-            //String jsonWifi = JsonUtil.serialize(adapter, adapter.getClass());
             String jsonWifi = GsonUtil.serialize(adapter);
             List<Object> json = NbiDecorator.getEmptyJson();
             json.set(0, jsonWifi);
