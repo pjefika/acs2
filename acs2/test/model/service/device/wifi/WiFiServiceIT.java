@@ -5,7 +5,7 @@
  */
 package model.service.device.wifi;
 
-import model.service.device.impl.wifi.WiFiService;
+import model.service.device.impl.parameter.wifi.WiFiService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import init.EquipamentoTestValues;
 import init.SingletonDeviceTest;

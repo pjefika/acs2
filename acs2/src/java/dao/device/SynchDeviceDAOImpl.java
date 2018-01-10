@@ -107,8 +107,8 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         GetParameterNamesDTO g = new GetParameterNamesDTO();
         g.setNextLevel(true);
+        g.setParameterPath("*");
         try {
-            g.setParameterPath(" ");
             return synch().getParameterNames(NbiDecorator.adapter(eqp), g, opt, 30000, "").getParameterList();
         } catch (Exception e) {
             g.setParameterPath("InternetGatewayDevice.");

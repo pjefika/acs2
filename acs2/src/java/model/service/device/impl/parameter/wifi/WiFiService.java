@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service.device.impl.wifi;
+package model.service.device.impl.parameter.wifi;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import model.device.wifi.WifiInfoFull;

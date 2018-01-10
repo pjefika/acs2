@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service.device.impl.wifi;
+package model.service.device.impl.parameter.wifi;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import model.device.wifi.WifiInfoFull;
 import model.exception.WifiInativoException;
 import model.service.device.GenericDeviceService;
 import model.service.device.ThreadControl;
-import model.service.device.impl.wifi.acao.SetParameters;
+import model.service.device.impl.parameter.SetParameters;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
 /**

@@ -28,9 +28,11 @@ import model.device.traceroute.TraceRouteRequest;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.xdsldiagnostics.XdslDiagnostics;
+import model.service.device.impl.parameter.SetParameters;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
+import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -144,6 +146,22 @@ public class SynchDeviceDAOImplIT {
             fail(e.getMessage());
 
         }
+    }
+
+    @Test
+    public void testGetParametersValuesDownloadDiagnostics() {
+        try {
+            System.out.println("getParametersValues");
+            List<String> paths = new ArrayList<>();
+            paths.add("InternetGatewayDevice.DownloadDiagnostics.");
+            GetParameterValuesResponseDTO parameters = instance.getParametersValues(eqp, paths);
+            System.out.println(GsonUtil.serialize(parameters));
+            assertTrue("Cheio", parameters != null);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -480,6 +498,19 @@ public class SynchDeviceDAOImplIT {
 //        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    @Test
+    public void testSetParameters() {
+        try {
+            List<ParameterValueStructDTO> lst = new ArrayList<>();
+            lst.add(SetParameters.DOWNLOAD_URL);
+            lst.add(SetParameters.INICIAR_DOWNLOAD_DIAGNOSTICS);
+            instance.setParametersValues(eqp, lst);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
     }
 
     /**

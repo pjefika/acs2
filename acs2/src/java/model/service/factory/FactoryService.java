@@ -10,8 +10,8 @@ import model.service.search.FindDevice;
 import model.service.search.FindDeviceImpl;
 import model.service.device.detail.DeviceDetailService;
 import model.service.device.detail.DeviceDetailServiceImpl;
-import model.service.device.impl.wifi.WiFiService;
-import model.service.device.impl.wifi.WiFiServiceImpl;
+import model.service.device.impl.parameter.wifi.WiFiService;
+import model.service.device.impl.parameter.wifi.WiFiServiceImpl;
 
 /**
  *

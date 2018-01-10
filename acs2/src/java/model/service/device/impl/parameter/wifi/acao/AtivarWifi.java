@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service.device.impl.wifi.acao;
+package model.service.device.impl.parameter.wifi.acao;
 
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
