@@ -11,14 +11,15 @@ package model.device.sipactivation;
  */
 public class SipActivation {
 
-    private String 
-            DirectoryNumber, 
-            AuthUserName, 
-            AuthPassword, 
+    private String DirectoryNumber,
+            AuthUserName,
+            AuthPassword,
             ProxyServer,
             RegistrarServer,
-            UserAgentDomain, 
+            UserAgentDomain,
             OutboundProxy, phyReferenceList;
+
+    private Boolean t38Enable;
 
     public SipActivation() {
     }
@@ -85,6 +86,14 @@ public class SipActivation {
 
     public void setPhyReferenceList(String phyReferenceList) {
         this.phyReferenceList = phyReferenceList;
+    }
+
+    public Boolean getT38Enable() {
+        return t38Enable;
+    }
+
+    public void setT38Enable(Boolean t38Enable) {
+        this.t38Enable = t38Enable;
     }
 
 }
