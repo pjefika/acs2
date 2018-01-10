@@ -6,6 +6,7 @@
 package util;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import model.device.log.DeviceLogR;
 import motive.hdm.synchdeviceops.StringResponseDTO;
+import util.gson.BooleanSerializer;
 
 /**
  *
@@ -23,23 +25,30 @@ import motive.hdm.synchdeviceops.StringResponseDTO;
  */
 public class GsonUtil {
 
-    private static Gson gson = new Gson();
+    public static Gson gson() {
+        GsonBuilder b = new GsonBuilder();
+        BooleanSerializer serializer = new BooleanSerializer();
+        b.registerTypeAdapter(Boolean.class, serializer);
+        b.registerTypeAdapter(boolean.class, serializer);
+        return b.create();
+    }
 
     public static Object convert(String str, Class c) {
+
         JsonReader reader = new JsonReader(new StringReader(str));
         reader.setLenient(true);
-        return gson.fromJson(reader, c);
+        return gson().fromJson(reader, c);
     }
-    
+
     public static Object convertValues(StringResponseDTO a, Class c) {
         JsonElement jelement = new JsonParser().parse(a.getValue());
-        JsonObject jobject = jelement.getAsJsonObject();        
+        JsonObject jobject = jelement.getAsJsonObject();
         JsonObject jo = (JsonObject) jobject.get("values");
-        return gson.fromJson(jo, c);
+        return gson().fromJson(jo, c);
     }
 
     public static String serialize(Object ob) {
-        return gson.toJson(ob, ob.getClass());
+        return gson().toJson(ob, ob.getClass());
     }
 
     public static List<DeviceLogR> deviceLogR(StringResponseDTO a) {
@@ -68,7 +77,7 @@ public class GsonUtil {
         }
         //System.out.println(list);
         //List<DeviceLogR> logs = new ArrayList<>();        
-        DeviceLogR[] logs = gson.fromJson(list, DeviceLogR[].class);
+        DeviceLogR[] logs = gson().fromJson(list, DeviceLogR[].class);
         return Arrays.asList(logs);
     }
 

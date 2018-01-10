@@ -100,7 +100,7 @@ public interface SynchDeviceDAO {
 
     public Boolean setPortMapping(NbiDeviceData eqp, List<PortMappingInfo> ports) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
 
-    public SipDiagnostics getSipDiagnostics(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, JsonUtilException, HdmException, ProviderException, UnsupportedException;
+    public SipDiagnostics getSipDiagnostics(NbiDeviceData eqp, Integer phyref) throws Exception;
 
     public Boolean setSipActivation(NbiDeviceData eqp, SipActivation sip) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
     

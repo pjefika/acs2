@@ -503,15 +503,18 @@ public class SynchDeviceDAOImplIT {
      */
     @Test
     public void testGetSipDiagnostics() throws Exception {
-        System.out.println("getSipDiagnostics");
+        try {
+            System.out.println("getSipDiagnostics");
+            Integer phyref = 1;
+            SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+            SipDiagnostics result = instance.getSipDiagnostics(eqp, phyref);
+            System.out.println("--------");
+            System.out.println(GsonUtil.serialize(result));
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
 
-        Integer phyref = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        SipDiagnostics expResult = null;
-        SipDiagnostics result = instance.getSipDiagnostics(eqp, phyref);
-        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

@@ -425,7 +425,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
      * @throws UnsupportedException
      */
     @Override
-    public SipDiagnostics getSipDiagnostics(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, JsonUtilException, HdmException, ProviderException, UnsupportedException {
+    public SipDiagnostics getSipDiagnostics(NbiDeviceData eqp, Integer phyref) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         String leJson = "{\"phyreferencelist\":\"" + phyref.toString() + "\"}";
         List<Object> json = NbiDecorator.getEmptyJson();
@@ -433,11 +433,19 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
         try {
             StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), json, 9520, opt, 30000, "");
-            //System.out.println(a.getValue());        
+            System.out.println(a.getValue());
             if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
                 throw new UnsupportedException();
             }
+
             return (SipDiagnostics) GsonUtil.convertValues(a, SipDiagnostics.class);
+//            if (a.getValue().contains("pivotColumn")) {
+//                JacksonMapper<SipDiagnosticsWithPivotColumn> mapper = new JacksonMapper(SipDiagnosticsWithPivotColumn.class);
+//                return mapper.deserialize(a.getValue()).getValues();
+//            } else {
+//                JacksonMapper<SipDiagnostics> mapper = new JacksonMapper(SipDiagnostics.class);
+//                return mapper.deserialize(a.getValue());
+//            }
         } catch (DeviceOperationException e) {
             throw new UnsupportedException();
         }

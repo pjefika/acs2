@@ -15,9 +15,19 @@ public class SipDiagnostics {
             UserAgentDomain, UserAgentPort, OutboundProxy, ConferenceCallURI,
             DirectoryNumber, Enable, LineEnable, AuthUserName, AuthPassword,
             URI, CallState, DigitMap, ProfileEnable, DTMFMethod, Codec,
-            T38Enable, Status, PacketsLost;
+            Status, PacketsLost, IPAddress;
+
+    private Boolean T38Enable;
 
     public SipDiagnostics() {
+    }
+
+    public String getIPAddress() {
+        return IPAddress;
+    }
+
+    public void setIPAddress(String IPAddress) {
+        this.IPAddress = IPAddress;
     }
 
     public String getProxyServer() {
@@ -164,11 +174,11 @@ public class SipDiagnostics {
         this.Codec = Codec;
     }
 
-    public String getT38Enable() {
+    public Boolean getT38Enable() {
         return T38Enable;
     }
 
-    public void setT38Enable(String T38Enable) {
+    public void setT38Enable(Boolean T38Enable) {
         this.T38Enable = T38Enable;
     }
 
