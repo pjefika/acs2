@@ -19,7 +19,7 @@ public class SipActivation {
             UserAgentDomain,
             OutboundProxy, phyReferenceList;
 
-    private Boolean t38Enable;
+    private Boolean T38Enable;
 
     public SipActivation() {
     }
@@ -89,11 +89,11 @@ public class SipActivation {
     }
 
     public Boolean getT38Enable() {
-        return t38Enable;
+        return T38Enable;
     }
 
-    public void setT38Enable(Boolean t38Enable) {
-        this.t38Enable = t38Enable;
+    public void setT38Enable(Boolean T38Enable) {
+        this.T38Enable = T38Enable;
     }
 
 }

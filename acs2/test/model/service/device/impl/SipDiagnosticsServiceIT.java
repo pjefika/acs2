@@ -5,7 +5,6 @@
  */
 package model.service.device.impl;
 
-import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import model.AbstractTest;
 import model.device.sipdiagnostics.SipDiagnostics;
 import org.junit.After;
