@@ -31,14 +31,17 @@ public class DeviceDetailServiceImpl implements DeviceDetailService {
         result.setDevice(eqp);
         result.setOnline(sync.checkOnline(eqp));
 
-        if (result.getOnline()) {
-            try {
-                ThreadControl.sleep();
-                result.setFirmware(new FirmwareOut(sync.getFirmwareVersion(eqp)));
-            } catch (Exception e) {
-                result.setFirmware(null);
-            }
-        }
+        /**
+         * Firmware Version
+         */
+//        if (result.getOnline()) {
+//            try {
+//                ThreadControl.sleep();
+//                result.setFirmware(new FirmwareOut(sync.getFirmwareVersion(eqp)));
+//            } catch (Exception e) {
+//                result.setFirmware(null);
+//            }
+//        }
 
         return result;
     }

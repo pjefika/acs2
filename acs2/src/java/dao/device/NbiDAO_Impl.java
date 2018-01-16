@@ -54,7 +54,7 @@ public class NbiDAO_Impl implements NbiDAO {
     }
 
     public List<NbiDeviceActionResult> getDeviceOperationsHistory(NbiDeviceID nbi) throws Exception {
-        return nbi().getDeviceOperationsHistory(nbi, 0, 1000);
+        return nbi().getDeviceOperationsHistory(nbi, 0, 10);
         
     }
 

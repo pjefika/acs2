@@ -40,6 +40,10 @@ public class RemoteDAOImpl implements RemoteDAO {
         return remote().getDeviceOperationsHistory(NbiDecorator.adapterRemote(nbi), 0, 1000);
     }
 
+    public NBIDeviceActionResult[] test(NbiDeviceData eqp) throws Exception {
+        return remote().getDeviceOperationsHistory(adapterCaps(eqp), 0, (int) remote().getDeviceOperationsHistoryCount(eqp.getDeviceGUID()));
+    }
+
     @Override
     public Long firmwareUpdate(NbiDeviceData eqp, FirmwareInfo info) throws NBIException_Exception, RemoteException {
         return remote().createSingleFirmwareUpdateOperation(new NBIDeviceID(eqp.getDeviceId().getOUI(),
@@ -57,6 +61,9 @@ public class RemoteDAOImpl implements RemoteDAO {
 
     public NBITemplate[] getAvailableCriteriaTemplates() throws RemoteException {
         return remote().getAvailableCriteriaTemplates();
+    }
+    
+    public void teste(){
     }
 
 }

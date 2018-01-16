@@ -78,6 +78,13 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         }
     }
 
+    public WanInfo getDeviceInfo(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9515, opt, 30000, "");
+//        System.out.println(a.getValue());
+        return (WanInfo) GsonUtil.convert(a.getValue(), WanInfo.class);
+    }
+
     @Override
     public Boolean factoryReset(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
         synch().factoryReset(NbiDecorator.adapter(eqp), NbiDecorator.getDeviceOperationOptionsDefault(), 50000, "");
