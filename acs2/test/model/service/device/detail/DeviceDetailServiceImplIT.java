@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service;
+package model.service.device.detail;
 
 import model.service.device.detail.DeviceDetailServiceImpl;
 import init.EquipamentoTestValues;
@@ -52,8 +52,8 @@ public class DeviceDetailServiceImplIT extends EquipamentoTestValues {
             DeviceDetailServiceImpl instance = new DeviceDetailServiceImpl();
             DetailOut result = instance.consultar(GUID);
             System.out.println(GsonUtil.serialize(result));
-
             assertEquals("Online", result.getOnline(), true);
+            assertEquals("Updated", result.getFirmware().getUpdated(), true);
 //            assertEquals("FirmwareUpdated", result.getFirmware().getUpdated(), true);
 
         } catch (Exception e) {

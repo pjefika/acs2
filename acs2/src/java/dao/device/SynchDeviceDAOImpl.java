@@ -22,6 +22,7 @@ import model.device.ddns.DdnsInfo;
 import model.device.dhcp.Dhcp;
 import model.device.dhcp.DhcpSet;
 import model.device.firmware.FirmwareInfo;
+import model.device.info.DeviceInfo;
 import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
@@ -88,7 +89,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public Boolean checkOnline(NbiDeviceData eqp) throws NBIException, ProviderException {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
         try {
-            synch().checkOnline(NbiDecorator.adapter(eqp), opt, 15000, "");
+            synch().checkOnline(NbiDecorator.adapter(eqp), opt, 800000, "");
             return true;
         } catch (DeviceOperationException | OperationTimeoutException e) {
             return false;
@@ -98,7 +99,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     @Override
     public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
-        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 55000, "");
+        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9526, opt, 800000, "");
         return JsonUtil.firmwareInfo(a);
     }
 
@@ -128,6 +129,13 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         });
 
         return synch().getParameterValues(NbiDecorator.adapter(eqp), g, opt, 30000, "");
+    }
+
+    @Override
+    public DeviceInfo getDeviceInfo(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = NbiDecorator.getDeviceOperationOptionsDefault();
+        StringResponseDTO a = (StringResponseDTO) synch().executeFunction(NbiDecorator.adapter(eqp), NbiDecorator.getEmptyJson(), 9527, opt, 80000, "");
+        return (DeviceInfo) GsonUtil.convert(a.getValue(), DeviceInfo.class);
     }
 
     @Override

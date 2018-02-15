@@ -13,6 +13,7 @@ import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.dhcp.Dhcp;
 import model.device.firmware.FirmwareInfo;
+import model.device.info.DeviceInfo;
 import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
@@ -83,6 +84,21 @@ public class SynchDeviceDAOImplIT {
         fail("The test case is a prototype.");
     }
 
+    @Test
+    public void testGetDeviceInfo() throws Exception {
+        try {
+            System.out.println("getDeviceInfo");
+
+            SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+            DeviceInfo deviceInfo = instance.getDeviceInfo(eqp);
+            System.out.println("end");
+            // TODO review the generated test code and remove the default call to fail.
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+    }
+
     /**
      * Test of factoryReset method, of class SynchDeviceDAOImpl.
      */
@@ -102,15 +118,17 @@ public class SynchDeviceDAOImplIT {
      * Test of checkOnline method, of class SynchDeviceDAOImpl.
      */
     @Test
-    public void testCheckOnline() throws Exception {
-        System.out.println("checkOnline");
+    public void testCheckOnline() {
+        try {
+            System.out.println("checkOnline");
+            SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+            Boolean expResult = true;
+            Boolean result = instance.checkOnline(eqp);
+            assertEquals(expResult, result);
+        } catch (Exception e) {
+            fail("The test case is a prototype.");
+        }
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        Boolean expResult = null;
-        Boolean result = instance.checkOnline(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

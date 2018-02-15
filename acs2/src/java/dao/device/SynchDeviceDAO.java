@@ -16,6 +16,7 @@ import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.dhcp.Dhcp;
 import model.device.firmware.FirmwareInfo;
+import model.device.info.DeviceInfo;
 import model.device.interfacestatistics.InterfaceStatistics;
 import model.device.lanhost.LanDevice;
 import model.device.log.DeviceLog;
@@ -57,6 +58,8 @@ public interface SynchDeviceDAO {
     public GetParameterValuesResponseDTO getParametersValues(NbiDeviceData eqp, List<String> paths) throws Exception;
 
     public GetParameterValuesResponseDTO getParameterValue(NbiDeviceData eqp, String path) throws Exception;
+
+    public DeviceInfo getDeviceInfo(NbiDeviceData eqp) throws Exception;
 
     public void setParametersValues(NbiDeviceData eqp, List<ParameterValueStructDTO> p) throws Exception;
 
@@ -103,9 +106,9 @@ public interface SynchDeviceDAO {
     public SipDiagnostics getSipDiagnostics(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, JsonUtilException, HdmException, ProviderException, UnsupportedException;
 
     public Boolean setSipActivation(NbiDeviceData eqp, SipActivation sip) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
-    
+
     public Boolean setSipDeactivation(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
-    
+
     public Boolean sipRestart(NbiDeviceData eqp, Integer phyref) throws UnsupportedException, NBIException, OperationTimeoutException, ProviderException;
 
 }
