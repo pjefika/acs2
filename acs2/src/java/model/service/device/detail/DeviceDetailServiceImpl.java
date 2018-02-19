@@ -9,6 +9,8 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.device.NbiDAO;
 import dao.device.SynchDeviceDAO;
 import dao.factory.FactoryDAO;
+import model.device.firmware.FirmwareInfo;
+import model.device.info.DeviceInfo;
 import model.service.dto.DetailOut;
 import model.service.dto.FirmwareOut;
 import model.service.device.ThreadControl;
@@ -29,16 +31,25 @@ public class DeviceDetailServiceImpl implements DeviceDetailService {
 
         eqp = dao.findDeviceByGUID(guid);
         result.setDevice(eqp);
-        result.setOnline(sync.checkOnline(eqp));
 
-        if (result.getOnline()) {
-            try {
-                ThreadControl.sleep();
-                result.setFirmware(new FirmwareOut(sync.getFirmwareVersion(eqp)));
-            } catch (Exception e) {
-                result.setFirmware(null);
-            }
+        try {
+            DeviceInfo deviceInfo = sync.getDeviceInfo(eqp);
+            result.setOnline(Boolean.TRUE);
+            result.setFirmware(new FirmwareOut(new FirmwareInfo(deviceInfo.getFwer(), deviceInfo.getPreferv())));
+        } catch (Exception e) {
+            result.setOnline(Boolean.FALSE);
+
         }
+//        result.setOnline(true);
+//
+//        if (result.getOnline()) {
+//            try {
+//                ThreþadControl.sleep();
+//                result.setFirmware(new FirmwareOut(sync.getFirmwareVersion(eqp)));
+//            } catch (Exception e) {
+//                result.setFirmware(null);
+//            }
+//        }
 
         return result;
     }

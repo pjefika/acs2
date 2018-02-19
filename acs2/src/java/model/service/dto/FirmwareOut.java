@@ -13,7 +13,10 @@ import model.device.firmware.FirmwareInfo;
  */
 public class FirmwareOut {
 
-    private final FirmwareInfo info;
+    private FirmwareInfo info;
+
+    public FirmwareOut() {
+    }
 
     public FirmwareOut(FirmwareInfo info) {
         this.info = info;

@@ -24,7 +24,7 @@ public class EquipamentoTestValues {
      * BANCADA ARNO - QX4S1EB598946 (18358162) 165014 - PACE HOMOLOG 151054 -
      * HOMOLOG 89018 - HOMOLOG
      */
-    public static Long GUID = new Long(18523038);
+    public static Long GUID = new Long(27602270);
 
     private SynchDeviceDAO instance = FactoryDAO.createSynch();
     private NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();
