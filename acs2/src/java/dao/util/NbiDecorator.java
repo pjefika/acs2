@@ -21,6 +21,10 @@ import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
  */
 public class NbiDecorator {
 
+    private static final int EXECUTION = 3000;
+
+    private static final int EXPIRATION = 120;
+
     public static NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault() {
         NbiSingleDeviceOperationOptions opt = new NbiSingleDeviceOperationOptions();
 
@@ -28,8 +32,8 @@ public class NbiDecorator {
         cb.setRetry(false);
 
         opt.setDisableCaptureConstraint(true);
-        opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(60);
+        opt.setExecutionTimeoutSeconds(EXECUTION);
+        opt.setExpirationTimeoutSeconds(EXPIRATION);
         opt.setFailOnConnectionRequestFailure(true);
         opt.setNBISingleDeviceOperationCallBackInfo(cb);
         opt.setOpaqueTransactionId("teste5555");
@@ -48,8 +52,8 @@ public class NbiDecorator {
         cb.setRetry(false);
 
         opt.setDisableCaptureConstraint(true);
-        opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(60);
+        opt.setExecutionTimeoutSeconds(EXECUTION);
+        opt.setExpirationTimeoutSeconds(EXPIRATION);
         opt.setFailOnConnectionRequestFailure(true);
         opt.setNBISingleDeviceOperationCallBackInfo(cb);
         opt.setOpaqueTransactionId("teste5555");
@@ -67,8 +71,8 @@ public class NbiDecorator {
         cb.setRetry(false);
 
         opt.setDisableCaptureConstraint(true);
-        opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(60);
+        opt.setExecutionTimeoutSeconds(EXECUTION);
+        opt.setExpirationTimeoutSeconds(EXPIRATION);
         opt.setFailOnConnectionRequestFailure(true);
         opt.setNBISingleDeviceOperationCallBackInfo(cb);
         opt.setOpaqueTransactionId("teste5555");
@@ -80,9 +84,6 @@ public class NbiDecorator {
         return opt;
     }
 
-//    public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
-//        return new WifiInfoSet(true, i.getSsid(), i.getChannel());
-//    }
     public static WifiInfoSet getWifiInfoSetFull(WifiInfoFull i) {
         return new WifiInfoSet(i);
     }
