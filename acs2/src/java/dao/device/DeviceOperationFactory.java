@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.util;
+package dao.device;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
@@ -19,11 +19,11 @@ import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
  *
  * @author G0042204
  */
-public class NbiDecorator {
+public class DeviceOperationFactory {
 
-    private static final int EXECUTION = 3000;
+    private static final int EXECUTION = 600;
 
-    private static final int EXPIRATION = 120;
+    private static final int EXPIRATION = 90;
 
     public static NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault() {
         NbiSingleDeviceOperationOptions opt = new NbiSingleDeviceOperationOptions();
