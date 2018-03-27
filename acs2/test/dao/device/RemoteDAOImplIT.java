@@ -6,20 +6,17 @@
 package dao.device;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import com.alcatel.hdm.service.nbi2.NbiDeviceID;
 import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
 import dto.nbi.service.hdm.alcatel.com.NBITemplate;
 import init.SingletonDeviceTest;
 import java.rmi.RemoteException;
 import java.util.List;
-import model.device.firmware.FirmwareInfo;
 import notification.dto.nbi.service.hdm.alcatel.com.NBIDeviceActionResult;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import util.GsonUtil;
 
 /**
  *
@@ -63,7 +60,20 @@ public class RemoteDAOImplIT {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void testgetAvailableFirmwareImages() throws RemoteException {
+        try {
+            System.out.println("getAvailableFirmwareImages");
+            List<NBIFirmwareImageData> firmwares = instance.getAvailableFirmwareImages(nbi);
+            firmwares.forEach((t) -> {
+                System.err.println(t.getName());
+            });
+            System.out.println("end");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

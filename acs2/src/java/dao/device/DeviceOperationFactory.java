@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.util;
+package dao.device;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
@@ -19,7 +19,11 @@ import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
  *
  * @author G0042204
  */
-public class NbiDecorator {
+public class DeviceOperationFactory {
+
+    private static final int EXECUTION = 600;
+
+    private static final int EXPIRATION = 90;
 
     public static NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault() {
         NbiSingleDeviceOperationOptions opt = new NbiSingleDeviceOperationOptions();
@@ -28,8 +32,8 @@ public class NbiDecorator {
         cb.setRetry(false);
 
         opt.setDisableCaptureConstraint(true);
-        opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(60);
+        opt.setExecutionTimeoutSeconds(EXECUTION);
+        opt.setExpirationTimeoutSeconds(EXPIRATION);
         opt.setFailOnConnectionRequestFailure(true);
         opt.setNBISingleDeviceOperationCallBackInfo(cb);
         opt.setOpaqueTransactionId("teste5555");
@@ -48,8 +52,8 @@ public class NbiDecorator {
         cb.setRetry(false);
 
         opt.setDisableCaptureConstraint(true);
-        opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(60);
+        opt.setExecutionTimeoutSeconds(EXECUTION);
+        opt.setExpirationTimeoutSeconds(EXPIRATION);
         opt.setFailOnConnectionRequestFailure(true);
         opt.setNBISingleDeviceOperationCallBackInfo(cb);
         opt.setOpaqueTransactionId("teste5555");
@@ -67,8 +71,8 @@ public class NbiDecorator {
         cb.setRetry(false);
 
         opt.setDisableCaptureConstraint(true);
-        opt.setExecutionTimeoutSeconds(1200);
-        opt.setExpirationTimeoutSeconds(60);
+        opt.setExecutionTimeoutSeconds(EXECUTION);
+        opt.setExpirationTimeoutSeconds(EXPIRATION);
         opt.setFailOnConnectionRequestFailure(true);
         opt.setNBISingleDeviceOperationCallBackInfo(cb);
         opt.setOpaqueTransactionId("teste5555");
@@ -80,9 +84,6 @@ public class NbiDecorator {
         return opt;
     }
 
-//    public static WifiInfoSet getWifiInfoSet(WifiInfo i) {
-//        return new WifiInfoSet(true, i.getSsid(), i.getChannel());
-//    }
     public static WifiInfoSet getWifiInfoSetFull(WifiInfoFull i) {
         return new WifiInfoSet(i);
     }

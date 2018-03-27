@@ -13,7 +13,6 @@ import model.device.firmware.FirmwareInfo;
 import model.device.info.DeviceInfo;
 import model.service.dto.DetailOut;
 import model.service.dto.FirmwareOut;
-import model.service.device.ThreadControl;
 
 public class DeviceDetailServiceImpl implements DeviceDetailService {
 
@@ -37,6 +36,7 @@ public class DeviceDetailServiceImpl implements DeviceDetailService {
             result.setOnline(Boolean.TRUE);
             result.setFirmware(new FirmwareOut(new FirmwareInfo(deviceInfo.getFwer(), deviceInfo.getPreferv())));
         } catch (Exception e) {
+            e.printStackTrace();
             result.setOnline(Boolean.FALSE);
 
         }

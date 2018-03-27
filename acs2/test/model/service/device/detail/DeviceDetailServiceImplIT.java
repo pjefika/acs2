@@ -52,7 +52,7 @@ public class DeviceDetailServiceImplIT extends EquipamentoTestValues {
             DeviceDetailServiceImpl instance = new DeviceDetailServiceImpl();
             DetailOut result = instance.consultar(GUID);
             System.out.println(GsonUtil.serialize(result));
-            assertEquals("Online", result.getOnline(), true);
+            assertEquals("Online", true, result.getOnline());
             assertEquals("Updated", result.getFirmware().getUpdated(), true);
 //            assertEquals("FirmwareUpdated", result.getFirmware().getUpdated(), true);
 
