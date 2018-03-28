@@ -21,9 +21,9 @@ import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
  */
 public class DeviceOperationFactory {
 
-    private static final int EXECUTION = 600;
+    private static final int EXECUTION = 1200;
 
-    private static final int EXPIRATION = 90;
+    private static final int EXPIRATION = 60;
 
     public static NbiSingleDeviceOperationOptions getDeviceOperationOptionsDefault() {
         NbiSingleDeviceOperationOptions opt = new NbiSingleDeviceOperationOptions();
