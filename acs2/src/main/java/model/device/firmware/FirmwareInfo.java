@@ -5,15 +5,22 @@
  */
 package model.device.firmware;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import parser.device.FirmwareInfoDeserializer;
+
 /**
  *
  * @author G0042204
  */
+@JsonDeserialize(using = FirmwareInfoDeserializer.class)
 public class FirmwareInfo {
 
     private String firmwareVersion;
 
     private String preferredVersion;
+
+    public FirmwareInfo() {
+    }
 
     public FirmwareInfo(String firmwareVersion, String preferredVersion) {
         this.firmwareVersion = firmwareVersion;

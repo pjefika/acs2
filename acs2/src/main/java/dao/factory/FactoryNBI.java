@@ -9,7 +9,7 @@ import com.alcatel.hdm.service.nbi2.NBIService;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDeviceOperationsService;
 import com.motive.www.remotehdm.NBIService._1_0.NBIServiceLocator;
 import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortStub;
-import com.sun.xml.ws.client.BindingProviderProperties;
+import com.sun.xml.internal.ws.client.BindingProviderProperties;
 import com.sun.xml.wss.XWSSConstants;
 import dao.util.SoapUtil;
 import java.net.MalformedURLException;

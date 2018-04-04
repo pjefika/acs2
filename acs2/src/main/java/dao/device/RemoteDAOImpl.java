@@ -11,7 +11,7 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceID;
 import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortStub;
 import dao.factory.FactoryNBI;
 import static dao.device.DeviceOperationFactory.adapterCaps;
-import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
+import dto.nbi.service.hdm.alcatel.com.NBIDeviceID; 
 import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
 import dto.nbi.service.hdm.alcatel.com.NBITemplate;
 import java.rmi.RemoteException;

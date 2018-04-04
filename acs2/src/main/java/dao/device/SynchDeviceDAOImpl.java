@@ -5,8 +5,8 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.util.json.JacksonMapper;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import com.google.gson.Gson;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
@@ -51,8 +51,7 @@ import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 import motive.hdm.synchdeviceops.SetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
-import util.GsonUtil;
-import util.JsonUtil;
+import parser.JsonUtil;
 
 public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
@@ -101,7 +100,8 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public FirmwareInfo getFirmwareVersion(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), DeviceOperationFactory.getEmptyJson(), 9526, opt, TIMEOUT, "");
-        return JsonUtil.firmwareInfo(a);
+        System.out.println(new JacksonMapper(StringResponseDTO.class).serialize(a));
+        return (FirmwareInfo) new JacksonMapper(FirmwareInfo.class).deserialize(a.getValue());
     }
 
     @Override
