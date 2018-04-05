@@ -34,23 +34,23 @@ import motive.hdm.synchdeviceops.StringResponseDTO;
  */
 public class JsonUtil {
 
-    public static FirmwareInfo firmwareInfo(StringResponseDTO a) throws Exception {
-        String firmwareVersion = "";
-        String preferredVersion = "";
-        try {
-            
-            JsonElement jelement = new JsonParser().parse(a.getValue());
-            JsonObject jobject = jelement.getAsJsonObject();
-            firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
-            preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
-        } catch (Exception e) {
-            if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
-                throw new UnsupportedException();
-            }
-            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
-        }
-        return new FirmwareInfo(firmwareVersion, preferredVersion);
-    }
+//    public static FirmwareInfo firmwareInfo(StringResponseDTO a) throws Exception {
+//        String firmwareVersion = "";
+//        String preferredVersion = "";
+//        try {
+//            
+//            JsonElement jelement = new JsonParser().parse(a.getValue());
+//            JsonObject jobject = jelement.getAsJsonObject();
+//            firmwareVersion = jobject.get("firmwareVersion").toString().replace("\"", "");
+//            preferredVersion = jobject.get("preferredVersion").toString().replace("\"", "");
+//        } catch (Exception e) {
+//            if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
+//                throw new UnsupportedException();
+//            }
+//            throw new JsonUtilException("A resposta da plataforma não estava de acordo com o esperado");
+//        }
+//        return new FirmwareInfo(firmwareVersion, preferredVersion);
+//    }
 
     public static DmzInfo dmzInfo(StringResponseDTO a) {
         JsonElement jelement = new JsonParser().parse(a.getValue());

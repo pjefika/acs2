@@ -6,6 +6,7 @@
 package dao.device;
 
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import br.net.gvt.efika.util.json.exception.JsonParseException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
@@ -63,23 +64,23 @@ public interface SynchDeviceDAO {
 
     public void setParametersValues(NbiDeviceData eqp, List<ParameterValueStructDTO> p) throws Exception;
 
-    public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException;
+    public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException;
 
-    public ServiceClass getServiceClass(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException;
+    public ServiceClass getServiceClass(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException, JsonParseException;
 
     public Boolean setServiceClass(NbiDeviceData eqp, ServiceClass sc) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
 
     public List<LanDevice> getLanHosts(NbiDeviceData eqp) throws Exception;
 
-    public DmzInfo getDmzInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException;
+    public DmzInfo getDmzInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException, JsonParseException;
 
-    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws Exception;
+    public List<WifiInfoFull> getWifiInfoFull(NbiDeviceData eqp) throws Exception;
 
-    public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException;
+    public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException;
 
-    public Dhcp getDhcp(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
+    public Dhcp getDhcp(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException;
 
-    public Boolean setDhcp(NbiDeviceData eqp, Dhcp dh) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
+    public Boolean setDhcp(NbiDeviceData eqp, Dhcp dh) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException, Exception;
 
     public PortMappingInfo traceroute(NbiDeviceData eqp, TraceRouteRequest trace) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
 

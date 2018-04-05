@@ -5,10 +5,14 @@
  */
 package model.device.lanhost;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import parser.device.LanDeviceDeserializer;
+
 /**
  *
  * @author G0042204
  */
+@JsonDeserialize(using = LanDeviceDeserializer.class)
 public class LanDevice {
 
     private String ipAddress;

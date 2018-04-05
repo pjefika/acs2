@@ -7,6 +7,8 @@ package dao.device;
 
 import br.net.gvt.efika.util.json.JacksonMapper;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import br.net.gvt.efika.util.json.exception.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.NBIException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.OperationTimeoutException;
@@ -16,6 +18,8 @@ import dao.factory.FactoryNBI;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.dhcp.Dhcp;
@@ -136,7 +140,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public DeviceInfo getDeviceInfo(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), DeviceOperationFactory.getEmptyJson(), 9527, opt, TIMEOUT, "");
-        return (DeviceInfo) GsonUtil.convert(a.getValue(), DeviceInfo.class);
+        return (DeviceInfo) new JacksonMapper(DeviceInfo.class).deserialize(a.getValue());
     }
 
     @Override
@@ -169,28 +173,34 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+    public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), DeviceOperationFactory.getEmptyJson(), 9515, opt, TIMEOUT, "");
-//        System.out.println(a.getValue());
-        return (WanInfo) GsonUtil.convert(a.getValue(), WanInfo.class);
+
+        return (WanInfo) new JacksonMapper(WanInfo.class).deserialize(a.getValue());
+
     }
 
     @Override
-    public ServiceClass getServiceClass(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException {
+    public ServiceClass getServiceClass(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException, JsonParseException {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), DeviceOperationFactory.getEmptyJson(), 9505, opt, TIMEOUT, "");
         System.out.println("Value: " + a.getValue());
         if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
             throw new UnsupportedException();
         }
-        return (ServiceClass) GsonUtil.convert(a.getValue(), ServiceClass.class);
+        return (ServiceClass) new JacksonMapper(ServiceClass.class).deserialize(a.getValue());
     }
 
     @Override
     public Boolean setServiceClass(NbiDeviceData eqp, ServiceClass sc) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
-        String jsonSc = GsonUtil.serialize(sc);
+        String jsonSc;
+        try {
+            jsonSc = new JacksonMapper(String.class).serialize(sc);
+        } catch (Exception ex) {
+            jsonSc = "";
+        }
         List<Object> json = DeviceOperationFactory.getEmptyJson();
         json.set(0, jsonSc);
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, 9504, opt, TIMEOUT, "");
@@ -204,7 +214,9 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), DeviceOperationFactory.getEmptyJson(), 9517, opt, TIMEOUT, "");
         tratativa(a);
-        return JsonUtil.getLanHosts(a);
+        String json = a.getValue().replace("{", "[{").replace("}", "}]").replaceAll("\"HostNumberOfEntries\":\"[0-9]{1,10}\",", "").replaceAll("Host.[0-9]{1,10}.", "").replace("\",\"IPAddress\"", "\"},{\"IPAddress\"");
+        System.out.println(json);
+        return (List<LanDevice>) new JacksonMapper(List.class).deserialize(json);
     }
 
     protected void tratativa(StringResponseDTO response) throws UnsupportedException {
@@ -214,17 +226,17 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public DmzInfo getDmzInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException {
+    public DmzInfo getDmzInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException, JsonParseException {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), DeviceOperationFactory.getEmptyJson(), 9503, opt, TIMEOUT, "");
         if (a.getValue().equalsIgnoreCase("O CPE não suporta o(s) parâmetro(s) solicitados.")) {
             throw new UnsupportedException();
         }
-        return (DmzInfo) GsonUtil.convert(a.getValue(), DmzInfo.class);
+        return (DmzInfo) new JacksonMapper(DmzInfo.class).deserialize(a.getValue());
     }
 
     @Override
-    public WifiInfoFull getWifiInfoFull(NbiDeviceData eqp) throws Exception {
+    public List<WifiInfoFull> getWifiInfoFull(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), DeviceOperationFactory.getEmptyJson(), 9529, opt, TIMEOUT, "");
 
@@ -233,33 +245,35 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             throw new WifiInativoException();
         }
         System.out.println("Retorno: " + a.getValue());
-        WifiInfoFull[] wifi = (WifiInfoFull[]) GsonUtil.convert(a.getValue(), WifiInfoFull[].class);
-//        System.out.println("Retorno: " + GsonUtil.serialize(wifi));
+        List<WifiInfoFull> wifi = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
+        }).fromJSON(a.getValue());
 
-        return wifi[0];
+        return wifi;
     }
 
     @Override
-    public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException {
+    public List<PortMappingInfo> getPortMapping(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), DeviceOperationFactory.getEmptyJson(), 9513, opt, TIMEOUT, "");
         System.out.println("Value: " + a.getValue());
-        PortMappingInfo[] pmi = (PortMappingInfo[]) GsonUtil.convert(a.getValue(), PortMappingInfo[].class);
-        //List<PortMappingInfo> l = ;
-        return Arrays.asList(pmi);
+        List<PortMappingInfo> pmi;
+        pmi = (List<PortMappingInfo>) new JacksonMapper(new TypeReference<List<PortMappingInfo>>() {
+        }).fromJSON(a.getValue());
+
+        return pmi;
     }
 
     @Override
-    public Dhcp getDhcp(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
+    public Dhcp getDhcp(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), DeviceOperationFactory.getEmptyJson(), 9509, opt, TIMEOUT, "");
-        return (Dhcp) GsonUtil.convert(a.getValue(), Dhcp.class);
+        return (Dhcp) new JacksonMapper(Dhcp.class).deserialize(a.getValue());
     }
 
     @Override
-    public Boolean setDhcp(NbiDeviceData eqp, Dhcp dh) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException {
+    public Boolean setDhcp(NbiDeviceData eqp, Dhcp dh) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
-        String jsonD = GsonUtil.serialize(new DhcpSet(dh));
+        String jsonD = new JacksonMapper(DhcpSet.class).serialize(new DhcpSet(dh));
         List<Object> json = DeviceOperationFactory.getEmptyJson();
         json.set(0, jsonD);
         StringResponseDTO a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, 9508, opt, TIMEOUT, "");

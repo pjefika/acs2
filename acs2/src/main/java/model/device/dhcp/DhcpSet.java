@@ -11,7 +11,8 @@ package model.device.dhcp;
  */
 public class DhcpSet {
 
-    private String dhcpServerEnable, startAddress, endAddress;
+    private Boolean dhcpServerEnable;
+    private String startAddress, endAddress;
 
     public DhcpSet(Dhcp d) {
         this.dhcpServerEnable = d.getDHCPServerEnable();
@@ -19,11 +20,11 @@ public class DhcpSet {
         this.endAddress = d.getMaxAddress();
     }
 
-    public String getDhcpServerEnable() {
+    public Boolean getDhcpServerEnable() {
         return dhcpServerEnable;
     }
 
-    public void setDhcpServerEnable(String dhcpServerEnable) {
+    public void setDhcpServerEnable(Boolean dhcpServerEnable) {
         this.dhcpServerEnable = dhcpServerEnable;
     }
 

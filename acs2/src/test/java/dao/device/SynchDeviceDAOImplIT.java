@@ -7,12 +7,14 @@ package dao.device;
 
 import br.net.gvt.efika.util.json.JacksonMapper;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import com.fasterxml.jackson.core.type.TypeReference;
 import init.SingletonDeviceTest;
 import java.util.ArrayList;
 import java.util.List;
 import model.device.DmzInfo;
 import model.device.ddns.DdnsInfo;
 import model.device.dhcp.Dhcp;
+import model.device.dhcp.DhcpSet;
 import model.device.firmware.FirmwareInfo;
 import model.device.info.DeviceInfo;
 import model.device.interfacestatistics.InterfaceStatistics;
@@ -259,12 +261,10 @@ public class SynchDeviceDAOImplIT {
     public void testGetLanHosts() throws Exception {
         System.out.println("getLanHosts");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        List<LanDevice> expResult = null;
+        
         List<LanDevice> result = instance.getLanHosts(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//        System.out.println("Booleano->"+result.get(0).getAtivo());
+        System.out.println(new JacksonMapper(List.class).serialize(result));
     }
 
     /**
@@ -289,12 +289,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetWifiInfoFull() throws Exception {
         System.out.println("getWifiInfoFull");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        WifiInfoFull expResult = null;
-        WifiInfoFull result = instance.getWifiInfoFull(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<WifiInfoFull> result = instance.getWifiInfoFull(eqp);
+        System.out.println(new JacksonMapper(new TypeReference<List<WifiInfoFull>>(){}).serialize(result));
     }
 
     /**
@@ -304,12 +300,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetPortMapping() throws Exception {
         System.out.println("getPortMapping");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        List<PortMappingInfo> expResult = null;
         List<PortMappingInfo> result = instance.getPortMapping(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(new TypeReference<List<PortMappingInfo>>(){}).serialize(result));
     }
 
     /**
@@ -320,11 +312,8 @@ public class SynchDeviceDAOImplIT {
         System.out.println("getDhcp");
 
         SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        Dhcp expResult = null;
         Dhcp result = instance.getDhcp(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(Dhcp.class).serialize(result));
     }
 
     /**
@@ -333,14 +322,10 @@ public class SynchDeviceDAOImplIT {
     @Test
     public void testSetDhcp() throws Exception {
         System.out.println("setDhcp");
-
-        Dhcp dh = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        Boolean expResult = null;
+        Dhcp dh = instance.getDhcp(eqp);
+        
         Boolean result = instance.setDhcp(eqp, dh);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(result);
     }
 
     /**

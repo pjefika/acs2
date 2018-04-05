@@ -164,12 +164,20 @@ public class WifiInfoFull {
         this.bcEnabled = bcEnabled;
     }
 
+    public void setBcEnabled(String bcEnabled) {
+        this.bcEnabled = Boolean.valueOf(bcEnabled);
+    }
+
     public Boolean getMacAddrControl() {
         return macAddrControl;
     }
 
     public void setMacAddrControl(Boolean macAddrControl) {
         this.macAddrControl = macAddrControl;
+    }
+
+    public void setMacAddrControl(String macAddrControl) {
+//        this.macAddrControl = macAddrControl;
     }
 
     public String getAdmStatus() {
@@ -186,6 +194,10 @@ public class WifiInfoFull {
 
     public void setWpsEnabled(Boolean wpsEnabled) {
         this.wpsEnabled = wpsEnabled;
+    }
+
+    public void setWpsEnabled(String wpsEnabled) {
+//        this.wpsEnabled = wpsEnabled;
     }
 
     public String getBytesSent() {

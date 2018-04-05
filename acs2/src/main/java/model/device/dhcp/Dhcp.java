@@ -5,13 +5,18 @@
  */
 package model.device.dhcp;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import parser.device.DhcpDeserializer;
+
 /**
  *
  * @author G0041775
  */
+@JsonDeserialize(using = DhcpDeserializer.class)
 public class Dhcp {
-    
-    private String MaxAddress, MinAddress,DHCPServerEnable;
+
+    private String MaxAddress, MinAddress;
+    private Boolean DHCPServerEnable;
 
     public Dhcp() {
     }
@@ -32,13 +37,12 @@ public class Dhcp {
         this.MinAddress = MinAddress;
     }
 
-    public String getDHCPServerEnable() {
+    public Boolean getDHCPServerEnable() {
         return DHCPServerEnable;
     }
 
-    public void setDHCPServerEnable(String DHCPServerEnable) {
+    public void setDHCPServerEnable(Boolean DHCPServerEnable) {
         this.DHCPServerEnable = DHCPServerEnable;
     }
-    
-    
+
 }

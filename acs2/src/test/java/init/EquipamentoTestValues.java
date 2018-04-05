@@ -23,6 +23,8 @@ public class EquipamentoTestValues {
      *
      * BANCADA ARNO - QX4S1EB598946 (18358162) 165014 - PACE HOMOLOG 151054 -
      * HOMOLOG 89018 - HOMOLOG
+     * 30585765
+     * 26737329 - casa Matheus (canelinha)
      */
     public static Long GUID = new Long(30585765);
 
