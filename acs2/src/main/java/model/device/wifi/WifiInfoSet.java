@@ -5,47 +5,46 @@
  */
 package model.device.wifi;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  *
  * @author G0042204
  */
+@JsonInclude(Include.NON_NULL)
 public class WifiInfoSet {
 
     private String ssid,
             index,
             //            frequency,
             //            authentication,
-            //            bcEnable,
             //            autochannel,
-            //            encryptation,
-            //            standard,
+            encryptation,
+            standard,
             //            beaconType,
             password,
             channel;
-    private Boolean radioOperStatus, operStatus, autochannel;
+    private Boolean radioOperStatus, operStatus, broadcastEnable, autochannel;
 
     public WifiInfoSet() {
     }
 
     public WifiInfoSet(WifiInfoFull getInfo) {
 //       this.authentication = getInfo.getAuthMode();
-//       this.bcEnable = getInfo.getBcEnabled().toString();
+        this.broadcastEnable = getInfo.getBcEnabled();
         this.channel = getInfo.getChannel();
-//       this.encryptation = getInfo.getEncType();
+        this.encryptation = getInfo.getEncType();
 //       this.password = getInfo.getKey();
         this.radioOperStatus = true;
         this.operStatus = true;
         this.ssid = getInfo.getSsid();
         this.index = "1";
-        try {
-            if (!getInfo.getKey().isEmpty()) {
-                this.password = getInfo.getKey();
-            }
-        } catch (Exception e) {
-        }
 
-        this.autochannel = false;
-//       this.standard = getInfo.getStandard();
+        this.password = getInfo.getKey() != null && getInfo.getKey().isEmpty() ? null : getInfo.getKey();
+
+        this.autochannel = getInfo.getAutochannel().equalsIgnoreCase("1");
+        this.standard = getInfo.getStandard();
     }
 
     public Boolean getRadioOperStatus() {
@@ -102,6 +101,30 @@ public class WifiInfoSet {
 
     public void setChannel(String channel) {
         this.channel = channel;
+    }
+
+    public Boolean getBroadcastEnable() {
+        return broadcastEnable;
+    }
+
+    public void setBroadcastEnable(Boolean broadcastEnable) {
+        this.broadcastEnable = broadcastEnable;
+    }
+
+    public String getEncryptation() {
+        return encryptation;
+    }
+
+    public void setEncryptation(String encryptation) {
+        this.encryptation = encryptation;
+    }
+
+    public String getStandard() {
+        return standard;
+    }
+
+    public void setStandard(String standard) {
+        this.standard = standard;
     }
 
 }

@@ -5,10 +5,14 @@
  */
 package model.device.ddns;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import parser.device.DdnsDeserializer;
+
 /**
  *
  * @author G0042204
  */
+@JsonDeserialize(using = DdnsDeserializer.class)
 public class DdnsInfo {
 
     private Boolean enable;

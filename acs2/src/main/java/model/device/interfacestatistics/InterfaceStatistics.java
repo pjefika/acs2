@@ -5,10 +5,14 @@
  */
 package model.device.interfacestatistics;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import parser.device.InterfaceStatisticsDeserializer;
+
 /**
  *
  * @author G0041775
  */
+@JsonDeserialize(using = InterfaceStatisticsDeserializer.class)
 public class InterfaceStatistics {
     
     private String ifType,

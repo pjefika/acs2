@@ -5,20 +5,23 @@
  */
 package model.device.sipactivation;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import parser.device.SipActivationSerializer;
+
 /**
  *
  * @author G0041775
  */
+@JsonSerialize(using = SipActivationSerializer.class)
 public class SipActivation {
 
-    private String 
-            DirectoryNumber, 
-            AuthUserName, 
-            AuthPassword, 
+    private String DirectoryNumber,
+            AuthUserName,
+            AuthPassword,
             ProxyServer,
             RegistrarServer,
-            UserAgentDomain, 
-            OutboundProxy, phyReferenceList;
+            UserAgentDomain,
+            OutboundProxy, phyReferenceList, T38Enabled;
 
     public SipActivation() {
     }
@@ -85,6 +88,14 @@ public class SipActivation {
 
     public void setPhyReferenceList(String phyReferenceList) {
         this.phyReferenceList = phyReferenceList;
+    }
+
+    public String getT38Enabled() {
+        return T38Enabled;
+    }
+
+    public void setT38Enabled(String T38Enabled) {
+        this.T38Enabled = T38Enabled;
     }
 
 }

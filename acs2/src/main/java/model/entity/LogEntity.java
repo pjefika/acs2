@@ -5,6 +5,7 @@
  */
 package model.entity;
 
+import br.net.gvt.efika.util.json.JacksonMapper;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,6 @@ import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import model.log.AcaoAcsEnum;
-import util.GsonUtil;
 
 /**
  *
@@ -62,7 +62,11 @@ public class LogEntity extends AbstractEntity {
     }
 
     public void setSaida(Object saida) {
-        this.saida = GsonUtil.serialize(saida);
+        try {
+            this.saida = new JacksonMapper(Object.class).serialize(saida);
+        } catch (Exception e) {
+        }
+
     }
 
     public Calendar getDataLog() {

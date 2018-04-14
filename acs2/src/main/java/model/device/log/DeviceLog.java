@@ -5,10 +5,14 @@
  */
 package model.device.log;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import parser.device.DeviceLogDeserializer;
+
 /**
  *
  * @author G0042204
  */
+@JsonDeserialize(using = DeviceLogDeserializer.class)
 public class DeviceLog {
 
     private String mensagem;

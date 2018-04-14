@@ -5,10 +5,14 @@
  */
 package model.device.xdsldiagnostics;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import parser.device.XdslDiagnosticsDeserializer;
+
 /**
  *
  * @author G0041775
  */
+@JsonDeserialize(using = XdslDiagnosticsDeserializer.class)
 public class XdslDiagnostics {
     private String ModulationType,
             ShowtimeStart,

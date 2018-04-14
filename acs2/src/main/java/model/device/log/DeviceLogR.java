@@ -16,6 +16,14 @@ public class DeviceLogR {
     public DeviceLogR() {
     }
 
+    public DeviceLogR(String Index, String Time, String Type, String Servity, String LogInformation) {
+        this.Index = Index;
+        this.Time = Time;
+        this.Type = Type;
+        this.Servity = Servity;
+        this.LogInformation = LogInformation;
+    }
+
     public String getIndex() {
         return Index;
     }

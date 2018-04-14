@@ -85,6 +85,7 @@ public class WifiInfoFull {
     }
 
     public String getKey() {
+        key = key == null ? "" : key;
         return key;
     }
 
@@ -165,7 +166,7 @@ public class WifiInfoFull {
     }
 
     public void setBcEnabled(String bcEnabled) {
-        this.bcEnabled = Boolean.valueOf(bcEnabled);
+        this.bcEnabled = bcEnabled.equalsIgnoreCase("1");
     }
 
     public Boolean getMacAddrControl() {

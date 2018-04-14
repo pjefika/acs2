@@ -142,7 +142,7 @@ public class SynchDeviceDAOImplIT {
 
         FirmwareInfo result = instance.getFirmwareVersion(eqp);
         System.out.println(new JacksonMapper(FirmwareInfo.class).serialize(result));
-        
+
     }
 
     /**
@@ -154,7 +154,7 @@ public class SynchDeviceDAOImplIT {
             System.out.println("getParameters");
             SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
             List<ParameterInfoStructDTO> parameters = instance.getParameters(eqp);
-            System.out.println(GsonUtil.serialize(parameters));
+//            System.out.println(GsonUtil.serialize(parameters));
             assertTrue("Cheio", !parameters.isEmpty());
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,7 +174,7 @@ public class SynchDeviceDAOImplIT {
             paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
 
             GetParameterValuesResponseDTO parameters = instance.getParametersValues(eqp, paths);
-            System.out.println(GsonUtil.serialize(parameters));
+//            System.out.println(GsonUtil.serialize(parameters));
             assertTrue("Cheio", parameters != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -189,7 +189,7 @@ public class SynchDeviceDAOImplIT {
             System.out.println("getParameterAttributes");
             String paths = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable";
             GetParameterAttributesResponseDTO parameters = instance.getParameterAttributes(eqp, paths);
-            System.out.println(GsonUtil.serialize(parameters));
+//            System.out.println(GsonUtil.serialize(parameters));
             assertTrue("Cheio", parameters != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -261,7 +261,6 @@ public class SynchDeviceDAOImplIT {
     public void testGetLanHosts() throws Exception {
         System.out.println("getLanHosts");
 
-        
         List<LanDevice> result = instance.getLanHosts(eqp);
 //        System.out.println("Booleano->"+result.get(0).getAtivo());
         System.out.println(new JacksonMapper(List.class).serialize(result));
@@ -290,7 +289,8 @@ public class SynchDeviceDAOImplIT {
         System.out.println("getWifiInfoFull");
 
         List<WifiInfoFull> result = instance.getWifiInfoFull(eqp);
-        System.out.println(new JacksonMapper(new TypeReference<List<WifiInfoFull>>(){}).serialize(result));
+        System.out.println(new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
+        }).serialize(result));
     }
 
     /**
@@ -301,7 +301,8 @@ public class SynchDeviceDAOImplIT {
         System.out.println("getPortMapping");
 
         List<PortMappingInfo> result = instance.getPortMapping(eqp);
-        System.out.println(new JacksonMapper(new TypeReference<List<PortMappingInfo>>(){}).serialize(result));
+        System.out.println(new JacksonMapper(new TypeReference<List<PortMappingInfo>>() {
+        }).serialize(result));
     }
 
     /**
@@ -323,7 +324,7 @@ public class SynchDeviceDAOImplIT {
     public void testSetDhcp() throws Exception {
         System.out.println("setDhcp");
         Dhcp dh = instance.getDhcp(eqp);
-        
+
         Boolean result = instance.setDhcp(eqp, dh);
         System.out.println(result);
     }
@@ -335,13 +336,9 @@ public class SynchDeviceDAOImplIT {
     public void testTraceroute() throws Exception {
         System.out.println("traceroute");
 
-        TraceRouteRequest trace = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        PortMappingInfo expResult = null;
+        TraceRouteRequest trace = new TraceRouteRequest("");
         PortMappingInfo result = instance.traceroute(eqp, trace);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(PortMappingInfo.class).serialize(result));
     }
 
     /**
@@ -351,13 +348,11 @@ public class SynchDeviceDAOImplIT {
     public void testSetWifiInfoFull() throws Exception {
         System.out.println("setWifiInfoFull");
 
-        WifiInfoFull wifi = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        Boolean expResult = null;
+        WifiInfoFull wifi = instance.getWifiInfoFull(eqp).get(0);
+        wifi.setBcEnabled(Boolean.TRUE);
         Boolean result = instance.setWifiInfoFull(eqp, wifi);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("ResultadoFinal->" + new JacksonMapper(new TypeReference<WifiInfoFull>() {
+        }).serialize(instance.getWifiInfoFull(eqp)));
     }
 
     /**
@@ -367,12 +362,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetDdns() throws Exception {
         System.out.println("getDdns");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        DdnsInfo expResult = null;
         DdnsInfo result = instance.getDdns(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(DdnsInfo.class).serialize(result));
     }
 
     /**
@@ -382,12 +373,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetXdslDiagnostic() throws Exception {
         System.out.println("getXdslDiagnostic");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        XdslDiagnostics expResult = null;
         XdslDiagnostics result = instance.getXdslDiagnostic(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(XdslDiagnostics.class).serialize(result));
     }
 
     /**
@@ -396,30 +383,21 @@ public class SynchDeviceDAOImplIT {
     @Test
     public void testGetDeviceLog() throws Exception {
         System.out.println("getDeviceLog");
-
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        List<DeviceLog> expResult = null;
         List<DeviceLog> result = instance.getDeviceLog(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(new TypeReference<List<DeviceLog>>() {
+        }).serialize(result));
     }
 
     /**
      * Test of getDeviceLogR method, of class SynchDeviceDAOImpl.
      */
-    @Test
-    public void testGetDeviceLogR() throws Exception {
-        System.out.println("getDeviceLogR");
-
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        List<DeviceLogR> expResult = null;
-        List<DeviceLogR> result = instance.getDeviceLogR(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
+//    @Test
+//    public void testGetDeviceLogR() throws Exception {
+//        System.out.println("getDeviceLogR");
+//        
+//        List<DeviceLogR> result = instance.getDeviceLogR(eqp);
+//        System.out.println(new JacksonMapper(new TypeReference<List<DeviceLogR>>(){}).serialize(result));
+//    }
     /**
      * Test of getInterfaceStatistics method, of class SynchDeviceDAOImpl.
      */
@@ -427,12 +405,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetInterfaceStatistics() throws Exception {
         System.out.println("getInterfaceStatistics");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        List<InterfaceStatistics> expResult = null;
         List<InterfaceStatistics> result = instance.getInterfaceStatistics(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(List.class).serialize(result));
     }
 
     /**
@@ -442,12 +416,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetPPPoECredentials() throws Exception {
         System.out.println("getPPPoECredentials");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        PPPoECredentialsInfo expResult = null;
         PPPoECredentialsInfo result = instance.getPPPoECredentials(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(PPPoECredentialsInfo.class).serialize(result));
     }
 
     /**
@@ -457,13 +427,11 @@ public class SynchDeviceDAOImplIT {
     public void testPingDiagnostic() throws Exception {
         System.out.println("pingDiagnostic");
 
-        PingRequest p = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        PingResponse expResult = null;
+        PingRequest p = new PingRequest();
+        p.setDestAddress("www.google.com");
+
         PingResponse result = instance.pingDiagnostic(eqp, p);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(PingResponse.class).serialize(result));
     }
 
     /**
@@ -473,13 +441,10 @@ public class SynchDeviceDAOImplIT {
     public void testSetPPPoECredentials() throws Exception {
         System.out.println("setPPPoECredentials");
 
-        PPPoECredentialsInfo pPPoECredentialsInfo = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        StringResponseDTO expResult = null;
-//        StringResponseDTO result = instance.setPPPoECredentials(eqp, pPPoECredentialsInfo);
-//        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        PPPoECredentialsInfo pPPoECredentialsInfo = instance.getPPPoECredentials(eqp);
+        pPPoECredentialsInfo.setPassword("gvt25");
+        instance.setPPPoECredentials(eqp, pPPoECredentialsInfo);
+
     }
 
     /**
@@ -489,13 +454,10 @@ public class SynchDeviceDAOImplIT {
     public void testSetPortMapping() throws Exception {
         System.out.println("setPortMapping");
 
-        List<PortMappingInfo> ports = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        Boolean expResult = null;
+        List<PortMappingInfo> ports = new ArrayList<>();
+
         Boolean result = instance.setPortMapping(eqp, ports);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -505,13 +467,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetSipDiagnostics() throws Exception {
         System.out.println("getSipDiagnostics");
 
-        Integer phyref = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        SipDiagnostics expResult = null;
-        SipDiagnostics result = instance.getSipDiagnostics(eqp, phyref);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SipDiagnostics result = instance.getSipDiagnostics(eqp, 1);
+        System.out.println(new JacksonMapper(SipDiagnostics.class).serialize(result));
     }
 
     /**
@@ -520,14 +477,19 @@ public class SynchDeviceDAOImplIT {
     @Test
     public void testSetSipActivation() throws Exception {
         System.out.println("setSipActivation");
-
-        SipActivation sip = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        Boolean expResult = null;
+        SipDiagnostics diag = instance.getSipDiagnostics(eqp, 1);
+        SipActivation sip = new SipActivation();
+        sip.setAuthPassword("09455");
+        sip.setAuthUserName(diag.getAuthUserName());
+        sip.setDirectoryNumber(diag.getDirectoryNumber());
+        sip.setOutboundProxy(diag.getOutboundProxy());
+        sip.setPhyReferenceList("1");
+        sip.setProxyServer(diag.getProxyServer());
+        sip.setRegistrarServer(diag.getRegistrarServer());
+        sip.setUserAgentDomain(diag.getUserAgentDomain());
+        sip.setT38Enabled("1");
         Boolean result = instance.setSipActivation(eqp, sip);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result);
     }
 
 }

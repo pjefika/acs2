@@ -5,17 +5,21 @@
  */
 package model.device.sipdiagnostics;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import parser.device.SipDiagnosticsDeserializer;
+
 /**
  *
  * @author G0041775
  */
+@JsonDeserialize(using = SipDiagnosticsDeserializer.class)
 public class SipDiagnostics {
 
     private String ProxyServer, ProxyServerPort, RegistrarServer,
             UserAgentDomain, UserAgentPort, OutboundProxy, ConferenceCallURI,
             DirectoryNumber, Enable, LineEnable, AuthUserName, AuthPassword,
             URI, CallState, DigitMap, ProfileEnable, DTMFMethod, Codec,
-            T38Enable, Status, PacketsLost;
+            T38Enable, Status, PacketsLost, IPAddress;
 
     public SipDiagnostics() {
     }
@@ -186,6 +190,14 @@ public class SipDiagnostics {
 
     public void setPacketsLost(String PacketsLost) {
         this.PacketsLost = PacketsLost;
+    }
+
+    public String getIPAddress() {
+        return IPAddress;
+    }
+
+    public void setIPAddress(String IPAddress) {
+        this.IPAddress = IPAddress;
     }
 
 }

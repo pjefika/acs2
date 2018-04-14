@@ -29,7 +29,7 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
      * @throws Exception
      */
     @Override
-    public WifiInfoFull consultar(NbiDeviceData device) throws Exception {
+    public List<WifiInfoFull> consultar(NbiDeviceData device) throws Exception {
         try {
             return synch().getWifiInfoFull(device);
         } catch (WifiInativoException e) {
