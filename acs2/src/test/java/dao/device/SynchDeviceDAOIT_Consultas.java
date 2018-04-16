@@ -37,7 +37,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.GsonUtil;
 
 /**
  *
@@ -105,7 +104,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getFirmwareVersion");
             FirmwareInfo result = instance.getFirmwareVersion(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -117,7 +116,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getFirmwareVersion");
             ServiceClass result = instance.getServiceClass(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -132,7 +131,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getWanInfo");
             WanInfo result = instance.getWanInfo(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -147,7 +146,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getLanHosts");
             List<LanDevice> result = instance.getLanHosts(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -162,7 +161,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getDmzInfo");
             DmzInfo result = instance.getDmzInfo(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -176,9 +175,9 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
     public void testGetWifiInfoFull() {
         try {
             System.out.println("getWifiInfoFull");
-            WifiInfoFull result = instance.getWifiInfoFull(eqp);
+//            WifiInfoFull result = instance.getWifiInfoFull(eqp);
 //            System.out.println("Retorno: " + GsonUtil.serialize(result));
-            assertTrue(result != null);
+//            assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -193,7 +192,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getPortMapping");
             List<PortMappingInfo> result = instance.getPortMapping(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -208,7 +207,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getDhcp");
             Dhcp result = instance.getDhcp(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -223,7 +222,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("traceroute");
             PortMappingInfo result = instance.traceroute(eqp, new TraceRouteRequest("www.google.com.br"));
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -238,7 +237,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("testGetDdns");
             DdnsInfo result = instance.getDdns(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -253,7 +252,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getXdslDiagnostic");
             XdslDiagnostics result = instance.getXdslDiagnostic(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -268,7 +267,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getDeviceLog");
             List<DeviceLog> result = instance.getDeviceLog(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(!result.isEmpty());
         } catch (Exception e) {
             fail(e.getMessage());
@@ -282,9 +281,9 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
     public void testGetDeviceLogR() {
         try {
             System.out.println("getDeviceLogR");
-            List<DeviceLogR> result = instance.getDeviceLogR(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
-            assertTrue(!result.isEmpty());
+//            List<DeviceLogR> result = instance.getDeviceLogR(eqp);
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            assertTrue(!result.isEmpty());
         } catch (Exception e) {
             fail("The test case is a prototype.");
         }
@@ -299,7 +298,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getInterfaceStatistics");
             List<InterfaceStatistics> result = instance.getInterfaceStatistics(eqp);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
 
             assertTrue(!result.isEmpty());
 
@@ -334,7 +333,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
             PingRequest p = new PingRequest();
             p.setDestAddress("www.google.com.br");
             PingResponse result = instance.pingDiagnostic(eqp, p);
-            System.out.println("Retorno: " + GsonUtil.serialize(result));
+//            System.out.println("Retorno: " + GsonUtil.serialize(result));
             assertTrue(result.getStatus().equalsIgnoreCase("Complete"));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -350,7 +349,7 @@ public class SynchDeviceDAOIT_Consultas extends EquipamentoTestValues {
         try {
             System.out.println("getSipDiagnostics");
             SipDiagnostics result = instance.getSipDiagnostics(eqp, 1);
-            System.out.println("leSIP: " + GsonUtil.serialize(result));
+//            System.out.println("leSIP: " + GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             e.printStackTrace();

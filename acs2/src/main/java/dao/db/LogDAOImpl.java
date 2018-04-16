@@ -5,14 +5,19 @@
  */
 package dao.db;
 
+import br.net.gvt.efika.mongo.dao.AbstractMongoDAO;
+import br.net.gvt.efika.mongo.dao.MongoEndpointEnum;
 import model.entity.LogEntity;
 
-public class LogDAOImpl extends AbstractHibernateDAO implements InterfaceDAO<LogEntity> {
-    
+public class LogDAOImpl extends AbstractMongoDAO<LogEntity> implements InterfaceDAO<LogEntity> {
+
+    public LogDAOImpl() {
+        super(MongoEndpointEnum.MONGO.getIp(), "acsAPI", LogEntity.class);
+    }
+
     @Override
     public void cadastrar(LogEntity l) throws Exception {
-        persist(l);
-        close();
+        this.save(l);
     }
-    
+
 }

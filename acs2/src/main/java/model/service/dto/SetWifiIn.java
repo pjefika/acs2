@@ -5,7 +5,7 @@
  */
 package model.service.dto;
 
-import model.device.wifi.WifiInfoFull;
+import model.device.wifi.WifiNets;
 import model.log.AcaoAcsEnum;
 
 /**
@@ -14,17 +14,17 @@ import model.log.AcaoAcsEnum;
  */
 public class SetWifiIn extends GetDeviceDataIn {
 
-    private WifiInfoFull wifi;
+    private WifiNets wifi;
 
     public SetWifiIn() {
         this.setAcao(AcaoAcsEnum.SET_WIFI_INFO);
     }
 
-    public WifiInfoFull getWifi() {
+    public WifiNets getWifi() {
         return wifi;
     }
 
-    public void setWifi(WifiInfoFull wifi) {
+    public void setWifi(WifiNets wifi) {
         this.wifi = wifi;
     }
 

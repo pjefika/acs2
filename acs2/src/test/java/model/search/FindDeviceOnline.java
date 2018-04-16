@@ -19,7 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.GsonUtil;
+//import util.GsonUtil;
 
 /**
  *
@@ -67,7 +67,7 @@ public class FindDeviceOnline {
                 if (dao.checkOnline(nbiDeviceData)) {
                     System.out.println("|------------------------------|");
                     System.out.println("Equipamento Online!");
-                    System.out.println(GsonUtil.serialize(nbiDeviceData));
+//                    System.out.println(GsonUtil.serialize(nbiDeviceData));
                     System.out.println("|------------------------------|");
                 }
             }

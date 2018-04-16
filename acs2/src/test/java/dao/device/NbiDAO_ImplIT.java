@@ -73,7 +73,7 @@ public class NbiDAO_ImplIT {
         List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDevicesBySubscriberId(subscriberId);
         for (NbiDeviceData nbiDeviceData : result) {
-            System.out.println("LeDevice: " + GsonUtil.serialize(nbiDeviceData));
+//            System.out.println("LeDevice: " + GsonUtil.serialize(nbiDeviceData));
         }
 
         assertTrue(result != null);
@@ -104,7 +104,7 @@ public class NbiDAO_ImplIT {
         try {
             System.out.println("getAvailableCriteriaTemplates");
             List<NbiTemplate> result = instance.getAvailableCriteriaTemplates();
-            System.out.println(GsonUtil.serialize(result));
+//            System.out.println(GsonUtil.serialize(result));
             System.out.println("end");
             assertTrue(!result.isEmpty());
             // TODO review the generated test code and remove the default call to fail.
@@ -139,7 +139,7 @@ public class NbiDAO_ImplIT {
 
         List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDeviceBySerialNumber(serial);
-        System.out.println(GsonUtil.serialize(result));
+//        System.out.println(GsonUtil.serialize(result));
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -168,7 +168,7 @@ public class NbiDAO_ImplIT {
     public void testGetDeviceOperationsHistory() throws Exception {
         System.out.println("getDeviceOperationsHistory");
         List<NbiDeviceActionResult> result = instance.getDeviceOperationsHistory(nbi.getDeviceId());
-        System.out.println(GsonUtil.serialize(result));
+//        System.out.println(GsonUtil.serialize(result));
         assertTrue(!result.isEmpty());
 
     }

@@ -16,7 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.GsonUtil;
+//import util.GsonUtil;
 
 /**
  *
@@ -54,7 +54,7 @@ public class ParameterServiceImplIT {
         try {
             System.out.println("getParameters");
             List<ParameterInfoStructDTO> result = instance.getParameters(eqp);
-            System.out.println(GsonUtil.serialize(result));
+//            System.out.println(GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());

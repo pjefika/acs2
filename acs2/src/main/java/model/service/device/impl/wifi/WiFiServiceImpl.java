@@ -9,6 +9,7 @@ import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
 import model.device.wifi.WifiInfoFull;
+import model.device.wifi.WifiNets;
 import model.exception.WifiInativoException;
 import model.service.device.GenericDeviceService;
 import model.service.device.ThreadControl;
@@ -29,14 +30,14 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
      * @throws Exception
      */
     @Override
-    public List<WifiInfoFull> consultar(NbiDeviceData device) throws Exception {
+    public WifiNets consultar(NbiDeviceData device) throws Exception {
         try {
-            return synch().getWifiInfoFull(device);
+            return new WifiNets(synch().getWifiInfoFull(device));
         } catch (WifiInativoException e) {
             ThreadControl.sleep();
             this.ativar(device);
             ThreadControl.sleep();
-            return synch().getWifiInfoFull(device);
+            return new WifiNets(synch().getWifiInfoFull(device));
         }
     }
 
@@ -59,8 +60,9 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
     }
 
     @Override
-    public WifiInfoFull alterar(NbiDeviceData device, WifiInfoFull wifi) throws Exception {
+    public WifiNets alterar(NbiDeviceData device, WifiNets wifis) throws Exception {
         List<ParameterValueStructDTO> lst = new ArrayList<>();
+        WifiInfoFull wifi = wifis.getWifi().get(0);
         lst.add(SetParameters.DESATIVAR_AUTOCHANNEL);
         lst.add(SetParameters.ATIVAR_WIFI);
         synch().setParametersValues(device, lst);

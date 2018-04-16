@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.GsonUtil;
+//import util.GsonUtil;
 
 /**
  *
@@ -51,7 +51,7 @@ public class SipDiagnosticsServiceIT extends AbstractTest {
             Integer phyref = 1;
             SipDiagnosticsService instance = new SipDiagnosticsServiceImpl();
             SipDiagnostics result = instance.consultar(eqp, phyref);
-            System.out.println(GsonUtil.serialize(result));
+//            System.out.println(GsonUtil.serialize(result));
             assertTrue(result != null);
         } catch (Exception e) {
             fail(e.getMessage());

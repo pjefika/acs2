@@ -23,7 +23,7 @@ import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.serviceclass.ServiceClass;
 import model.device.sipdiagnostics.SipDiagnostics;
 import model.device.wan.WanInfo;
-import model.device.wifi.WifiInfoFull;
+import model.device.wifi.WifiNets;
 import model.device.xdsldiagnostics.XdslDiagnostics;
 import model.service.dto.DetailOut;
 import model.entity.LogEntity;
@@ -84,7 +84,7 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_WIFI_INFO);
         LogEntity l = in.create();
         try {
-            WifiInfoFull wifi = FactoryService.createWiFiService().consultar(in.getDevice());
+            WifiNets wifi = FactoryService.createWiFiService().consultar(in.getDevice());
             l.setSaida(wifi);
             return ok(wifi);
         } catch (Exception e) {
@@ -106,7 +106,7 @@ public class EquipamentoController extends RestAbstractController {
     public Response setWifiInfo(SetWifiIn in) {
         LogEntity l = in.create();
         try {
-            WifiInfoFull wifi = FactoryService.createWiFiService().alterar(in.getDevice(), in.getWifi());
+            WifiNets wifi = FactoryService.createWiFiService().alterar(in.getDevice(), in.getWifi());
             l.setSaida(wifi);
             return ok(wifi);
         } catch (Exception e) {
@@ -493,7 +493,7 @@ public class EquipamentoController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response setSipActivation(SipActivationIn in) {
-        
+
         LogEntity l = in.create();
         try {
             SipActivationService sip = new SipActivationServiceImpl();

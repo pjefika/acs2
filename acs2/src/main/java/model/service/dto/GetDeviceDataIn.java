@@ -5,10 +5,10 @@
  */
 package model.service.dto;
 
+import br.net.gvt.efika.util.json.JacksonMapper;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import model.log.AcaoAcsEnum;
 import model.log.LogInAcs;
-import util.GsonUtil;
 
 /**
  *
@@ -22,7 +22,12 @@ public class GetDeviceDataIn extends LogInAcs {
 
     @Override
     public String input() {
-        return GsonUtil.serialize(device);
+        try {
+            return new JacksonMapper(NbiDeviceData.class).serialize(device);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     @Override

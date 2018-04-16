@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import util.GsonUtil;
+//import util.GsonUtil;
 
 /**
  *
@@ -51,7 +51,7 @@ public class DeviceDetailServiceImplIT extends EquipamentoTestValues {
             System.out.println("consultar");
             DeviceDetailServiceImpl instance = new DeviceDetailServiceImpl();
             DetailOut result = instance.consultar(GUID);
-            System.out.println(GsonUtil.serialize(result));
+//            System.out.println(GsonUtil.serialize(result));
             assertEquals("Online", true, result.getOnline());
             assertEquals("Updated", result.getFirmware().getUpdated(), true);
 //            assertEquals("FirmwareUpdated", result.getFirmware().getUpdated(), true);

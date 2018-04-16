@@ -5,44 +5,25 @@
  */
 package model.entity;
 
+import br.net.gvt.efika.mongo.model.entity.AbstractMongoEntity;
 import br.net.gvt.efika.util.json.JacksonMapper;
 import java.util.Calendar;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import model.log.AcaoAcsEnum;
 
 /**
  *
  * @author G0034481
  */
-@Entity
-@Table(name = "acs2_log")
-public class LogEntity extends AbstractEntity {
+public class LogEntity extends AbstractMongoEntity {
 
-    @Lob
-    @Column(columnDefinition = "LONGVARCHAR")
     private String entrada;
 
-    @Lob
-    @Column(columnDefinition = "LONGVARCHAR")
     private String saida;
 
-    @NotNull(message = "Campo obrigatório")
-    @Size(min = 1)
     private String executor;
 
-    @NotNull(message = "Campo obrigatório")
-    @Enumerated(EnumType.STRING)
     private AcaoAcsEnum acao;
 
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Calendar dataLog;
 
     public LogEntity() {

@@ -5,9 +5,9 @@
  */
 package model.service.search;
 
+import br.net.gvt.efika.util.json.JacksonMapper;
 import model.log.AcaoAcsEnum;
 import model.log.LogInAcs;
-import util.GsonUtil;
 
 /**
  *
@@ -45,7 +45,11 @@ public class SearchIn extends LogInAcs {
 
     @Override
     public String input() {
-        return GsonUtil.serialize(this);
+        try {
+            return new JacksonMapper(SearchIn.class).serialize(this);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

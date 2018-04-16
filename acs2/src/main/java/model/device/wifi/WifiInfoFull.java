@@ -28,6 +28,22 @@ public class WifiInfoFull {
             wpsDevicePassword,
             maxBitRate;
 
+    private String signal;
+
+    private Boolean bcEnabled,
+            macAddrControl,
+            wpsEnabled;
+
+    private String bytesSent,
+            bytesRecv,
+            pctSent,
+            pctRecv,
+            errSent,
+            errRecv;
+
+    public WifiInfoFull() {
+    }
+
     public String getOperStatus() {
         return operStatus;
     }
@@ -50,22 +66,6 @@ public class WifiInfoFull {
 
     public void setChannel(String channel) {
         this.channel = channel;
-    }
-
-    private String signal;
-
-    private Boolean bcEnabled,
-            macAddrControl,
-            wpsEnabled;
-
-    private String bytesSent,
-            bytesRecv,
-            pctSent,
-            pctRecv,
-            errSent,
-            errRecv;
-
-    public WifiInfoFull() {
     }
 
     public String getAuthMode() {
@@ -177,10 +177,6 @@ public class WifiInfoFull {
         this.macAddrControl = macAddrControl;
     }
 
-    public void setMacAddrControl(String macAddrControl) {
-//        this.macAddrControl = macAddrControl;
-    }
-
     public String getAdmStatus() {
         return admStatus;
     }
@@ -195,10 +191,6 @@ public class WifiInfoFull {
 
     public void setWpsEnabled(Boolean wpsEnabled) {
         this.wpsEnabled = wpsEnabled;
-    }
-
-    public void setWpsEnabled(String wpsEnabled) {
-//        this.wpsEnabled = wpsEnabled;
     }
 
     public String getBytesSent() {
