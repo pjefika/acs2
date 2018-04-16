@@ -177,6 +177,10 @@ public class WifiInfoFull {
         this.macAddrControl = macAddrControl;
     }
 
+    public void setMacAddrControl(String macAddrControl) {
+        this.macAddrControl = macAddrControl.equalsIgnoreCase("1");
+    }
+
     public String getAdmStatus() {
         return admStatus;
     }
@@ -191,6 +195,10 @@ public class WifiInfoFull {
 
     public void setWpsEnabled(Boolean wpsEnabled) {
         this.wpsEnabled = wpsEnabled;
+    }
+
+    public void setWpsEnabled(String wpsEnabled) {
+        this.wpsEnabled = wpsEnabled.equalsIgnoreCase("1");
     }
 
     public String getBytesSent() {
