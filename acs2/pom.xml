@@ -29,7 +29,7 @@
     </dependencyManagement>
 
     <build>
-        <finalName>customerAPI</finalName>
+        <finalName>acsAPI</finalName>
         <plugins>
             <plugin>
                 <groupId>org.wildfly.swarm</groupId>
@@ -45,7 +45,7 @@
                 </executions>
                 <configuration>
                     <properties>
-                        <swarm.http.port>7171</swarm.http.port>
+                        <swarm.http.port>7177</swarm.http.port>
                     </properties>
                 </configuration>
             </plugin>
