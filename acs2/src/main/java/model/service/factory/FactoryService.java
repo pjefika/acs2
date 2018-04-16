@@ -5,7 +5,6 @@
  */
 package model.service.factory;
 
-import static javafx.scene.input.KeyCode.T;
 import model.service.search.FindDevice;
 import model.service.search.FindDeviceImpl;
 import model.service.device.detail.DeviceDetailService;
