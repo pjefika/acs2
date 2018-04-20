@@ -468,7 +468,9 @@ public class SynchDeviceDAOImplIT {
         System.out.println("getSipDiagnostics");
 
         SipDiagnostics result = instance.getSipDiagnostics(eqp, 1);
-        System.out.println(new JacksonMapper(SipDiagnostics.class).serialize(result));
+        SipDiagnostics result1 = instance.getSipDiagnostics(eqp, 2);
+        System.out.println("phyReference 1->"+new JacksonMapper(SipDiagnostics.class).serialize(result));
+        System.out.println("phyReference 2->"+new JacksonMapper(SipDiagnostics.class).serialize(result1));
     }
 
     /**
