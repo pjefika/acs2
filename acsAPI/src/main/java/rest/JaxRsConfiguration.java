@@ -12,6 +12,6 @@ import javax.ws.rs.core.Application;
  *
  * @author G0041775
  */
-@ApplicationPath("/acs")
+@ApplicationPath("/acsAPI")
 public class JaxRsConfiguration extends Application {
 }
