@@ -146,6 +146,7 @@
             <groupId>old</groupId>
             <artifactId>jaxb-api-osgi</artifactId>
             <version>1.0.0</version>
+            <scope>provided</scope>
         </dependency>
         
         <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
