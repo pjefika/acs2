@@ -5,6 +5,7 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.util.json.JacksonMapper;
 import com.alcatel.hdm.service.nbi2.NbiCommunicationLog;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
@@ -53,13 +54,10 @@ public class NbiDAO_ImplIT {
     @Test
     public void testFindDeviceByGUID() throws Exception {
         System.out.println("findDeviceByGUID");
-        Long guid = null;
+        Long guid = 26648107l;
 
-        NbiDeviceData expResult = null;
         NbiDeviceData result = instance.findDeviceByGUID(guid);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(NbiDeviceData.class).equals(result));
     }
 
     /**
@@ -135,14 +133,11 @@ public class NbiDAO_ImplIT {
     @Test
     public void testFindDeviceBySerialNumber() throws Exception {
         System.out.println("findDeviceBySerialNumber");
-        String serial = "N71327865001810";
+        String serial = "LU1421603000323";
 
-        List<NbiDeviceData> expResult = null;
+//        List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDeviceBySerialNumber(serial);
-//        System.out.println(GsonUtil.serialize(result));
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(List.class).serialize(result));
     }
 
     /**
