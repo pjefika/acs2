@@ -26,7 +26,7 @@ public class EquipamentoTestValues {
      * 30585765
      * 26737329 - casa Matheus (canelinha)
      */
-    public static Long GUID = new Long(26648107);
+    public static Long GUID = new Long(30585765);
 
     private SynchDeviceDAO instance = FactoryDAO.createSynch();
     private NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();

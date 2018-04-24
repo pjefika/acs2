@@ -91,11 +91,11 @@
             <version>1.0.3</version>
         </dependency>   
         
-        <dependency>
+<!--        <dependency>
             <groupId>old</groupId>
             <artifactId>xws-security</artifactId>
             <version>1.0.0</version>
-        </dependency>
+        </dependency>-->
         
 
                 
