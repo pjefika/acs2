@@ -5,7 +5,9 @@
  */
 package model.device.sipactivation;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import parser.device.SipActivationDeserializer;
 import parser.device.SipActivationSerializer;
 
 /**
@@ -13,6 +15,7 @@ import parser.device.SipActivationSerializer;
  * @author G0041775
  */
 @JsonSerialize(using = SipActivationSerializer.class)
+@JsonDeserialize(using = SipActivationDeserializer.class)
 public class SipActivation {
 
     private String DirectoryNumber,

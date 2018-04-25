@@ -481,7 +481,7 @@ public class SynchDeviceDAOImplIT {
         System.out.println("setSipActivation");
         SipDiagnostics diag = instance.getSipDiagnostics(eqp, 1);
         SipActivation sip = new SipActivation();
-        sip.setAuthPassword("09455");
+        sip.setAuthPassword("17588");
         sip.setAuthUserName(diag.getAuthUserName());
         sip.setDirectoryNumber(diag.getDirectoryNumber());
         sip.setOutboundProxy(diag.getOutboundProxy());
@@ -489,7 +489,7 @@ public class SynchDeviceDAOImplIT {
         sip.setProxyServer(diag.getProxyServer());
         sip.setRegistrarServer(diag.getRegistrarServer());
         sip.setUserAgentDomain(diag.getUserAgentDomain());
-        sip.setT38Enabled("1");
+        sip.setT38Enabled("0");
         Boolean result = instance.setSipActivation(eqp, sip);
         assertTrue(result);
     }
