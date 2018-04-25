@@ -135,6 +135,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public DeviceInfo getDeviceInfo(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9527, opt, TIMEOUT, "");
+        System.out.println("VALUE=>"+a.getValue());
         return (DeviceInfo) new JacksonMapper(DeviceInfo.class).deserialize(a.getValue());
     }
 

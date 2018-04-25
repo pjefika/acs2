@@ -5,7 +5,7 @@
  */
 package model.service.device.detail;
 
-import model.service.device.detail.DeviceDetailServiceImpl;
+import br.net.gvt.efika.util.json.JacksonMapper;
 import init.EquipamentoTestValues;
 import model.service.dto.DetailOut;
 import org.junit.After;
@@ -51,7 +51,7 @@ public class DeviceDetailServiceImplIT extends EquipamentoTestValues {
             System.out.println("consultar");
             DeviceDetailServiceImpl instance = new DeviceDetailServiceImpl();
             DetailOut result = instance.consultar(GUID);
-//            System.out.println(GsonUtil.serialize(result));
+            System.out.println(new JacksonMapper(DetailOut.class).serialize(result));
             assertEquals("Online", true, result.getOnline());
             assertEquals("Updated", result.getFirmware().getUpdated(), true);
 //            assertEquals("FirmwareUpdated", result.getFirmware().getUpdated(), true);

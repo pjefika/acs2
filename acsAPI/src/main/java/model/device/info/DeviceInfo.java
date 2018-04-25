@@ -5,10 +5,14 @@
  */
 package model.device.info;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import parser.device.DeviceInfoDeserializer;
+
 /**
  *
  * @author G0042204
  */
+@JsonDeserialize(using = DeviceInfoDeserializer.class)
 public class DeviceInfo {
 
     private String manufacid,
