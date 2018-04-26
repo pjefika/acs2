@@ -480,7 +480,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             }
             return (SipDiagnostics) new JacksonMapper(SipDiagnostics.class).deserialize(a.getValue());
         } catch (DeviceOperationException e) {
-            throw new UnsupportedException();
+            throw e;
         }
     }
 
@@ -519,7 +519,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             }
         } catch (DeviceOperationException e) {
             e.printStackTrace();
-            throw new UnsupportedException();
+            throw e;
         }
 
         return false;

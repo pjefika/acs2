@@ -12,7 +12,7 @@ package model.exception;
 public class UnsupportedException extends Exception {
 
     public UnsupportedException() {
-        super("O CPE não suporta o(s) parâmetro(s) solicitados.");
+        super("O Equipamento não suporta o(s) parâmetro(s) solicitados.");
     }
 
     public UnsupportedException(String message) {
