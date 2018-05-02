@@ -442,6 +442,7 @@ public class SynchDeviceDAOImplIT {
         System.out.println("setPPPoECredentials");
 
         PPPoECredentialsInfo pPPoECredentialsInfo = instance.getPPPoECredentials(eqp);
+        pPPoECredentialsInfo.setUsername("2138513195@turbonetpro");
         pPPoECredentialsInfo.setPassword("gvt25");
         instance.setPPPoECredentials(eqp, pPPoECredentialsInfo);
 

@@ -6,13 +6,16 @@
 package model.device.pppoe;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import parser.device.PPPoECredentialsInfoDeserializer;
+import parser.device.PPPoECredentialsInfoSerializer;
 
 /**
  *
  * @author G0042204
  */
 @JsonDeserialize(using = PPPoECredentialsInfoDeserializer.class)
+@JsonSerialize(using = PPPoECredentialsInfoSerializer.class)
 public class PPPoECredentialsInfo {
 
     private String Username, Password;

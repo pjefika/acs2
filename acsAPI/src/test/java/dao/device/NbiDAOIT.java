@@ -5,8 +5,7 @@
  */
 package dao.device;
 
-import dao.device.NbiDAO_Impl;
-import dao.device.NbiDAO;
+import br.net.gvt.efika.util.json.JacksonMapper;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
 import org.junit.After;
@@ -61,13 +60,11 @@ public class NbiDAOIT {
     @Test
     public void testFindDevicesBySubscriberId() throws Exception {
         System.out.println("findDevicesBySubscriberId");
-        String subscriberId = "";
+        String subscriberId = "NIU-811ECMZQZR-013";
 
-        List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDevicesBySubscriberId(subscriberId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper(List.class).serialize(result));
+        
     }
 
     /**
