@@ -32,8 +32,8 @@ public class PPPoECredentialsInfoSerializer extends StdSerializer<PPPoECredentia
             throws IOException, JsonProcessingException {
 
         jgen.writeStartObject();
-        jgen.writeStringField("username", value.getUsername());
-        jgen.writeStringField("password", value.getPassword());
+        jgen.writeStringField("Username", value.getUsername());
+        jgen.writeStringField("Password", value.getPassword());
 
         jgen.writeEndObject();
     }
