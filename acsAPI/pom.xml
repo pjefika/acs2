@@ -203,6 +203,12 @@
         
         <dependency>
             <groupId>br.net.gvt.efika</groupId>
+            <artifactId>acs</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>br.net.gvt.efika</groupId>
             <artifactId>efika_customer</artifactId>
             <version>1.0.0</version>
         </dependency>

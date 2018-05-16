@@ -5,7 +5,7 @@
  */
 package model.service.factory;
 
-import model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
 import model.service.device.MotiveService;
 import model.service.device.impl.DhcpService;
 

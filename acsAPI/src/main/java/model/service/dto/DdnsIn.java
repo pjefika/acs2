@@ -5,7 +5,6 @@
  */
 package model.service.dto;
 
-import model.device.dhcp.Dhcp;
 import model.log.AcaoAcsEnum;
 
 /**

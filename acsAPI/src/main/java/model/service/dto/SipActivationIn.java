@@ -5,7 +5,7 @@
  */
 package model.service.dto;
 
-import model.device.sipactivation.SipActivation;
+import br.net.gvt.efika.acs.model.device.sipactivation.SipActivation;
 import model.log.AcaoAcsEnum;
 
 /**

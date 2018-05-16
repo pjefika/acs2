@@ -5,7 +5,7 @@
  */
 package model.service.dto;
 
-import model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
 import model.log.AcaoAcsEnum;
 
 /**

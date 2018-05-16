@@ -5,7 +5,7 @@
  */
 package model.service.dto;
 
-import model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
 import model.log.AcaoAcsEnum;
 
 /**

@@ -5,8 +5,8 @@
  */
 package model.service.device.impl;
 
+import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import model.device.dhcp.Dhcp;
 import model.service.device.GenericDeviceService;
 import model.service.device.MotiveService;
 import model.service.device.ThreadControl;

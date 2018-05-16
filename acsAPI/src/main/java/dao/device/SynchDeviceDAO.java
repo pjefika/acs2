@@ -5,6 +5,17 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
+import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
+import br.net.gvt.efika.acs.model.device.info.DeviceInfo;
+import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
+import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
+import br.net.gvt.efika.acs.model.device.log.DeviceLog;
+import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.sipactivation.SipActivation;
+import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
+import br.net.gvt.efika.acs.model.device.xdsldiagnostics.XdslDiagnostics;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import br.net.gvt.efika.util.json.exception.JsonParseException;
 import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.DeviceOperationException;
@@ -14,24 +25,13 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.ProviderExc
 
 import java.util.List;
 import model.device.DmzInfo;
-import model.device.ddns.DdnsInfo;
-import model.device.dhcp.Dhcp;
-import model.device.firmware.FirmwareInfo;
-import model.device.info.DeviceInfo;
-import model.device.interfacestatistics.InterfaceStatistics;
-import model.device.lanhost.LanDevice;
-import model.device.log.DeviceLog;
 import model.device.ping.PingRequest;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
-import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.serviceclass.ServiceClass;
-import model.device.sipactivation.SipActivation;
-import model.device.sipdiagnostics.SipDiagnostics;
 import model.device.traceroute.TraceRouteRequest;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfoFull;
-import model.device.xdsldiagnostics.XdslDiagnostics;
 import model.exception.HdmException;
 import model.exception.JsonUtilException;
 import model.exception.UnsupportedException;

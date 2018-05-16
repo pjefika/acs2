@@ -5,8 +5,8 @@
  */
 package model.service.device.impl;
 
+import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import model.device.pppoe.PPPoECredentialsInfo;
 
 /**
  *

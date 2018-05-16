@@ -5,6 +5,13 @@
  */
 package rest;
 
+import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
+import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
+import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
+import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
+import br.net.gvt.efika.acs.model.device.xdsldiagnostics.XdslDiagnostics;
 import dao.factory.FactoryDAO;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -13,18 +20,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.device.ddns.DdnsInfo;
-import model.device.dhcp.Dhcp;
-import model.device.interfacestatistics.InterfaceStatistics;
-import model.device.lanhost.LanDevice;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
-import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.serviceclass.ServiceClass;
-import model.device.sipdiagnostics.SipDiagnostics;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiNets;
-import model.device.xdsldiagnostics.XdslDiagnostics;
 import model.service.dto.DetailOut;
 import model.entity.LogEntity;
 import model.log.AcaoAcsEnum;

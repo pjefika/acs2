@@ -5,6 +5,7 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiDeviceID;
@@ -18,7 +19,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import model.device.firmware.FirmwareInfo;
 import notification.dto.nbi.service.hdm.alcatel.com.NBIDeviceActionResult;
 
 public class RemoteDAOImpl implements RemoteDAO {

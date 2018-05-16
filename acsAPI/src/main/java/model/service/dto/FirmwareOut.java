@@ -5,7 +5,7 @@
  */
 package model.service.dto;
 
-import model.device.firmware.FirmwareInfo;
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
 
 /**
  *

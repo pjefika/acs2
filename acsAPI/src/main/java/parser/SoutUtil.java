@@ -5,6 +5,10 @@
  */
 package parser;
 
+import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
+import br.net.gvt.efika.acs.model.device.log.DeviceLog;
+import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiDynamicVariable;
@@ -12,12 +16,8 @@ import com.alcatel.hdm.service.nbi2.NbiServiceTag;
 import com.alcatel.hdm.service.nbi2.NbiUserTag;
 import java.util.List;
 import model.device.DmzInfo;
-import model.device.ddns.DdnsInfo;
-import model.device.firmware.FirmwareInfo;
-import model.device.log.DeviceLog;
 import model.device.ping.PingResponse;
 import model.device.portmapping.PortMappingInfo;
-import model.device.pppoe.PPPoECredentialsInfo;
 import model.device.wifi.WifiInfo;
 import model.device.wifi.WifiInfoFull;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
