@@ -27,8 +27,11 @@ public class DeviceOnlineServiceImpl implements DeviceOnlineService {
     @Override
     public Boolean isAnyOnline(List<NbiDeviceData> eqps) throws Exception {
         for (NbiDeviceData eqp : eqps) {
-            if (sync.forceOnline(eqp)) {
-                return true;
+            try {
+                if (sync.forceOnline(eqp)) {
+                    return true;
+                }
+            } catch (Exception e) {
             }
         }
         return false;
