@@ -14,10 +14,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.entity.LogEntity;
+import br.net.gvt.efika.acs.model.entity.LogEntity;
 import model.service.factory.FactoryService;
-import model.service.search.FindDevice;
-import model.service.search.SearchIn;
+import br.net.gvt.efika.acs.model.search.FindDevice;
+import br.net.gvt.efika.acs.model.search.SearchIn;
 
 /**
  *

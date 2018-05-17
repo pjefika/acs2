@@ -5,8 +5,8 @@
  */
 package model.service.factory;
 
-import model.service.search.FindDevice;
-import model.service.search.FindDeviceImpl;
+import br.net.gvt.efika.acs.model.search.FindDevice;
+import br.net.gvt.efika.acs.model.search.FindDeviceImpl;
 import model.service.device.detail.DeviceDetailService;
 import model.service.device.detail.DeviceDetailServiceImpl;
 import model.service.device.impl.wifi.WiFiService;

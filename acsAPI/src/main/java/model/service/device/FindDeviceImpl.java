@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service.search;
+package br.net.gvt.efika.acs.model.search;
 
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.device.NbiDAO;
 import dao.factory.FactoryDAO;
 import java.util.List;
-import model.exception.SearchCriteriaException;
-import model.exception.SearchNotFound;
+import br.net.gvt.efika.acs.model.exception.SearchCriteriaException;
+import br.net.gvt.efika.acs.model.exception.SearchNotFound;
 
 /**
  *

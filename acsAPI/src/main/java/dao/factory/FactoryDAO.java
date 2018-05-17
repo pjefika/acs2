@@ -13,7 +13,7 @@ import dao.device.RemoteDAO;
 import dao.device.RemoteDAOImpl;
 import dao.device.SynchDeviceDAO;
 import dao.device.SynchDeviceDAOImpl;
-import model.entity.LogEntity;
+import br.net.gvt.efika.acs.model.entity.LogEntity;
 
 /**
  *

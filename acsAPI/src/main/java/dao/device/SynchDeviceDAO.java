@@ -32,9 +32,9 @@ import model.device.serviceclass.ServiceClass;
 import model.device.traceroute.TraceRouteRequest;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfoFull;
-import model.exception.HdmException;
-import model.exception.JsonUtilException;
-import model.exception.UnsupportedException;
+import br.net.gvt.efika.acs.model.exception.HdmException;
+import br.net.gvt.efika.acs.model.exception.JsonUtilException;
+import br.net.gvt.efika.acs.model.exception.UnsupportedException;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
@@ -97,7 +97,7 @@ public interface SynchDeviceDAO {
 
     public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException, Exception;
 
-    public PingResponse pingDiagnostic(NbiDeviceData eqp, PingRequest p) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, model.exception.JsonUtilException, Exception;
+    public PingResponse pingDiagnostic(NbiDeviceData eqp, PingRequest p) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, br.net.gvt.efika.acs.model.exception.JsonUtilException, Exception;
 
     public Boolean setPPPoECredentials(NbiDeviceData eqp, PPPoECredentialsInfo pPPoECredentialsInfo) throws DeviceOperationException, OperationTimeoutException, NBIException, ProviderException, Exception;
 

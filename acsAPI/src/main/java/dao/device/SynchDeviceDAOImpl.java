@@ -38,10 +38,10 @@ import model.device.traceroute.TraceRouteRequest;
 import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiInfoSet;
-import model.exception.HdmException;
-import model.exception.JsonUtilException;
-import model.exception.UnsupportedException;
-import model.exception.WifiInativoException;
+import br.net.gvt.efika.acs.model.exception.HdmException;
+import br.net.gvt.efika.acs.model.exception.JsonUtilException;
+import br.net.gvt.efika.acs.model.exception.UnsupportedException;
+import br.net.gvt.efika.acs.model.exception.WifiInativoException;
 import motive.hdm.synchdeviceops.GetParameterAttributesDTO;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesDTO;
@@ -408,7 +408,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public PingResponse pingDiagnostic(NbiDeviceData eqp, PingRequest p) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, model.exception.JsonUtilException, Exception {
+    public PingResponse pingDiagnostic(NbiDeviceData eqp, PingRequest p) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, br.net.gvt.efika.acs.model.exception.JsonUtilException, Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         //String jsonPppoe = JsonUtil.serialize(p, p.getClass());
         String jsonPppoe = new JacksonMapper(PingRequest.class).serialize(p);

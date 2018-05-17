@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.device.wifi.WifiInfoFull;
 import model.device.wifi.WifiNets;
-import model.exception.WifiInativoException;
+import br.net.gvt.efika.acs.model.exception.WifiInativoException;
 import model.service.device.GenericDeviceService;
 import model.service.device.ThreadControl;
 import model.service.device.impl.wifi.acao.SetParameters;

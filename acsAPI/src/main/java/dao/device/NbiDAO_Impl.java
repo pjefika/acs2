@@ -21,7 +21,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import model.exception.SearchNotFound;
+import br.net.gvt.efika.acs.model.exception.SearchNotFound;
 
 /**
  *

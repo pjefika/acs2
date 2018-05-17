@@ -7,7 +7,7 @@ package dao.db;
 
 import br.net.gvt.efika.mongo.dao.AbstractMongoDAO;
 import br.net.gvt.efika.mongo.dao.MongoEndpointEnum;
-import model.entity.LogEntity;
+import br.net.gvt.efika.acs.model.entity.LogEntity;
 
 public class LogDAOImpl extends AbstractMongoDAO<LogEntity> implements InterfaceDAO<LogEntity> {
 
