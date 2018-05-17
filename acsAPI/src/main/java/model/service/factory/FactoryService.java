@@ -7,6 +7,8 @@ package model.service.factory;
 
 import br.net.gvt.efika.acs.model.search.FindDevice;
 import br.net.gvt.efika.acs.model.search.FindDeviceImpl;
+import model.service.device.DeviceOnlineService;
+import model.service.device.DeviceOnlineServiceImpl;
 import model.service.device.detail.DeviceDetailService;
 import model.service.device.detail.DeviceDetailServiceImpl;
 import model.service.device.impl.wifi.WiFiService;
@@ -24,6 +26,10 @@ public class FactoryService {
 
     public static DeviceDetailService createDeviceDetailService() {
         return new DeviceDetailServiceImpl();
+    }
+
+    public static DeviceOnlineService createDeviceOnlineService() {
+        return new DeviceOnlineServiceImpl();
     }
 
     public static WiFiService createWiFiService() {

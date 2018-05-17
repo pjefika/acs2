@@ -38,6 +38,8 @@ import model.service.device.impl.SipDiagnosticsServiceImpl;
 import model.service.factory.FactoryService;
 import br.net.gvt.efika.acs.model.dto.DetailIn;
 import br.net.gvt.efika.acs.model.dto.DhcpIn;
+import br.net.gvt.efika.acs.model.dto.ForceOnlineDeviceIn;
+import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
 import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
 import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
 import br.net.gvt.efika.acs.model.dto.PingDiagnosticIn;
@@ -64,6 +66,52 @@ public class EquipamentoController extends RestAbstractController {
             DetailOut detail = FactoryService.createDeviceDetailService().consultar(in.getGuid());
             l.setSaida(detail);
             return ok(detail);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/forceOnlineDevice")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response forceOnlineDevice(ForceOnlineDeviceIn in) {
+        in.setAcao(AcaoAcsEnum.FORCE_ONLINE);
+        LogEntity l = in.create();
+        try {
+            Boolean w = FactoryService.createDeviceOnlineService().isOnline(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/forceOnlineDevices")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response forceOnlineDevices(ForceOnlineDevicesIn in) {
+        in.setAcao(AcaoAcsEnum.FORCE_ONLINE_ANY);
+        LogEntity l = in.create();
+        try {
+            Boolean w = FactoryService.createDeviceOnlineService().isAnyOnline(in.getDevices());
+            l.setSaida(w);
+            return ok(w);
         } catch (Exception e) {
             l.setSaida(e.getMessage());
             return internalServerError(e);

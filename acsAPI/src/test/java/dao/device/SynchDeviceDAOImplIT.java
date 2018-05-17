@@ -32,7 +32,10 @@ import model.device.wan.WanInfo;
 import model.device.wifi.WifiInfoFull;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
+import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
+import motive.hdm.synchdeviceops.ParameterValueStructDTO;
+import motive.hdm.synchdeviceops.StringResponseDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -466,7 +469,7 @@ public class SynchDeviceDAOImplIT {
 
         SipDiagnostics result = instance.getSipDiagnostics(eqp, 1);
 //        SipDiagnostics result1 = instance.getSipDiagnostics(eqp, 2);
-        System.out.println("phyReference 1->"+new JacksonMapper(SipDiagnostics.class).serialize(result));
+        System.out.println("phyReference 1->" + new JacksonMapper(SipDiagnostics.class).serialize(result));
 //        System.out.println("phyReference 2->"+new JacksonMapper(SipDiagnostics.class).serialize(result1));
     }
 
@@ -489,6 +492,100 @@ public class SynchDeviceDAOImplIT {
         sip.setT38Enabled("0");
         Boolean result = instance.setSipActivation(eqp, sip);
         assertTrue(result);
+    }
+
+    /**
+     * Test of getParameterAttributes method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testGetParameterAttributes() throws Exception {
+        System.out.println("getParameterAttributes");
+        NbiDeviceData eqp = null;
+        String path = "";
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        GetParameterAttributesResponseDTO expResult = null;
+        GetParameterAttributesResponseDTO result = instance.getParameterAttributes(eqp, path);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setParametersValues method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testSetParametersValues() throws Exception {
+        System.out.println("setParametersValues");
+        NbiDeviceData eqp = null;
+        List<ParameterValueStructDTO> p = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        instance.setParametersValues(eqp, p);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setSipDeactivation method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testSetSipDeactivation() throws Exception {
+        System.out.println("setSipDeactivation");
+        NbiDeviceData eqp = null;
+        Integer phyref = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        Boolean expResult = null;
+        Boolean result = instance.setSipDeactivation(eqp, phyref);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of sipRestart method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testSipRestart() throws Exception {
+        System.out.println("sipRestart");
+        NbiDeviceData eqp = null;
+        Integer phyref = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        Boolean expResult = null;
+        Boolean result = instance.sipRestart(eqp, phyref);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of exec method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testExec() throws Exception {
+        System.out.println("exec");
+        NbiDeviceData eqp = null;
+        List<Object> json = null;
+        int i = 0;
+        NbiSingleDeviceOperationOptions opt = null;
+        long l = 0L;
+        String str = "";
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        StringResponseDTO expResult = null;
+        StringResponseDTO result = instance.exec(eqp, json, i, opt, l, str);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of forceOnline method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testForceOnline() throws Exception {
+        System.out.println("forceOnline");
+    
+        Boolean result = instance.forceOnline(eqp);
+        
+        System.out.println(new JacksonMapper(Boolean.class).serialize(result));
     }
 
 }

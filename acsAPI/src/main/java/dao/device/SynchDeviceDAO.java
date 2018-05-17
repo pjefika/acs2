@@ -110,5 +110,7 @@ public interface SynchDeviceDAO {
     public Boolean setSipDeactivation(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
 
     public Boolean sipRestart(NbiDeviceData eqp, Integer phyref) throws UnsupportedException, NBIException, OperationTimeoutException, ProviderException, Exception;
+    
+    public Boolean forceOnline (NbiDeviceData eqp) throws Exception;
 
 }

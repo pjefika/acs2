@@ -46,6 +46,7 @@ import motive.hdm.synchdeviceops.GetParameterAttributesDTO;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
+import motive.hdm.synchdeviceops.NbiInitiateConnectionResult;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
@@ -135,7 +136,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public DeviceInfo getDeviceInfo(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9527, opt, TIMEOUT, "");
-        System.out.println("VALUE=>"+a.getValue());
+        System.out.println("VALUE=>" + a.getValue());
         return (DeviceInfo) new JacksonMapper(DeviceInfo.class).deserialize(a.getValue());
     }
 
@@ -538,6 +539,11 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             }
         }
         return a;
+    }
+
+    @Override
+    public Boolean forceOnline(NbiDeviceData eqp) throws Exception {
+        return synch().issueConnectionRequestByDeviceGUID(eqp.getDeviceGUID(), 0).isSuccess();
     }
 
 }
