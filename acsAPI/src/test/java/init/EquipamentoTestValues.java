@@ -25,8 +25,9 @@ public class EquipamentoTestValues {
      * HOMOLOG 89018 - HOMOLOG
      * 30585765
      * 26737329 - casa Matheus (canelinha)
+     * 26446406
      */
-    public static Long GUID = new Long(26446406);
+    public static Long GUID = new Long(30022683);
 
     private SynchDeviceDAO instance = FactoryDAO.createSynch();
     private NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();

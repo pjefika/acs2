@@ -7,6 +7,7 @@ package dao.device;
 
 import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.dns.Dns;
 import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
 import br.net.gvt.efika.acs.model.device.info.DeviceInfo;
 import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
@@ -215,12 +216,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetWanInfo() throws Exception {
         System.out.println("getWanInfo");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        WanInfo expResult = null;
         WanInfo result = instance.getWanInfo(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper<>(WanInfo.class).serialize(result));
     }
 
     /**
@@ -586,6 +583,17 @@ public class SynchDeviceDAOImplIT {
         Boolean result = instance.forceOnline(eqp);
         
         System.out.println(new JacksonMapper(Boolean.class).serialize(result));
+    }
+
+    /**
+     * Test of getDns method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testGetDns() throws Exception {
+        System.out.println("getDns");
+        
+        Dns result = instance.getDns(eqp);
+        System.out.println(new JacksonMapper<>(Dns.class).serialize(result));
     }
 
 }

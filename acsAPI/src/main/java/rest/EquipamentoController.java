@@ -7,6 +7,7 @@ package rest;
 
 import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.dns.Dns;
 import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
 import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
 import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
@@ -41,9 +42,11 @@ import br.net.gvt.efika.acs.model.dto.DhcpIn;
 import br.net.gvt.efika.acs.model.dto.ForceOnlineDeviceIn;
 import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
 import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
+import br.net.gvt.efika.acs.model.dto.GetDnsIn;
 import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
 import br.net.gvt.efika.acs.model.dto.PingDiagnosticIn;
 import br.net.gvt.efika.acs.model.dto.ServiceClassIn;
+import br.net.gvt.efika.acs.model.dto.SetDnsIn;
 import br.net.gvt.efika.acs.model.dto.SetWifiIn;
 import br.net.gvt.efika.acs.model.dto.SipActivationIn;
 import br.net.gvt.efika.acs.model.dto.SipDiagnosticsIn;
@@ -180,6 +183,52 @@ public class EquipamentoController extends RestAbstractController {
             List<LanDevice> lst = FactoryDAO.createSynch().getLanHosts(in.getDevice());
             l.setSaida(lst);
             return ok(lst);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getDns")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getDnsInfo(GetDnsIn in) {
+        in.setAcao(AcaoAcsEnum.GET_DNS);
+        LogEntity l = in.create();
+        try {
+            Dns w = FactoryDAO.createSynch().getDns(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/setDns")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setDnsInfo(SetDnsIn in) {
+        in.setAcao(AcaoAcsEnum.SET_DNS);
+        LogEntity l = in.create();
+        try {
+            Boolean w = FactoryDAO.createSynch().setDns(in.getDevice(), in.getDns().getDnsServers());
+            l.setSaida(w);
+            return ok(w);
         } catch (Exception e) {
             l.setSaida(e.getMessage());
             return internalServerError(e);

@@ -8,7 +8,9 @@ package dao.device;
 import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
 import br.net.gvt.efika.acs.model.device.dhcp.DhcpSet;
+import br.net.gvt.efika.acs.model.device.dns.Dns;
 import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
+import br.net.gvt.efika.acs.model.device.gatewayparameters.GatewayParameters;
 import br.net.gvt.efika.acs.model.device.info.DeviceInfo;
 import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
 import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
@@ -46,7 +48,6 @@ import motive.hdm.synchdeviceops.GetParameterAttributesDTO;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
-import motive.hdm.synchdeviceops.NbiInitiateConnectionResult;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
@@ -173,7 +174,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException, Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9515, opt, TIMEOUT, "");
-
+        System.out.println("RESULT->" + a.getValue());
         return (WanInfo) new JacksonMapper(WanInfo.class).deserialize(a.getValue());
 
     }
@@ -543,7 +544,30 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
     @Override
     public Boolean forceOnline(NbiDeviceData eqp) throws Exception {
-        return synch().issueConnectionRequestByDeviceGUID(eqp.getDeviceGUID(), 0).isSuccess();
+        return synch().issueConnectionRequestByDeviceGUID(eqp.getDeviceGUID(), 10).isSuccess();
+    }
+
+    @Override
+    public Dns getDns(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+        StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9516, opt, TIMEOUT, "");
+        GatewayParameters gp = new JacksonMapper<>(GatewayParameters.class).deserialize(a.getValue());
+        return new Dns(gp.getDNSServers());
+    }
+
+    @Override
+    public Boolean setDns(NbiDeviceData eqp, String dnsServers) throws Exception {
+        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+        List<Object> json = DeviceOperationFactory.getEmptyJson();
+        json.set(0, "{\"dnsservers\":\"" + dnsServers + "\"}");
+
+        StringResponseDTO a = this.exec(eqp, json, 9525, opt, TIMEOUT, "");
+
+        if (a.getValue().contains("SUCCESS") || a.getValue().contains("\"statusCode\":\"0\"")) {
+            return true;
+        }
+        System.out.println(a.getValue());
+        return false;
     }
 
 }

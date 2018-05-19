@@ -7,6 +7,7 @@ package dao.device;
 
 import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.dns.Dns;
 import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
 import br.net.gvt.efika.acs.model.device.info.DeviceInfo;
 import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
@@ -92,7 +93,6 @@ public interface SynchDeviceDAO {
     public List<DeviceLog> getDeviceLog(NbiDeviceData eqp) throws JsonUtilException, DeviceOperationException, NBIException, ProviderException, OperationTimeoutException, Exception;
 
 //    public List<DeviceLogR> getDeviceLogR(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, Exception;
-
     public List<InterfaceStatistics> getInterfaceStatistics(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException, Exception;
 
     public PPPoECredentialsInfo getPPPoECredentials(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException, Exception;
@@ -110,7 +110,11 @@ public interface SynchDeviceDAO {
     public Boolean setSipDeactivation(NbiDeviceData eqp, Integer phyref) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
 
     public Boolean sipRestart(NbiDeviceData eqp, Integer phyref) throws UnsupportedException, NBIException, OperationTimeoutException, ProviderException, Exception;
-    
-    public Boolean forceOnline (NbiDeviceData eqp) throws Exception;
+
+    public Boolean forceOnline(NbiDeviceData eqp) throws Exception;
+
+    public Dns getDns(NbiDeviceData eqp) throws Exception;
+
+    public Boolean setDns(NbiDeviceData eqp, String dnsServers) throws Exception;
 
 }
