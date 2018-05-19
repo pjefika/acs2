@@ -19,15 +19,9 @@ import dao.factory.FactoryDAO;
 public class EquipamentoTestValues {
 
     /**
-     * Prod 18523038 - cliente
-     *
-     * BANCADA ARNO - QX4S1EB598946 (18358162) 165014 - PACE HOMOLOG 151054 -
-     * HOMOLOG 89018 - HOMOLOG
-     * 30585765
-     * 26737329 - casa Matheus (canelinha)
-     * 26446406
+     * 
      */
-    public static Long GUID = new Long(30022683);
+    public static Long GUID = new Long(21736421);
 
     private SynchDeviceDAO instance = FactoryDAO.createSynch();
     private NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();

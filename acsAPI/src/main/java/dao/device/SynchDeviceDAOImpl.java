@@ -48,6 +48,7 @@ import motive.hdm.synchdeviceops.GetParameterAttributesDTO;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
+import motive.hdm.synchdeviceops.NbiInitiateConnectionResult;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
@@ -544,7 +545,8 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
     @Override
     public Boolean forceOnline(NbiDeviceData eqp) throws Exception {
-        return synch().issueConnectionRequestByDeviceGUID(eqp.getDeviceGUID(), 10).isSuccess();
+        NbiInitiateConnectionResult r = synch().issueConnectionRequestByDeviceGUID(eqp.getDeviceGUID(), 3000);
+        return r.isSuccess();
     }
 
     @Override
