@@ -9,7 +9,6 @@ import model.service.device.impl.wifi.WiFiService;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import init.EquipamentoTestValues;
 import init.SingletonDeviceTest;
-import model.device.wifi.WifiInfoFull;
 import model.service.factory.FactoryService;
 import org.junit.After;
 import org.junit.AfterClass;

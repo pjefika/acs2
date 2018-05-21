@@ -5,9 +5,9 @@
  */
 package model.service.device.impl;
 
+import br.net.gvt.efika.acs.model.device.portmapping.PortMappingInfo;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
-import model.device.portmapping.PortMappingInfo;
 import model.service.device.GenericDeviceService;
 import model.service.device.MotiveService;
 import model.service.device.ThreadControl;

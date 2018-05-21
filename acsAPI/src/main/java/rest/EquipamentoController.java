@@ -10,8 +10,13 @@ import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
 import br.net.gvt.efika.acs.model.device.dns.Dns;
 import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
 import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
+import br.net.gvt.efika.acs.model.device.ping.PingResponse;
+import br.net.gvt.efika.acs.model.device.portmapping.PortMappingInfo;
 import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.serviceclass.ServiceClass;
 import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
+import br.net.gvt.efika.acs.model.device.wan.WanInfo;
+import br.net.gvt.efika.acs.model.device.wifi.WifiNets;
 import br.net.gvt.efika.acs.model.device.xdsldiagnostics.XdslDiagnostics;
 import dao.factory.FactoryDAO;
 import java.util.List;
@@ -21,11 +26,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.device.ping.PingResponse;
-import model.device.portmapping.PortMappingInfo;
-import model.device.serviceclass.ServiceClass;
-import model.device.wan.WanInfo;
-import model.device.wifi.WifiNets;
 import br.net.gvt.efika.acs.model.dto.DetailOut;
 import br.net.gvt.efika.acs.model.entity.LogEntity;
 import br.net.gvt.efika.acs.model.log.AcaoAcsEnum;
@@ -160,6 +160,9 @@ public class EquipamentoController extends RestAbstractController {
     public Response setWifiInfo(SetWifiIn in) {
         LogEntity l = in.create();
         try {
+            if(in.getDevice()==null){
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             WifiNets wifi = FactoryService.createWiFiService().alterar(in.getDevice(), in.getWifi());
             l.setSaida(wifi);
             return ok(wifi);

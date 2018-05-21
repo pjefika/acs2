@@ -5,21 +5,21 @@
  */
 package parser;
 
+import br.net.gvt.efika.acs.model.device.DmzInfo;
 import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
 import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
 import br.net.gvt.efika.acs.model.device.log.DeviceLog;
+import br.net.gvt.efika.acs.model.device.ping.PingResponse;
+import br.net.gvt.efika.acs.model.device.portmapping.PortMappingInfo;
 import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.wifi.WifiInfo;
+import br.net.gvt.efika.acs.model.device.wifi.WifiInfoFull;
 import com.alcatel.hdm.service.nbi2.NbiDeviceActionResult;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiDynamicVariable;
 import com.alcatel.hdm.service.nbi2.NbiServiceTag;
 import com.alcatel.hdm.service.nbi2.NbiUserTag;
 import java.util.List;
-import model.device.DmzInfo;
-import model.device.ping.PingResponse;
-import model.device.portmapping.PortMappingInfo;
-import model.device.wifi.WifiInfo;
-import model.device.wifi.WifiInfoFull;
 import motive.hdm.synchdeviceops.ExecuteFunctionResponse;
 
 /**

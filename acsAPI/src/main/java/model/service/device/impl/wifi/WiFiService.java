@@ -5,9 +5,8 @@
  */
 package model.service.device.impl.wifi;
 
+import br.net.gvt.efika.acs.model.device.wifi.WifiNets;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import model.device.wifi.WifiInfoFull;
-import model.device.wifi.WifiNets;
 import model.service.device.MotiveService;
 
 /**

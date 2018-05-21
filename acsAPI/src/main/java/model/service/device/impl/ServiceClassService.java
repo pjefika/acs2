@@ -5,8 +5,8 @@
  */
 package model.service.device.impl;
 
+import br.net.gvt.efika.acs.model.device.serviceclass.ServiceClass;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import model.device.serviceclass.ServiceClass;
 import model.service.device.GenericDeviceService;
 import model.service.device.MotiveService;
 import model.service.device.ThreadControl;

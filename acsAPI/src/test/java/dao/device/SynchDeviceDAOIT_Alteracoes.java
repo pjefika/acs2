@@ -6,7 +6,9 @@
 package dao.device;
 
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.portmapping.PortMappingInfo;
 import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.serviceclass.ServiceClass;
 import br.net.gvt.efika.acs.model.device.sipactivation.SipActivation;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
@@ -17,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.device.portmapping.PortMappingInfo;
-import model.device.serviceclass.ServiceClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

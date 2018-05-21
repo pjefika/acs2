@@ -5,12 +5,12 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.acs.model.device.wifi.WifiInfoFull;
+import br.net.gvt.efika.acs.model.device.wifi.WifiInfoSet;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import java.util.ArrayList;
 import java.util.List;
-import model.device.wifi.WifiInfoFull;
-import model.device.wifi.WifiInfoSet;
 import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationCallBackInfo;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;

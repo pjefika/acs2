@@ -5,11 +5,11 @@
  */
 package model.service.device.impl.wifi;
 
+import br.net.gvt.efika.acs.model.device.wifi.WifiInfoFull;
+import br.net.gvt.efika.acs.model.device.wifi.WifiNets;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
-import model.device.wifi.WifiInfoFull;
-import model.device.wifi.WifiNets;
 import br.net.gvt.efika.acs.model.exception.WifiInativoException;
 import model.service.device.GenericDeviceService;
 import model.service.device.ThreadControl;

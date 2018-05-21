@@ -5,14 +5,21 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.acs.model.device.DmzInfo;
 import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
 import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
 import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
 import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
 import br.net.gvt.efika.acs.model.device.log.DeviceLog;
+import br.net.gvt.efika.acs.model.device.ping.PingRequest;
+import br.net.gvt.efika.acs.model.device.ping.PingResponse;
+import br.net.gvt.efika.acs.model.device.portmapping.PortMappingInfo;
 import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.serviceclass.ServiceClass;
 import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
+import br.net.gvt.efika.acs.model.device.traceroute.TraceRouteRequest;
+import br.net.gvt.efika.acs.model.device.wan.WanInfo;
 import br.net.gvt.efika.acs.model.device.xdsldiagnostics.XdslDiagnostics;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.factory.FactoryDAO;
@@ -21,13 +28,6 @@ import init.SingletonDeviceTest;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.device.DmzInfo;
-import model.device.ping.PingRequest;
-import model.device.ping.PingResponse;
-import model.device.portmapping.PortMappingInfo;
-import model.device.serviceclass.ServiceClass;
-import model.device.traceroute.TraceRouteRequest;
-import model.device.wan.WanInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
