@@ -135,7 +135,7 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_WIFI_INFO);
         LogEntity l = in.create();
         try {
-            if(in.getDevice()==null){
+            if (in.getDevice() == null) {
                 in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
             }
             WifiNets wifi = FactoryService.createWiFiService().consultar(in.getDevice());
@@ -160,7 +160,7 @@ public class EquipamentoController extends RestAbstractController {
     public Response setWifiInfo(SetWifiIn in) {
         LogEntity l = in.create();
         try {
-            if(in.getDevice()==null){
+            if (in.getDevice() == null) {
                 in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
             }
             WifiNets wifi = FactoryService.createWiFiService().alterar(in.getDevice(), in.getWifi());
@@ -185,7 +185,11 @@ public class EquipamentoController extends RestAbstractController {
     public Response getLanHosts(GetDeviceDataIn in) {
         in.setAcao(AcaoAcsEnum.GET_LAN_HOSTS);
         LogEntity l = in.create();
+
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             List<LanDevice> lst = FactoryDAO.createSynch().getLanHosts(in.getDevice());
             l.setSaida(lst);
             return ok(lst);
@@ -255,6 +259,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_WAN_INFO);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             WanInfo w = FactoryDAO.createSynch().getWanInfo(in.getDevice());
             l.setSaida(w);
             return ok(w);
