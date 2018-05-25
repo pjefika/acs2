@@ -285,6 +285,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_INTERFACE_STATISTICS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             List<InterfaceStatistics> w = FactoryDAO.createSynch().getInterfaceStatistics(in.getDevice());
             l.setSaida(w);
             return ok(w);
