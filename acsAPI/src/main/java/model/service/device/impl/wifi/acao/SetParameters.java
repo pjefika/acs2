@@ -15,6 +15,7 @@ public class SetParameters {
 
     public static final ParameterValueStructDTO ATIVAR_WIFI = new AtivarWifi();
     public static final ParameterValueStructDTO ATIVAR_STATUS_WIFI = new AtivarStatusWifi();
+    public static final ParameterValueStructDTO ATIVAR_BROADCAST_WIFI = new AtivarStatusWifi();
     public static final ParameterValueStructDTO DESATIVAR_WIFI = new DesativarWifi();
     public static final ParameterValueStructDTO DESATIVAR_AUTOCHANNEL = new DesativarAutoChannelWifi();
 }

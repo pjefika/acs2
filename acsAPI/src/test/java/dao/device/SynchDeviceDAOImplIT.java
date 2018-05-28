@@ -155,7 +155,7 @@ public class SynchDeviceDAOImplIT {
             System.out.println("getParameters");
             SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
             List<ParameterInfoStructDTO> parameters = instance.getParameters(eqp);
-//            System.out.println(GsonUtil.serialize(parameters));
+            System.out.println(new JacksonMapper<>(new TypeReference<List<ParameterInfoStructDTO>>(){}).serialize(parameters));
             assertTrue("Cheio", !parameters.isEmpty());
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,7 +175,8 @@ public class SynchDeviceDAOImplIT {
             paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
 
             GetParameterValuesResponseDTO parameters = instance.getParametersValues(eqp, paths);
-//            System.out.println(GsonUtil.serialize(parameters));
+            
+            System.out.println(new JacksonMapper<>(GetParameterValuesResponseDTO.class).serialize(parameters));
             assertTrue("Cheio", parameters != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -579,9 +580,9 @@ public class SynchDeviceDAOImplIT {
     @Test
     public void testForceOnline() throws Exception {
         System.out.println("forceOnline");
-    
+
         Boolean result = instance.forceOnline(eqp);
-        
+
         System.out.println(new JacksonMapper(Boolean.class).serialize(result));
     }
 
@@ -591,9 +592,39 @@ public class SynchDeviceDAOImplIT {
     @Test
     public void testGetDns() throws Exception {
         System.out.println("getDns");
-        
+
         Dns result = instance.getDns(eqp);
         System.out.println(new JacksonMapper<>(Dns.class).serialize(result));
+    }
+
+    /**
+     * Test of setDns method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testSetDns() throws Exception {
+        System.out.println("setDns");
+        NbiDeviceData eqp = null;
+        String dnsServers = "";
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        Boolean expResult = null;
+        Boolean result = instance.setDns(eqp, dnsServers);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getWifiStatus method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testGetWifiStatus() throws Exception {
+        System.out.println("getWifiStatus");
+
+        List<WifiInfoFull> result = instance.getWifiStatus(eqp);
+
+        System.out.println(new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
+        }).serialize(result));
+
     }
 
 }

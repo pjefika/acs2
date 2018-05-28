@@ -112,7 +112,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         GetParameterNamesDTO g = new GetParameterNamesDTO();
         g.setNextLevel(true);
         try {
-            g.setParameterPath(" ");
+            g.setParameterPath("");
             return synch().getParameterNames(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "").getParameterList();
         } catch (Exception e) {
             g.setParameterPath("InternetGatewayDevice.");
@@ -570,6 +570,22 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         }
         System.out.println(a.getValue());
         return false;
+    }
+
+    @Override
+    public List<WifiInfoFull> getWifiStatus(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+        StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9529, opt, TIMEOUT, "");
+
+//        String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
+//        if (a.getValue().contains(wifiDisable)) {
+//            throw new WifiInativoException();
+//        }
+        System.out.println("Retorno: " + a.getValue());
+        List<WifiInfoFull> wifi = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
+        }).fromJSON(a.getValue());
+
+        return wifi;
     }
 
 }

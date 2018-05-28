@@ -116,5 +116,7 @@ public interface SynchDeviceDAO {
     public Dns getDns(NbiDeviceData eqp) throws Exception;
 
     public Boolean setDns(NbiDeviceData eqp, String dnsServers) throws Exception;
+    
+   public List<WifiInfoFull> getWifiStatus(NbiDeviceData eqp) throws Exception;
 
 }

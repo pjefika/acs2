@@ -14,6 +14,7 @@ import br.net.gvt.efika.acs.model.exception.WifiInativoException;
 import model.service.device.GenericDeviceService;
 import model.service.device.ThreadControl;
 import model.service.device.impl.wifi.acao.SetParameters;
+import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
 /**
@@ -31,14 +32,19 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
      */
     @Override
     public WifiNets consultar(NbiDeviceData device) throws Exception {
-        try {
-            return new WifiNets(synch().getWifiInfoFull(device));
-        } catch (WifiInativoException e) {
-            ThreadControl.sleep();
-            this.ativar(device);
-            ThreadControl.sleep();
-            return new WifiNets(synch().getWifiInfoFull(device));
-        }
+
+        List<String> paths = new ArrayList<>();
+        paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
+        GetParameterValuesResponseDTO wifis = synch().getParametersValues(device, paths);
+        return new WifiNets(WifiParser.parse(wifis));
+        //        try {
+        //            return new WifiNets(synch().getWifiInfoFull(device));
+        //        } catch (WifiInativoException e) {
+        //            ThreadControl.sleep();
+        //            this.ativar(device);
+        //            ThreadControl.sleep();
+        //            return new WifiNets(synch().getWifiInfoFull(device));
+        //        }
     }
 
     @Override
@@ -48,6 +54,11 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
         lst.add(SetParameters.ATIVAR_WIFI);
         lst.add(SetParameters.ATIVAR_STATUS_WIFI);
         synch().setParametersValues(device, lst);
+        try {
+            List<ParameterValueStructDTO> l = new ArrayList<>();
+
+        } catch (Exception e) {
+        }
     }
 
     @Override
