@@ -12,11 +12,13 @@ import motive.hdm.synchdeviceops.ParameterValueStructDTO;
  *
  * @author G0042204
  */
-public class AtivarWifi extends ParameterValueStructDTO {
+public class AtivarBroadcastWifi extends ParameterValueStructDTO {
 
-    public AtivarWifi(DeviceTR deviceTr, int wichone) {
-        this.name = deviceTr == DeviceTR.TR_181 ? "Device.WiFi.SSID." + wichone + ".Enable" : "InternetGatewayDevice.LANDevice.1.WLANConfiguration." + wichone + ".Enable";
+    public AtivarBroadcastWifi(DeviceTR deviceTr, int wichone) {
+        this.name = deviceTr == DeviceTR.TR_181
+                ? "Device.WiFi.AccessPoint." + wichone + ".SSIDAdvertisementEnabled"
+                : "InternetGatewayDevice.LANDevice.1.WLANConfiguration." + wichone + ".SSIDAdvertisementEnabled";
         this.type = "boolean";
-        this.value = "1";
+        this.value = "true";
     }
 }

@@ -5,6 +5,7 @@
  */
 package model.service.device.impl.wifi.acao;
 
+import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
 /**
@@ -13,9 +14,17 @@ import motive.hdm.synchdeviceops.ParameterValueStructDTO;
  */
 public class SetParameters {
 
-    public static final ParameterValueStructDTO ATIVAR_WIFI = new AtivarWifi();
-    public static final ParameterValueStructDTO ATIVAR_STATUS_WIFI = new AtivarStatusWifi();
-    public static final ParameterValueStructDTO ATIVAR_BROADCAST_WIFI = new AtivarStatusWifi();
-    public static final ParameterValueStructDTO DESATIVAR_WIFI = new DesativarWifi();
-    public static final ParameterValueStructDTO DESATIVAR_AUTOCHANNEL = new DesativarAutoChannelWifi();
+    public static ParameterValueStructDTO ativarWifi(DeviceTR tr, int wichone) {
+        return new AtivarWifi(tr, wichone);
+    }
+
+    public static final ParameterValueStructDTO ativarStatusWifi(DeviceTR tr, int wichone) {
+        return new AtivarStatusWifi(tr, wichone);
+    }
+
+    public static final ParameterValueStructDTO ativarBroadcastWifi(DeviceTR tr, int wichone) {
+        return new AtivarBroadcastWifi(tr, wichone);
+    }
+//    public static final ParameterValueStructDTO DESATIVAR_WIFI = new DesativarWifi();
+//    public static final ParameterValueStructDTO DESATIVAR_AUTOCHANNEL = new DesativarAutoChannelWifi();
 }
