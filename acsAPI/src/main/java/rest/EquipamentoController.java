@@ -154,6 +154,33 @@ public class EquipamentoController extends RestAbstractController {
     }
 
     @POST
+    @Path("/activateWifi")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response activateWifi(GetDeviceDataIn in) {
+        in.setAcao(AcaoAcsEnum.ACTIVATE_WIFI);
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            FactoryService.createWiFiService().ativar(in.getDevice());
+            WifiNets wifi = FactoryService.createWiFiService().consultar(in.getDevice());
+            l.setSaida(wifi);
+            return ok(wifi);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
     @Path("/setWifiInfo")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
