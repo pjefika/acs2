@@ -25,6 +25,22 @@ public class SetParameters {
     public static final ParameterValueStructDTO ativarBroadcastWifi(DeviceTR tr, int wichone) {
         return new AtivarBroadcastWifi(tr, wichone);
     }
+
+    public static final ParameterValueStructDTO setAdmStatusWifi(DeviceTR tr, String value, int wichone) {
+        return new SetAdmStatusWifi(tr, value, wichone);
+    }
+
+    public static final ParameterValueStructDTO setSsidWifi(DeviceTR tr, String value, int wichone) {
+        return new SetSsidWifi(tr, value, wichone);
+    }
+
+    public static final ParameterValueStructDTO setChannelWifi(DeviceTR tr, String value, int wichone) {
+        return new SetChannelWifi(tr, value, wichone);
+    }
+
+    public static final ParameterValueStructDTO setPasswordWifi(DeviceTR tr, String value, int wichone) {
+        return new SetPasswordWifi(tr, value, wichone);
+    }
 //    public static final ParameterValueStructDTO DESATIVAR_WIFI = new DesativarWifi();
 //    public static final ParameterValueStructDTO DESATIVAR_AUTOCHANNEL = new DesativarAutoChannelWifi();
 }

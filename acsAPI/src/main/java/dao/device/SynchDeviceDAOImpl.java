@@ -554,6 +554,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9516, opt, TIMEOUT, "");
         GatewayParameters gp = new JacksonMapper<>(GatewayParameters.class).deserialize(a.getValue());
+        System.out.println(a.getValue());
         return new Dns(gp.getDNSServers());
     }
 

@@ -5,9 +5,11 @@
  */
 package model.service.device.impl.wifi;
 
+import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import br.net.gvt.efika.acs.model.device.wifi.WifiInfoFull;
 import java.util.ArrayList;
 import java.util.List;
+import model.service.device.impl.wifi.acao.SetParameters;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
@@ -131,9 +133,30 @@ public class WifiParser {
                     || p.getName().equalsIgnoreCase("Device.WiFi.AccessPoint." + wichone + ".WPS.Enable")) {
                 wifi.setWpsEnabled(p.getValue());
             }
+            if (p.getName().equalsIgnoreCase("InternetGatewayDevice.LANDevice.1.WLANConfiguration." + wichone + ".Alias")) {
+                wifi.setAlias(p.getValue());
+            }
 
         }
         return wifi;
+    }
+
+    public static List<ParameterValueStructDTO> parse(WifiInfoFull wifi, DeviceTR tr) {
+        List<ParameterValueStructDTO> l = new ArrayList<>();
+        int wichone = 1;
+        if (wifi.getAlias().contains("5ghz")) {
+            wichone = 5;
+        } else if (wifi.getAlias().contains("2ghz-02")) {
+            wichone = 2;
+        }
+        l.add(SetParameters.setAdmStatusWifi(tr, wifi.getAdmStatus(), wichone));
+        l.add(SetParameters.setChannelWifi(tr, wifi.getChannel(), wichone));
+        if (!wifi.getKey().isEmpty()) {
+            l.add(SetParameters.setPasswordWifi(tr, wifi.getKey(), wichone));
+        }
+        l.add(SetParameters.setSsidWifi(tr, wifi.getSsid(), wichone));
+
+        return l;
     }
 
 }
