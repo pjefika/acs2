@@ -236,10 +236,13 @@ public class EquipamentoController extends RestAbstractController {
     @Path("/getDns")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getDnsInfo(GetDnsIn in) {
+    public Response getDnsInfo(GetDeviceDataIn in) {
         in.setAcao(AcaoAcsEnum.GET_DNS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             Dns w = FactoryDAO.createSynch().getDns(in.getDevice());
             l.setSaida(w);
             return ok(w);
