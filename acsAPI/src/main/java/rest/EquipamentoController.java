@@ -459,6 +459,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.FACTORY_RESET);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             Boolean w = FactoryDAO.createSynch().factoryReset(in.getDevice());
             l.setSaida(w);
             return ok(w);
