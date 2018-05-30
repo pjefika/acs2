@@ -22,14 +22,14 @@ public class WifiParser {
     public static List<WifiInfoFull> parse(GetParameterValuesResponseDTO vals) {
         List<WifiInfoFull> l = new ArrayList<>();
         WifiInfoFull dois = parse(vals, 1);
-        WifiInfoFull guest = parse(vals, 2);
+//        WifiInfoFull guest = parse(vals, 2);
         WifiInfoFull cinco = parse(vals, 5);
         if (dois.getAdmStatus() != null) {
             l.add(dois);
         }
-        if (guest.getAdmStatus() != null) {
-            l.add(guest);
-        }
+//        if (guest.getAdmStatus() != null) {
+//            l.add(guest);
+//        }
         if (cinco.getAdmStatus() != null) {
             l.add(cinco);
         }
@@ -144,16 +144,21 @@ public class WifiParser {
     public static List<ParameterValueStructDTO> parse(WifiInfoFull wifi, DeviceTR tr) {
         List<ParameterValueStructDTO> l = new ArrayList<>();
         int wichone = 1;
-        if (wifi.getAlias().contains("5ghz")) {
+
+        if (wifi.getAlias() != null && wifi.getAlias().contains("5ghz")) {
             wichone = 5;
-        } else if (wifi.getAlias().contains("2ghz-02")) {
-            wichone = 2;
         }
+//        else if (wifi.getAlias().contains("2ghz-02")) {
+//            wichone = 2;
+//        }
+
         l.add(SetParameters.setAdmStatusWifi(tr, wifi.getAdmStatus(), wichone));
         l.add(SetParameters.setChannelWifi(tr, wifi.getChannel(), wichone));
-        if (!wifi.getKey().isEmpty()) {
+        if (!wifi.getKey()
+                .isEmpty()) {
             l.add(SetParameters.setPasswordWifi(tr, wifi.getKey(), wichone));
         }
+
         l.add(SetParameters.setSsidWifi(tr, wifi.getSsid(), wichone));
 
         return l;
