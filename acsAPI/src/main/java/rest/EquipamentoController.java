@@ -266,6 +266,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.SET_DNS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             Boolean w = FactoryDAO.createSynch().setDns(in.getDevice(), in.getDns().getDnsServers());
             l.setSaida(w);
             return ok(w);
