@@ -92,9 +92,8 @@ public class SynchDeviceDAOImplIT {
         try {
             System.out.println("getDeviceInfo");
 
-            SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
             DeviceInfo deviceInfo = instance.getDeviceInfo(eqp);
-            System.out.println("end");
+            System.out.println(new JacksonMapper<>(DeviceInfo.class).serialize(deviceInfo));
             // TODO review the generated test code and remove the default call to fail.
         } catch (Exception e) {
             fail(e.getMessage());
@@ -155,7 +154,8 @@ public class SynchDeviceDAOImplIT {
             System.out.println("getParameters");
             SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
             List<ParameterInfoStructDTO> parameters = instance.getParameters(eqp);
-            System.out.println(new JacksonMapper<>(new TypeReference<List<ParameterInfoStructDTO>>(){}).serialize(parameters));
+            System.out.println(new JacksonMapper<>(new TypeReference<List<ParameterInfoStructDTO>>() {
+            }).serialize(parameters));
             assertTrue("Cheio", !parameters.isEmpty());
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,7 +175,7 @@ public class SynchDeviceDAOImplIT {
             paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
 
             GetParameterValuesResponseDTO parameters = instance.getParametersValues(eqp, paths);
-            
+
             System.out.println(new JacksonMapper<>(GetParameterValuesResponseDTO.class).serialize(parameters));
             assertTrue("Cheio", parameters != null);
         } catch (Exception e) {
@@ -228,12 +228,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetServiceClass() throws Exception {
         System.out.println("getServiceClass");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        ServiceClass expResult = null;
         ServiceClass result = instance.getServiceClass(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper<>(ServiceClass.class).serialize(result));
     }
 
     /**
@@ -243,13 +239,11 @@ public class SynchDeviceDAOImplIT {
     public void testSetServiceClass() throws Exception {
         System.out.println("setServiceClass");
 
-        ServiceClass sc = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        Boolean expResult = null;
+        ServiceClass sc = new ServiceClass();
+        sc.setClassOfService("service05");
+
         Boolean result = instance.setServiceClass(eqp, sc);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(result.toString());
     }
 
     /**
@@ -271,12 +265,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetDmzInfo() throws Exception {
         System.out.println("getDmzInfo");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        DmzInfo expResult = null;
         DmzInfo result = instance.getDmzInfo(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper<>(DmzInfo.class).serialize(result));
     }
 
     /**
@@ -310,7 +300,6 @@ public class SynchDeviceDAOImplIT {
     public void testGetDhcp() throws Exception {
         System.out.println("getDhcp");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         Dhcp result = instance.getDhcp(eqp);
         System.out.println(new JacksonMapper(Dhcp.class).serialize(result));
     }
@@ -611,20 +600,6 @@ public class SynchDeviceDAOImplIT {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getWifiStatus method, of class SynchDeviceDAOImpl.
-     */
-    @Test
-    public void testGetWifiStatus() throws Exception {
-        System.out.println("getWifiStatus");
-
-        List<WifiInfoFull> result = instance.getWifiStatus(eqp);
-
-        System.out.println(new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
-        }).serialize(result));
-
     }
 
 }

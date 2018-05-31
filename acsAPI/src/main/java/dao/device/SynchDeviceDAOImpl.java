@@ -573,20 +573,4 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         return false;
     }
 
-    @Override
-    public List<WifiInfoFull> getWifiStatus(NbiDeviceData eqp) throws Exception {
-        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
-        StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9529, opt, TIMEOUT, "");
-
-//        String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
-//        if (a.getValue().contains(wifiDisable)) {
-//            throw new WifiInativoException();
-//        }
-        System.out.println("Retorno: " + a.getValue());
-        List<WifiInfoFull> wifi = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
-        }).fromJSON(a.getValue());
-
-        return wifi;
-    }
-
 }
