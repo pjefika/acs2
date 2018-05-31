@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import br.net.gvt.efika.acs.model.exception.HdmException;
 import br.net.gvt.efika.acs.model.exception.JsonUtilException;
+import br.net.gvt.efika.acs.model.exception.SemRespostaException;
 import br.net.gvt.efika.acs.model.exception.UnsupportedException;
 import br.net.gvt.efika.acs.model.exception.WifiInativoException;
 import motive.hdm.synchdeviceops.GetParameterAttributesDTO;
@@ -535,9 +536,17 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
         } catch (Exception e) {
             try {
-                a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
+                if (forceOnline(eqp)) {
+                    a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
+                } else {
+                    if (forceOnline(eqp)) {
+                        a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
+                    } else {
+                        throw new SemRespostaException();
+                    }
+                }
             } catch (Exception ex) {
-                a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
+                throw new SemRespostaException();
             }
         }
         return a;
