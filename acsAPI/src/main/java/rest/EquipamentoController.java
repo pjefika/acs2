@@ -8,6 +8,7 @@ package rest;
 import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
 import br.net.gvt.efika.acs.model.device.dns.Dns;
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
 import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
 import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
 import br.net.gvt.efika.acs.model.device.ping.PingResponse;
@@ -39,10 +40,10 @@ import model.service.device.impl.SipDiagnosticsServiceImpl;
 import model.service.factory.FactoryService;
 import br.net.gvt.efika.acs.model.dto.DetailIn;
 import br.net.gvt.efika.acs.model.dto.DhcpIn;
+import br.net.gvt.efika.acs.model.dto.FirmwareUpdateIn;
 import br.net.gvt.efika.acs.model.dto.ForceOnlineDeviceIn;
 import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
 import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
-import br.net.gvt.efika.acs.model.dto.GetDnsIn;
 import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
 import br.net.gvt.efika.acs.model.dto.PingDiagnosticIn;
 import br.net.gvt.efika.acs.model.dto.ServiceClassIn;
@@ -69,6 +70,29 @@ public class EquipamentoController extends RestAbstractController {
             DetailOut detail = FactoryService.createDeviceDetailService().consultar(in.getGuid());
             l.setSaida(detail);
             return ok(detail);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/firmwareUpdate")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response firmwareUpdate(FirmwareUpdateIn in) {
+        LogEntity l = in.create();
+        try {
+            DetailOut detail = FactoryService.createDeviceDetailService().consultar(in.getGuid());
+            Boolean update = FactoryService.createFirmwareService().firmwareUpdate(detail.getDevice(), detail.getFirmware().getInfo());
+            l.setSaida(update);
+            return ok(update);
         } catch (Exception e) {
             l.setSaida(e.getMessage());
             return internalServerError(e);

@@ -5,6 +5,7 @@
  */
 package model.service.device;
 
+import dao.device.RemoteDAO;
 import dao.device.SynchDeviceDAO;
 import dao.factory.FactoryDAO;
 
@@ -16,10 +17,19 @@ public class ServiceAbstract {
 
     private SynchDeviceDAO synch;
 
+    private RemoteDAO remote;
+
     public SynchDeviceDAO synch() {
         if (synch == null) {
             synch = FactoryDAO.createSynch();
         }
         return synch;
+    }
+
+    public RemoteDAO remote() {
+        if (remote == null) {
+            remote = FactoryDAO.createRemote();
+        }
+        return remote;
     }
 }
