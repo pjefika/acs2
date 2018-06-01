@@ -44,6 +44,7 @@ import br.net.gvt.efika.acs.model.dto.ForceOnlineDeviceIn;
 import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
 import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
 import br.net.gvt.efika.acs.model.dto.GetPhoneNumberIn;
+import br.net.gvt.efika.acs.model.dto.GetPhoneNumberOut;
 import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
 import br.net.gvt.efika.acs.model.dto.PingDiagnosticIn;
 import br.net.gvt.efika.acs.model.dto.ServiceClassIn;
@@ -722,13 +723,13 @@ public class EquipamentoController extends RestAbstractController {
                 in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
             }
             List<String> paths = new ArrayList<>();
-            String w = "";
+            GetPhoneNumberOut w = null;
             try {
                 paths.add("InternetGatewayDevice.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
-                w = FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue();
+                w = new GetPhoneNumberOut(FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue());
             } catch (Exception e) {
                 paths.add("Device.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
-                w = FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue();
+                w = new GetPhoneNumberOut(FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue());
             }
             l.setSaida(w);
             return ok(w);
