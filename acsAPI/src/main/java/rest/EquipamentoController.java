@@ -508,6 +508,9 @@ public class EquipamentoController extends RestAbstractController {
     public Response pingDiagnostic(PingDiagnosticIn in) {
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             PingResponse w = FactoryDAO.createSynch().pingDiagnostic(in.getDevice(), in.getRequest());
             l.setSaida(w);
             return ok(w);
@@ -531,6 +534,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_PPPOE_CREDENTIALS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             Dhcp w = FactoryDAO.createSynch().getDhcp(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -553,6 +559,9 @@ public class EquipamentoController extends RestAbstractController {
     public Response setDhcp(DhcpIn in) {
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             MotiveService<Dhcp> fac = (MotiveService<Dhcp>) FactoryMotiveService.create(in.getDhcp());
             Dhcp dhcp = fac.alterar(in.getDevice(), in.getDhcp());
             l.setSaida(dhcp);
@@ -577,6 +586,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_DDNS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             DdnsInfo w = FactoryDAO.createSynch().getDdns(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -600,6 +612,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_SERVICE_CLASS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             ServiceClass w = FactoryDAO.createSynch().getServiceClass(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -622,6 +637,9 @@ public class EquipamentoController extends RestAbstractController {
     public Response setServiceClass(ServiceClassIn in) {
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             Boolean w = FactoryDAO.createSynch().setServiceClass(in.getDevice(), in.getService());
             l.setSaida(w);
             return ok(w);
@@ -645,6 +663,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.SIP_DIAGNOSTICS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             SipDiagnosticsService sip = new SipDiagnosticsServiceImpl();
             SipDiagnostics w = sip.consultar(in.getDevice(), in.getPhyref());
             l.setSaida(w);
@@ -669,6 +690,9 @@ public class EquipamentoController extends RestAbstractController {
 
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             SipActivationService sip = new SipActivationServiceImpl();
             SipDiagnostics w = sip.ativar(in.getDevice(), in.getSip());
             l.setSaida(w);
