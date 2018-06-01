@@ -172,7 +172,8 @@ public class SynchDeviceDAOImplIT {
         try {
             System.out.println("getParametersValues");
             List<String> paths = new ArrayList<>();
-            paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
+//            paths.add("InternetGatewayDevice.Services.VoiceService.1.VoiceProfile.1.Line.1.DirectoryNumber");
+            paths.add("Device.Services.VoiceService.1.VoiceProfile.1.Line.1.DirectoryNumber");
 
             GetParameterValuesResponseDTO parameters = instance.getParametersValues(eqp, paths);
 

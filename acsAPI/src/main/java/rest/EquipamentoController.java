@@ -8,7 +8,6 @@ package rest;
 import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
 import br.net.gvt.efika.acs.model.device.dns.Dns;
-import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
 import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
 import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
 import br.net.gvt.efika.acs.model.device.ping.PingResponse;
@@ -44,6 +43,7 @@ import br.net.gvt.efika.acs.model.dto.FirmwareUpdateIn;
 import br.net.gvt.efika.acs.model.dto.ForceOnlineDeviceIn;
 import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
 import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
+import br.net.gvt.efika.acs.model.dto.GetPhoneNumberIn;
 import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
 import br.net.gvt.efika.acs.model.dto.PingDiagnosticIn;
 import br.net.gvt.efika.acs.model.dto.ServiceClassIn;
@@ -51,6 +51,7 @@ import br.net.gvt.efika.acs.model.dto.SetDnsIn;
 import br.net.gvt.efika.acs.model.dto.SetWifiIn;
 import br.net.gvt.efika.acs.model.dto.SipActivationIn;
 import br.net.gvt.efika.acs.model.dto.SipDiagnosticsIn;
+import java.util.ArrayList;
 import model.service.factory.FactoryMotiveService;
 
 /**
@@ -695,6 +696,40 @@ public class EquipamentoController extends RestAbstractController {
             }
             SipActivationService sip = new SipActivationServiceImpl();
             SipDiagnostics w = sip.ativar(in.getDevice(), in.getSip());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getPhoneNumber")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getPhoneNumber(GetPhoneNumberIn in) {
+
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            List<String> paths = new ArrayList<>();
+            String w = "";
+            try {
+                paths.add("InternetGatewayDevice.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
+                w = FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue();
+            } catch (Exception e) {
+                paths.add("Device.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
+                w = FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue();
+            }
             l.setSaida(w);
             return ok(w);
         } catch (Exception e) {
