@@ -5,6 +5,7 @@
  */
 package model.service.device.impl;
 
+import model.service.device.impl.sip.SipActivationServiceImpl;
 import br.net.gvt.efika.acs.model.device.sipactivation.SipActivation;
 import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;

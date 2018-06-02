@@ -32,10 +32,10 @@ import br.net.gvt.efika.acs.model.log.AcaoAcsEnum;
 import model.service.device.MotiveService;
 import model.service.device.impl.PppoeCredentialsInService;
 import model.service.device.impl.PppoeCredentialsInServiceImpl;
-import model.service.device.impl.SipActivationService;
-import model.service.device.impl.SipActivationServiceImpl;
-import model.service.device.impl.SipDiagnosticsService;
-import model.service.device.impl.SipDiagnosticsServiceImpl;
+import model.service.device.impl.sip.SipActivationService;
+import model.service.device.impl.sip.SipActivationServiceImpl;
+import model.service.device.impl.sip.SipDiagnosticsService;
+import model.service.device.impl.sip.SipDiagnosticsServiceImpl;
 import model.service.factory.FactoryService;
 import br.net.gvt.efika.acs.model.dto.DetailIn;
 import br.net.gvt.efika.acs.model.dto.DhcpIn;
@@ -45,10 +45,13 @@ import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
 import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
 import br.net.gvt.efika.acs.model.dto.GetPhoneNumberIn;
 import br.net.gvt.efika.acs.model.dto.GetPhoneNumberOut;
+import br.net.gvt.efika.acs.model.dto.GetT38EnabledIn;
+import br.net.gvt.efika.acs.model.dto.T38Enabled;
 import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
 import br.net.gvt.efika.acs.model.dto.PingDiagnosticIn;
 import br.net.gvt.efika.acs.model.dto.ServiceClassIn;
 import br.net.gvt.efika.acs.model.dto.SetDnsIn;
+import br.net.gvt.efika.acs.model.dto.SetT38EnabledIn;
 import br.net.gvt.efika.acs.model.dto.SetWifiIn;
 import br.net.gvt.efika.acs.model.dto.SipActivationIn;
 import br.net.gvt.efika.acs.model.dto.SipDiagnosticsIn;
@@ -731,6 +734,67 @@ public class EquipamentoController extends RestAbstractController {
                 paths.add("Device.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
                 w = new GetPhoneNumberOut(FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue());
             }
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getT38Enabled")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getT38Enabled(GetT38EnabledIn in) {
+
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            T38Enabled t = (T38Enabled) FactoryService.createTreeChanger(T38Enabled.class).consultar(in.getDevice(), in.getT38());
+            l.setSaida(t);
+            return ok(t);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/setT38Enabled")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setT38Enabled(SetT38EnabledIn in) {
+
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            List<String> paths = new ArrayList<>();
+            String value = null;
+            try {
+                paths.add("InternetGatewayDevice.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.FaxT38.Enable");
+                value = FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue();
+            } catch (Exception e) {
+                paths.add("Device.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.FaxT38.Enable");
+                value = FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue();
+            }
+            T38Enabled w = new T38Enabled(value.equalsIgnoreCase("1") || value.equalsIgnoreCase("true"));
             l.setSaida(w);
             return ok(w);
         } catch (Exception e) {

@@ -11,8 +11,10 @@ import model.service.device.DeviceOnlineService;
 import model.service.device.DeviceOnlineServiceImpl;
 import model.service.device.FirmwareService;
 import model.service.device.FirmwareServiceImpl;
+import model.service.device.MotiveFromTreeService;
 import model.service.device.detail.DeviceDetailService;
 import model.service.device.detail.DeviceDetailServiceImpl;
+import model.service.device.impl.sip.T38EnabledService;
 import model.service.device.impl.wifi.WiFiService;
 import model.service.device.impl.wifi.WiFiServiceImpl;
 
@@ -44,6 +46,14 @@ public class FactoryService {
 
     public static FirmwareService createFirmwareService() {
         return new FirmwareServiceImpl();
+    }
+
+    public static MotiveFromTreeService createTreeChanger(Class c) {
+        if (c.getSimpleName().equalsIgnoreCase("T38Enabled")) {
+            return new T38EnabledService();
+        }
+
+        return null;
     }
 
 }

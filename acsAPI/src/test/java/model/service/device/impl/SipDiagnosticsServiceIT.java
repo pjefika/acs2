@@ -5,6 +5,8 @@
  */
 package model.service.device.impl;
 
+import model.service.device.impl.sip.SipDiagnosticsService;
+import model.service.device.impl.sip.SipDiagnosticsServiceImpl;
 import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
 import model.AbstractTest;
 import org.junit.After;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service.device.impl;
+package model.service.device.impl.sip;
 
 import br.net.gvt.efika.acs.model.device.sipactivation.SipActivation;
 import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;

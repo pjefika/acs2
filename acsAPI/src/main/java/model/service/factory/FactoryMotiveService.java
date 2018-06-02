@@ -6,8 +6,11 @@
 package model.service.factory;
 
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.dto.T38Enabled;
+import model.service.device.MotiveFromTreeService;
 import model.service.device.MotiveService;
 import model.service.device.impl.DhcpService;
+import model.service.device.impl.sip.T38EnabledService;
 
 /**
  *
@@ -20,7 +23,7 @@ public class FactoryMotiveService {
         if (o instanceof Dhcp) {
             ret = new DhcpService();
         }
-        
+
         return ret;
     }
 
