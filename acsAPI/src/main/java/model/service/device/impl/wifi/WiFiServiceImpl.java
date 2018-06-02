@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.service.device.GenericDeviceService;
 import model.service.device.ThreadControl;
-import model.service.device.impl.wifi.acao.SetParameters;
+import model.service.device.impl.SetParameters;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 

@@ -9,7 +9,7 @@ import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import br.net.gvt.efika.acs.model.device.wifi.WifiInfoFull;
 import java.util.ArrayList;
 import java.util.List;
-import model.service.device.impl.wifi.acao.SetParameters;
+import model.service.device.impl.SetParameters;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 

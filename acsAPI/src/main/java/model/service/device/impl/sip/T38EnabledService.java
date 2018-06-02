@@ -5,6 +5,7 @@
  */
 package model.service.device.impl.sip;
 
+import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import br.net.gvt.efika.acs.model.dto.T38Enabled;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.factory.FactoryDAO;
@@ -36,7 +37,12 @@ public class T38EnabledService extends GenericDeviceService implements MotiveFro
 
     @Override
     public T38Enabled alterar(NbiDeviceData device, T38Enabled t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            synch().setParametersValues(device, SIPParamParser.parse(t, DeviceTR.TR_098));
+        } catch (Exception e) {
+            synch().setParametersValues(device, SIPParamParser.parse(t, DeviceTR.TR_181));
+        }
+        return consultar(device, t);
     }
 
 }

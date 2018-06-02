@@ -785,18 +785,9 @@ public class EquipamentoController extends RestAbstractController {
             if (in.getDevice() == null) {
                 in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
             }
-            List<String> paths = new ArrayList<>();
-            String value = null;
-            try {
-                paths.add("InternetGatewayDevice.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.FaxT38.Enable");
-                value = FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue();
-            } catch (Exception e) {
-                paths.add("Device.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.FaxT38.Enable");
-                value = FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue();
-            }
-            T38Enabled w = new T38Enabled(value.equalsIgnoreCase("1") || value.equalsIgnoreCase("true"));
-            l.setSaida(w);
-            return ok(w);
+            T38Enabled t = (T38Enabled) FactoryService.createTreeChanger(T38Enabled.class).alterar(in.getDevice(), in.getT38());
+            l.setSaida(t);
+            return ok(t);
         } catch (Exception e) {
             l.setSaida(e.getMessage());
             return internalServerError(e);

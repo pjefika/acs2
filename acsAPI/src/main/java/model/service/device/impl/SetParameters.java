@@ -3,9 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.service.device.impl.wifi.acao;
+package model.service.device.impl;
 
 import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
+import model.service.device.impl.sip.acao.SetT38Enabled;
+import model.service.device.impl.wifi.acao.AtivarBroadcastWifi;
+import model.service.device.impl.wifi.acao.AtivarStatusWifi;
+import model.service.device.impl.wifi.acao.AtivarWifi;
+import model.service.device.impl.wifi.acao.SetAdmStatusWifi;
+import model.service.device.impl.wifi.acao.SetChannelWifi;
+import model.service.device.impl.wifi.acao.SetPasswordWifi;
+import model.service.device.impl.wifi.acao.SetSsidWifi;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
 /**
@@ -40,6 +48,10 @@ public class SetParameters {
 
     public static final ParameterValueStructDTO setPasswordWifi(DeviceTR tr, String value, int wichone) {
         return new SetPasswordWifi(tr, value, wichone);
+    }
+
+    public static final ParameterValueStructDTO setT38Enabled(DeviceTR tr, String value, int wichone) {
+        return new SetT38Enabled(tr, value, wichone);
     }
 //    public static final ParameterValueStructDTO DESATIVAR_WIFI = new DesativarWifi();
 //    public static final ParameterValueStructDTO DESATIVAR_AUTOCHANNEL = new DesativarAutoChannelWifi();
