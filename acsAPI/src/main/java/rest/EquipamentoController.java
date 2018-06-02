@@ -44,7 +44,7 @@ import br.net.gvt.efika.acs.model.dto.ForceOnlineDeviceIn;
 import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
 import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
 import br.net.gvt.efika.acs.model.dto.GetPhoneNumberIn;
-import br.net.gvt.efika.acs.model.dto.GetPhoneNumberOut;
+import br.net.gvt.efika.acs.model.dto.DirectoryNumber;
 import br.net.gvt.efika.acs.model.dto.GetT38EnabledIn;
 import br.net.gvt.efika.acs.model.dto.T38Enabled;
 import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
@@ -725,15 +725,8 @@ public class EquipamentoController extends RestAbstractController {
             if (in.getDevice() == null) {
                 in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
             }
-            List<String> paths = new ArrayList<>();
-            GetPhoneNumberOut w = null;
-            try {
-                paths.add("InternetGatewayDevice.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
-                w = new GetPhoneNumberOut(FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue());
-            } catch (Exception e) {
-                paths.add("Device.Services.VoiceService." + in.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
-                w = new GetPhoneNumberOut(FactoryDAO.createSynch().getParametersValues(in.getDevice(), paths).getParameterList().get(0).getValue());
-            }
+            DirectoryNumber w = (DirectoryNumber) FactoryMotiveService.createTreeChanger(DirectoryNumber.class).consultar(
+                    in.getDevice(), in.getNumber());
             l.setSaida(w);
             return ok(w);
         } catch (Exception e) {
@@ -759,7 +752,7 @@ public class EquipamentoController extends RestAbstractController {
             if (in.getDevice() == null) {
                 in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
             }
-            T38Enabled t = (T38Enabled) FactoryService.createTreeChanger(T38Enabled.class).consultar(in.getDevice(), in.getT38());
+            T38Enabled t = (T38Enabled) FactoryMotiveService.createTreeChanger(T38Enabled.class).consultar(in.getDevice(), in.getT38());
             l.setSaida(t);
             return ok(t);
         } catch (Exception e) {
@@ -785,7 +778,7 @@ public class EquipamentoController extends RestAbstractController {
             if (in.getDevice() == null) {
                 in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
             }
-            T38Enabled t = (T38Enabled) FactoryService.createTreeChanger(T38Enabled.class).alterar(in.getDevice(), in.getT38());
+            T38Enabled t = (T38Enabled) FactoryMotiveService.createTreeChanger(T38Enabled.class).alterar(in.getDevice(), in.getT38());
             l.setSaida(t);
             return ok(t);
         } catch (Exception e) {

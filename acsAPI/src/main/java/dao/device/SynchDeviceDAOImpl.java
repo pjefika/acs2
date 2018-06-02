@@ -131,8 +131,24 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         paths.forEach((t) -> {
             g.getParameterNames().add(t);
         });
+        try {
+            return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+        } catch (Exception e) {
+            try {
+                if (forceOnline(eqp)) {
+                    try {
+                        return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+                    } catch (Exception ex) {
+                        throw new UnsupportedException();
+                    }
+                } else {
+                    throw new SemRespostaException();
+                }
+            } catch (Exception exc) {
+                throw exc;
+            }
+        }
 
-        return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
     }
 
     @Override
@@ -554,8 +570,14 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
     @Override
     public Boolean forceOnline(NbiDeviceData eqp) throws Exception {
-        NbiInitiateConnectionResult r = synch().issueConnectionRequestByDeviceGUID(eqp.getDeviceGUID(), 3000);
-        return r.isSuccess();
+        Boolean b = false;
+        try {
+            NbiInitiateConnectionResult r = synch().issueConnectionRequestByDeviceGUID(eqp.getDeviceGUID(), 3000);
+            b = r.isSuccess();
+        } catch (Exception e) {
+        }
+
+        return b;
     }
 
     @Override

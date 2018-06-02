@@ -48,12 +48,4 @@ public class FactoryService {
         return new FirmwareServiceImpl();
     }
 
-    public static MotiveFromTreeService createTreeChanger(Class c) {
-        if (c.getSimpleName().equalsIgnoreCase("T38Enabled")) {
-            return new T38EnabledService();
-        }
-
-        return null;
-    }
-
 }

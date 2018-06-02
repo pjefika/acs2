@@ -8,7 +8,6 @@ package model.service.device.impl.sip;
 import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import br.net.gvt.efika.acs.model.dto.T38Enabled;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
-import dao.factory.FactoryDAO;
 import java.util.ArrayList;
 import java.util.List;
 import model.service.device.GenericDeviceService;

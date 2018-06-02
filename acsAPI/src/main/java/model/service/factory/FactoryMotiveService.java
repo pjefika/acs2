@@ -10,6 +10,7 @@ import br.net.gvt.efika.acs.model.dto.T38Enabled;
 import model.service.device.MotiveFromTreeService;
 import model.service.device.MotiveService;
 import model.service.device.impl.DhcpService;
+import model.service.device.impl.sip.DirectoryNumberService;
 import model.service.device.impl.sip.T38EnabledService;
 
 /**
@@ -25,6 +26,17 @@ public class FactoryMotiveService {
         }
 
         return ret;
+    }
+
+    public static MotiveFromTreeService createTreeChanger(Class c) {
+        if (c.getSimpleName().equalsIgnoreCase("T38Enabled")) {
+            return new T38EnabledService();
+        }
+        if (c.getSimpleName().equalsIgnoreCase("DirectoryNumber")) {
+            return new DirectoryNumberService();
+        }
+
+        return null;
     }
 
 }
