@@ -45,7 +45,9 @@ import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
 import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
 import br.net.gvt.efika.acs.model.dto.GetPhoneNumberIn;
 import br.net.gvt.efika.acs.model.dto.DirectoryNumber;
+import br.net.gvt.efika.acs.model.dto.GetIptvDiagnosticsIn;
 import br.net.gvt.efika.acs.model.dto.GetT38EnabledIn;
+import br.net.gvt.efika.acs.model.dto.IptvDiagnostics;
 import br.net.gvt.efika.acs.model.dto.T38Enabled;
 import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
 import br.net.gvt.efika.acs.model.dto.PingDiagnosticIn;
@@ -55,7 +57,6 @@ import br.net.gvt.efika.acs.model.dto.SetT38EnabledIn;
 import br.net.gvt.efika.acs.model.dto.SetWifiIn;
 import br.net.gvt.efika.acs.model.dto.SipActivationIn;
 import br.net.gvt.efika.acs.model.dto.SipDiagnosticsIn;
-import java.util.ArrayList;
 import model.service.factory.FactoryMotiveService;
 
 /**
@@ -727,6 +728,33 @@ public class EquipamentoController extends RestAbstractController {
             }
             DirectoryNumber w = (DirectoryNumber) FactoryMotiveService.createTreeChanger(DirectoryNumber.class).consultar(
                     in.getDevice(), in.getNumber());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getIptvDiagnostics")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getIptvDiagnostics(GetIptvDiagnosticsIn in) {
+
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            IptvDiagnostics w = (IptvDiagnostics) FactoryMotiveService.createTreeChanger(IptvDiagnostics.class).consultar(
+                    in.getDevice(), in.getIptvDiagnostics());
             l.setSaida(w);
             return ok(w);
         } catch (Exception e) {
