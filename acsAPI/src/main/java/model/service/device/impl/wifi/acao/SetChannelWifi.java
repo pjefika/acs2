@@ -18,7 +18,7 @@ public class SetChannelWifi extends ParameterValueStructDTO {
         this.name = deviceTr == DeviceTR.TR_181
                 ? "Device.WiFi.Radio." + wichone + ".Channel"
                 : "InternetGatewayDevice.LANDevice.1.WLANConfiguration." + wichone + ".Channel";
-        this.type = "string";
+        this.type = "unsignedInt";
         this.value = value;
     }
 }

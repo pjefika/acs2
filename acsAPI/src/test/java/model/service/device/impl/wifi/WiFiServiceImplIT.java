@@ -87,14 +87,9 @@ public class WiFiServiceImplIT {
     @Test
     public void testAlterar() throws Exception {
         System.out.println("alterar");
-        NbiDeviceData device = null;
-        WifiNets wifis = null;
-        WiFiServiceImpl instance = new WiFiServiceImpl();
-        WifiNets expResult = null;
-        WifiNets result = instance.alterar(device, wifis);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        WifiNets wifis = instance.consultar(eqp);
+        WifiNets result = instance.alterar(eqp, wifis);
+        System.out.println(new JacksonMapper<>(WifiNets.class).serialize(result));
     }
 
 }
