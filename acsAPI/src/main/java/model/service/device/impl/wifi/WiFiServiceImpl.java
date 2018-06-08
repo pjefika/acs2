@@ -33,16 +33,17 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
     @Override
     public WifiNets consultar(NbiDeviceData device) throws Exception {
 
-        List<String> paths = new ArrayList<>();
-        try {
-            paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
-            GetParameterValuesResponseDTO wifis = synch().getParametersValues(device, paths);
-            return new WifiNets(WifiParser.parse(wifis));
-        } catch (Exception e) {
-            paths.add("Device.WiFi.");
-            GetParameterValuesResponseDTO wifis = synch().getParametersValues(device, paths);
-            return new WifiNets(WifiParser.parse(wifis));
-        }
+//        List<String> paths = new ArrayList<>();
+//        try {
+//            paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
+//            GetParameterValuesResponseDTO wifis = synch().getParametersValues(device, paths);
+//            return new WifiNets(WifiParser.parse(wifis));
+//        } catch (Exception e) {
+//            paths.add("Device.WiFi.");
+//            GetParameterValuesResponseDTO wifis = synch().getParametersValues(device, paths);
+//            return new WifiNets(WifiParser.parse(wifis));
+//        }
+        return new WifiNets(synch().getWifiInfoFull(device));
 
     }
 
@@ -56,28 +57,28 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
             lst.add(SetParameters.ativarStatusWifi(DeviceTR.TR_098, 1));
             lst.add(SetParameters.ativarWifi(DeviceTR.TR_098, 1));
             synch().setParametersValues(device, lst);
-            try {
-                List<ParameterValueStructDTO> l = new ArrayList<>();
-                l.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_098, 5));
-                l.add(SetParameters.ativarStatusWifi(DeviceTR.TR_098, 5));
-                l.add(SetParameters.ativarWifi(DeviceTR.TR_098, 5));
-                synch().setParametersValues(device, l);
-            } catch (Exception e) {
-            }
+//            try {
+//                List<ParameterValueStructDTO> l = new ArrayList<>();
+//                l.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_098, 5));
+//                l.add(SetParameters.ativarStatusWifi(DeviceTR.TR_098, 5));
+//                l.add(SetParameters.ativarWifi(DeviceTR.TR_098, 5));
+//                synch().setParametersValues(device, l);
+//            } catch (Exception e) {
+//            }
         } catch (Exception e) {
             List<ParameterValueStructDTO> lst = new ArrayList<>();
             lst.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_181, 1));
             lst.add(SetParameters.ativarStatusWifi(DeviceTR.TR_181, 1));
             lst.add(SetParameters.ativarWifi(DeviceTR.TR_181, 1));
             synch().setParametersValues(device, lst);
-            try {
-                List<ParameterValueStructDTO> l = new ArrayList<>();
-                l.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_181, 5));
-                l.add(SetParameters.ativarStatusWifi(DeviceTR.TR_181, 5));
-                l.add(SetParameters.ativarWifi(DeviceTR.TR_181, 5));
-                synch().setParametersValues(device, l);
-            } catch (Exception ex) {
-            }
+//            try {
+//                List<ParameterValueStructDTO> l = new ArrayList<>();
+//                l.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_181, 5));
+//                l.add(SetParameters.ativarStatusWifi(DeviceTR.TR_181, 5));
+//                l.add(SetParameters.ativarWifi(DeviceTR.TR_181, 5));
+//                synch().setParametersValues(device, l);
+//            } catch (Exception ex) {
+//            }
         }
     }
 
@@ -93,8 +94,9 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
     @Override
     public WifiNets alterar(NbiDeviceData device, WifiNets wifis) throws Exception {
         try {
-            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_098);
-            synch().setParametersValues(device, lst);
+//            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_098);
+//            synch().setParametersValues(device, lst);
+            synch().setWifiInfoFull(device, wifis.getWifi().get(0));
         } catch (Exception e) {
             e.printStackTrace();
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_181);
