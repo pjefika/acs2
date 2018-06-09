@@ -6,15 +6,12 @@
 package model.service.device.impl.wifi;
 
 import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
-import br.net.gvt.efika.acs.model.device.wifi.WifiInfoFull;
 import br.net.gvt.efika.acs.model.device.wifi.WifiNets;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
 import model.service.device.GenericDeviceService;
-import model.service.device.ThreadControl;
 import model.service.device.impl.SetParameters;
-import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
 /**
