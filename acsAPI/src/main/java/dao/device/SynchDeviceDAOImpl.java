@@ -5,6 +5,29 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.acs.model.device.DmzInfo;
+import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
+import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.dhcp.DhcpSet;
+import br.net.gvt.efika.acs.model.device.dns.Dns;
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
+import br.net.gvt.efika.acs.model.device.gatewayparameters.GatewayParameters;
+import br.net.gvt.efika.acs.model.device.info.DeviceInfo;
+import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
+import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
+import br.net.gvt.efika.acs.model.device.log.DeviceLog;
+import br.net.gvt.efika.acs.model.device.ping.PingRequest;
+import br.net.gvt.efika.acs.model.device.ping.PingResponse;
+import br.net.gvt.efika.acs.model.device.portmapping.PortMappingInfo;
+import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.serviceclass.ServiceClass;
+import br.net.gvt.efika.acs.model.device.sipactivation.SipActivation;
+import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
+import br.net.gvt.efika.acs.model.device.traceroute.TraceRouteRequest;
+import br.net.gvt.efika.acs.model.device.wan.WanInfo;
+import br.net.gvt.efika.acs.model.device.wifi.WifiInfoFull;
+import br.net.gvt.efika.acs.model.device.wifi.WifiInfoSet;
+import br.net.gvt.efika.acs.model.device.xdsldiagnostics.XdslDiagnostics;
 import br.net.gvt.efika.util.json.JacksonMapper;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import br.net.gvt.efika.util.json.exception.JsonParseException;
@@ -17,35 +40,16 @@ import com.motive.synchdeviceopsimpl.synchdeviceoperationsnbiservice.SynchDevice
 import dao.factory.FactoryNBI;
 import java.util.ArrayList;
 import java.util.List;
-import model.device.DmzInfo;
-import model.device.ddns.DdnsInfo;
-import model.device.dhcp.Dhcp;
-import model.device.dhcp.DhcpSet;
-import model.device.firmware.FirmwareInfo;
-import model.device.info.DeviceInfo;
-import model.device.interfacestatistics.InterfaceStatistics;
-import model.device.lanhost.LanDevice;
-import model.device.log.DeviceLog;
-import model.device.ping.PingRequest;
-import model.device.ping.PingResponse;
-import model.device.portmapping.PortMappingInfo;
-import model.device.pppoe.PPPoECredentialsInfo;
-import model.device.serviceclass.ServiceClass;
-import model.device.sipactivation.SipActivation;
-import model.device.sipdiagnostics.SipDiagnostics;
-import model.device.traceroute.TraceRouteRequest;
-import model.device.wan.WanInfo;
-import model.device.wifi.WifiInfoFull;
-import model.device.wifi.WifiInfoSet;
-import model.device.xdsldiagnostics.XdslDiagnostics;
-import model.exception.HdmException;
-import model.exception.JsonUtilException;
-import model.exception.UnsupportedException;
-import model.exception.WifiInativoException;
+import br.net.gvt.efika.acs.model.exception.HdmException;
+import br.net.gvt.efika.acs.model.exception.JsonUtilException;
+import br.net.gvt.efika.acs.model.exception.SemRespostaException;
+import br.net.gvt.efika.acs.model.exception.UnsupportedException;
+import br.net.gvt.efika.acs.model.exception.WifiInativoException;
 import motive.hdm.synchdeviceops.GetParameterAttributesDTO;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
+import motive.hdm.synchdeviceops.NbiInitiateConnectionResult;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
@@ -109,7 +113,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         GetParameterNamesDTO g = new GetParameterNamesDTO();
         g.setNextLevel(true);
         try {
-            g.setParameterPath(" ");
+            g.setParameterPath("");
             return synch().getParameterNames(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "").getParameterList();
         } catch (Exception e) {
             g.setParameterPath("InternetGatewayDevice.");
@@ -127,15 +131,31 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         paths.forEach((t) -> {
             g.getParameterNames().add(t);
         });
+        try {
+            return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+        } catch (Exception e) {
+            try {
+                if (forceOnline(eqp)) {
+                    try {
+                        return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+                    } catch (Exception ex) {
+                        throw new UnsupportedException();
+                    }
+                } else {
+                    throw new SemRespostaException();
+                }
+            } catch (Exception exc) {
+                throw exc;
+            }
+        }
 
-        return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
     }
 
     @Override
     public DeviceInfo getDeviceInfo(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9527, opt, TIMEOUT, "");
-        System.out.println("VALUE=>"+a.getValue());
+        System.out.println("VALUE=>" + a.getValue());
         return (DeviceInfo) new JacksonMapper(DeviceInfo.class).deserialize(a.getValue());
     }
 
@@ -172,7 +192,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException, Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9515, opt, TIMEOUT, "");
-
+        System.out.println("RESULT->" + a.getValue());
         return (WanInfo) new JacksonMapper(WanInfo.class).deserialize(a.getValue());
 
     }
@@ -409,7 +429,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public PingResponse pingDiagnostic(NbiDeviceData eqp, PingRequest p) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, model.exception.JsonUtilException, Exception {
+    public PingResponse pingDiagnostic(NbiDeviceData eqp, PingRequest p) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, br.net.gvt.efika.acs.model.exception.JsonUtilException, Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         //String jsonPppoe = JsonUtil.serialize(p, p.getClass());
         String jsonPppoe = new JacksonMapper(PingRequest.class).serialize(p);
@@ -533,12 +553,56 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
         } catch (Exception e) {
             try {
-                a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
+                if (forceOnline(eqp)) {
+                    a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
+                } else {
+                    if (forceOnline(eqp)) {
+                        a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
+                    } else {
+                        throw new SemRespostaException();
+                    }
+                }
             } catch (Exception ex) {
-                a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
+                throw new SemRespostaException();
             }
         }
         return a;
+    }
+
+    @Override
+    public Boolean forceOnline(NbiDeviceData eqp) throws Exception {
+        Boolean b = false;
+        try {
+            NbiInitiateConnectionResult r = synch().issueConnectionRequestByDeviceGUID(eqp.getDeviceGUID(), 3000);
+            b = r.isSuccess();
+        } catch (Exception e) {
+        }
+
+        return b;
+    }
+
+    @Override
+    public Dns getDns(NbiDeviceData eqp) throws Exception {
+        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+        StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9516, opt, TIMEOUT, "");
+        GatewayParameters gp = new JacksonMapper<>(GatewayParameters.class).deserialize(a.getValue());
+        System.out.println(a.getValue());
+        return new Dns(gp.getDNSServers());
+    }
+
+    @Override
+    public Boolean setDns(NbiDeviceData eqp, String dnsServers) throws Exception {
+        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+        List<Object> json = DeviceOperationFactory.getEmptyJson();
+        json.set(0, "{\"dnsservers\":\"" + dnsServers + "\"}");
+
+        StringResponseDTO a = this.exec(eqp, json, 9525, opt, TIMEOUT, "");
+
+        if (a.getValue().contains("SUCCESS") || a.getValue().contains("\"statusCode\":\"0\"")) {
+            return true;
+        }
+        System.out.println(a.getValue());
+        return false;
     }
 
 }

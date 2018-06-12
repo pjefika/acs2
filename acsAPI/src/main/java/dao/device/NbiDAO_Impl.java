@@ -21,7 +21,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import model.exception.SearchNotFound;
+import br.net.gvt.efika.acs.model.exception.SearchNotFound;
 
 /**
  *
@@ -55,7 +55,7 @@ public class NbiDAO_Impl implements NbiDAO {
 
     public List<NbiDeviceActionResult> getDeviceOperationsHistory(NbiDeviceID nbi) throws Exception {
         return nbi().getDeviceOperationsHistory(nbi, 0, 1000);
-        
+
     }
 
     public List<NbiCommunicationLog> getCommunicationLogsByDeviceID(NbiDeviceID nbi) throws Exception {
@@ -78,7 +78,7 @@ public class NbiDAO_Impl implements NbiDAO {
 
         XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
         XMLGregorianCalendar cal1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c1);
-       
+
         return nbi().getCommunicationLogsByDeviceID(nbi, 1000, cal, cal1);
     }
 

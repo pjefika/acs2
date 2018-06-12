@@ -5,6 +5,7 @@
  */
 package model.service.device.impl.wifi.acao;
 
+import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
 /**
@@ -13,8 +14,10 @@ import motive.hdm.synchdeviceops.ParameterValueStructDTO;
  */
 public class AtivarStatusWifi extends ParameterValueStructDTO {
 
-    public AtivarStatusWifi() {
-        this.name = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.RadioEnabled";
+    public AtivarStatusWifi(DeviceTR deviceTr, int wichone) {
+        this.name = deviceTr == DeviceTR.TR_181
+                ? "Device.WiFi.Radio." + wichone + ".Status"
+                : "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.RadioEnabled";
         this.type = "boolean";
         this.value = "true";
     }

@@ -7,7 +7,7 @@ package model.service.device.detail;
 
 import br.net.gvt.efika.util.json.JacksonMapper;
 import init.EquipamentoTestValues;
-import model.service.dto.DetailOut;
+import br.net.gvt.efika.acs.model.dto.DetailOut;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;

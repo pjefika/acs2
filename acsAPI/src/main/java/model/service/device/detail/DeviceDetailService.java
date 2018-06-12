@@ -5,7 +5,7 @@
  */
 package model.service.device.detail;
 
-import model.service.dto.DetailOut;
+import br.net.gvt.efika.acs.model.dto.DetailOut;
 
 /**
  *

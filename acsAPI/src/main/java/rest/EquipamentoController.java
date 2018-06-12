@@ -5,6 +5,19 @@
  */
 package rest;
 
+import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
+import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.dns.Dns;
+import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
+import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
+import br.net.gvt.efika.acs.model.device.ping.PingResponse;
+import br.net.gvt.efika.acs.model.device.portmapping.PortMappingInfo;
+import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.serviceclass.ServiceClass;
+import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
+import br.net.gvt.efika.acs.model.device.wan.WanInfo;
+import br.net.gvt.efika.acs.model.device.wifi.WifiNets;
+import br.net.gvt.efika.acs.model.device.xdsldiagnostics.XdslDiagnostics;
 import dao.factory.FactoryDAO;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -13,38 +26,37 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.device.ddns.DdnsInfo;
-import model.device.dhcp.Dhcp;
-import model.device.interfacestatistics.InterfaceStatistics;
-import model.device.lanhost.LanDevice;
-import model.device.ping.PingResponse;
-import model.device.portmapping.PortMappingInfo;
-import model.device.pppoe.PPPoECredentialsInfo;
-import model.device.serviceclass.ServiceClass;
-import model.device.sipdiagnostics.SipDiagnostics;
-import model.device.wan.WanInfo;
-import model.device.wifi.WifiNets;
-import model.device.xdsldiagnostics.XdslDiagnostics;
-import model.service.dto.DetailOut;
-import model.entity.LogEntity;
-import model.log.AcaoAcsEnum;
+import br.net.gvt.efika.acs.model.dto.DetailOut;
+import br.net.gvt.efika.acs.model.entity.LogEntity;
+import br.net.gvt.efika.acs.model.log.AcaoAcsEnum;
 import model.service.device.MotiveService;
 import model.service.device.impl.PppoeCredentialsInService;
 import model.service.device.impl.PppoeCredentialsInServiceImpl;
-import model.service.device.impl.SipActivationService;
-import model.service.device.impl.SipActivationServiceImpl;
-import model.service.device.impl.SipDiagnosticsService;
-import model.service.device.impl.SipDiagnosticsServiceImpl;
+import model.service.device.impl.sip.SipActivationService;
+import model.service.device.impl.sip.SipActivationServiceImpl;
+import model.service.device.impl.sip.SipDiagnosticsService;
+import model.service.device.impl.sip.SipDiagnosticsServiceImpl;
 import model.service.factory.FactoryService;
-import model.service.dto.DetailIn;
-import model.service.dto.DhcpIn;
-import model.service.dto.GetDeviceDataIn;
-import model.service.dto.PPPoECredentialsIn;
-import model.service.dto.PingDiagnosticIn;
-import model.service.dto.ServiceClassIn;
-import model.service.dto.SetWifiIn;
-import model.service.dto.SipActivationIn;
-import model.service.dto.SipDiagnosticsIn;
+import br.net.gvt.efika.acs.model.dto.DetailIn;
+import br.net.gvt.efika.acs.model.dto.DhcpIn;
+import br.net.gvt.efika.acs.model.dto.FirmwareUpdateIn;
+import br.net.gvt.efika.acs.model.dto.ForceOnlineDeviceIn;
+import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
+import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
+import br.net.gvt.efika.acs.model.dto.GetPhoneNumberIn;
+import br.net.gvt.efika.acs.model.dto.DirectoryNumber;
+import br.net.gvt.efika.acs.model.dto.GetIptvDiagnosticsIn;
+import br.net.gvt.efika.acs.model.dto.GetT38EnabledIn;
+import br.net.gvt.efika.acs.model.dto.IptvDiagnostics;
+import br.net.gvt.efika.acs.model.dto.T38Enabled;
+import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
+import br.net.gvt.efika.acs.model.dto.PingDiagnosticIn;
+import br.net.gvt.efika.acs.model.dto.ServiceClassIn;
+import br.net.gvt.efika.acs.model.dto.SetDnsIn;
+import br.net.gvt.efika.acs.model.dto.SetT38EnabledIn;
+import br.net.gvt.efika.acs.model.dto.SetWifiIn;
+import br.net.gvt.efika.acs.model.dto.SipActivationIn;
+import br.net.gvt.efika.acs.model.dto.SipDiagnosticsIn;
 import model.service.factory.FactoryMotiveService;
 
 /**
@@ -77,6 +89,75 @@ public class EquipamentoController extends RestAbstractController {
     }
 
     @POST
+    @Path("/firmwareUpdate")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response firmwareUpdate(FirmwareUpdateIn in) {
+        LogEntity l = in.create();
+        try {
+            DetailOut detail = FactoryService.createDeviceDetailService().consultar(in.getGuid());
+            Boolean update = FactoryService.createFirmwareService().firmwareUpdate(detail.getDevice(), detail.getFirmware().getInfo());
+            l.setSaida(update);
+            return ok(update);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/forceOnlineDevice")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response forceOnlineDevice(ForceOnlineDeviceIn in) {
+        in.setAcao(AcaoAcsEnum.FORCE_ONLINE);
+        LogEntity l = in.create();
+        try {
+            Boolean w = FactoryService.createDeviceOnlineService().isOnline(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/forceOnlineDevices")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response forceOnlineDevices(ForceOnlineDevicesIn in) {
+        in.setAcao(AcaoAcsEnum.FORCE_ONLINE_ANY);
+        LogEntity l = in.create();
+        try {
+            Boolean w = FactoryService.createDeviceOnlineService().isAnyOnline(in.getDevices());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
     @Path("/getWifiInfo")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -84,6 +165,36 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_WIFI_INFO);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            WifiNets wifi = FactoryService.createWiFiService().consultar(in.getDevice());
+            l.setSaida(wifi);
+            return ok(wifi);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/activateWifi")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response activateWifi(GetDeviceDataIn in) {
+        in.setAcao(AcaoAcsEnum.ACTIVATE_WIFI);
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            FactoryService.createWiFiService().ativar(in.getDevice());
             WifiNets wifi = FactoryService.createWiFiService().consultar(in.getDevice());
             l.setSaida(wifi);
             return ok(wifi);
@@ -106,6 +217,9 @@ public class EquipamentoController extends RestAbstractController {
     public Response setWifiInfo(SetWifiIn in) {
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             WifiNets wifi = FactoryService.createWiFiService().alterar(in.getDevice(), in.getWifi());
             l.setSaida(wifi);
             return ok(wifi);
@@ -128,10 +242,66 @@ public class EquipamentoController extends RestAbstractController {
     public Response getLanHosts(GetDeviceDataIn in) {
         in.setAcao(AcaoAcsEnum.GET_LAN_HOSTS);
         LogEntity l = in.create();
+
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             List<LanDevice> lst = FactoryDAO.createSynch().getLanHosts(in.getDevice());
             l.setSaida(lst);
             return ok(lst);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getDns")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getDnsInfo(GetDeviceDataIn in) {
+        in.setAcao(AcaoAcsEnum.GET_DNS);
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            Dns w = FactoryDAO.createSynch().getDns(in.getDevice());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/setDns")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setDnsInfo(SetDnsIn in) {
+        in.setAcao(AcaoAcsEnum.SET_DNS);
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            Boolean w = FactoryDAO.createSynch().setDns(in.getDevice(), in.getDns().getDnsServers());
+            l.setSaida(w);
+            return ok(w);
         } catch (Exception e) {
             l.setSaida(e.getMessage());
             return internalServerError(e);
@@ -152,6 +322,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_WAN_INFO);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             WanInfo w = FactoryDAO.createSynch().getWanInfo(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -175,6 +348,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_INTERFACE_STATISTICS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             List<InterfaceStatistics> w = FactoryDAO.createSynch().getInterfaceStatistics(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -313,6 +489,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.FACTORY_RESET);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             Boolean w = FactoryDAO.createSynch().factoryReset(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -335,6 +514,9 @@ public class EquipamentoController extends RestAbstractController {
     public Response pingDiagnostic(PingDiagnosticIn in) {
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             PingResponse w = FactoryDAO.createSynch().pingDiagnostic(in.getDevice(), in.getRequest());
             l.setSaida(w);
             return ok(w);
@@ -358,6 +540,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_PPPOE_CREDENTIALS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             Dhcp w = FactoryDAO.createSynch().getDhcp(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -380,6 +565,9 @@ public class EquipamentoController extends RestAbstractController {
     public Response setDhcp(DhcpIn in) {
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             MotiveService<Dhcp> fac = (MotiveService<Dhcp>) FactoryMotiveService.create(in.getDhcp());
             Dhcp dhcp = fac.alterar(in.getDevice(), in.getDhcp());
             l.setSaida(dhcp);
@@ -404,6 +592,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_DDNS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             DdnsInfo w = FactoryDAO.createSynch().getDdns(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -427,6 +618,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.GET_SERVICE_CLASS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             ServiceClass w = FactoryDAO.createSynch().getServiceClass(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -449,6 +643,9 @@ public class EquipamentoController extends RestAbstractController {
     public Response setServiceClass(ServiceClassIn in) {
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             Boolean w = FactoryDAO.createSynch().setServiceClass(in.getDevice(), in.getService());
             l.setSaida(w);
             return ok(w);
@@ -472,6 +669,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.SIP_DIAGNOSTICS);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             SipDiagnosticsService sip = new SipDiagnosticsServiceImpl();
             SipDiagnostics w = sip.consultar(in.getDevice(), in.getPhyref());
             l.setSaida(w);
@@ -496,10 +696,119 @@ public class EquipamentoController extends RestAbstractController {
 
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
             SipActivationService sip = new SipActivationServiceImpl();
             SipDiagnostics w = sip.ativar(in.getDevice(), in.getSip());
             l.setSaida(w);
             return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getPhoneNumber")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getPhoneNumber(GetPhoneNumberIn in) {
+
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            DirectoryNumber w = (DirectoryNumber) FactoryMotiveService.createTreeChanger(DirectoryNumber.class).consultar(
+                    in.getDevice(), in.getNumber());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getIptvDiagnostics")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getIptvDiagnostics(GetIptvDiagnosticsIn in) {
+
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            IptvDiagnostics w = (IptvDiagnostics) FactoryMotiveService.createTreeChanger(IptvDiagnostics.class).consultar(
+                    in.getDevice(), in.getIptvDiagnostics());
+            l.setSaida(w);
+            return ok(w);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/getT38Enabled")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getT38Enabled(GetT38EnabledIn in) {
+
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            T38Enabled t = (T38Enabled) FactoryMotiveService.createTreeChanger(T38Enabled.class).consultar(in.getDevice(), in.getT38());
+            l.setSaida(t);
+            return ok(t);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
+    @Path("/setT38Enabled")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setT38Enabled(SetT38EnabledIn in) {
+
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+            }
+            T38Enabled t = (T38Enabled) FactoryMotiveService.createTreeChanger(T38Enabled.class).alterar(in.getDevice(), in.getT38());
+            l.setSaida(t);
+            return ok(t);
         } catch (Exception e) {
             l.setSaida(e.getMessage());
             return internalServerError(e);

@@ -44,7 +44,10 @@
                     </execution>
                 </executions>
                 <configuration>
+                    
                     <properties>
+                        <java.net.preferIPv4Addresses>true</java.net.preferIPv4Addresses>
+                        <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
                         <swarm.http.port>7177</swarm.http.port>
                     </properties>
                 </configuration>
@@ -54,7 +57,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.12.4</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <!--<skipTests>true</skipTests>-->
                 </configuration>
             </plugin>
         </plugins>
@@ -76,7 +79,7 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>jaxrs</artifactId>
         </dependency>
-         
+
         <!-- https://mvnrepository.com/artifact/com.sun.xml.parsers/jaxp-ri -->
         <dependency>
             <groupId>com.sun.xml.parsers</groupId>
@@ -97,8 +100,7 @@
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
         </dependency>
-             
-             
+
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-ws-security -->
         <dependency>
             <groupId>old</groupId>
@@ -113,7 +115,7 @@
             <version>1.0.3</version>
         </dependency>   
         
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>old</groupId>
             <artifactId>xws-security</artifactId>
             <version>1.0.0</version>
@@ -225,6 +227,12 @@
         
         <dependency>
             <groupId>br.net.gvt.efika</groupId>
+            <artifactId>acs</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>br.net.gvt.efika</groupId>
             <artifactId>efika_customer</artifactId>
             <version>1.0.0</version>
         </dependency>
@@ -323,9 +331,10 @@
             <artifactId>mongodb-driver</artifactId>
             <version>3.6.0</version>
         </dependency>
+             
         
-        
-        
+
+
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>

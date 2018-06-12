@@ -5,10 +5,16 @@
  */
 package model.service.factory;
 
-import model.service.search.FindDevice;
-import model.service.search.FindDeviceImpl;
+import br.net.gvt.efika.acs.model.search.FindDevice;
+import br.net.gvt.efika.acs.model.search.FindDeviceImpl;
+import model.service.device.DeviceOnlineService;
+import model.service.device.DeviceOnlineServiceImpl;
+import model.service.device.FirmwareService;
+import model.service.device.FirmwareServiceImpl;
+import model.service.device.MotiveFromTreeService;
 import model.service.device.detail.DeviceDetailService;
 import model.service.device.detail.DeviceDetailServiceImpl;
+import model.service.device.impl.sip.T38EnabledService;
 import model.service.device.impl.wifi.WiFiService;
 import model.service.device.impl.wifi.WiFiServiceImpl;
 
@@ -26,12 +32,20 @@ public class FactoryService {
         return new DeviceDetailServiceImpl();
     }
 
+    public static DeviceOnlineService createDeviceOnlineService() {
+        return new DeviceOnlineServiceImpl();
+    }
+
     public static WiFiService createWiFiService() {
         return new WiFiServiceImpl();
     }
 
     public static WiFiService createServiceClassService() {
         return new WiFiServiceImpl();
+    }
+
+    public static FirmwareService createFirmwareService() {
+        return new FirmwareServiceImpl();
     }
 
 }

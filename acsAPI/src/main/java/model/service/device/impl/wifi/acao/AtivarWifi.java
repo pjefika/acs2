@@ -5,6 +5,7 @@
  */
 package model.service.device.impl.wifi.acao;
 
+import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 
 /**
@@ -13,9 +14,9 @@ import motive.hdm.synchdeviceops.ParameterValueStructDTO;
  */
 public class AtivarWifi extends ParameterValueStructDTO {
 
-    public AtivarWifi() {
-        this.name = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable";
+    public AtivarWifi(DeviceTR deviceTr, int wichone) {
+        this.name = deviceTr == DeviceTR.TR_181 ? "Device.WiFi.SSID." + wichone + ".Enable" : "InternetGatewayDevice.LANDevice.1.WLANConfiguration." + wichone + ".Enable";
         this.type = "boolean";
-        this.value = "true";
+        this.value = "1";
     }
 }

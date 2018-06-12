@@ -5,14 +5,14 @@
  */
 package model.service.device.detail;
 
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
+import br.net.gvt.efika.acs.model.device.info.DeviceInfo;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import dao.device.NbiDAO;
 import dao.device.SynchDeviceDAO;
 import dao.factory.FactoryDAO;
-import model.device.firmware.FirmwareInfo;
-import model.device.info.DeviceInfo;
-import model.service.dto.DetailOut;
-import model.service.dto.FirmwareOut;
+import br.net.gvt.efika.acs.model.dto.DetailOut;
+import br.net.gvt.efika.acs.model.dto.FirmwareOut;
 
 public class DeviceDetailServiceImpl implements DeviceDetailService {
 

@@ -5,20 +5,20 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.alcatel.hdm.service.nbi2.NbiDeviceID;
 import com.motive.www.remotehdm.NBIService._1_0.NBIServicePortStub;
 import dao.factory.FactoryNBI;
 import static dao.device.DeviceOperationFactory.adapterCaps;
-import dto.nbi.service.hdm.alcatel.com.NBIDeviceID; 
+import dto.nbi.service.hdm.alcatel.com.NBIDeviceID;
 import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
 import dto.nbi.service.hdm.alcatel.com.NBITemplate;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import model.device.firmware.FirmwareInfo;
 import notification.dto.nbi.service.hdm.alcatel.com.NBIDeviceActionResult;
 
 public class RemoteDAOImpl implements RemoteDAO {
@@ -44,7 +44,7 @@ public class RemoteDAOImpl implements RemoteDAO {
         return remote().createSingleFirmwareUpdateOperation(new NBIDeviceID(eqp.getDeviceId().getOUI(),
                 eqp.getDeviceId().getProductClass(),
                 eqp.getDeviceId().getProtocol(), eqp.getDeviceId().getSerialNumber()),
-                info.getPreferredVersion(), 15000);
+                info.getPreferredVersion().replace("-preferred", ""), 15000);
     }
 
     @Override

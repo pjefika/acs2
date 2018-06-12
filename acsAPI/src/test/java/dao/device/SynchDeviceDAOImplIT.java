@@ -5,36 +5,37 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.acs.model.device.DmzInfo;
+import br.net.gvt.efika.acs.model.device.ddns.DdnsInfo;
+import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.device.dns.Dns;
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
+import br.net.gvt.efika.acs.model.device.info.DeviceInfo;
+import br.net.gvt.efika.acs.model.device.interfacestatistics.InterfaceStatistics;
+import br.net.gvt.efika.acs.model.device.lanhost.LanDevice;
+import br.net.gvt.efika.acs.model.device.log.DeviceLog;
+import br.net.gvt.efika.acs.model.device.ping.PingRequest;
+import br.net.gvt.efika.acs.model.device.ping.PingResponse;
+import br.net.gvt.efika.acs.model.device.portmapping.PortMappingInfo;
+import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.device.serviceclass.ServiceClass;
+import br.net.gvt.efika.acs.model.device.sipactivation.SipActivation;
+import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
+import br.net.gvt.efika.acs.model.device.traceroute.TraceRouteRequest;
+import br.net.gvt.efika.acs.model.device.wan.WanInfo;
+import br.net.gvt.efika.acs.model.device.wifi.WifiInfoFull;
+import br.net.gvt.efika.acs.model.device.xdsldiagnostics.XdslDiagnostics;
 import br.net.gvt.efika.util.json.JacksonMapper;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.fasterxml.jackson.core.type.TypeReference;
 import init.SingletonDeviceTest;
 import java.util.ArrayList;
 import java.util.List;
-import model.device.DmzInfo;
-import model.device.ddns.DdnsInfo;
-import model.device.dhcp.Dhcp;
-import model.device.dhcp.DhcpSet;
-import model.device.firmware.FirmwareInfo;
-import model.device.info.DeviceInfo;
-import model.device.interfacestatistics.InterfaceStatistics;
-import model.device.lanhost.LanDevice;
-import model.device.log.DeviceLog;
-import model.device.log.DeviceLogR;
-import model.device.ping.PingRequest;
-import model.device.ping.PingResponse;
-import model.device.portmapping.PortMappingInfo;
-import model.device.pppoe.PPPoECredentialsInfo;
-import model.device.serviceclass.ServiceClass;
-import model.device.sipactivation.SipActivation;
-import model.device.sipdiagnostics.SipDiagnostics;
-import model.device.traceroute.TraceRouteRequest;
-import model.device.wan.WanInfo;
-import model.device.wifi.WifiInfoFull;
-import model.device.xdsldiagnostics.XdslDiagnostics;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
+import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
+import motive.hdm.synchdeviceops.ParameterValueStructDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -50,7 +51,8 @@ import static org.junit.Assert.*;
 public class SynchDeviceDAOImplIT {
 
     private final SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-    private final NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();
+    private NbiDeviceData eqp;
+    //SingletonDeviceTest.getInstance().getDevice();
 
     public SynchDeviceDAOImplIT() {
     }
@@ -65,6 +67,11 @@ public class SynchDeviceDAOImplIT {
 
     @Before
     public void setUp() {
+        try {
+            eqp = (NbiDeviceData) new JacksonMapper<>(NbiDeviceData.class).deserialize("{\"domainName\":null,\"activated\":true,\"alarmsEnabled\":true,\"captured\":false,\"commonUniqueIdentifier\":null,\"community\":null,\"connectionRequestPassword\":\"5ce4a65587ede20ceb52aa0080b1e8f3\",\"connectionRequestURL\":\"http://179.181.66.41:7547/\",\"connectionRequestUsername\":\"107223E37FB2-RTF3507VW-N2-009096\",\"currentTime\":1528574805000,\"customAttribute1\":\"10:72:23:E3:7F:B2\",\"customAttribute10\":null,\"customAttribute2\":null,\"customAttribute3\":null,\"customAttribute4\":null,\"customAttribute5\":null,\"customAttribute6\":null,\"customAttribute7\":null,\"customAttribute8\":null,\"customAttribute9\":null,\"deleted\":false,\"deviceClass\":null,\"deviceGUID\":31394283,\"deviceId\":{\"oui\":\"009096\",\"productClass\":\"RTF3507VW-N2\",\"protocol\":\"DEVICE_PROTOCOL_DSLFTR069v1\",\"serialNumber\":\"107223E37FB2\"},\"dynamicVariables\":[{\"encrypt\":false,\"name\":\"inform.itoss.activation.msg\",\"sensitive\":false,\"value\":\"{'operation':'PROVISIONING','mac':'10:72:23:E3:7F:B2','pclass':'RTF3507VW-N2','guid':'31394283','serialNumber':'107223E37FB2','subscriberId':'NO_SUBSCRIBER_IT','parentId':'','parentMac':'','parentIp':'null','timestamp':'2018-04-09T17:26:36.332-03:00'}\"},{\"encrypt\":false,\"name\":\"sip.retries\",\"sensitive\":false,\"value\":\"0\"},{\"encrypt\":false,\"name\":\"vivo.voip.result.data.1\",\"sensitive\":false,\"value\":\"+555131108218\"}],\"firstContactTime\":1523305592553,\"lastActivationTime\":1523305594160,\"lastCapturedBy\":null,\"lastCapturedTime\":null,\"lastContactTime\":1528585551977,\"macAddress\":\"10:72:23:E3:7F:B2\",\"managed\":true,\"manufacturer\":\"Askey\",\"model\":\"Device:1\",\"modelName\":\"RTF3507VW-N2\",\"port\":0,\"portMappingRetryCount\":0,\"serviceTagArray\":[{\"name\":\"inform.itoss.activation.status\",\"value\":\"final_notification_sent_at[2018-04-09T17:26:36.440-03:00]_status[OK]\",\"copyOnFactoryReset\":false,\"factoryResetValue\":null},{\"name\":\"inform.itoss.hpna.status\",\"value\":\"final_notification_sent_at[2018-04-09T17:43:05.064-03:00][12/12]_id[1523306582939]_status[OK]\",\"copyOnFactoryReset\":false,\"factoryResetValue\":null},{\"name\":\"notifyIT\",\"value\":\"true\",\"copyOnFactoryReset\":false,\"factoryResetValue\":null},{\"name\":\"vivo.voip\",\"value\":\"enabled\",\"copyOnFactoryReset\":false,\"factoryResetValue\":null}],\"softwareVersion\":\"BR_SG_s00.00_g000_3507019\",\"subscriberID\":\"PAE-814RXLRF1O-013\",\"type\":0,\"userTagArray\":[],\"httppublicPassword\":\"1523305593192a\",\"httppublicUsername\":\"1523305593192u\",\"pppusername\":null,\"ipaddress\":\"179.181.66.41\",\"ppppassword\":null}");
+        } catch (Exception e) {
+        }
+
     }
 
     @After
@@ -91,9 +98,8 @@ public class SynchDeviceDAOImplIT {
         try {
             System.out.println("getDeviceInfo");
 
-            SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
             DeviceInfo deviceInfo = instance.getDeviceInfo(eqp);
-            System.out.println("end");
+            System.out.println(new JacksonMapper<>(DeviceInfo.class).serialize(deviceInfo));
             // TODO review the generated test code and remove the default call to fail.
         } catch (Exception e) {
             fail(e.getMessage());
@@ -154,7 +160,8 @@ public class SynchDeviceDAOImplIT {
             System.out.println("getParameters");
             SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
             List<ParameterInfoStructDTO> parameters = instance.getParameters(eqp);
-//            System.out.println(GsonUtil.serialize(parameters));
+            System.out.println(new JacksonMapper<>(new TypeReference<List<ParameterInfoStructDTO>>() {
+            }).serialize(parameters));
             assertTrue("Cheio", !parameters.isEmpty());
         } catch (Exception e) {
             e.printStackTrace();
@@ -171,10 +178,12 @@ public class SynchDeviceDAOImplIT {
         try {
             System.out.println("getParametersValues");
             List<String> paths = new ArrayList<>();
-            paths.add("InternetGatewayDevice.LANDevice.1.WLANConfiguration.");
+//            paths.add("InternetGatewayDevice.Services.VoiceService.1.VoiceProfile.1.Line.1.DirectoryNumber");
+            paths.add("Device.Services.VoiceService.1.VoiceProfile.1.Line.1.DirectoryNumber");
 
             GetParameterValuesResponseDTO parameters = instance.getParametersValues(eqp, paths);
-//            System.out.println(GsonUtil.serialize(parameters));
+
+            System.out.println(new JacksonMapper<>(GetParameterValuesResponseDTO.class).serialize(parameters));
             assertTrue("Cheio", parameters != null);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -215,12 +224,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetWanInfo() throws Exception {
         System.out.println("getWanInfo");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        WanInfo expResult = null;
         WanInfo result = instance.getWanInfo(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper<>(WanInfo.class).serialize(result));
     }
 
     /**
@@ -230,12 +235,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetServiceClass() throws Exception {
         System.out.println("getServiceClass");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        ServiceClass expResult = null;
         ServiceClass result = instance.getServiceClass(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper<>(ServiceClass.class).serialize(result));
     }
 
     /**
@@ -245,13 +246,11 @@ public class SynchDeviceDAOImplIT {
     public void testSetServiceClass() throws Exception {
         System.out.println("setServiceClass");
 
-        ServiceClass sc = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        Boolean expResult = null;
+        ServiceClass sc = new ServiceClass();
+        sc.setClassOfService("service05");
+
         Boolean result = instance.setServiceClass(eqp, sc);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(result.toString());
     }
 
     /**
@@ -273,12 +272,8 @@ public class SynchDeviceDAOImplIT {
     public void testGetDmzInfo() throws Exception {
         System.out.println("getDmzInfo");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-        DmzInfo expResult = null;
         DmzInfo result = instance.getDmzInfo(eqp);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper<>(DmzInfo.class).serialize(result));
     }
 
     /**
@@ -312,7 +307,6 @@ public class SynchDeviceDAOImplIT {
     public void testGetDhcp() throws Exception {
         System.out.println("getDhcp");
 
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         Dhcp result = instance.getDhcp(eqp);
         System.out.println(new JacksonMapper(Dhcp.class).serialize(result));
     }
@@ -470,7 +464,7 @@ public class SynchDeviceDAOImplIT {
 
         SipDiagnostics result = instance.getSipDiagnostics(eqp, 1);
 //        SipDiagnostics result1 = instance.getSipDiagnostics(eqp, 2);
-        System.out.println("phyReference 1->"+new JacksonMapper(SipDiagnostics.class).serialize(result));
+        System.out.println("phyReference 1->" + new JacksonMapper(SipDiagnostics.class).serialize(result));
 //        System.out.println("phyReference 2->"+new JacksonMapper(SipDiagnostics.class).serialize(result1));
     }
 
@@ -493,6 +487,127 @@ public class SynchDeviceDAOImplIT {
         sip.setT38Enabled("0");
         Boolean result = instance.setSipActivation(eqp, sip);
         assertTrue(result);
+    }
+
+    /**
+     * Test of getParameterAttributes method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testGetParameterAttributes() throws Exception {
+        System.out.println("getParameterAttributes");
+        NbiDeviceData eqp = null;
+        String path = "";
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        GetParameterAttributesResponseDTO expResult = null;
+        GetParameterAttributesResponseDTO result = instance.getParameterAttributes(eqp, path);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setParametersValues method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testSetParametersValues() throws Exception {
+        System.out.println("setParametersValues");
+        NbiDeviceData eqp = null;
+        List<ParameterValueStructDTO> p = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        instance.setParametersValues(eqp, p);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setSipDeactivation method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testSetSipDeactivation() throws Exception {
+        System.out.println("setSipDeactivation");
+        NbiDeviceData eqp = null;
+        Integer phyref = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        Boolean expResult = null;
+        Boolean result = instance.setSipDeactivation(eqp, phyref);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of sipRestart method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testSipRestart() throws Exception {
+        System.out.println("sipRestart");
+        NbiDeviceData eqp = null;
+        Integer phyref = null;
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        Boolean expResult = null;
+        Boolean result = instance.sipRestart(eqp, phyref);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of exec method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testExec() throws Exception {
+        System.out.println("exec");
+        NbiDeviceData eqp = null;
+        List<Object> json = null;
+        int i = 0;
+        NbiSingleDeviceOperationOptions opt = null;
+        long l = 0L;
+        String str = "";
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        StringResponseDTO expResult = null;
+        StringResponseDTO result = instance.exec(eqp, json, i, opt, l, str);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of forceOnline method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testForceOnline() throws Exception {
+        System.out.println("forceOnline");
+
+        Boolean result = instance.forceOnline(eqp);
+
+        System.out.println(new JacksonMapper(Boolean.class).serialize(result));
+    }
+
+    /**
+     * Test of getDns method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testGetDns() throws Exception {
+        System.out.println("getDns");
+
+        Dns result = instance.getDns(eqp);
+        System.out.println(new JacksonMapper<>(Dns.class).serialize(result));
+    }
+
+    /**
+     * Test of setDns method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testSetDns() throws Exception {
+        System.out.println("setDns");
+        NbiDeviceData eqp = null;
+        String dnsServers = "";
+        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        Boolean expResult = null;
+        Boolean result = instance.setDns(eqp, dnsServers);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }
