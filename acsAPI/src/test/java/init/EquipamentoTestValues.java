@@ -19,7 +19,7 @@ import dao.factory.FactoryDAO;
 public class EquipamentoTestValues {
 
     /**
-     * 
+     *
      */
     public static Long GUID = new Long(31394283);
 
@@ -29,7 +29,5 @@ public class EquipamentoTestValues {
     public NbiDeviceData getEqp() {
         return eqp;
     }
-    
-    
 
 }

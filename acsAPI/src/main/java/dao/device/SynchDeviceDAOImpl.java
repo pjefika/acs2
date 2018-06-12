@@ -258,6 +258,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
         String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
         if (a.getValue().contains(wifiDisable)) {
+            
             throw new WifiInativoException();
         }
         System.out.println("Retorno: " + a.getValue());
