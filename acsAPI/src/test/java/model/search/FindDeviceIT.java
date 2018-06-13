@@ -7,18 +7,17 @@ package model.search;
 
 import br.net.gvt.efika.acs.model.search.SearchCriteria;
 import br.net.gvt.efika.acs.model.search.SearchIn;
-import br.net.gvt.efika.acs.model.search.FindDeviceImpl;
 import br.net.gvt.efika.acs.model.search.FindDevice;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
 import br.net.gvt.efika.acs.model.exception.SearchNotFound;
+import model.service.device.FindDeviceImpl;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import parser.SoutUtil;
 
 /**
  *
@@ -58,7 +57,7 @@ public class FindDeviceIT {
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {
-                SoutUtil.print(t);
+//                SoutUtil.print(t);
             });
             assertTrue(!result.isEmpty());
             // TODO review the generated test code and remove the default call to fail.
@@ -75,7 +74,7 @@ public class FindDeviceIT {
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {
-                SoutUtil.print(t);
+//                SoutUtil.print(t);
             });
             assertTrue(!result.isEmpty());
             // TODO review the generated test code and remove the default call to fail.
@@ -91,7 +90,7 @@ public class FindDeviceIT {
             SearchIn in = new SearchIn(SearchCriteria.MAC, "2C:39:96:89:D2:8F");
             List<NbiDeviceData> result = instance.find(in);
             result.forEach((t) -> {
-                SoutUtil.print(t);
+//                SoutUtil.print(t);
             });
             
             assertTrue(!result.isEmpty());
@@ -120,7 +119,7 @@ public class FindDeviceIT {
             List<NbiDeviceData> result = instance.find(in);
 
             result.forEach((t) -> {
-                SoutUtil.print(t);
+//                SoutUtil.print(t);
             });
             assertTrue(!result.isEmpty());
             // TODO review the generated test code and remove the default call to fail.

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.net.gvt.efika.acs.model.search;
+package model.service.device;
 
 import com.alcatel.hdm.service.nbi2.NBIException_Exception;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
@@ -12,6 +12,9 @@ import dao.factory.FactoryDAO;
 import java.util.List;
 import br.net.gvt.efika.acs.model.exception.SearchCriteriaException;
 import br.net.gvt.efika.acs.model.exception.SearchNotFound;
+import br.net.gvt.efika.acs.model.search.FindDevice;
+import static br.net.gvt.efika.acs.model.search.SearchCriteria.*;
+import br.net.gvt.efika.acs.model.search.SearchIn;
 
 /**
  *
