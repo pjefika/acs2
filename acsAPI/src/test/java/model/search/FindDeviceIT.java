@@ -7,11 +7,11 @@ package model.search;
 
 import br.net.gvt.efika.acs.model.search.SearchCriteria;
 import br.net.gvt.efika.acs.model.search.SearchIn;
-import br.net.gvt.efika.acs.model.search.FindDeviceImpl;
 import br.net.gvt.efika.acs.model.search.FindDevice;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.List;
 import br.net.gvt.efika.acs.model.exception.SearchNotFound;
+import model.service.device.FindDeviceImpl;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
