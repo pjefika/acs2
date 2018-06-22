@@ -462,7 +462,7 @@ public class SynchDeviceDAOImplIT {
     public void testGetSipDiagnostics() throws Exception {
         System.out.println("getSipDiagnostics");
 
-        SipDiagnostics result = instance.getSipDiagnostics(eqp, 1);
+        SipDiagnostics result = instance.getSipDiagnostics(eqp, 2);
 //        SipDiagnostics result1 = instance.getSipDiagnostics(eqp, 2);
         System.out.println("phyReference 1->" + new JacksonMapper(SipDiagnostics.class).serialize(result));
 //        System.out.println("phyReference 2->"+new JacksonMapper(SipDiagnostics.class).serialize(result1));
