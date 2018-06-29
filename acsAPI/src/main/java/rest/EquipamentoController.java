@@ -119,6 +119,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.FORCE_ONLINE);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
+            }
             Boolean w = FactoryService.createDeviceOnlineService().isOnline(in.getDevice());
             l.setSaida(w);
             return ok(w);

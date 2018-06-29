@@ -55,10 +55,10 @@ public class NbiDAO_ImplIT {
     @Test
     public void testFindDeviceByGUID() throws Exception {
         System.out.println("findDeviceByGUID");
-        Long guid = 26648107l;
+        Long guid = 26113822l;
 
         NbiDeviceData result = instance.findDeviceByGUID(guid);
-        System.out.println(new JacksonMapper(NbiDeviceData.class).equals(result));
+        System.out.println(new JacksonMapper(NbiDeviceData.class).serialize(result));
     }
 
     /**
