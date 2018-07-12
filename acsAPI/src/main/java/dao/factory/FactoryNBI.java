@@ -82,10 +82,10 @@ public class FactoryNBI {
     }
 
     public static void applyProxy() {
-        if (EndpointEnum.LAB == ENDPOINT) {
-            System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
-            System.setProperty("http.proxyPort", "8080");
-        }
+//        if (EndpointEnum.LAB == ENDPOINT) {
+//            System.setProperty("http.proxyHost", "proxysp.vivo.com.br");
+//            System.setProperty("http.proxyPort", "8080");
+//        }
     }
 
     public static void removeProxy() {

@@ -284,6 +284,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public Dhcp getDhcp(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException, Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9509, opt, TIMEOUT, "");
+        System.out.println(a.getValue());
         return (Dhcp) new JacksonMapper(Dhcp.class).deserialize(a.getValue());
     }
 

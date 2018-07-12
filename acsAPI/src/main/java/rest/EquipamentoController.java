@@ -543,7 +543,7 @@ public class EquipamentoController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getDhcp(GetDeviceDataIn in) {
-        in.setAcao(AcaoAcsEnum.GET_PPPOE_CREDENTIALS);
+        in.setAcao(AcaoAcsEnum.GET_DHCP);
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {

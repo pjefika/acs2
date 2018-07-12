@@ -51,8 +51,8 @@ import static org.junit.Assert.*;
 public class SynchDeviceDAOImplIT {
 
     private final SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-    private NbiDeviceData eqp;
-    //SingletonDeviceTest.getInstance().getDevice();
+    private NbiDeviceData eqp
+            = SingletonDeviceTest.getInstance().getDevice();
 
     public SynchDeviceDAOImplIT() {
     }
@@ -134,6 +134,7 @@ public class SynchDeviceDAOImplIT {
             Boolean result = instance.checkOnline(eqp);
             assertEquals(expResult, result);
         } catch (Exception e) {
+            e.printStackTrace();
             fail("The test case is a prototype.");
         }
 
@@ -317,7 +318,11 @@ public class SynchDeviceDAOImplIT {
     @Test
     public void testSetDhcp() throws Exception {
         System.out.println("setDhcp");
-        Dhcp dh = instance.getDhcp(eqp);
+        Dhcp dh = new Dhcp();
+                //instance.getDhcp(eqp);
+        dh.setDHCPServerEnable(true);
+        dh.setMaxAddress("192.168.15.240");
+        dh.setMinAddress("192.168.15.2");
 
         Boolean result = instance.setDhcp(eqp, dh);
         System.out.println(result);
