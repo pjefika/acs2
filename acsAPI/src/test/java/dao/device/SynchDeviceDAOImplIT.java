@@ -500,7 +500,7 @@ public class SynchDeviceDAOImplIT {
     @Test
     public void testGetParameterAttributes() throws Exception {
         System.out.println("getParameterAttributes");
-        NbiDeviceData eqp = null;
+     
         String path = "";
         SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         GetParameterAttributesResponseDTO expResult = null;

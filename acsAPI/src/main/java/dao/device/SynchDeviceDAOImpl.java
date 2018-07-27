@@ -254,7 +254,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     @Override
     public List<WifiInfoFull> getWifiInfoFull(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
-        StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9529, opt, TIMEOUT, "");
+        StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9511, opt, TIMEOUT, "");
 
         String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
         if (a.getValue().contains(wifiDisable)) {
