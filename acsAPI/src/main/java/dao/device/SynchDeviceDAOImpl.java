@@ -326,10 +326,10 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public Boolean setWifiInfoFull(NbiDeviceData eqp1, WifiInfoFull wifi) throws DeviceOperationException, NBIException, Exception {
+    public Boolean setWifiInfoFull(NbiDeviceData eqp1, WifiInfoFull wifi, String index) throws DeviceOperationException, NBIException, Exception {
 //        try {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
-        WifiInfoSet adapter = DeviceOperationFactory.getWifiInfoSetFull(wifi);
+        WifiInfoSet adapter = DeviceOperationFactory.getWifiInfoSetFull(wifi, index);
         String jsonWifi;
         jsonWifi = new JacksonMapper(WifiInfoSet.class).serialize(adapter);
 
