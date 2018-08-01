@@ -284,6 +284,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     public Dhcp getDhcp(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException, Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9509, opt, TIMEOUT, "");
+        System.out.println(a.getValue());
         return (Dhcp) new JacksonMapper(Dhcp.class).deserialize(a.getValue());
     }
 
@@ -325,10 +326,10 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public Boolean setWifiInfoFull(NbiDeviceData eqp1, WifiInfoFull wifi) throws DeviceOperationException, NBIException, Exception {
+    public Boolean setWifiInfoFull(NbiDeviceData eqp1, WifiInfoFull wifi, String index) throws DeviceOperationException, NBIException, Exception {
 //        try {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
-        WifiInfoSet adapter = DeviceOperationFactory.getWifiInfoSetFull(wifi);
+        WifiInfoSet adapter = DeviceOperationFactory.getWifiInfoSetFull(wifi, index);
         String jsonWifi;
         jsonWifi = new JacksonMapper(WifiInfoSet.class).serialize(adapter);
 

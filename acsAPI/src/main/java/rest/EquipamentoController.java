@@ -119,6 +119,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.FORCE_ONLINE);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
+            }
             Boolean w = FactoryService.createDeviceOnlineService().isOnline(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -166,7 +169,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             WifiNets wifi = FactoryService.createWiFiService().consultar(in.getDevice());
             l.setSaida(wifi);
@@ -192,7 +195,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             FactoryService.createWiFiService().ativar(in.getDevice());
             WifiNets wifi = FactoryService.createWiFiService().consultar(in.getDevice());
@@ -218,7 +221,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             WifiNets wifi = FactoryService.createWiFiService().alterar(in.getDevice(), in.getWifi());
             l.setSaida(wifi);
@@ -245,7 +248,7 @@ public class EquipamentoController extends RestAbstractController {
 
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             List<LanDevice> lst = FactoryDAO.createSynch().getLanHosts(in.getDevice());
             l.setSaida(lst);
@@ -271,7 +274,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             Dns w = FactoryDAO.createSynch().getDns(in.getDevice());
             l.setSaida(w);
@@ -297,7 +300,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             Boolean w = FactoryDAO.createSynch().setDns(in.getDevice(), in.getDns().getDnsServers());
             l.setSaida(w);
@@ -323,7 +326,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             WanInfo w = FactoryDAO.createSynch().getWanInfo(in.getDevice());
             l.setSaida(w);
@@ -349,7 +352,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             List<InterfaceStatistics> w = FactoryDAO.createSynch().getInterfaceStatistics(in.getDevice());
             l.setSaida(w);
@@ -466,6 +469,9 @@ public class EquipamentoController extends RestAbstractController {
         in.setAcao(AcaoAcsEnum.REBOOT);
         LogEntity l = in.create();
         try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
+            }
             Boolean w = FactoryDAO.createSynch().reboot(in.getDevice());
             l.setSaida(w);
             return ok(w);
@@ -490,7 +496,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             Boolean w = FactoryDAO.createSynch().factoryReset(in.getDevice());
             l.setSaida(w);
@@ -515,7 +521,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             PingResponse w = FactoryDAO.createSynch().pingDiagnostic(in.getDevice(), in.getRequest());
             l.setSaida(w);
@@ -537,11 +543,11 @@ public class EquipamentoController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getDhcp(GetDeviceDataIn in) {
-        in.setAcao(AcaoAcsEnum.GET_PPPOE_CREDENTIALS);
+        in.setAcao(AcaoAcsEnum.GET_DHCP);
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             Dhcp w = FactoryDAO.createSynch().getDhcp(in.getDevice());
             l.setSaida(w);
@@ -566,7 +572,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             MotiveService<Dhcp> fac = (MotiveService<Dhcp>) FactoryMotiveService.create(in.getDhcp());
             Dhcp dhcp = fac.alterar(in.getDevice(), in.getDhcp());
@@ -593,7 +599,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             DdnsInfo w = FactoryDAO.createSynch().getDdns(in.getDevice());
             l.setSaida(w);
@@ -619,7 +625,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             ServiceClass w = FactoryDAO.createSynch().getServiceClass(in.getDevice());
             l.setSaida(w);
@@ -644,7 +650,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             Boolean w = FactoryDAO.createSynch().setServiceClass(in.getDevice(), in.getService());
             l.setSaida(w);
@@ -670,7 +676,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             SipDiagnosticsService sip = new SipDiagnosticsServiceImpl();
             SipDiagnostics w = sip.consultar(in.getDevice(), in.getPhyref());
@@ -697,7 +703,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             SipActivationService sip = new SipActivationServiceImpl();
             SipDiagnostics w = sip.ativar(in.getDevice(), in.getSip());
@@ -724,7 +730,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             DirectoryNumber w = (DirectoryNumber) FactoryMotiveService.createTreeChanger(DirectoryNumber.class).consultar(
                     in.getDevice(), in.getNumber());
@@ -751,7 +757,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             IptvDiagnostics w = (IptvDiagnostics) FactoryMotiveService.createTreeChanger(IptvDiagnostics.class).consultar(
                     in.getDevice(), in.getIptvDiagnostics());
@@ -778,7 +784,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             T38Enabled t = (T38Enabled) FactoryMotiveService.createTreeChanger(T38Enabled.class).consultar(in.getDevice(), in.getT38());
             l.setSaida(t);
@@ -804,7 +810,7 @@ public class EquipamentoController extends RestAbstractController {
         LogEntity l = in.create();
         try {
             if (in.getDevice() == null) {
-                in.setDevice(FactoryService.createDeviceDetailService().consultar(in.getGuid()).getDevice());
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
             }
             T38Enabled t = (T38Enabled) FactoryMotiveService.createTreeChanger(T38Enabled.class).alterar(in.getDevice(), in.getT38());
             l.setSaida(t);

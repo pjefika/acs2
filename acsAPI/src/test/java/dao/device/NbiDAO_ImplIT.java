@@ -27,7 +27,8 @@ public class NbiDAO_ImplIT {
 
     private NbiDAO_Impl instance = new NbiDAO_Impl();
 
-    private final NbiDeviceData nbi = SingletonDeviceTest.getInstance().getDevice();
+    private final NbiDeviceData nbi = null;
+            //SingletonDeviceTest.getInstance().getDevice();
 
     public NbiDAO_ImplIT() {
     }
@@ -54,10 +55,10 @@ public class NbiDAO_ImplIT {
     @Test
     public void testFindDeviceByGUID() throws Exception {
         System.out.println("findDeviceByGUID");
-        Long guid = 26648107l;
+        Long guid = 26113822l;
 
         NbiDeviceData result = instance.findDeviceByGUID(guid);
-        System.out.println(new JacksonMapper(NbiDeviceData.class).equals(result));
+        System.out.println(new JacksonMapper(NbiDeviceData.class).serialize(result));
     }
 
     /**
@@ -66,17 +67,11 @@ public class NbiDAO_ImplIT {
     @Test
     public void testFindDevicesBySubscriberId() throws Exception {
         System.out.println("findDevicesBySubscriberId");
-        String subscriberId = "NO_SUBSCRIBER";
+        String subscriberId = "NLP-8186VQFHG-013";
 
-        List<NbiDeviceData> expResult = null;
+//        List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDevicesBySubscriberId(subscriberId);
-        for (NbiDeviceData nbiDeviceData : result) {
-//            System.out.println("LeDevice: " + GsonUtil.serialize(nbiDeviceData));
-        }
-
-        assertTrue(result != null);
-        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
+        System.out.println(new JacksonMapper<>(List.class).serialize(result));
     }
 
     /**
