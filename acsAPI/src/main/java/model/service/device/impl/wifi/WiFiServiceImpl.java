@@ -95,7 +95,7 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 //            synch().setParametersValues(device, lst);
             synch().setWifiInfoFull(device, wifis.getWifi().get(0), "1");
             Thread.sleep(8000);
-            synch().setWifiInfoFull(device, wifis.getWifi().get(4), "5");
+            synch().setWifiInfoFull(device, wifis.getWifi().get(wifis.getWifi().size()-1), "5");
         } catch (Exception e) {
             e.printStackTrace();
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_181);
