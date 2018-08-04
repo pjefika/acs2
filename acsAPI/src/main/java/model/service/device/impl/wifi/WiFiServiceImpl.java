@@ -41,13 +41,13 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 //            return new WifiNets(WifiParser.parse(wifis));
 //        }
         return new WifiNets(synch().getWifiInfoFull(device));
-        
+
     }
-    
+
     @Override
     public void ativar(NbiDeviceData device) throws Exception {
         System.out.println("Ativar WiFi...");
-        
+
         try {
             List<ParameterValueStructDTO> lst = new ArrayList<>();
             lst.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_098, 1));
@@ -78,31 +78,30 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 //            }
         }
     }
-    
+
     @Override
     public void desativar(NbiDeviceData device) throws Exception {
         System.out.println("Desativar WiFi...");
-        
+
         List<ParameterValueStructDTO> lst = new ArrayList<>();
 //        lst.add(SetParameters.DESATIVAR_WIFI);
         synch().setParametersValues(device, lst);
     }
-    
+
     @Override
     public WifiNets alterar(NbiDeviceData device, WifiNets wifis) throws Exception {
         try {
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_098);
 //            synch().setParametersValues(device, lst);
-            synch().setWifiInfoFull(device, wifis.getWifi().get(0), "1");
-            Thread.sleep(8000);
-            synch().setWifiInfoFull(device, wifis.getWifi().get(wifis.getWifi().size()-1), "5");
+            synch().setWifiInfoFull(device, wifis.getWifi().get(0));
+
         } catch (Exception e) {
             e.printStackTrace();
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_181);
 //            synch().setParametersValues(device, lst);
         }
-        
+
         return consultar(device);
     }
-    
+
 }

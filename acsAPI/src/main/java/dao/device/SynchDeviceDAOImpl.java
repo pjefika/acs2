@@ -258,14 +258,18 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
         String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
         if (a.getValue().contains(wifiDisable)) {
-            
             throw new WifiInativoException();
         }
-        System.out.println("Retorno: " + a.getValue());
+        System.out.println("Retorno9529: " + a.getValue());
+        StringResponseDTO b = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9511, opt, TIMEOUT, "");
+        System.out.println("Retorno9511: " + b.getValue());
+        
         List<WifiInfoFull> wifi = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
         }).fromJSON(a.getValue());
+        List<WifiInfoFull> wifib = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
+        }).fromJSON(b.getValue());
 
-        return wifi;
+        return DeviceOperationFactory.mergeWifis(wifi, wifib);
     }
 
     @Override
@@ -326,10 +330,10 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     }
 
     @Override
-    public Boolean setWifiInfoFull(NbiDeviceData eqp1, WifiInfoFull wifi, String index) throws DeviceOperationException, NBIException, Exception {
+    public Boolean setWifiInfoFull(NbiDeviceData eqp1, WifiInfoFull wifi) throws DeviceOperationException, NBIException, Exception {
 //        try {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
-        WifiInfoSet adapter = DeviceOperationFactory.getWifiInfoSetFull(wifi, index);
+        WifiInfoSet adapter = DeviceOperationFactory.getWifiInfoSetFull(wifi);
         String jsonWifi;
         jsonWifi = new JacksonMapper(WifiInfoSet.class).serialize(adapter);
 
