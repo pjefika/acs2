@@ -99,12 +99,14 @@ public class DeviceOperationFactory {
     public static List<WifiInfoFull> mergeWifis(List<WifiInfoFull> a, List<WifiInfoFull> b) {
 
         for (int i = 0; i < a.size(); i++) {
-            a.get(i).setIndex(b.get(i).getIndex());
-            a.get(i).setAuthentication(b.get(i).getAuthentication());
-            a.get(i).setEncryptation(b.get(i).getEncryptation());
-            a.get(i).setFrequency(b.get(i).getFrequency());
-            a.get(i).setSsidPassword(b.get(i).getSsidPassword());
-            a.get(i).setBroadcastEnabled(b.get(i).getBroadcastEnabled());
+            if (b.size() > i) {
+                a.get(i).setIndex(b.get(i).getIndex());
+                a.get(i).setAuthentication(b.get(i).getAuthentication());
+                a.get(i).setEncryptation(b.get(i).getEncryptation());
+                a.get(i).setFrequency(b.get(i).getFrequency());
+                a.get(i).setSsidPassword(b.get(i).getSsidPassword());
+                a.get(i).setBroadcastEnabled(b.get(i).getBroadcastEnabled());
+            }
         }
 
         return a;
