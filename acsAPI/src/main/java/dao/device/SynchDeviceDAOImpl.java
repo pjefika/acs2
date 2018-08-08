@@ -113,11 +113,17 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         GetParameterNamesDTO g = new GetParameterNamesDTO();
         g.setNextLevel(true);
         try {
-            g.setParameterPath("");
-            return synch().getParameterNames(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "").getParameterList();
+            try {
+                g.setParameterPath("");
+                return synch().getParameterNames(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "").getParameterList();
+            } catch (Exception e) {
+                g.setParameterPath("InternetGatewayDevice.");
+                return synch().getParameterNames(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "").getParameterList();
+            }
+        } catch (DeviceOperationException e) {
+            throw new UnsupportedException();
         } catch (Exception e) {
-            g.setParameterPath("InternetGatewayDevice.");
-            return synch().getParameterNames(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "").getParameterList();
+            throw new SemRespostaException();
         }
 
     }
@@ -145,7 +151,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
                     throw new SemRespostaException();
                 }
             } catch (Exception exc) {
-                throw exc;
+                throw new SemRespostaException();
             }
         }
 
@@ -161,31 +167,49 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
     @Override
     public GetParameterValuesResponseDTO getParameterValue(NbiDeviceData eqp, String path) throws Exception {
-        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+        try {
+            NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
 
-        motive.hdm.synchdeviceops.GetParameterValuesDTO g = new motive.hdm.synchdeviceops.GetParameterValuesDTO();
-        g.getParameterNames().add(0, path);
-        return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+            motive.hdm.synchdeviceops.GetParameterValuesDTO g = new motive.hdm.synchdeviceops.GetParameterValuesDTO();
+            g.getParameterNames().add(0, path);
+            return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+        } catch (DeviceOperationException e) {
+            throw new UnsupportedException();
+        } catch (Exception e) {
+            throw new SemRespostaException();
+        }
     }
 
     public GetParameterAttributesResponseDTO getParameterAttributes(NbiDeviceData eqp, String path) throws Exception {
-        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
-        GetParameterAttributesDTO g = new GetParameterAttributesDTO();
-        g.getParameterNames().add(0, path);
-        return synch().getParameterAttributes(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+        try {
+            NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+            GetParameterAttributesDTO g = new GetParameterAttributesDTO();
+            g.getParameterNames().add(0, path);
+            return synch().getParameterAttributes(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+        } catch (DeviceOperationException e) {
+            throw new UnsupportedException();
+        } catch (Exception e) {
+            throw new SemRespostaException();
+        }
     }
 
     @Override
     public void setParametersValues(NbiDeviceData eqp, List<ParameterValueStructDTO> p) throws Exception {
-        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
-        motive.hdm.synchdeviceops.SetParameterValuesDTO g = new motive.hdm.synchdeviceops.SetParameterValuesDTO();
+        try {
+            NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+            motive.hdm.synchdeviceops.SetParameterValuesDTO g = new motive.hdm.synchdeviceops.SetParameterValuesDTO();
 
-        p.forEach((t) -> {
-            g.getParameterValueStructs().add(t);
-        });
+            p.forEach((t) -> {
+                g.getParameterValueStructs().add(t);
+            });
 
-        SetParameterValuesResponseDTO s = synch().setParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
-        System.out.println("Retorno: " + s.getStatus());
+            SetParameterValuesResponseDTO s = synch().setParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+            System.out.println("Retorno: " + s.getStatus());
+        } catch (DeviceOperationException e) {
+            throw new UnsupportedException();
+        } catch (Exception e) {
+            throw new SemRespostaException();
+        }
     }
 
     @Override
@@ -263,7 +287,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         System.out.println("Retorno9529: " + a.getValue());
         StringResponseDTO b = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9511, opt, TIMEOUT, "");
         System.out.println("Retorno9511: " + b.getValue());
-        
+
         List<WifiInfoFull> wifi = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
         }).fromJSON(a.getValue());
         List<WifiInfoFull> wifib = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
