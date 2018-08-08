@@ -90,16 +90,16 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 
     @Override
     public WifiNets alterar(NbiDeviceData device, WifiNets wifis) throws Exception {
-        try {
+//        try {
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_098);
 //            synch().setParametersValues(device, lst);
             synch().setWifiInfoFull(device, wifis.getWifi().get(0));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-//            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_181);
-//            synch().setParametersValues(device, lst);
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+////            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_181);
+////            synch().setParametersValues(device, lst);
+//        }
 
         return consultar(device);
     }
