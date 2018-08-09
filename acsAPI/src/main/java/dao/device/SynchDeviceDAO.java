@@ -46,9 +46,9 @@ import motive.hdm.synchdeviceops.ParameterValueStructDTO;
  */
 public interface SynchDeviceDAO {
 
-    public Boolean reboot(NbiDeviceData eqp) throws DeviceOperationException, NBIException, ProviderException;
+    public Boolean reboot(NbiDeviceData eqp) throws Exception;
 
-    public Boolean factoryReset(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
+    public Boolean factoryReset(NbiDeviceData eqp) throws Exception;
 
     public Boolean checkOnline(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException;
 
@@ -66,7 +66,7 @@ public interface SynchDeviceDAO {
 
     public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException, Exception;
 
-    public ServiceClass getServiceClass(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, UnsupportedException, JsonParseException, Exception;
+    public ServiceClass getServiceClass(NbiDeviceData eqp) throws Exception;
 
     public Boolean setServiceClass(NbiDeviceData eqp, ServiceClass sc) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, Exception;
 

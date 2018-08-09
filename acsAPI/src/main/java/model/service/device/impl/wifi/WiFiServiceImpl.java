@@ -7,6 +7,7 @@ package model.service.device.impl.wifi;
 
 import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import br.net.gvt.efika.acs.model.device.wifi.WifiNets;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,12 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 //            GetParameterValuesResponseDTO wifis = synch().getParametersValues(device, paths);
 //            return new WifiNets(WifiParser.parse(wifis));
 //        }
-        return new WifiNets(synch().getWifiInfoFull(device));
-
+        try {
+            return new WifiNets(synch().getWifiInfoFull(device));
+        } catch (Exception e) {
+            TratativaExcessao.treatException(e);
+        }
+        return null;
     }
 
     @Override
@@ -67,7 +72,12 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
             lst.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_181, 1));
             lst.add(SetParameters.ativarStatusWifi(DeviceTR.TR_181, 1));
             lst.add(SetParameters.ativarWifi(DeviceTR.TR_181, 1));
-            synch().setParametersValues(device, lst);
+            try {
+                synch().setParametersValues(device, lst);
+            } catch (Exception ex) {
+                TratativaExcessao.treatException(ex);
+            }
+
 //            try {
 //                List<ParameterValueStructDTO> l = new ArrayList<>();
 //                l.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_181, 5));
@@ -85,7 +95,11 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 
         List<ParameterValueStructDTO> lst = new ArrayList<>();
 //        lst.add(SetParameters.DESATIVAR_WIFI);
-        synch().setParametersValues(device, lst);
+        try {
+            synch().setParametersValues(device, lst);
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
+        }
     }
 
     @Override
@@ -93,14 +107,17 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 //        try {
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_098);
 //            synch().setParametersValues(device, lst);
+        try {
             synch().setWifiInfoFull(device, wifis.getWifi().get(0));
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
+        }
 
 //        } catch (Exception e) {
 //            e.printStackTrace();
 ////            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_181);
 ////            synch().setParametersValues(device, lst);
 //        }
-
         return consultar(device);
     }
 
