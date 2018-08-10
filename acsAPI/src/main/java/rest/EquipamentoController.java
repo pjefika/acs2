@@ -45,6 +45,7 @@ import br.net.gvt.efika.acs.model.dto.ForceOnlineDevicesIn;
 import br.net.gvt.efika.acs.model.dto.GetDeviceDataIn;
 import br.net.gvt.efika.acs.model.dto.GetPhoneNumberIn;
 import br.net.gvt.efika.acs.model.dto.DirectoryNumber;
+import br.net.gvt.efika.acs.model.dto.FirmwareOut;
 import br.net.gvt.efika.acs.model.dto.GetIptvDiagnosticsIn;
 import br.net.gvt.efika.acs.model.dto.GetT38EnabledIn;
 import br.net.gvt.efika.acs.model.dto.IptvDiagnostics;
@@ -827,4 +828,25 @@ public class EquipamentoController extends RestAbstractController {
         }
     }
 
+    @POST
+    @Path("/firmwareversion")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response firmwareVersion(DetailIn in) {
+        LogEntity l = in.create();
+        try {
+            FirmwareOut detail = FactoryService.createDeviceDetailService().consultar(in.getGuid()).getFirmware();
+            l.setSaida(detail);
+            return ok(detail);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 }
