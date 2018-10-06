@@ -348,7 +348,7 @@ public class SynchDeviceDAOImplIT {
         System.out.println("setWifiInfoFull");
 
         WifiInfoFull wifi = instance.getWifiInfoFull(eqp).get(0);
-        wifi.setBcEnabled(Boolean.TRUE);
+//        wifi.setBcEnabled(Boolean.TRUE);
         Boolean result = instance.setWifiInfoFull(eqp, wifi);
         System.out.println("ResultadoFinal->" + new JacksonMapper(new TypeReference<WifiInfoFull>() {
         }).serialize(instance.getWifiInfoFull(eqp)));

@@ -662,6 +662,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
                     }
                 }
             } catch (Exception ex) {
+                ex.printStackTrace();
                 throw new CommunicationFailureException();
             }
         }
