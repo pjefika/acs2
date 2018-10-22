@@ -553,6 +553,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         try {
             a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
         } catch (Exception e) {
+            e.printStackTrace();
             try {
                 if (forceOnline(eqp)) {
                     a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
@@ -564,6 +565,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
                     }
                 }
             } catch (Exception ex) {
+                ex.printStackTrace();
                 throw new SemRespostaException();
             }
         }
