@@ -21,7 +21,7 @@ public class EquipamentoTestValues {
     /**
      *
      */
-    public static Long GUID = new Long(26737329);
+    public static Long GUID = new Long(32546500);
 
     private SynchDeviceDAO instance = FactoryDAO.createSynch();
     private NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();

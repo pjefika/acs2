@@ -49,6 +49,7 @@ import motive.hdm.synchdeviceops.GetParameterAttributesDTO;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterNamesDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
+import motive.hdm.synchdeviceops.NbiDeviceID;
 import motive.hdm.synchdeviceops.NbiInitiateConnectionResult;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
@@ -188,6 +189,17 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         System.out.println("Retorno: " + s.getStatus());
     }
 
+    public SetParameterValuesResponseDTO setParamValues(NbiDeviceData eqp, List<ParameterValueStructDTO> p) throws Exception {
+        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+        motive.hdm.synchdeviceops.SetParameterValuesDTO g = new motive.hdm.synchdeviceops.SetParameterValuesDTO();
+
+        p.forEach((t) -> {
+            g.getParameterValueStructs().add(t);
+        });
+
+        return synch().setParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+    }
+
     @Override
     public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException, Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
@@ -258,7 +270,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
         String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
         if (a.getValue().contains(wifiDisable)) {
-            
+
             throw new WifiInativoException();
         }
         System.out.println("Retorno: " + a.getValue());
@@ -551,6 +563,11 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             NbiSingleDeviceOperationOptions opt, long l, String str) throws Exception {
         StringResponseDTO a;
         try {
+            System.out.println("FROMADAPTER=> " + new JacksonMapper(NbiDeviceID.class).serialize(DeviceOperationFactory.adapter(eqp)));
+            System.out.println("OPT=> " + new JacksonMapper(NbiSingleDeviceOperationOptions.class).serialize(opt));
+            System.out.println("json=> " + json);
+            System.out.println("LONG=> " + l);
+            System.out.println("STR=> " + str);
             a = (StringResponseDTO) synch().executeFunction(DeviceOperationFactory.adapter(eqp), json, i, opt, l, str);
         } catch (Exception e) {
             e.printStackTrace();
@@ -606,6 +623,20 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         }
         System.out.println(a.getValue());
         return false;
+    }
+
+    @Override
+    public Boolean setT38(NbiDeviceData eqp, Boolean bool) throws Exception {
+        NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+        String jsonSc;
+        jsonSc = "{\"serviceT38\":\"" + bool + "\"} ";
+        List<Object> json = DeviceOperationFactory.getEmptyJson();
+        json.set(0, jsonSc);
+        StringResponseDTO a = this.exec(eqp, json, 9547, opt, TIMEOUT, "");
+        System.out.println(a.getValue());
+
+        return a.getValue().contains("SUCCESS");
+
     }
 
 }

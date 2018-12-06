@@ -28,14 +28,23 @@ import br.net.gvt.efika.acs.model.device.xdsldiagnostics.XdslDiagnostics;
 import br.net.gvt.efika.util.json.JacksonMapper;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import com.fasterxml.jackson.core.type.TypeReference;
+import dao.factory.FactoryDAO;
 import init.SingletonDeviceTest;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import motive.hdm.synchdeviceops.GetParameterAttributesResponseDTO;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.NbiSingleDeviceOperationOptions;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
+import motive.hdm.synchdeviceops.SetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.StringResponseDTO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -51,8 +60,7 @@ import static org.junit.Assert.*;
 public class SynchDeviceDAOImplIT {
 
     private final SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-    private NbiDeviceData eqp
-            = SingletonDeviceTest.getInstance().getDevice();
+    private NbiDeviceData eqp  = SingletonDeviceTest.getInstance().getDevice();
 
     public SynchDeviceDAOImplIT() {
     }
@@ -159,7 +167,6 @@ public class SynchDeviceDAOImplIT {
     public void testGetParameters() throws Exception {
         try {
             System.out.println("getParameters");
-            SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
             List<ParameterInfoStructDTO> parameters = instance.getParameters(eqp);
             System.out.println(new JacksonMapper<>(new TypeReference<List<ParameterInfoStructDTO>>() {
             }).serialize(parameters));
@@ -193,15 +200,324 @@ public class SynchDeviceDAOImplIT {
         // TODO review the generated test code and remove the default call to fail.
     }
 
+    class Paranauezeiro extends Thread {
+
+        public Paranauezeiro(String nomeFrom, String nomeTo) {
+            super(new Paranauezin(nomeFrom, nomeTo));
+        }
+
+    }
+
+    class Paranaue implements Runnable {
+
+        String nomeFrom, nomeTo;
+
+        public Paranaue(String nomeFroms, String nomeTos) {
+            nomeFrom = nomeFroms;
+            nomeTo = nomeTos;
+        }
+
+        @Override
+        public void run() {
+            try {
+                System.out.println("testMethod");
+                JacksonMapper deviceMapper = new JacksonMapper(NbiDeviceData.class);
+                JacksonMapper getParameterMapper = new JacksonMapper(GetParameterAttributesResponseDTO.class);
+                JacksonMapper setParameterMapper = new JacksonMapper(SetParameterValuesResponseDTO.class);
+//                List<String> paths = new ArrayList<>();
+//                paths.add("InternetGatewayDevice.X_VIVO_COM_BR.Interfaces.InternetService");
+                PrintWriter pw = null;
+                try {
+                    pw = new PrintWriter(new File(nomeTo));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                StringBuilder builder = new StringBuilder();
+                String ColumnNamesList = "Designador;Equipamento;setResult";
+                builder.append(ColumnNamesList).append("\n");
+
+                String file = nomeFrom;
+                List<String> designadores = new ArrayList<>();
+                try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                    String line = "";
+                    while ((line = br.readLine()) != null) {
+                        designadores.add(line);
+                    }
+                } catch (FileNotFoundException e) {
+                    //Some error logging
+                }
+
+                //for com designadores
+                for (String designador : designadores) {
+
+                    try {
+                        List<NbiDeviceData> eqps = FactoryDAO.createNBI().findDevicesBySubscriberId(designador);
+                        System.out.println("Quantidade Eqps -> " + eqps.size());
+                        if (eqps.size() == 0) {
+                            builder.append(designador).append(";").append("0\n");
+                        }
+
+                        for (NbiDeviceData eqp1 : eqps) {
+                            builder.append(designador).append(";");
+                            System.out.println("Equipamento -> " + deviceMapper.serialize(eqp1));
+                            builder.append(deviceMapper.serialize(eqp1).replace("&gt;", ">")).append(";");
+                            try {
+//                                GetParameterValuesResponseDTO parameters = instance.getParametersValues(eqp1, paths);
+//                                builder.append(getParameterMapper.serialize(parameters)).append(";");
+//                                System.out.println("Parameters -> " + getParameterMapper.serialize(parameters));
+                                try {
+                                    List<ParameterValueStructDTO> p = new ArrayList<>();
+//                                    ParameterValueStructDTO pvs = new ParameterValueStructDTO();
+//                                    pvs.setName(parameters.getParameterList().get(0).getValue() + ".X_VIVO_COM_BR_IPv6CPEnable");
+//                                    pvs.setType("boolean");
+//                                    pvs.setValue("true");
+                                    ParameterValueStructDTO pvs1 = new ParameterValueStructDTO();
+                                    pvs1.setName("InternetGatewayDevice.LANDevice.1.X_TELEFONICA-ES_IPv6LANHostConfigManagement.AutoConfigurationAddress");
+                                    pvs1.setType("boolean");
+                                    pvs1.setValue("false");
+//                                    p.add(pvs);
+                                    p.add(pvs1);
+                                    SetParameterValuesResponseDTO s = instance.setParamValues(eqp1, p);
+                                    builder.append(setParameterMapper.serialize(s)).append(";\n");
+                                    System.out.println(setParameterMapper.serialize(s));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    builder.append(e.getMessage()).append("\n");
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                builder.append(e.getMessage()).append("\n");
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        builder.append(designador).append(";").append(e.getMessage()).append("\n");
+                    }
+                }
+                pw.write(builder.toString());
+                pw.close();
+                System.out.println("done!" + nomeTo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    class Paranauezin implements Runnable {
+
+        String nomeFrom, nomeTo;
+
+        public Paranauezin(String nomeFroms, String nomeTos) {
+            nomeFrom = nomeFroms;
+            nomeTo = nomeTos;
+        }
+
+        @Override
+        public void run() {
+            PrintWriter pw = null;
+
+            try {
+                pw = new PrintWriter(new File(nomeTo));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            try (BufferedReader br = new BufferedReader(new FileReader(nomeFrom))) {
+                String line = "";
+                int i = 0;
+                while ((line = br.readLine()) != null) {
+                    String[] leLine = line.split(";");
+                    String praescreve = "";
+                    try {
+                        List<NbiDeviceData> eqps = FactoryDAO.createNBI().findDeviceBySerialNumber(leLine[4]);
+                        if (eqps.isEmpty()) {
+                            praescreve = "Equipamento não encontrado.";
+                        } else {
+                            try {
+                                List<ParameterValueStructDTO> p = new ArrayList<>();
+                                ParameterValueStructDTO pvs1 = new ParameterValueStructDTO();
+                                pvs1.setName("InternetGatewayDevice.LANDevice.1.X_TELEFONICA-ES_IPv6LANHostConfigManagement.AutoConfigurationAddress");
+                                pvs1.setType("boolean");
+                                pvs1.setValue("false");
+                                p.add(pvs1);
+                                SetParameterValuesResponseDTO s = instance.setParamValues(eqps.get(0), p);
+
+                                praescreve = new JacksonMapper(SetParameterValuesResponseDTO.class).serialize(s);
+
+                            } catch (Exception ex) {
+                                praescreve = ex.getMessage();
+                            }
+                        }
+                    } catch (Exception e) {
+                        praescreve = e.getMessage();
+                    }
+                    System.out.println("LINE " + i + " -> " + praescreve);
+                    i++;
+                    pw.write(line + praescreve + "\n");
+                }
+                pw.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
     @Test
-    public void testMethod() {
+    public void testMethod() throws Exception {
+        //"C:\\Users\\G0041775\\Desktop\\getSetInternetService.csv"
+//
+        List<String> lFrom = new ArrayList<>();
+        List<String> lTo = new ArrayList<>();
+        String nomeFrom = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\22-11-2018\\paei2325133135.csv";
+        String nomeTo = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\22-11-2018\\paei2325133135Result.csv";
+
+//        String file = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\designadoresRound2";
+//        PrintWriter pw = null;
+//        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+//            String line = "";
+//            int i = 0;
+//            int o = 30;
+//            int n = 0;
+//            String fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\desigsRound2" + n + ".csv";
+//            String fileTo = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\resultsRound2" + n + ".csv";
+//            lFrom.add(fileName);
+//            lTo.add(fileTo);
+//            try {
+//                pw = new PrintWriter(new File(fileName));
+//                n++;
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            while ((line = br.readLine()) != null) {
+//                if (i >= o) {
+//                    pw.close();
+//                    try {
+//                        fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\desigsRound2" + n + ".csv";
+//                        fileTo = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\resultsRound2" + n + ".csv";
+//                        pw = new PrintWriter(new File(fileName));
+//                        lFrom.add(fileName);
+//                        lTo.add(fileTo);
+//                        n++;
+//                        i = 0;
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                pw.write(line + "\n");
+//                i++;
+//            }
+//            pw.close();
+//        } catch (FileNotFoundException e) {
+//            //Some error logging
+//        }
+        lFrom.add(nomeFrom);
+        lTo.add(nomeTo);
+        System.out.println("lFrom -> " + lFrom.toString());
+        System.out.println("lTo -> " + lTo.toString());
+
+        List<Paranauezeiro> l = new ArrayList<>();
+        for (int i = 0; i < lFrom.size(); i++) {
+            l.add(new Paranauezeiro(lFrom.get(i), lTo.get(i)));
+            l.get(i).start();
+        }
+        l.forEach((t) -> {
+            try {
+                t.join();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SynchDeviceDAOImplIT.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+//        pw = new PrintWriter(new File("C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\setFalseResultRound2.csv"));
+//        pw.write("Designador;Equipamento;setResult\n");
+//        String linz = "";
+//        for (String string : lTo) {
+//            try (BufferedReader br = new BufferedReader(new FileReader(string))) {
+//                while ((linz = br.readLine()) != null) {
+//                    if (!linz.contains("Designador;Equipamento;setResult")) {
+//                        pw.write(linz + "\n");
+//                    }
+//                }
+//            } catch (Exception e) {
+//            }
+//        }
+//        pw.close();
+
+    }
+
+    @Test
+
+    public void testMethod1() {
         try {
-            System.out.println("getParameterAttributes");
-            String paths = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.Enable";
-            GetParameterAttributesResponseDTO parameters = instance.getParameterAttributes(eqp, paths);
-//            System.out.println(GsonUtil.serialize(parameters));
-            assertTrue("Cheio", parameters != null);
+            System.out.println("testMethod1");
+            PrintWriter pw = null;
+            JacksonMapper deviceMapper = new JacksonMapper(NbiDeviceData.class);
+            JacksonMapper getParameterMapper = new JacksonMapper(GetParameterValuesResponseDTO.class);
+            List<String> paths = new ArrayList<>();
+            paths.add("InternetGatewayDevice.X_VIVO_COM_BR.Interfaces.InternetService");
+            try {
+                pw = new PrintWriter(new File("C:\\Users\\G0041775\\Desktop\\setInternetService.csv"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            StringBuilder builder = new StringBuilder();
+            String ColumnNamesList = "Designador;Equipamento;SetParameter;GetParameter";
+            builder.append(ColumnNamesList).append("\n");
+
+            String file = "C:\\Users\\G0041775\\Desktop\\getok.csv";
+            List<String[]> linhas = new ArrayList<>();
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    linhas.add(line.replace("\"\"", "\"").replaceAll(";\"", ";").replaceFirst("\\\"\\n", "").split(";"));
+                }
+            } catch (FileNotFoundException e) {
+                //Some error logging
+            }
+
+            for (String[] linha : linhas) {
+
+                try {
+//                  
+                    builder.append(linha[0]).append(";");
+                    NbiDeviceData eqp1 = (NbiDeviceData) deviceMapper.deserialize(linha[1]);
+                    System.out.println("Equipamento -> " + deviceMapper.serialize(eqp1));
+                    GetParameterValuesResponseDTO parameters = (GetParameterValuesResponseDTO) getParameterMapper.deserialize(linha[2]);
+                    builder.append(deviceMapper.serialize(eqp1)).append(";");
+                    try {
+
+                        List<ParameterValueStructDTO> p = new ArrayList<>();
+                        ParameterValueStructDTO pvs = new ParameterValueStructDTO();
+                        pvs.setName(parameters.getParameterList().get(0).getValue() + ".X_VIVO_COM_BR_IPv6CPEnable");
+                        pvs.setType("boolean");
+                        pvs.setValue("false");
+                        p.add(pvs);
+                        SetParameterValuesResponseDTO s = instance.setParamValues(eqp1, p);
+                        builder.append(new JacksonMapper(SetParameterValuesResponseDTO.class).serialize(s)).append(";");
+                        System.out.println(new JacksonMapper(SetParameterValuesResponseDTO.class).serialize(s));
+
+                        List<String> paths1 = new ArrayList<>();
+                        paths1.add(parameters.getParameterList().get(0).getValue() + ".X_VIVO_COM_BR_IPv6CPEnable");
+                        GetParameterValuesResponseDTO parameters1 = instance.getParametersValues(eqp1, paths1);
+                        builder.append(getParameterMapper.serialize(parameters1)).append("\n");
+                        System.out.println(getParameterMapper.serialize(parameters1));
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        builder.append(e.getMessage()).append("\n");
+                    }
+//                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    builder.append(linha[0]).append(";").append(e.getMessage()).append("\n");
+                }
+            }
+            pw.write(builder.toString());
+            pw.close();
+            System.out.println("done!");
         } catch (Exception e) {
+            e.printStackTrace();
             fail(e.getMessage());
         }
     }
@@ -319,7 +635,7 @@ public class SynchDeviceDAOImplIT {
     public void testSetDhcp() throws Exception {
         System.out.println("setDhcp");
         Dhcp dh = new Dhcp();
-                //instance.getDhcp(eqp);
+        //instance.getDhcp(eqp);
         dh.setDHCPServerEnable(true);
         dh.setMaxAddress("192.168.15.240");
         dh.setMinAddress("192.168.15.2");
@@ -347,7 +663,8 @@ public class SynchDeviceDAOImplIT {
     public void testSetWifiInfoFull() throws Exception {
         System.out.println("setWifiInfoFull");
 
-        WifiInfoFull wifi = instance.getWifiInfoFull(eqp).get(0);
+        List<WifiInfoFull> wifis = instance.getWifiInfoFull(eqp);
+        WifiInfoFull wifi = wifis.get(4);
         wifi.setChannel("11");
 //        wifi.setBcEnabled(Boolean.TRUE);
         Boolean result = instance.setWifiInfoFull(eqp, wifi, "1");
@@ -501,7 +818,7 @@ public class SynchDeviceDAOImplIT {
     @Test
     public void testGetParameterAttributes() throws Exception {
         System.out.println("getParameterAttributes");
-     
+
         String path = "";
         SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
         GetParameterAttributesResponseDTO expResult = null;
@@ -517,12 +834,19 @@ public class SynchDeviceDAOImplIT {
     @Test
     public void testSetParametersValues() throws Exception {
         System.out.println("setParametersValues");
-        NbiDeviceData eqp = null;
-        List<ParameterValueStructDTO> p = null;
-        SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
+        NbiDeviceData eqp = FactoryDAO.createNBI().findDevicesBySubscriberId("FNS-814VU9AHWL-013").get(0);
+        List<ParameterValueStructDTO> p = new ArrayList<>();
+        ParameterValueStructDTO pvs = new ParameterValueStructDTO();
+        pvs.setName("InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.X_VIVO_COM_BR_IPv6CPEnable");
+        pvs.setType("boolean");
+        pvs.setValue("false");
+        p.add(pvs);
         instance.setParametersValues(eqp, p);
+        List<String> paths = new ArrayList<>();
+        paths.add("InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.X_VIVO_COM_BR_IPv6CPEnable");
+        System.out.println(new JacksonMapper(GetParameterValuesResponseDTO.class).serialize(instance.getParametersValues(eqp, paths)));
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//        fail("The test case is a prototype.");
     }
 
     /**
@@ -614,6 +938,18 @@ public class SynchDeviceDAOImplIT {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setT38 method, of class SynchDeviceDAOImpl.
+     */
+    @Test
+    public void testSetT38() throws Exception {
+        System.out.println("setT38");
+
+        Boolean result = instance.setT38(eqp, true);
+
+        System.out.println("resultado->" + result);
     }
 
 }
