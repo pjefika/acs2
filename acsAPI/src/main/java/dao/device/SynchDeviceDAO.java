@@ -117,4 +117,6 @@ public interface SynchDeviceDAO {
 
     public Boolean setDns(NbiDeviceData eqp, String dnsServers) throws Exception;
 
+    public Boolean setT38(NbiDeviceData eqp, Boolean bool) throws Exception;
+
 }
