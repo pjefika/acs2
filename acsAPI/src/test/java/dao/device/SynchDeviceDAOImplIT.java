@@ -663,9 +663,11 @@ public class SynchDeviceDAOImplIT {
     public void testSetWifiInfoFull() throws Exception {
         System.out.println("setWifiInfoFull");
 
+
         List<WifiInfoFull> wifis = instance.getWifiInfoFull(eqp);
         WifiInfoFull wifi = wifis.get(4);
         wifi.setChannel("108");
+
 //        wifi.setBcEnabled(Boolean.TRUE);
         Boolean result = instance.setWifiInfoFull(eqp, wifi);
         System.out.println("ResultadoFinal->" + new JacksonMapper(new TypeReference<WifiInfoFull>() {

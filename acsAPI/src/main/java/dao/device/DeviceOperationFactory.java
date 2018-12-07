@@ -86,6 +86,7 @@ public class DeviceOperationFactory {
 
     public static WifiInfoSet getWifiInfoSetFull(WifiInfoFull i) {
         return new WifiInfoSet(i);
+
     }
 
     public static NbiDeviceID adapter(NbiDeviceData d) {

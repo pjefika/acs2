@@ -7,6 +7,7 @@ package model.service.device.impl.iptv.acao;
 
 import br.net.gvt.efika.acs.model.dto.DirectoryNumber;
 import br.net.gvt.efika.acs.model.dto.IptvDiagnostics;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +38,12 @@ public class IptvDiagnosticsService extends GenericDeviceService implements Moti
             });
             id.setIpVod(getParam.getParameterList().get(0).getValue());
             id.setIpMulticast(getParam.getParameterList().get(1).getValue());
-        } catch (Exception e) {
-
+            return id;
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
         }
-        return id;
+        return null;
+        
     }
 
     @Override

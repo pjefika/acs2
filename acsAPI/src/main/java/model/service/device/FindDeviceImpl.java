@@ -12,6 +12,8 @@ import dao.factory.FactoryDAO;
 import java.util.List;
 import br.net.gvt.efika.acs.model.exception.SearchCriteriaException;
 import br.net.gvt.efika.acs.model.exception.SearchNotFound;
+import br.net.gvt.efika.acs.model.exception.CommunicationFailureException;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import br.net.gvt.efika.acs.model.search.FindDevice;
 import static br.net.gvt.efika.acs.model.search.SearchCriteria.*;
 import br.net.gvt.efika.acs.model.search.SearchIn;
@@ -53,10 +55,8 @@ public class FindDeviceImpl implements FindDevice {
                 throw new SearchNotFound();
             }
             return lst;
-        } catch (NBIException_Exception | SearchCriteriaException e) {
-            if (e instanceof NBIException_Exception) {
-                throw new SearchNotFound();
-            }
+        } catch (Exception e) {
+            TratativaExcessao.treatException(e);
         }
         return null;
     }

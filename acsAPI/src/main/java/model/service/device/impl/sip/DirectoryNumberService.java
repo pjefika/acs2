@@ -6,6 +6,7 @@
 package model.service.device.impl.sip;
 
 import br.net.gvt.efika.acs.model.dto.DirectoryNumber;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,18 @@ public class DirectoryNumberService extends GenericDeviceService implements Moti
     public DirectoryNumber consultar(NbiDeviceData device, DirectoryNumber dn) throws Exception {
         List<String> paths = new ArrayList<>();
         try {
-            paths.add("InternetGatewayDevice.Services.VoiceService." + dn.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
-            dn.setPhoneNumber(synch().getParametersValues(device, paths).getParameterList().get(0).getValue());
-        } catch (Exception e) {
-            paths.add("Device.Services.VoiceService." + dn.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
-            dn.setPhoneNumber(synch().getParametersValues(device, paths).getParameterList().get(0).getValue());
+            try {
+                paths.add("InternetGatewayDevice.Services.VoiceService." + dn.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
+                dn.setPhoneNumber(synch().getParametersValues(device, paths).getParameterList().get(0).getValue());
+            } catch (Exception e) {
+                paths.add("Device.Services.VoiceService." + dn.getIndex() + ".VoiceProfile.1.Line.1.DirectoryNumber");
+                dn.setPhoneNumber(synch().getParametersValues(device, paths).getParameterList().get(0).getValue());
+            }
+            return dn;
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
         }
-        return dn;
+        return null;
     }
 
     @Override

@@ -6,6 +6,7 @@
 package model.service.device.impl;
 
 import br.net.gvt.efika.acs.model.device.pppoe.PPPoECredentialsInfo;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import model.service.device.GenericDeviceService;
 
@@ -17,7 +18,12 @@ public class PppoeCredentialsInServiceImpl extends GenericDeviceService implemen
 
     @Override
     public Boolean alterar(NbiDeviceData device, PPPoECredentialsInfo t) throws Exception {
-        return synch().setPPPoECredentials(device, t);
+        try {
+            return synch().setPPPoECredentials(device, t);
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
+        }
+        return null;
     }
 
 }
