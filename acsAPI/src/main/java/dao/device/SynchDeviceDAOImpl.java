@@ -43,6 +43,7 @@ import java.util.List;
 import br.net.gvt.efika.acs.model.exception.HdmException;
 import br.net.gvt.efika.acs.model.exception.JsonUtilException;
 import br.net.gvt.efika.acs.model.exception.CommunicationFailureException;
+import br.net.gvt.efika.acs.model.exception.SemRespostaException;
 import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import br.net.gvt.efika.acs.model.exception.UnsupportedException;
 import br.net.gvt.efika.acs.model.exception.WifiInativoException;

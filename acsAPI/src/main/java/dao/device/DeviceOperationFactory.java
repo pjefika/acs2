@@ -89,6 +89,58 @@ public class DeviceOperationFactory {
 
     }
 
+    /**
+     * Merges WifiInfoFull from list b into list a based on list order Both
+     * lists must have same size
+     *
+     * @param a
+     * @param b
+     * @return a with the b parameters from execFunction 9511
+     */
+    public static List<WifiInfoFull> mergeWifis(List<WifiInfoFull> a, List<WifiInfoFull> b) {
+
+        List<WifiInfoFull> retorno = new ArrayList<WifiInfoFull>();
+
+        for (int i = 0; i < a.size(); i++) {
+            if (b.size() > i) {
+                a.get(i).setIndex(b.get(i).getIndex());
+                a.get(i).setAuthentication(b.get(i).getAuthentication());
+                a.get(i).setEncryptation(b.get(i).getEncryptation());
+                a.get(i).setFrequency(b.get(i).getFrequency());
+                a.get(i).setSsidPassword(b.get(i).getSsidPassword());
+                a.get(i).setBroadcastEnabled(b.get(i).getBroadcastEnabled());
+            }
+            retorno.add(a.get(i));
+        }
+
+        int contador = 1;
+        for (WifiInfoFull wifiInfoFull : retorno) {
+            if ((wifiInfoFull.getIndex() == null) || (wifiInfoFull.getIndex().isEmpty())) {
+                if (contador == a.size()) {
+                    wifiInfoFull.setIndex("5");
+                } else {
+                    wifiInfoFull.setIndex(contador + "");
+                }
+            }
+            contador++;
+        }
+        /*for (WifiInfoFull wifiInfoFull : b) {
+            retorno.add(wifiInfoFull);
+        }*/
+
+ /* for (int i = 0; i < a.size(); i++) {
+            if (b.size() > i) {
+                a.get(i).setIndex(b.get(i).getIndex());
+                a.get(i).setAuthentication(b.get(i).getAuthentication());
+                a.get(i).setEncryptation(b.get(i).getEncryptation());
+                a.get(i).setFrequency(b.get(i).getFrequency());
+                a.get(i).setSsidPassword(b.get(i).getSsidPassword());
+                a.get(i).setBroadcastEnabled(b.get(i).getBroadcastEnabled());
+            }
+        }*/
+        return retorno;
+    }
+
     public static NbiDeviceID adapter(NbiDeviceData d) {
 
         NbiDeviceID id = new NbiDeviceID();
