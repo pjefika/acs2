@@ -93,14 +93,20 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
         try {
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_098);
 //            synch().setParametersValues(device, lst);
-            System.out.println("REDE 1");
-            synch().setWifiInfoFull(device, wifis.getWifi().get(0), "1");
-            System.out.println("_________________________________________________");
-            Thread.sleep(8000);
-            System.out.println("REDE 5");
-            Integer rede5Pos = device.getModelName().equalsIgnoreCase("RTF3505VW-N2") ? 4 : wifis.getWifi().size() - 1;
-            synch().setWifiInfoFull(device, wifis.getWifi().get(rede5Pos), "5");
-            System.out.println("_________________________________________________5");
+            if (wifis.getWifi().size() > 1) {
+                System.out.println("REDE 1");
+                synch().setWifiInfoFull(device, wifis.getWifi().get(0));
+                System.out.println("_________________________________________________");
+                Thread.sleep(8000);
+                System.out.println("REDE 5");
+                Integer rede5Pos = device.getModelName().equalsIgnoreCase("RTF3505VW-N2") ? 4 : wifis.getWifi().size() - 1;
+                synch().setWifiInfoFull(device, wifis.getWifi().get(rede5Pos));
+                System.out.println("_________________________________________________5");
+            }else{
+//                String wichone = wifis.getWifi().get(0).getIndex().equalsIgnoreCase("1") ? wifis.getWifi().get(0).getIndex() : "5";
+                synch().setWifiInfoFull(device, wifis.getWifi().get(0));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_181);

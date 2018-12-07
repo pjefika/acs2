@@ -84,7 +84,7 @@ public interface SynchDeviceDAO {
 
     public PortMappingInfo traceroute(NbiDeviceData eqp, TraceRouteRequest trace) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, Exception;
 
-    public Boolean setWifiInfoFull(NbiDeviceData eqp, WifiInfoFull wifi, String index) throws DeviceOperationException, NBIException, Exception;
+    public Boolean setWifiInfoFull(NbiDeviceData eqp, WifiInfoFull wifi) throws DeviceOperationException, NBIException, Exception;
 
     public DdnsInfo getDdns(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonUtilException, UnsupportedException, Exception;
 
