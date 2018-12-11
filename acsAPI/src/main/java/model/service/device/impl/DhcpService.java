@@ -6,6 +6,7 @@
 package model.service.device.impl;
 
 import br.net.gvt.efika.acs.model.device.dhcp.Dhcp;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import model.service.device.GenericDeviceService;
 import model.service.device.MotiveService;
@@ -19,14 +20,24 @@ public class DhcpService extends GenericDeviceService implements MotiveService<D
 
     @Override
     public Dhcp consultar(NbiDeviceData device) throws Exception {
-        return synch().getDhcp(device);
+        try {
+            return synch().getDhcp(device);
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
+        }
+        return null;
     }
 
     @Override
     public Dhcp alterar(NbiDeviceData device, Dhcp t) throws Exception {
-        synch().setDhcp(device, t);
-        ThreadControl.sleep();
-        return consultar(device);
+        try {
+            synch().setDhcp(device, t);
+            ThreadControl.sleep();
+            return consultar(device);
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
+        }
+        return null;
     }
 
 }

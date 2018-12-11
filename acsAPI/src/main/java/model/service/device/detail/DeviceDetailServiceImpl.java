@@ -13,6 +13,7 @@ import dao.device.SynchDeviceDAO;
 import dao.factory.FactoryDAO;
 import br.net.gvt.efika.acs.model.dto.DetailOut;
 import br.net.gvt.efika.acs.model.dto.FirmwareOut;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 
 public class DeviceDetailServiceImpl implements DeviceDetailService {
 
@@ -25,21 +26,23 @@ public class DeviceDetailServiceImpl implements DeviceDetailService {
 
     @Override
     public DetailOut consultar(Long guid) throws Exception {
-        NbiDAO dao = FactoryDAO.createNBI();
-        SynchDeviceDAO sync = FactoryDAO.createSynch();
-
-        eqp = dao.findDeviceByGUID(guid);
-        result.setDevice(eqp);
-
         try {
-            DeviceInfo deviceInfo = sync.getDeviceInfo(eqp);
-            result.setOnline(Boolean.TRUE);
-            result.setFirmware(new FirmwareOut(new FirmwareInfo(deviceInfo.getFwer(), deviceInfo.getPreferv())));
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.setOnline(Boolean.FALSE);
 
-        }
+            NbiDAO dao = FactoryDAO.createNBI();
+            SynchDeviceDAO sync = FactoryDAO.createSynch();
+
+            eqp = dao.findDeviceByGUID(guid);
+            result.setDevice(eqp);
+
+            try {
+                DeviceInfo deviceInfo = sync.getDeviceInfo(eqp);
+                result.setOnline(Boolean.TRUE);
+                result.setFirmware(new FirmwareOut(new FirmwareInfo(deviceInfo.getFwer(), deviceInfo.getPreferv())));
+            } catch (Exception e) {
+                e.printStackTrace();
+                result.setOnline(Boolean.FALSE);
+
+            }
 //        result.setOnline(true);
 //
 //        if (result.getOnline()) {
@@ -51,6 +54,9 @@ public class DeviceDetailServiceImpl implements DeviceDetailService {
 //            }
 //        }
 
+        } catch (Exception e) {
+            TratativaExcessao.treatException(e);
+        }
         return result;
     }
 

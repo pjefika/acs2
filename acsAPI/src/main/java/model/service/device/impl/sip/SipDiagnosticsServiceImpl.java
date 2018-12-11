@@ -6,6 +6,7 @@
 package model.service.device.impl.sip;
 
 import br.net.gvt.efika.acs.model.device.sipdiagnostics.SipDiagnostics;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import model.service.device.GenericDeviceService;
 
@@ -17,9 +18,12 @@ public class SipDiagnosticsServiceImpl extends GenericDeviceService implements S
 
     @Override
     public SipDiagnostics consultar(NbiDeviceData device, Integer phyref) throws Exception {
-        return synch().getSipDiagnostics(device, phyref);
+        try {
+            return synch().getSipDiagnostics(device, phyref);
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
+        }
+        return null;
     }
-
-  
 
 }

@@ -7,6 +7,7 @@ package model.service.device.impl.wifi;
 
 import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import br.net.gvt.efika.acs.model.device.wifi.WifiNets;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +41,19 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 //            GetParameterValuesResponseDTO wifis = synch().getParametersValues(device, paths);
 //            return new WifiNets(WifiParser.parse(wifis));
 //        }
-        return new WifiNets(synch().getWifiInfoFull(device));
-        
+
+        try {
+            return new WifiNets(synch().getWifiInfoFull(device));
+        } catch (Exception e) {
+            TratativaExcessao.treatException(e);
+        }
+        return null;
     }
-    
+
     @Override
     public void ativar(NbiDeviceData device) throws Exception {
         System.out.println("Ativar WiFi...");
-        
+
         try {
             List<ParameterValueStructDTO> lst = new ArrayList<>();
             lst.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_098, 1));
@@ -67,7 +73,12 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
             lst.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_181, 1));
             lst.add(SetParameters.ativarStatusWifi(DeviceTR.TR_181, 1));
             lst.add(SetParameters.ativarWifi(DeviceTR.TR_181, 1));
-            synch().setParametersValues(device, lst);
+            try {
+                synch().setParametersValues(device, lst);
+            } catch (Exception ex) {
+                TratativaExcessao.treatException(ex);
+            }
+
 //            try {
 //                List<ParameterValueStructDTO> l = new ArrayList<>();
 //                l.add(SetParameters.ativarBroadcastWifi(DeviceTR.TR_181, 5));
@@ -78,31 +89,47 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
 //            }
         }
     }
-    
+
     @Override
     public void desativar(NbiDeviceData device) throws Exception {
         System.out.println("Desativar WiFi...");
-        
+
         List<ParameterValueStructDTO> lst = new ArrayList<>();
 //        lst.add(SetParameters.DESATIVAR_WIFI);
-        synch().setParametersValues(device, lst);
+        try {
+            synch().setParametersValues(device, lst);
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
+        }
     }
-    
+
     @Override
     public WifiNets alterar(NbiDeviceData device, WifiNets wifis) throws Exception {
         try {
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_098);
 //            synch().setParametersValues(device, lst);
-            synch().setWifiInfoFull(device, wifis.getWifi().get(0), "1");
-            Thread.sleep(8000);
-            synch().setWifiInfoFull(device, wifis.getWifi().get(wifis.getWifi().size()-1), "5");
+            if (wifis.getWifi().size() > 1) {
+                System.out.println("REDE 1");
+                synch().setWifiInfoFull(device, wifis.getWifi().get(0));
+                System.out.println("_________________________________________________");
+                Thread.sleep(8000);
+                System.out.println("REDE 5");
+                Integer rede5Pos = device.getModelName().equalsIgnoreCase("RTF3505VW-N2") ? 4 : wifis.getWifi().size() - 1;
+                synch().setWifiInfoFull(device, wifis.getWifi().get(rede5Pos));
+                System.out.println("_________________________________________________5");
+            }else{
+//                String wichone = wifis.getWifi().get(0).getIndex().equalsIgnoreCase("1") ? wifis.getWifi().get(0).getIndex() : "5";
+                synch().setWifiInfoFull(device, wifis.getWifi().get(0));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
 //            List<ParameterValueStructDTO> lst = WifiParser.parse(wifis.getWifi().get(0), DeviceTR.TR_181);
 //            synch().setParametersValues(device, lst);
         }
-        
+
+
         return consultar(device);
     }
-    
+
 }

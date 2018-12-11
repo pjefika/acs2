@@ -7,6 +7,7 @@ package model.service.device.impl.sip;
 
 import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
 import br.net.gvt.efika.acs.model.dto.T38Enabled;
+import br.net.gvt.efika.acs.model.exception.TratativaExcessao;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,27 +22,37 @@ public class T38EnabledService extends GenericDeviceService implements MotiveFro
 
     @Override
     public T38Enabled consultar(NbiDeviceData device, T38Enabled t38) throws Exception {
-        List<String> paths = new ArrayList<>();
-        String value = null;
         try {
-            paths.add("InternetGatewayDevice.Services.VoiceService." + t38.getIndex() + ".VoiceProfile.1.FaxT38.Enable");
-            value = synch().getParametersValues(device, paths).getParameterList().get(0).getValue();
-        } catch (Exception e) {
-            paths.add("Device.Services.VoiceService." + t38.getIndex() + ".VoiceProfile.1.FaxT38.Enable");
-            value = synch().getParametersValues(device, paths).getParameterList().get(0).getValue();
+            List<String> paths = new ArrayList<>();
+            String value = null;
+            try {
+                paths.add("InternetGatewayDevice.Services.VoiceService." + t38.getIndex() + ".VoiceProfile.1.FaxT38.Enable");
+                value = synch().getParametersValues(device, paths).getParameterList().get(0).getValue();
+            } catch (Exception e) {
+                paths.add("Device.Services.VoiceService." + t38.getIndex() + ".VoiceProfile.1.FaxT38.Enable");
+                value = synch().getParametersValues(device, paths).getParameterList().get(0).getValue();
+            }
+            t38.setEnabled(value.equalsIgnoreCase("1") || value.equalsIgnoreCase("true"));
+            return t38;
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
         }
-        t38.setEnabled(value.equalsIgnoreCase("1") || value.equalsIgnoreCase("true"));
-        return t38;
+        return null;
     }
 
     @Override
     public T38Enabled alterar(NbiDeviceData device, T38Enabled t) throws Exception {
         try {
-            synch().setParametersValues(device, SIPParamParser.parse(t, DeviceTR.TR_098));
-        } catch (Exception e) {
-            synch().setParametersValues(device, SIPParamParser.parse(t, DeviceTR.TR_181));
+            try {
+                synch().setParametersValues(device, SIPParamParser.parse(t, DeviceTR.TR_098));
+            } catch (Exception e) {
+                synch().setParametersValues(device, SIPParamParser.parse(t, DeviceTR.TR_181));
+            }
+            return consultar(device, t);
+        } catch (Exception ex) {
+            TratativaExcessao.treatException(ex);
         }
-        return consultar(device, t);
+        return null;
     }
 
 }
