@@ -21,8 +21,9 @@ public class EquipamentoTestValues {
     /**
      *
      */
+    
 
-    public static Long GUID = new Long(32546500);
+    public static Long GUID = new Long(42424084);
 
 
     private SynchDeviceDAO instance = FactoryDAO.createSynch();
