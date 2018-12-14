@@ -153,15 +153,15 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
         } catch (Exception e) {
 //            try {
-                if (forceOnline(eqp)) {
-                    try {
-                        return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
-                    } catch (Exception ex) {
-                        throw new UnsupportedException();
-                    }
-                } else {
-                    throw new CommunicationFailureException();
+            if (forceOnline(eqp)) {
+                try {
+                    return synch().getParameterValues(DeviceOperationFactory.adapter(eqp), g, opt, TIMEOUT, "");
+                } catch (Exception ex) {
+                    throw new UnsupportedException();
                 }
+            } else {
+                throw new CommunicationFailureException();
+            }
 //            } catch (Exception exc) {
 //                throw new CommunicationFailureException();
 //            }
@@ -333,9 +333,19 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
 
         List<WifiInfoFull> wifi = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
         }).fromJSON(a.getValue());
+        if (eqp.getModelName().equalsIgnoreCase("GPT-2541GNAC-N2")) {
+            for (Integer i = 0; i < wifi.size(); i++) {
+                if (i == wifi.size() - 1) {
+                    wifi.get(i).setIndex("5");
+                } else {
+                    wifi.get(i).setIndex(i.toString());
+                }
+            }
+            return wifi;
+        }
+
         List<WifiInfoFull> wifib = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
         }).fromJSON(b.getValue());
-
         return DeviceOperationFactory.mergeWifis(wifi, wifib);
     }
 

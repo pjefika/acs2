@@ -60,7 +60,7 @@ import static org.junit.Assert.*;
 public class SynchDeviceDAOImplIT {
 
     private final SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-    private NbiDeviceData eqp  = SingletonDeviceTest.getInstance().getDevice();
+    private NbiDeviceData eqp = SingletonDeviceTest.getInstance().getDevice();
 
     public SynchDeviceDAOImplIT() {
     }
@@ -203,7 +203,7 @@ public class SynchDeviceDAOImplIT {
     class Paranauezeiro extends Thread {
 
         public Paranauezeiro(String nomeFrom, String nomeTo) {
-            super(new Paranauezin(nomeFrom, nomeTo));
+            super(new Paranaue(nomeFrom, nomeTo));
         }
 
     }
@@ -370,11 +370,18 @@ public class SynchDeviceDAOImplIT {
 //
         List<String> lFrom = new ArrayList<>();
         List<String> lTo = new ArrayList<>();
-        String nomeFrom = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\22-11-2018\\paei2325133135.csv";
-        String nomeTo = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\22-11-2018\\paei2325133135Result.csv";
+//        String nomeFrom = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\22-11-2018\\paei2325133135.csv";
 
+//        for (int i = 0; i < 28; i++) {
+            lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desigs6.csv");
+            lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\desigs6Result.csv");
+            lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desigs10.csv");
+            lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\desigs10Result.csv");
+//        }
+
+//        String nomeTo = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\22-11-2018\\paei2325133135Result.csv";
 //        String file = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\designadoresRound2";
-//        PrintWriter pw = null;
+        PrintWriter pw = null;
 //        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 //            String line = "";
 //            int i = 0;
@@ -412,8 +419,8 @@ public class SynchDeviceDAOImplIT {
 //        } catch (FileNotFoundException e) {
 //            //Some error logging
 //        }
-        lFrom.add(nomeFrom);
-        lTo.add(nomeTo);
+//        lFrom.add(nomeFrom);
+//        lTo.add(nomeTo);
         System.out.println("lFrom -> " + lFrom.toString());
         System.out.println("lTo -> " + lTo.toString());
 
@@ -429,96 +436,61 @@ public class SynchDeviceDAOImplIT {
                 Logger.getLogger(SynchDeviceDAOImplIT.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-//        pw = new PrintWriter(new File("C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\setFalseResultRound2.csv"));
-//        pw.write("Designador;Equipamento;setResult\n");
-//        String linz = "";
-//        for (String string : lTo) {
-//            try (BufferedReader br = new BufferedReader(new FileReader(string))) {
-//                while ((linz = br.readLine()) != null) {
-//                    if (!linz.contains("Designador;Equipamento;setResult")) {
-//                        pw.write(linz + "\n");
-//                    }
-//                }
-//            } catch (Exception e) {
-//            }
-//        }
-//        pw.close();
+        pw = new PrintWriter(new File("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\resultS2.csv"));
+        pw.write("Designador;Equipamento;setResult\n");
+        String linz = "";
+        for (String string : lTo) {
+            try (BufferedReader br = new BufferedReader(new FileReader(string))) {
+                while ((linz = br.readLine()) != null) {
+                    if (!linz.contains("Designador;Equipamento;setResult")) {
+                        pw.write(linz + "\n");
+                    }
+                }
+            } catch (Exception e) {
+            }
+        }
+        pw.close();
 
     }
 
     @Test
 
-    public void testMethod1() {
-        try {
-            System.out.println("testMethod1");
-            PrintWriter pw = null;
-            JacksonMapper deviceMapper = new JacksonMapper(NbiDeviceData.class);
-            JacksonMapper getParameterMapper = new JacksonMapper(GetParameterValuesResponseDTO.class);
-            List<String> paths = new ArrayList<>();
-            paths.add("InternetGatewayDevice.X_VIVO_COM_BR.Interfaces.InternetService");
+    public void testMethod1() throws Exception {
+        String nomeTo = "C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\";
+
+        String file = "C:\\Users\\G0041775\\Desktop\\Arno\\Cópia de ARD_ASKEY SC_RSINT.csv";
+        PrintWriter pw = null;
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line = "";
+            int i = 0;
+            int o = 1000;
+            int n = 0;
+            String fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desigs" + n + ".csv";
+
             try {
-                pw = new PrintWriter(new File("C:\\Users\\G0041775\\Desktop\\setInternetService.csv"));
+                pw = new PrintWriter(new File(fileName));
+                n++;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            StringBuilder builder = new StringBuilder();
-            String ColumnNamesList = "Designador;Equipamento;SetParameter;GetParameter";
-            builder.append(ColumnNamesList).append("\n");
-
-            String file = "C:\\Users\\G0041775\\Desktop\\getok.csv";
-            List<String[]> linhas = new ArrayList<>();
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                String line = "";
-                while ((line = br.readLine()) != null) {
-                    linhas.add(line.replace("\"\"", "\"").replaceAll(";\"", ";").replaceFirst("\\\"\\n", "").split(";"));
-                }
-            } catch (FileNotFoundException e) {
-                //Some error logging
-            }
-
-            for (String[] linha : linhas) {
-
-                try {
-//                  
-                    builder.append(linha[0]).append(";");
-                    NbiDeviceData eqp1 = (NbiDeviceData) deviceMapper.deserialize(linha[1]);
-                    System.out.println("Equipamento -> " + deviceMapper.serialize(eqp1));
-                    GetParameterValuesResponseDTO parameters = (GetParameterValuesResponseDTO) getParameterMapper.deserialize(linha[2]);
-                    builder.append(deviceMapper.serialize(eqp1)).append(";");
+            while ((line = br.readLine()) != null) {
+                if (i >= o) {
+                    pw.close();
                     try {
-
-                        List<ParameterValueStructDTO> p = new ArrayList<>();
-                        ParameterValueStructDTO pvs = new ParameterValueStructDTO();
-                        pvs.setName(parameters.getParameterList().get(0).getValue() + ".X_VIVO_COM_BR_IPv6CPEnable");
-                        pvs.setType("boolean");
-                        pvs.setValue("false");
-                        p.add(pvs);
-                        SetParameterValuesResponseDTO s = instance.setParamValues(eqp1, p);
-                        builder.append(new JacksonMapper(SetParameterValuesResponseDTO.class).serialize(s)).append(";");
-                        System.out.println(new JacksonMapper(SetParameterValuesResponseDTO.class).serialize(s));
-
-                        List<String> paths1 = new ArrayList<>();
-                        paths1.add(parameters.getParameterList().get(0).getValue() + ".X_VIVO_COM_BR_IPv6CPEnable");
-                        GetParameterValuesResponseDTO parameters1 = instance.getParametersValues(eqp1, paths1);
-                        builder.append(getParameterMapper.serialize(parameters1)).append("\n");
-                        System.out.println(getParameterMapper.serialize(parameters1));
-
-                    } catch (Exception e) {
+                        fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desigs" + n + ".csv";
+                        pw = new PrintWriter(new File(fileName));
+                        n++;
+                        i = 0;
+                    } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                        builder.append(e.getMessage()).append("\n");
                     }
-//                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    builder.append(linha[0]).append(";").append(e.getMessage()).append("\n");
                 }
+                pw.write(line + "\n");
+                i++;
             }
-            pw.write(builder.toString());
             pw.close();
-            System.out.println("done!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.getMessage());
+        } catch (FileNotFoundException e) {
+            //Some error logging
         }
     }
 
@@ -663,11 +635,9 @@ public class SynchDeviceDAOImplIT {
     public void testSetWifiInfoFull() throws Exception {
         System.out.println("setWifiInfoFull");
 
-
         List<WifiInfoFull> wifis = instance.getWifiInfoFull(eqp);
-        WifiInfoFull wifi = wifis.get(4);
-        wifi.setChannel("108");
-
+        WifiInfoFull wifi = wifis.get(wifis.size() - 1);
+        wifi.setChannel(null);
 //        wifi.setBcEnabled(Boolean.TRUE);
         Boolean result = instance.setWifiInfoFull(eqp, wifi);
         System.out.println("ResultadoFinal->" + new JacksonMapper(new TypeReference<WifiInfoFull>() {

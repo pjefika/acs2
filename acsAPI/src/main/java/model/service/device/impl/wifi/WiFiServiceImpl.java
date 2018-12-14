@@ -114,7 +114,7 @@ public class WiFiServiceImpl extends GenericDeviceService implements WiFiService
                 System.out.println("_________________________________________________");
                 Thread.sleep(8000);
                 System.out.println("REDE 5");
-                Integer rede5Pos = device.getModelName().equalsIgnoreCase("RTF3505VW-N2") ? 4 : wifis.getWifi().size() - 1;
+                Integer rede5Pos = device.getModelName().equalsIgnoreCase("RTF3505VW-N2") ? 4 : wifis.getWifi().size();
                 synch().setWifiInfoFull(device, wifis.getWifi().get(rede5Pos));
                 System.out.println("_________________________________________________5");
             }else{
