@@ -5,7 +5,10 @@
  */
 package dao.device;
 
+import br.net.gvt.efika.acs.model.device.firmware.FirmwareInfo;
+import br.net.gvt.efika.acs.model.device.info.DeviceInfo;
 import com.alcatel.hdm.service.nbi2.NbiDeviceData;
+import dao.factory.FactoryDAO;
 import dto.nbi.service.hdm.alcatel.com.NBIFirmwareImageData;
 import dto.nbi.service.hdm.alcatel.com.NBITemplate;
 import init.SingletonDeviceTest;
@@ -14,6 +17,9 @@ import java.util.List;
 import notification.dto.nbi.service.hdm.alcatel.com.NBIDeviceActionResult;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -86,6 +92,48 @@ public class RemoteDAOImplIT {
         for (NBIDeviceActionResult r : result) {
         }
 
+    }
+
+    /**
+     * Test of firmwareUpdate method, of class RemoteDAOImpl.
+     */
+    @Test
+    public void testFirmwareUpdate() throws Exception {
+        System.out.println("firmwareUpdate");
+        DeviceInfo d = FactoryDAO.createSynch().getDeviceInfo(nbi);
+        FirmwareInfo info = new FirmwareInfo(d.getFwer(), d.getPreferv());
+//        Long expResult = null;
+        Long result = instance.firmwareUpdate(nbi, info);
+        System.out.println("result->" + result);
+    }
+
+    /**
+     * Test of getAvailableFirmwareImages method, of class RemoteDAOImpl.
+     */
+    @Test
+    public void testGetAvailableFirmwareImages() throws Exception {
+        System.out.println("getAvailableFirmwareImages");
+        NbiDeviceData eqp = null;
+        RemoteDAOImpl instance = new RemoteDAOImpl();
+        List<NBIFirmwareImageData> expResult = null;
+        List<NBIFirmwareImageData> result = instance.getAvailableFirmwareImages(eqp);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getAvailableCriteriaTemplates method, of class RemoteDAOImpl.
+     */
+    @Test
+    public void testGetAvailableCriteriaTemplates() throws Exception {
+        System.out.println("getAvailableCriteriaTemplates");
+        RemoteDAOImpl instance = new RemoteDAOImpl();
+        NBITemplate[] expResult = null;
+        NBITemplate[] result = instance.getAvailableCriteriaTemplates();
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }
