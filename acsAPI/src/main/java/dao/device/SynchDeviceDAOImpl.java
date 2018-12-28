@@ -321,6 +321,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
     @Override
     public List<WifiInfoFull> getWifiInfoFull(NbiDeviceData eqp) throws Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
+
         StringResponseDTO a = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9529, opt, TIMEOUT, "");
 
         String wifiDisable = "Nenhuma interface WiFi se encontra habilitada.";
@@ -328,8 +329,6 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             throw new WifiInativoException();
         }
         System.out.println("Retorno9529: " + a.getValue());
-        StringResponseDTO b = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9511, opt, TIMEOUT, "");
-        System.out.println("Retorno9511: " + b.getValue());
 
         List<WifiInfoFull> wifi = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
         }).fromJSON(a.getValue());
@@ -343,7 +342,9 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
             }
             return wifi;
         }
-
+        StringResponseDTO b = this.exec(eqp, DeviceOperationFactory.getEmptyJson(), 9511, opt, TIMEOUT, "");
+        System.out.println("Retorno9511: " + b.getValue());
+        
         List<WifiInfoFull> wifib = (List<WifiInfoFull>) new JacksonMapper(new TypeReference<List<WifiInfoFull>>() {
         }).fromJSON(b.getValue());
         return DeviceOperationFactory.mergeWifis(wifi, wifib);
