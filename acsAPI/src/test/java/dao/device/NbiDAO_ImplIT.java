@@ -128,7 +128,7 @@ public class NbiDAO_ImplIT {
     @Test
     public void testFindDeviceBySerialNumber() throws Exception {
         System.out.println("findDeviceBySerialNumber");
-        String serial = "RTF3507VW-N2";
+        String serial = "1072238ED654";
 
 //        List<NbiDeviceData> expResult = null;
         List<NbiDeviceData> result = instance.findDeviceBySerialNumber(serial);

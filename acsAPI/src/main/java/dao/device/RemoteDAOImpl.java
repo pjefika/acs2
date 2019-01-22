@@ -41,10 +41,12 @@ public class RemoteDAOImpl implements RemoteDAO {
 
     @Override
     public Long firmwareUpdate(NbiDeviceData eqp, FirmwareInfo info) throws NBIException_Exception, RemoteException {
-        return remote().createSingleFirmwareUpdateOperation(new NBIDeviceID(eqp.getDeviceId().getOUI(),
+        return remote().createSingleFirmwareUpdateOperation(
+                new NBIDeviceID(eqp.getDeviceId().getOUI(),
                 eqp.getDeviceId().getProductClass(),
                 eqp.getDeviceId().getProtocol(), eqp.getDeviceId().getSerialNumber()),
-                info.getPreferredVersion().replace("-preferred", ""), 15000);
+                info.getPreferredVersion(),
+                15000);
     }
 
     @Override

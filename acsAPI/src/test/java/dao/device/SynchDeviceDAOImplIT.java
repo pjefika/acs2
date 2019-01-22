@@ -60,7 +60,8 @@ import static org.junit.Assert.*;
 public class SynchDeviceDAOImplIT {
 
     private final SynchDeviceDAOImpl instance = new SynchDeviceDAOImpl();
-    private NbiDeviceData eqp = null;//SingletonDeviceTest.getInstance().getDevice();
+    private NbiDeviceData eqp = null;
+    ////SingletonDeviceTest.getInstance().getDevice();
 
     public SynchDeviceDAOImplIT() {
     }
@@ -366,118 +367,92 @@ public class SynchDeviceDAOImplIT {
 
     @Test
     public void testMethod() throws Exception {
-        //"C:\\Users\\G0041775\\Desktop\\getSetInternetService.csv"
-//
+
         List<String> lFrom = new ArrayList<>();
         List<String> lTo = new ArrayList<>();
         List<String> lTotal = new ArrayList<>();
-//        String nomeFrom = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\22-11-2018\\paei2325133135.csv";
 
-        for (int i = 0; i < 15; i++) {
-            lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desiges" + i + ".csv");
-            lTotal.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\desiges" + i + "Result.csv");
-            lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\desiges" + i + "Result.csv");
-        }
-        for (int i = 0; i < 23; i++) {
-            if (i != 0 && i != 15 && i != 16 && i != 21) {
-                lTotal.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\desigs" + i + "Result.csv");
+        for (int e = 99; e < 142; e++) {
+            int f = e + 15;
+            if (f > 142) {
+                f = 142;
+            }
+            lFrom = new ArrayList<>();
+            lTo = new ArrayList<>();
+            lTotal = new ArrayList<>();
+            for (int i = e; i < f; i++) {
+                lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\desigeZ" + i + ".csv");
+                lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\results\\desigeZ" + i + "Result.csv");
+
+//                for (int i = 0; i < 685; i++) {
+//                lTotal.add("C:\\Users\\G0041775\\Desktop\\Arno\\results\\desigeZ" + i + "Result.csv");
+//                }
             }
 
+            System.out.println("lFrom E -> " + lFrom.toString());
+            System.out.println("lTo E -> " + lTo.toString());
+
+            List<Paranauezeiro> l = new ArrayList<>();
+            for (int i = 0; i < lFrom.size(); i++) {
+                l.add(new Paranauezeiro(lFrom.get(i), lTo.get(i)));
+                l.get(i).start();
+            }
+            l.forEach((t) -> {
+                try {
+                    t.join();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(SynchDeviceDAOImplIT.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
+            e = f - 1;
         }
-//        lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desigs0.csv");
-//        lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\desigs0Result.csv");
-//        lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desigs15.csv");
-//        lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\desigs15Result.csv");
-//        lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desigs16.csv");
-//        lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\desigs16Result.csv");
-//        lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desigs21.csv");
-//        lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\desigs21Result.csv");
-//        String nomeTo = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\22-11-2018\\paei2325133135Result.csv";
-//        String file = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\designadoresRound2";
-        PrintWriter pw = null;
-//        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-//            String line = "";
-//            int i = 0;
-//            int o = 30;
-//            int n = 0;
-//            String fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\desigsRound2" + n + ".csv";
-//            String fileTo = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\resultsRound2" + n + ".csv";
-//            lFrom.add(fileName);
-//            lTo.add(fileTo);
-//            try {
-//                pw = new PrintWriter(new File(fileName));
-//                n++;
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//            while ((line = br.readLine()) != null) {
-//                if (i >= o) {
-//                    pw.close();
-//                    try {
-//                        fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\desigsRound2" + n + ".csv";
-//                        fileTo = "C:\\Users\\G0041775\\Desktop\\Arno\\LAN FALSE\\resultsRound2" + n + ".csv";
-//                        pw = new PrintWriter(new File(fileName));
-//                        lFrom.add(fileName);
-//                        lTo.add(fileTo);
-//                        n++;
-//                        i = 0;
-//                    } catch (FileNotFoundException e) {
-//                        e.printStackTrace();
+//        PrintWriter pw = null;
+//        pw = new PrintWriter(new File("C:\\Users\\G0041775\\Desktop\\Arno\\results\\resultZ.csv"));
+//        pw.write("Designador;Equipamento;setResult\n");
+//        String linz = "";
+//        for (String string : lTotal) {
+//            try (BufferedReader br = new BufferedReader(new FileReader(string))) {
+//                while ((linz = br.readLine()) != null) {
+//                    if (!linz.contains("Designador;Equipamento;setResult")) {
+//                        pw.write(linz + "\n");
 //                    }
 //                }
-//                pw.write(line + "\n");
-//                i++;
+//            } catch (Exception e) {
 //            }
-//            pw.close();
-//        } catch (FileNotFoundException e) {
-//            //Some error logging
 //        }
-//        lFrom.add(nomeFrom);
-//        lTo.add(nomeTo);
-        System.out.println("lFrom -> " + lFrom.toString());
-        System.out.println("lTo -> " + lTo.toString());
-
-        List<Paranauezeiro> l = new ArrayList<>();
-        for (int i = 0; i < lFrom.size(); i++) {
-            l.add(new Paranauezeiro(lFrom.get(i), lTo.get(i)));
-            l.get(i).start();
-        }
-        l.forEach((t) -> {
-            try {
-                t.join();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(SynchDeviceDAOImplIT.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        pw = new PrintWriter(new File("C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\results\\resultS.csv"));
-        pw.write("Designador;Equipamento;setResult\n");
-        String linz = "";
-        for (String string : lTotal) {
-            try (BufferedReader br = new BufferedReader(new FileReader(string))) {
-                while ((linz = br.readLine()) != null) {
-                    if (!linz.contains("Designador;Equipamento;setResult")) {
-                        pw.write(linz + "\n");
-                    }
-                }
-            } catch (Exception e) {
-            }
-        }
-        pw.close();
-
+//        pw.close();
     }
 
     @Test
     public void testMethod1() throws Exception {
-        String nomeTo = "C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\";
+        String nomeTo = "C:\\Users\\G0041775\\Desktop\\Arno\\";
         System.out.println("lelele");
-        String file = "C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desiges.csv";
+        String file = "C:\\Users\\G0041775\\Desktop\\Arno\\desigz";
         PrintWriter pw = null;
+//        pw = new PrintWriter(new File(file));
+//
+//        for (int i = 0; i < 100; i++) {
+//            if (i != 3 && i != 7 && i != 8 && i != 9 && i != 13 && i != 17 && i != 19 && i != 25 && i != 27 && i != 38 && i != 46 && i != 55 && i != 56 && i != 64) {
+//                if (i != 65 && i != 68 && i != 71 && i != 72 && i != 73 && i != 81 && i != 82 && i != 85 && i != 86 && i != 87 && i != 90 && i != 94 && i != 98) {
+//                    try (BufferedReader lebr = new BufferedReader(new FileReader(nomeTo + "desiges" + i + ".csv"))) {
+//                        String line = "";
+//                        while ((line = lebr.readLine()) != null) {
+//                            pw.write(line + "\n");
+//                        }
+//                    } catch (Exception e) {
+//                    }
+//                }
+//            }
+//        }
+//        pw.close();
+//        pw = null;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = "";
             int i = 0;
-            int o = 250;
+            int o = 20;
             int n = 0;
-            String fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desiges" + n + ".csv";
+            String fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\desigeZ" + n + ".csv";
 
             try {
                 pw = new PrintWriter(new File(fileName));
@@ -489,7 +464,7 @@ public class SynchDeviceDAOImplIT {
                 if (i >= o) {
                     pw.close();
                     try {
-                        fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\Rafael\\desiges" + n + ".csv";
+                        fileName = "C:\\Users\\G0041775\\Desktop\\Arno\\desigeZ" + n + ".csv";
                         pw = new PrintWriter(new File(fileName));
                         n++;
                         i = 0;

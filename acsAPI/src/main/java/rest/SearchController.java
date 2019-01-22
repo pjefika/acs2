@@ -33,18 +33,29 @@ public class SearchController extends RestAbstractController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response search(SearchIn in) {
+        System.out.println("36");
         LogEntity l = in.create();
+        System.out.println("38");
         try {
+            System.out.println("40");
             find = FactoryService.createFindDevice();
+            System.out.println("42");
             List<NbiDeviceData> lst = find.find(in);
+            System.out.println("44");
             l.setSaida(lst);
+            System.out.println("46");
             return ok(lst);
         } catch (Exception e) {
+            System.out.println("49");
             l.setSaida(e.getMessage());
+            System.out.println("51");
             return internalServerError(e);
         } finally {
+            System.out.println("54");
             try {
+                System.out.println("56");
                 FactoryDAO.createLogDAO().cadastrar(l);
+                System.out.println("58");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
