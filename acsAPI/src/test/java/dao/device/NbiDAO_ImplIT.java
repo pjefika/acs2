@@ -69,7 +69,7 @@ public class NbiDAO_ImplIT {
         System.out.println("findDevicesBySubscriberId");
         String subscriberId = "NLP-8186VQFHG-013";
 
-//        List<NbiDeviceData> expResult = null;
+//        List<NbiDeviceData> expResult = null;\0000
         List<NbiDeviceData> result = instance.findDevicesBySubscriberId(subscriberId);
         System.out.println(new JacksonMapper<>(List.class).serialize(result));
     }

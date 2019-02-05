@@ -6,6 +6,7 @@
 package model.service.device.impl;
 
 import br.net.gvt.efika.acs.model.device.enums.DeviceTR;
+import model.service.device.impl.lan.acao.IPV6Auto;
 import model.service.device.impl.sip.acao.SetT38Enabled;
 import model.service.device.impl.wifi.acao.AtivarBroadcastWifi;
 import model.service.device.impl.wifi.acao.AtivarStatusWifi;
@@ -52,6 +53,10 @@ public class SetParameters {
 
     public static final ParameterValueStructDTO setT38Enabled(DeviceTR tr, String value, int wichone) {
         return new SetT38Enabled(tr, value, wichone);
+    }
+
+    public static final ParameterValueStructDTO setIPv6Auto(Boolean active) {
+        return new IPV6Auto(active);
     }
 //    public static final ParameterValueStructDTO DESATIVAR_WIFI = new DesativarWifi();
 //    public static final ParameterValueStructDTO DESATIVAR_AUTOCHANNEL = new DesativarAutoChannelWifi();

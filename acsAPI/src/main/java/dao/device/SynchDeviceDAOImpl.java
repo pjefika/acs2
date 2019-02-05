@@ -224,6 +224,7 @@ public class SynchDeviceDAOImpl implements SynchDeviceDAO {
         }
     }
 
+    @Override
     public SetParameterValuesResponseDTO setParamValues(NbiDeviceData eqp, List<ParameterValueStructDTO> p) throws Exception {
         NbiSingleDeviceOperationOptions opt = DeviceOperationFactory.getDeviceOperationOptionsDefault();
         motive.hdm.synchdeviceops.SetParameterValuesDTO g = new motive.hdm.synchdeviceops.SetParameterValuesDTO();

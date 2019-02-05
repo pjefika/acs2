@@ -10,6 +10,7 @@ import model.service.device.MotiveFromTreeService;
 import model.service.device.MotiveService;
 import model.service.device.impl.DhcpService;
 import model.service.device.impl.iptv.acao.IptvDiagnosticsService;
+import model.service.device.impl.lan.IPv6AutoService;
 import model.service.device.impl.sip.DirectoryNumberService;
 import model.service.device.impl.sip.T38EnabledService;
 
@@ -37,6 +38,9 @@ public class FactoryMotiveService {
         }
         if (c.getSimpleName().equalsIgnoreCase("IptvDiagnostics")) {
             return new IptvDiagnosticsService();
+        }
+        if (c.getSimpleName().equalsIgnoreCase("LANIPv6Auto")) {
+            return new IPv6AutoService();
         }
 
         return null;

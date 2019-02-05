@@ -372,56 +372,55 @@ public class SynchDeviceDAOImplIT {
         List<String> lTo = new ArrayList<>();
         List<String> lTotal = new ArrayList<>();
 
-        for (int e = 99; e < 142; e++) {
-            int f = e + 15;
-            if (f > 142) {
-                f = 142;
-            }
-            lFrom = new ArrayList<>();
-            lTo = new ArrayList<>();
-            lTotal = new ArrayList<>();
-            for (int i = e; i < f; i++) {
-                lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\desigeZ" + i + ".csv");
-                lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\results\\desigeZ" + i + "Result.csv");
-
-//                for (int i = 0; i < 685; i++) {
-//                lTotal.add("C:\\Users\\G0041775\\Desktop\\Arno\\results\\desigeZ" + i + "Result.csv");
-//                }
-            }
-
-            System.out.println("lFrom E -> " + lFrom.toString());
-            System.out.println("lTo E -> " + lTo.toString());
-
-            List<Paranauezeiro> l = new ArrayList<>();
-            for (int i = 0; i < lFrom.size(); i++) {
-                l.add(new Paranauezeiro(lFrom.get(i), lTo.get(i)));
-                l.get(i).start();
-            }
-            l.forEach((t) -> {
-                try {
-                    t.join();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(SynchDeviceDAOImplIT.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-
-            e = f - 1;
-        }
-//        PrintWriter pw = null;
-//        pw = new PrintWriter(new File("C:\\Users\\G0041775\\Desktop\\Arno\\results\\resultZ.csv"));
-//        pw.write("Designador;Equipamento;setResult\n");
-//        String linz = "";
-//        for (String string : lTotal) {
-//            try (BufferedReader br = new BufferedReader(new FileReader(string))) {
-//                while ((linz = br.readLine()) != null) {
-//                    if (!linz.contains("Designador;Equipamento;setResult")) {
-//                        pw.write(linz + "\n");
-//                    }
-//                }
-//            } catch (Exception e) {
+//        for (int e = 119; e < 142; e++) {
+//            int f = e + 7;
+//            if (f > 142) {
+//                f = 142;
 //            }
+//            lFrom = new ArrayList<>();
+//            lTo = new ArrayList<>();
+//            lTotal = new ArrayList<>();
+//            for (int i = e; i < f; i++) {
+//                lFrom.add("C:\\Users\\G0041775\\Desktop\\Arno\\desigeZ" + i + ".csv");
+//                lTo.add("C:\\Users\\G0041775\\Desktop\\Arno\\results\\desigeZ" + i + "Result.csv");
+        for (int i = 0; i < 142; i++) {
+            lTotal.add("C:\\Users\\G0041775\\Desktop\\Arno\\results\\desigeZ" + i + "Result.csv");
+        }
+//            }
+
+//            System.out.println("lFrom E -> " + lFrom.toString());
+//            System.out.println("lTo E -> " + lTo.toString());
+//
+//            List<Paranauezeiro> l = new ArrayList<>();
+//            for (int i = 0; i < lFrom.size(); i++) {
+//                l.add(new Paranauezeiro(lFrom.get(i), lTo.get(i)));
+//                l.get(i).start();
+//            }
+//            l.forEach((t) -> {
+//                try {
+//                    t.join();
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(SynchDeviceDAOImplIT.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            });
+//
+//            e = f - 1;
 //        }
-//        pw.close();
+        PrintWriter pw = null;
+        pw = new PrintWriter(new File("C:\\Users\\G0041775\\Desktop\\Arno\\results\\resultZ.csv"));
+        pw.write("Designador;Equipamento;setResult\n");
+        String linz = "";
+        for (String string : lTotal) {
+            try (BufferedReader br = new BufferedReader(new FileReader(string))) {
+                while ((linz = br.readLine()) != null) {
+                    if (!linz.contains("Designador;Equipamento;setResult")) {
+                        pw.write(linz + "\n");
+                    }
+                }
+            } catch (Exception e) {
+            }
+        }
+        pw.close();
     }
 
     @Test

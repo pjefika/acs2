@@ -39,6 +39,7 @@ import br.net.gvt.efika.acs.model.exception.UnsupportedException;
 import motive.hdm.synchdeviceops.GetParameterValuesResponseDTO;
 import motive.hdm.synchdeviceops.ParameterInfoStructDTO;
 import motive.hdm.synchdeviceops.ParameterValueStructDTO;
+import motive.hdm.synchdeviceops.SetParameterValuesResponseDTO;
 
 /**
  *
@@ -63,6 +64,8 @@ public interface SynchDeviceDAO {
     public DeviceInfo getDeviceInfo(NbiDeviceData eqp) throws Exception;
 
     public void setParametersValues(NbiDeviceData eqp, List<ParameterValueStructDTO> p) throws Exception;
+
+    public SetParameterValuesResponseDTO setParamValues(NbiDeviceData eqp, List<ParameterValueStructDTO> p) throws Exception;
 
     public WanInfo getWanInfo(NbiDeviceData eqp) throws DeviceOperationException, NBIException, OperationTimeoutException, ProviderException, JsonParseException, Exception;
 
