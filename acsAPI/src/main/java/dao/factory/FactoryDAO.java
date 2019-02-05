@@ -14,6 +14,9 @@ import dao.device.RemoteDAOImpl;
 import dao.device.SynchDeviceDAO;
 import dao.device.SynchDeviceDAOImpl;
 import br.net.gvt.efika.acs.model.entity.LogEntity;
+import br.net.gvt.efika.acs.model.entity.Lote;
+import dao.db.AcaoMassivaDAOImpl;
+import dao.db.LoteDAOImpl;
 
 /**
  *
@@ -35,6 +38,14 @@ public class FactoryDAO {
 
     public static InterfaceDAO<LogEntity> createLogDAO() {
         return new LogDAOImpl();
+    }
+
+    public static InterfaceDAO<Lote> createLoteDAO() {
+        return new LoteDAOImpl();
+    }
+    
+    public static AcaoMassivaDAOImpl createAcaoMassivaDAO(){
+        return new AcaoMassivaDAOImpl();
     }
 
 }

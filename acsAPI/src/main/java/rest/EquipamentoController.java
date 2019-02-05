@@ -22,7 +22,6 @@ import dao.factory.FactoryDAO;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -59,6 +58,12 @@ import br.net.gvt.efika.acs.model.dto.SetT38EnabledIn;
 import br.net.gvt.efika.acs.model.dto.SetWifiIn;
 import br.net.gvt.efika.acs.model.dto.SipActivationIn;
 import br.net.gvt.efika.acs.model.dto.SipDiagnosticsIn;
+import br.net.gvt.efika.acs.model.entity.Lote;
+import br.net.gvt.efika.util.thread.EfikaThread;
+import java.util.Calendar;
+import javax.ws.rs.GET;
+import javax.ws.rs.PathParam;
+import model.massivaction.setter.RunnableSetter;
 import model.service.factory.FactoryMotiveService;
 
 /**
@@ -851,4 +856,32 @@ public class EquipamentoController extends RestAbstractController {
         }
     }
 
+    @POST
+    @Path("/massiveAction")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response massiveAction(Lote in) throws Exception {
+        if (in.getData() == null) {
+            in.setData(Calendar.getInstance());
+        }
+        FactoryDAO.createLoteDAO().cadastrar(in);
+        try {
+            new EfikaThread(new RunnableSetter(in));
+            return ok(in);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return internalServerError(e);
+        }
+    }
+
+    @GET
+    @Path("/massiveAction/{loteId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMassiveAction(@PathParam("loteId") String loteId) throws Exception {
+        try {
+            return ok(FactoryDAO.createAcaoMassivaDAO().findByLote(loteId));
+        } catch (Exception e) {
+            return internalServerError(e);
+        }
+    }
 }
