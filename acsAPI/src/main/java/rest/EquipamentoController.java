@@ -49,17 +49,22 @@ import br.net.gvt.efika.acs.model.dto.FirmwareOut;
 import br.net.gvt.efika.acs.model.dto.GetIptvDiagnosticsIn;
 import br.net.gvt.efika.acs.model.dto.GetT38EnabledIn;
 import br.net.gvt.efika.acs.model.dto.IptvDiagnostics;
+import br.net.gvt.efika.acs.model.dto.LANIPv6Auto;
 import br.net.gvt.efika.acs.model.dto.T38Enabled;
 import br.net.gvt.efika.acs.model.dto.PPPoECredentialsIn;
 import br.net.gvt.efika.acs.model.dto.PingDiagnosticIn;
 import br.net.gvt.efika.acs.model.dto.ServiceClassIn;
 import br.net.gvt.efika.acs.model.dto.SetDnsIn;
+import br.net.gvt.efika.acs.model.dto.SetLanIPv6AutoIn;
 import br.net.gvt.efika.acs.model.dto.SetT38EnabledIn;
 import br.net.gvt.efika.acs.model.dto.SetWifiIn;
 import br.net.gvt.efika.acs.model.dto.SipActivationIn;
 import br.net.gvt.efika.acs.model.dto.SipDiagnosticsIn;
+import br.net.gvt.efika.acs.model.entity.AcaoMassivaEntity;
 import br.net.gvt.efika.acs.model.entity.Lote;
+import br.net.gvt.efika.acs.model.exception.UnsupportedException;
 import br.net.gvt.efika.util.thread.EfikaThread;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
@@ -835,6 +840,32 @@ public class EquipamentoController extends RestAbstractController {
     }
 
     @POST
+    @Path("/setLanIPv6")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setLanIPv6(SetLanIPv6AutoIn in) {
+
+        LogEntity l = in.create();
+        try {
+            if (in.getDevice() == null) {
+                in.setDevice(FactoryDAO.createNBI().findDeviceByGUID(in.getGuid()));
+            }
+            LANIPv6Auto t = (LANIPv6Auto) FactoryMotiveService.createTreeChanger(LANIPv6Auto.class).alterar(in.getDevice(), in.getLanIPv6Auto());
+            l.setSaida(t);
+            return ok(t);
+        } catch (Exception e) {
+            l.setSaida(e.getMessage());
+            return internalServerError(e);
+        } finally {
+            try {
+                FactoryDAO.createLogDAO().cadastrar(l);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @POST
     @Path("/firmwareversion")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -861,10 +892,39 @@ public class EquipamentoController extends RestAbstractController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response massiveAction(Lote in) throws Exception {
-        if (in.getData() == null) {
-            in.setData(Calendar.getInstance());
+        if (in.getDataInicio() == null) {
+            in.setDataInicio(Calendar.getInstance());
         }
         FactoryDAO.createLoteDAO().cadastrar(in);
+        try {
+            new EfikaThread(new RunnableSetter(in));
+            return ok(in);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return internalServerError(e);
+        }
+    }
+
+    @POST
+    @Path("/massiveAction/reRun")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response massiveActionRerun(Lote in) throws Exception {
+        List<AcaoMassivaEntity> lame = FactoryDAO.createAcaoMassivaDAO().findByLote(in.getId().toString());
+        List<String> entradas = new ArrayList<>();
+        lame.forEach(t -> {
+            try {
+               Boolean result = (Boolean) t.getResultado();
+               if(!result){
+                   entradas.add(t.getParametro());
+               }
+            } catch (Exception e) {
+                Exception result = (Exception) t.getResultado();
+                if(!(result instanceof UnsupportedException)){
+                    entradas.add(t.getParametro());
+                }
+            }
+        });
         try {
             new EfikaThread(new RunnableSetter(in));
             return ok(in);
