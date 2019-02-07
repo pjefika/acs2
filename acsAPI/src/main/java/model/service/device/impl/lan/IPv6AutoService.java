@@ -43,7 +43,7 @@ public class IPv6AutoService extends GenericDeviceService implements MotiveFromT
     public LANIPv6Auto alterar(NbiDeviceData device, LANIPv6Auto t) throws Exception {
         try {   
             SetParameterValuesResponseDTO s = synch().setParamValues(device, IPv6AutoParamParser.parse(t));
-            t.setEnabled(s.getStatus() == 0);
+            t.setEnabled(s.getStatus() != 0);
             return t;
         } catch (Exception ex) {
             TratativaExcessao.treatException(ex);
